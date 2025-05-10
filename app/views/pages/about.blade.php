@@ -2,7 +2,7 @@
 @include(partials.head)
 @include(partials.header)
 
-{{ trans('hello_world') }}
+{{ trans('about') }}
 
 </body>
 </html>

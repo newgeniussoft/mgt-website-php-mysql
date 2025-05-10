@@ -7,9 +7,10 @@
 
         public function index()
         {
-            echo $this->view('pages.index', [
-                'title' => 'Home Page',
-                'content' => 'Welcome to the home page!'
-            ]);
+            echo $this->view('pages.index', []);
+        }
+
+        public function about() {
+            echo $this->view('pages.about', []);
         }
     }
