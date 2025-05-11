@@ -39,6 +39,11 @@ class MainController extends Controller
     {
         return $this->adminController->index();
     }
+
+    public function seo_test()
+    {
+        return $this->homeController->seo_test();
+    }
 }
 
 
