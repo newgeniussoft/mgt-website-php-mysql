@@ -106,19 +106,30 @@
     if (!function_exists('switchTo')) {
         function switchTo($lang) {
             $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-            // DEBUG HERE
-            // Replace or add language code
+            
+            // Check if the first part is a language code
+            $supportedLanguages = ['es', 'en'];
+            $currentPage = '';
+            
+            // Extract current page and handle language code
             if (!empty($urlParts[0])) {
-                $urlParts[0] = $lang;
-            } else {
-                array_unshift($urlParts, $lang);
+                if (in_array($urlParts[0], $supportedLanguages)) {
+                    // Current URL has language prefix, extract the page
+                    $currentPage = isset($urlParts[1]) ? $urlParts[1] : '';
+                } else {
+                    // Current URL has no language prefix, first part is the page
+                    $currentPage = $urlParts[0];
+                }
             }
             
-            // Remove 'en' language code if present (default language)
-            $url = '/' . implode('/', $urlParts);
-            $url = str_replace("/en", "", $url);
-            
-            return rtrim($_ENV['APP_URL'], '/') . $url;
+            // Build the new URL with the target language
+            if ($lang === 'en') {
+                // For English (default), don't add language prefix
+                return rtrim($_ENV['APP_URL'], '/') . ($currentPage ? '/' . $currentPage : '');
+            } else {
+                // For other languages, add the language prefix
+                return rtrim($_ENV['APP_URL'], '/') . '/' . $lang . ($currentPage ? '/' . $currentPage : '');
+            }
         }
     }
 

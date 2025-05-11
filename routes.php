@@ -43,13 +43,14 @@ class Router {
         
         // Route based on page name
         if (empty($page)) {
-            return $this->mainController->index();
+            return $this->mainController->index($language);
         } else if ($page === 'access') {
             // Admin routes with 'access' prefix
             return $this->handleAdminRoutes($pathParts);
         } else {
             if (in_array($page, $this->supportedPages)) {
-                return $this->mainController->$page();
+                // Call the page method with language parameter
+                return $this->mainController->$page($language);
             } else {
                 return $this->send404();
             }

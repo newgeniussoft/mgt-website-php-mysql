@@ -13,14 +13,26 @@ class MainController extends Controller
         $this->adminController = new AdminController();
     }
 
-    public function index()
+    /**
+     * Show homepage with optional language
+     * 
+     * @param string|null $language Language code
+     * @return mixed
+     */
+    public function index($language = null)
     {
-        return $this->homeController->index();
+        return $this->homeController->index($language);
     }
 
-    public function about()
+    /**
+     * Show about page with optional language
+     * 
+     * @param string|null $language Language code
+     * @return mixed
+     */
+    public function about($language = null)
     {
-        return $this->homeController->about();
+        return $this->homeController->about($language);
     }
 
     public function access()
