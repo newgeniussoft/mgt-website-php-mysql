@@ -106,7 +106,7 @@
     if (!function_exists('switchTo')) {
         function switchTo($lang) {
             $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-            
+            // DEBUG HERE
             // Replace or add language code
             if (!empty($urlParts[0])) {
                 $urlParts[0] = $lang;
@@ -130,7 +130,7 @@
      */
     if (!function_exists('assets')) {
         function assets($path) {
-            return rtrim($_ENV['APP_URL'], '/') . '/' . ltrim($path, '/');
+            return rtrim($_ENV['APP_URL'], '/') . '/assets/' . ltrim($path, '/');
         }
     }
 
