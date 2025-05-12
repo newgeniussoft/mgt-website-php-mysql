@@ -1,57 +1,21 @@
-@import('app/utils/helpers/helper.php')
-<div class="header-mobile-before">
-    <a href="{{ $_ENV['APP_URL'] }}" title="Madagascar Green Tours - Tour Operator Madagascar" rel="home">
-        <img src="{{ assets('img/logo/logo_new_updated.png') }}" alt="Madagascar Green Tours - Tour Operator Madagascar" />
-    </a>
-</div>
-<header id="header" class="main-header header-2 header-sticky header-mobile-sticky header-mobile-2 menu-drop-dropdown">
-    <div class="container header-mobile-wrapper">
-        <div class="header-mobile-inner header-mobile-2">
-            <div class="toggle-icon-wrapper" data-ref="main-menu" data-drop-type="dropdown">
-                <div class="toggle-icon"><span></span></div> <span>Menu</span>
-            </div>
-            <div class="header-customize"></div>
-        </div>
-    </div>
-    <div class="container header-desktop-wrapper">
-        <div class="header-left">
-            <div class="header-logo">
-                <a href="{{ $_ENV['APP_URL'] }}" title="Madagascar Green Tours - Tour Operator Madagascar" rel="home">
-                    <img src="{{ assets('img/logo/logo_new_updated.png') }}" alt="Madagascar Green Tours - Tour Operator Madagascar" />
-                </a>
-            </div>
-        </div>
-        <div class="header-right">
-            <div id="primary-menu" class="menu-wrapper">
-                <ul id="main-menu" class="main-menu menu-nav menu-drop-dropdown x-nav-menu x-nav-menu_main-menu x-animate-sign-flip" data-breakpoint="991" >
-                    <li class="menu-fly-search">
-                        <form  method="get" action="https://madagascar-green-tours.com/">
-                            <input type="text" name="s" placeholder="Search...">
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                        </form>
-                    </li>
-                    <li id="menu-item-2456" class="menu-item {{ namePage() == '' ? 'current-menu-item  current_page_item' : ''}} x-menu-item x-sub-menu-standard">
-                        <a href="{{ $_ENV['APP_URL'] }}" class="x-menu-a-text">
-                        <i class="fa fa-home"></i> <span class="x-menu-text">{{ trans('menu.home') }}</span>
-                        </a>
-                    </li>
-                    
-                    @navlink(About,about)
-                    @navlink(Contact,contact)
-                    <li class="menu-item en lang x-menu-item x-sub-menu-standard">
-                        <a href="{{ switchTo('en') }}" class="x-menu-a-text">
-                            <span class="x-menu-text"><img class="wpml-ls-flag" src="{{ assets('img/flags/uk.png') }}" alt="English"/></span>
-                        </a>
-                    </li>
-                    <li class="menu-item sp lang x-menu-item x-sub-menu-standard">
-                        <a href="{{ switchTo('es') }}" class="x-menu-a-text">
-                            <span class="x-menu-text">
-                                <img class="wpml-ls-flag" src="{{ assets('img/flags/spain.png') }}" alt="Spanish"/>
-                            </span>
+<header class="site-header">
+        <div class="container">
+            <a href="{{ $_ENV['APP_URL'] }}" class="site-logo">
+                <img src="{{ assets('img/logo/logo_new_updated.png') }}" alt="Madagascar Green Tours Logo" width="180" height="40">
+            </a>
+            
+            <nav class="site-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="{{ $_ENV['APP_URL'] }}" {{ $currentPage == 'home' ? 'aria-current="page"' : '' }}>Home</a></li>
+                    <li><a href="{{ $_ENV['APP_URL'] }}/about" {{ $currentPage == 'about' ? 'aria-current="page"' : '' }}>About</a></li>
+                    <li><a href="{{ $_ENV['APP_URL'] }}/" {{ $currentPage == '' ? 'aria-current="page"' : '' }}>SEO Guide</a></li>
+                    <li>
+                        <a href="{{ $language == 'es' ? $_ENV['APP_URL'] : $_ENV['APP_URL'] . '/es' . ($_SERVER['REQUEST_URI'] != '/' ? $_SERVER['REQUEST_URI'] : '') }}">
+                            <img src="{{ assets('img/flags/' . ($language == 'es' ? 'uk' : 'spain') . '.png') }}" alt="{{ $language == 'es' ? 'English' : 'Español' }}" width="20">
+                            
                         </a>
                     </li>
                 </ul>
-            </div>
+            </nav>
         </div>
-    </div>
-</header>
+    </header>

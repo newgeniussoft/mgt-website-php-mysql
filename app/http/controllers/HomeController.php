@@ -38,7 +38,7 @@
             // SEO metadata for homepage
             $languagePrefix = $this->language === 'es' ? ' - Español' : '';
             
-            echo $this->view('pages.seo-test', [
+            echo $this->view('pages.index', [
                 'language' => $this->language,
                 'currentPage' => 'home',
                 'metaTitle' => 'Madagascar Green Tours - Eco-Friendly Travel Experience' . $languagePrefix,
