@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Fixed Navbar</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Navbar that will overlay the hero section and become fixed on scroll -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo_colored.png" alt="MGT Travel Logo" class="navbar-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav header-styled">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Our tours</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Car rental</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero section with background image -->
+    <section id="home" class="content-section hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center text-white">
+                    <h1 class="display-4 font-weight-bold">Welcome to MGT Travel</h1>
+                    <p class="lead mb-5">This page demonstrates a transparent big navbar that becomes smaller and solid when you scroll down.</p>
+                    <div class="scroll-indicator">
+                        <p>Scroll down to see the navbar animation</p>
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About section -->
+    <section id="about" class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>About Us</h2>
+                    <p class="lead">Notice how the navbar is now fixed to the top and has changed its appearance!</p>
+                    <p>As you scroll down the page, the navbar sticks to the top, changes its background color, and adjusts its styling to be more compact.</p>
+                    <p>This provides a better user experience as navigation remains accessible throughout the page.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services section -->
+    <section id="services" class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Our Services</h2>
+                    <p class="lead">The navbar remains fixed at the top as you continue scrolling.</p>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="card-title">Service One</h4>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="card-title">Service Two</h4>
+                                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="card-title">Service Three</h4>
+                                    <p class="card-text">This is a shorter card with supporting text below as a natural lead-in to additional content.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact section -->
+    <section id="contact" class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2>Contact Us</h2>
+                    <p class="lead">The navbar animation enhances user experience throughout the entire page.</p>
+                    <p>This is the last section of our page. The navbar remains fixed at the top for easy navigation.</p>
+                    <a href="#home" class="btn btn-primary mt-3">Back to Top</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            // Toggle fadeIn class for navbar collapse
+            $('.navbar-toggler').click(function () {
+                $('.navbar-collapse').toggleClass('fadeIn');
+            });
+            
+            // Navbar scroll animation
+            $(window).scroll(function() {
+                var scroll = $(window).scrollTop();
+                var navbar = $('#mainNav');
+                var navbarSupportedContent = $("#navbarSupportedContent ul");
+                
+                // Add/remove classes based on scroll position
+                if (scroll > 80) { // Increased threshold for the transition
+                    navbar.addClass('navbar-scrolled');
+                    $('body').addClass('scrolled');
+                    navbarSupportedContent.removeClass('header-styled');
+                } else {
+                    navbar.removeClass('navbar-scrolled');
+                    navbarSupportedContent.addClass('header-styled');
+                    $('body').removeClass('scrolled');
+                }
+            });
+            
+            // Initialize navbar state on page load
+            if ($(window).scrollTop() > 100) {
+                $('#mainNav').addClass('navbar-scrolled');
+                $('body').addClass('scrolled');
+            }
+            
+            // Smooth scrolling for anchor links
+            $('a.nav-link').click(function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
