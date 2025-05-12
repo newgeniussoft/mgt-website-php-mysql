@@ -1,3 +1,9 @@
+:root {
+    --color-primary: #198754;
+    --color-primary-hover: #0f7445;
+    --color-primary-transparent: rgba(25, 135, 84, 0.2);
+}
+
 /*--- FONTS ---*/
   @font-face {
     font-family: InterRegular;
@@ -87,13 +93,12 @@ body.scrolled {
 }
 
 .nav-link {
-    font-family: InterRegular;
+    font-family: InterSemiBold;
     transition: all 0.5s ease;
     text-transform: uppercase;
-    font-size: 12pt; /* Larger nav links initially */
+    font-size: 11pt; /* Larger nav links initially */
     padding: 0.7rem 1rem; /* Larger padding */
     color: #fff; /* White text for better visibility on transparent background */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Text shadow for better readability */
 }
 
 .nav-link:hover {
@@ -110,6 +115,100 @@ body.scrolled {
 
 .navbar-scrolled .nav-link:hover {
     background-color: #f8f9fa; /* Solid hover background when scrolled */
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 8px;
+    margin-top: 0;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+.navbar-scrolled .dropdown-menu {
+    background-color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    color: #fff;
+    font-family: InterRegular;
+    font-size: 12pt;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--color-primary-hover);
+    color: #fff;
+}
+
+.navbar-scrolled .dropdown-item {
+    color: #333;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-scrolled .dropdown-item:hover {
+    background-color: var(--color-primary-transparent);
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+/* Custom dropdown arrow */
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    transition: all 0.3s ease;
+}
+
+/* Dropdown animation for hover */
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition: all 0.3s ease;
+}
+
+/* For mobile - still support click behavior */
+@media (max-width: 991.98px) {
+    .dropdown-menu {
+        display: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        pointer-events: auto;
+    }
+    
+    .dropdown-menu.show {
+        display: block;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .navbar-toggler {

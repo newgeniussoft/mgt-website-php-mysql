@@ -27,17 +27,23 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">Our tours</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#our_tours" id="toursDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Our Tours
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="toursDropdown">
+                            <a class="dropdown-item" href="#adventure">Adventure Tour</a>
+                            <a class="dropdown-item" href="#combination">Combination Tour</a>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#services">Car rental</a>
+                        <a class="nav-link" href="#car_rental">Car rental</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#services">Reviews</a>
+                        <a class="nav-link" href="#reviews">Reviews</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#services">Blog</a>
+                        <a class="nav-link" href="#blogs">Blog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact us</a>
@@ -171,8 +177,12 @@
                 $('body').addClass('scrolled');
             }
             
-            // Smooth scrolling for anchor links
+            // Smooth scrolling for anchor links (excluding dropdown toggles on mobile)
             $('a.nav-link').click(function(event) {
+                // Skip if this is a dropdown toggle on mobile
+                if ($(this).hasClass('dropdown-toggle') && isMobile) {
+                    return;
+                }
                 if (this.hash !== "") {
                     event.preventDefault();
                     var hash = this.hash;
@@ -182,6 +192,39 @@
                     }, 800, function(){
                         window.location.hash = hash;
                     });
+                }
+            });
+            
+            // Initialize dropdown functionality for mobile devices
+            var isMobile = false;
+            if (window.matchMedia("(max-width: 991.98px)").matches) {
+                isMobile = true;
+            }
+            
+            // Handle window resize events
+            $(window).resize(function() {
+                if (window.matchMedia("(max-width: 991.98px)").matches) {
+                    isMobile = true;
+                } else {
+                    isMobile = false;
+                    // Close any open dropdowns when switching to desktop
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+            
+            // For mobile: toggle dropdown on click
+            $('.dropdown-toggle').on('click', function(e) {
+                if (isMobile) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(this).next('.dropdown-menu').toggleClass('show');
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (isMobile && !$(e.target).closest('.dropdown').length) {
+                    $('.dropdown-menu').removeClass('show');
                 }
             });
         });
