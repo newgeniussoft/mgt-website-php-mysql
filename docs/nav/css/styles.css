@@ -1,7 +1,7 @@
 :root {
     --color-primary: #198754;
     --color-primary-hover: #0f7445;
-    --color-primary-transparent: rgba(25, 135, 84, 0.2);
+    --color-primary-transparent: rgba(25, 135, 84, 0.1);
 }
 
 /*--- FONTS ---*/
@@ -77,7 +77,7 @@ body.scrolled {
 }
 
 .navbar-scrolled .navbar-logo {
-    height: 40px; /* Smaller logo when scrolled */
+    height: 60px; /* Smaller logo when scrolled */
 }
 
 .navbar-nav {
@@ -114,7 +114,7 @@ body.scrolled {
 }
 
 .navbar-scrolled .nav-link:hover {
-    background-color: #f8f9fa; /* Solid hover background when scrolled */
+    background-color: var(--color-primary-transparent); /* Solid hover background when scrolled */
 }
 
 /* Dropdown menu styles */
