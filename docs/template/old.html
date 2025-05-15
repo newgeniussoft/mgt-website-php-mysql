@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madagascar Green Tours</title>
+    <meta name="description" content="Madagascar Green Tours offers eco-friendly travel experiences in Madagascar with sustainable tourism practices. Explore unique wildlife, breathtaking landscapes, and authentic cultural experiences.">
+    <meta name="keywords" content="madagascar tours, eco tourism, green travel, wildlife tours, sustainable tourism, madagascar travel, lemur tours">
+    <!-- Performance optimization meta tags -->
+    <meta http-equiv="Cache-Control" content="max-age=86400">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="canonical" href="https://madagascargreentours.com/">
+    
+    <!-- Resource hints for faster loading -->
+    <link rel="preconnect" href="https://maxcdn.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="https://maxcdn.bootstrapcdn.com">
+    <link rel="preconnect" href="https://code.jquery.com">
+    <link rel="dns-prefetch" href="https://code.jquery.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://use.fontawesome.com">
+    <link rel="dns-prefetch" href="https://use.fontawesome.com">
+    
+    <!-- Preload critical hero image (LCP improvement) -->
+    <link rel="preload" href="assets/img/slide-01.jpg" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/img/logo_colored.png" as="image">
+    
+    <!-- Critical CSS inline (to be implemented) -->
+    <style>
+        /* Critical CSS for above-the-fold content */
+        #iview-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .title-slogan { position: absolute; top: 40%; left: 0; right: 0; z-index: 2; }
+        .navbar-logo { max-height: 50px; width: auto; }
+        #mainNav { transition: background-color 0.3s ease; }
+        .navbar-scrolled { background-color: #fff; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); }
+        /* Optimize CLS for images */
+        img { max-width: 100%; height: auto; }
+        .card-img-top { aspect-ratio: 16/9; object-fit: cover; }
+    </style>
+    
+    <!-- Deferred non-critical CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/styles.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/vendor/iview/css/iview.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/vendor/iview/css/skin 4/style.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel="stylesheet" href="assets/vendor/iview/css/iview.css">
+        <link rel="stylesheet" href="assets/vendor/iview/css/skin 4/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    </noscript>
+</head>
+
+<body>
+    <!-- Navbar that will overlay the hero section and become fixed on scroll -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="assets/img/logo_colored.png" alt="MGT Travel Logo" class="navbar-logo" width="180" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav header-styled">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#our_tours" id="toursDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Our Tours
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="toursDropdown">
+                            <a class="dropdown-item" href="#adventure">Adventure Tour</a>
+                            <a class="dropdown-item" href="#combination">Combination Tour</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#car_rental">Car rental</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reviews">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blogs">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero section with View UI Carousel -->
+    <section id="home" class="content-section">
+        <div class="container-fluid p-0">
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <div id="iview-overlay"></div> 
+                    <h2 class="text-center text-white display-2 font-inter-extra-bold title-slogan">Descover Madagascar with us</h2>
+                    <div id="iview">
+                        <!-- Optimized hero image with proper dimensions -->
+                        <div data-iview:thumbnail="assets/img/slide-01.webp" data-iview:image="assets/img/slide-01.webp" width="1920" height="1080">
+                            <div class="iview-caption caption1" data-x="100" data-y="300" data-transition="expandDown"></div>
+                        </div>
+                        <!-- Add additional slides with proper dimensions and lazy loading -->
+                        <div data-iview:thumbnail="assets/img/slide-03.webp" data-iview:image="assets/img/slide-03.webp" width="1920" height="1080">
+                            <div class="iview-caption caption2" data-x="100" data-y="300" data-transition="expandDown"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- content section -->
+    <section id="home-content" class="content-section">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Welcome to Madagascar Green Tours</h4>
+                    <p class="card-text">Experience the natural wonders of Madagascar with our eco-friendly and sustainable tour packages. Our expert guides will take you on an unforgettable journey through this unique island paradise.</p>
+                    <a href="#services" class="btn btn-success mt-2">Explore Our Tours</a>
+                </div>
+            </div>
+            
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                </div>
+            </div>
+        </div>
+
+
+    </section>  
+    
+    <!-- Services section -->
+    <section id="services" class="content-section"  style="margin-top: 100px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Our Services</h2>
+                    <p class="lead">Explore our eco-friendly tour options in Madagascar.</p>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="assets/img/lemur.webp" class="card-img-top" alt="Wildlife Tours" width="350" height="200" loading="lazy">
+                                <div class="card-body">
+                                    <h4 class="card-title">Wildlife Tours</h4>
+                                    <p class="card-text">Discover Madagascar's unique wildlife including lemurs, chameleons, and endemic bird species.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="assets/img/lemur.webp" class="card-img-top" alt="Cultural Experiences" width="350" height="200" loading="lazy">
+                                <div class="card-body">
+                                    <h4 class="card-title">Cultural Experiences</h4>
+                                    <p class="card-text">Immerse yourself in Madagascar's rich cultural heritage with local community visits.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="assets/img/lemur.webp" class="card-img-top" alt="Adventure Tours" width="350" height="200" loading="lazy">
+                                <div class="card-body">
+                                    <h4 class="card-title">Adventure Tours</h4>
+                                    <p class="card-text">Experience thrilling adventures through rainforests, canyons, and coastal regions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact section with optimized layout -->
+    <section id="contact" class="content-section mt-6">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mx-auto text-center">
+                    <h2>Contact Us</h2>
+                    <p class="lead">Ready to plan your Madagascar adventure? Get in touch with our team.</p>
+                    <form id="contact-form" class="needs-validation" novalidate>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="message" rows="3" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-info mt-4 mt-lg-0">
+                        <h3>Our Information</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Green Street, Antananarivo, Madagascar</p>
+                        <p><i class="fas fa-phone"></i> +261 20 12 345 67</p>
+                        <p><i class="fas fa-envelope"></i> info@madagascargreentours.com</p>
+                        <div class="social-links mt-4">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <a href="#home" class="btn btn-outline-primary">Back to Top</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous" defer></script>
+        
+        
+    <!-- Optimized JavaScript with defer attribute -->
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle fadeIn class for navbar collapse
+            document.querySelector('.navbar-toggler').addEventListener('click', function() {
+                document.querySelector('.navbar-collapse').classList.toggle('fadeIn');
+            });
+            
+            // Navbar scroll animation
+            window.addEventListener('scroll', function() {
+                var scroll = window.scrollY;
+                var navbar = document.getElementById('mainNav');
+                var navbarSupportedContent = document.querySelector("#navbarSupportedContent ul");
+                
+                // Add/remove classes based on scroll position
+                if (scroll > 80) { // Increased threshold for the transition
+                    navbar.classList.add('navbar-scrolled');
+                    document.body.classList.add('scrolled');
+                    navbarSupportedContent.classList.remove('header-styled');
+                } else {
+                    navbar.classList.remove('navbar-scrolled');
+                    navbarSupportedContent.classList.add('header-styled');
+                    document.body.classList.remove('scrolled');
+                }
+            });
+            
+            // Initialize navbar state on page load
+            if (window.scrollY > 100) {
+                document.getElementById('mainNav').classList.add('navbar-scrolled');
+                document.body.classList.add('scrolled');
+            }
+            
+            // Smooth scrolling for anchor links (excluding dropdown toggles on mobile)
+            document.querySelectorAll('a.nav-link').forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    // Skip if this is a dropdown toggle on mobile
+                    var isMobile = window.innerWidth < 992;
+                    if (this.classList.contains('dropdown-toggle') && isMobile) {
+                        return;
+                    }
+                    if (this.hash !== "") {
+                        event.preventDefault();
+                        var hash = this.hash;
+                        
+                        // Smooth scroll to the target
+                        document.querySelector(hash).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Initialize dropdown functionality for mobile devices
+            var isMobile = false;
+            if (window.matchMedia("(max-width: 991.98px)").matches) {
+                isMobile = true;
+            }
+            
+            // Handle window resize events
+            $(window).resize(function() {
+                if (window.matchMedia("(max-width: 991.98px)").matches) {
+                    isMobile = true;
+                } else {
+                    isMobile = false;
+                    // Close any open dropdowns when switching to desktop
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+            
+            // For mobile: toggle dropdown on click
+            $('.dropdown-toggle').on('click', function(e) {
+                if (isMobile) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(this).next('.dropdown-menu').toggleClass('show');
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (isMobile && !$(e.target).closest('.dropdown').length) {
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+        });
+    </script>
+
+        <!-- Defer non-critical scripts for better performance -->
+        <script src="assets/vendor/iview/js/jquery-1.7.1.min.js" defer></script>
+        <script src="assets/vendor/iview/js/raphael-min.js" defer></script>
+        <script src="assets/vendor/iview/js/jquery.easing.js" defer></script>
+        <script src="assets/vendor/iview/js/iview.js" defer></script>
+
+		<script defer>
+			// Initialize iView slider after all resources are loaded
+			window.addEventListener('load', function() {
+				if (typeof $ !== 'undefined' && $('#iview').length > 0 && typeof $('#iview').iView === 'function') {
+					$('#iview').iView({
+						pauseTime: 7000,
+						pauseOnHover: true,
+						directionNavHoverOpacity: 0,
+						controlNav: true,
+						controlNavNextPrev: false,
+						controlNavTooltip: false,
+						timer: "360Bar",
+						timerDiameter: 30,
+						timerPadding: 0,
+						timerStroke: 4,
+						timerBarStroke: 0,
+						timerColor: "#0F0",
+						timerPosition: "bottom-right"
+					});
+					console.log('iView slider initialized successfully');
+				} else {
+					console.warn('iView slider initialization failed');
+				}
+			});
+		</script>	
+</body>
+
+</html>

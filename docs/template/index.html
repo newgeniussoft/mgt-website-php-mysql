@@ -1,19 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madagascar Green Tours</title>
-    <meta name="description" content="Madagascar Green Tours offers eco-friendly travel experiences in Madagascar with sustainable tourism practices. Explore unique wildlife, breathtaking landscapes, and authentic cultural experiences.">
-    <meta name="keywords" content="madagascar tours, eco tourism, green travel, wildlife tours, sustainable tourism, madagascar travel, lemur tours">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Madagascar Green Tours - Eco-Friendly Travel Experiences in Madagascar</title>
+    <meta name="description" content="Madagascar Green Tours offers eco-friendly travel experiences in Madagascar with sustainable tourism practices. Explore unique wildlife, breathtaking landscapes, and authentic cultural experiences with our expert local guides.">
+    <meta name="keywords" content="madagascar tours, eco tourism, green travel, wildlife tours, sustainable tourism, madagascar travel, lemur tours, baobab avenue, rainforest tours, madagascar safari, antananarivo tours">
+    <meta name="author" content="Madagascar Green Tours">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    
+    <!-- Performance optimization meta tags -->
+    <meta http-equiv="Cache-Control" content="max-age=86400">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="canonical" href="https://madagascargreentours.com/">
+    
+    <!-- Favicon and App Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://madagascargreentours.com/">
+    <meta property="og:title" content="Madagascar Green Tours - Eco-Friendly Travel Experiences">
+    <meta property="og:description" content="Discover Madagascar's unique wildlife and landscapes with our sustainable, eco-friendly tours led by expert local guides.">
+    <meta property="og:image" content="https://madagascargreentours.com/assets/img/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Madagascar Green Tours">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@MGTours">
+    <meta name="twitter:title" content="Madagascar Green Tours - Eco-Friendly Travel Experiences">
+    <meta name="twitter:description" content="Discover Madagascar's unique wildlife and landscapes with our sustainable, eco-friendly tours led by expert local guides.">
+    <meta name="twitter:image" content="https://madagascargreentours.com/assets/img/twitter-card.jpg">
+    
+    <!-- Alternate Language Links -->
+    <link rel="alternate" hreflang="en" href="https://madagascargreentours.com/">
+    <link rel="alternate" hreflang="fr" href="https://madagascargreentours.com/fr/">
+    <link rel="alternate" hreflang="es" href="https://madagascargreentours.com/es/">
+    <link rel="alternate" hreflang="x-default" href="https://madagascargreentours.com/">
+    
+    <!-- Resource hints for faster loading -->
+    <link rel="preconnect" href="https://maxcdn.bootstrapcdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://maxcdn.bootstrapcdn.com">
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="dns-prefetch" href="https://code.jquery.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://use.fontawesome.com" crossorigin>
+    <link rel="dns-prefetch" href="https://use.fontawesome.com">
+    <link rel="preload" href="assets/fonts/inter-extra-bold.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Critical CSS inline for faster rendering -->
+    <style>
+        /* Critical path CSS */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2E7D32;
+            --accent-color: #FFC107;
+            --text-color: #333;
+            --light-text: #fff;
+            --dark-bg: #1E1E1E;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            transition: all 0.3s ease;
+            background-color: transparent;
+            padding: 1rem 2rem;
+        }
+        .navbar-scrolled {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0.5rem 2rem;
+        }
+        .title-slogan {
+            position: absolute;
+            z-index: 100;
+            width: 100%;
+            top: 30%;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+    </style>
+    
+    <!-- Deferred non-critical CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- View UI CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/view-design/dist/styles/iview.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/styles.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/vendor/iview/css/skin 4/style.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/vendor/iview/css/iview.css" media="print" onload="this.media='all'">
+
+    <noscript>
+        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel="stylesheet" href="assets/vendor/iview/css/skin 4/style.css">
+        <link rel="stylesheet" href="assets/vendor/iview/css/iview.css">
+    </noscript>
     
+    <!-- JSON-LD Structured Data for Travel Agency -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        "name": "Madagascar Green Tours",
+        "url": "https://madagascargreentours.com",
+        "logo": "https://madagascargreentours.com/assets/img/logo_colored.png",
+        "description": "Eco-friendly travel experiences in Madagascar with sustainable tourism practices.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "123 Green Avenue",
+            "addressLocality": "Antananarivo",
+            "addressRegion": "Analamanga",
+            "postalCode": "101",
+            "addressCountry": "Madagascar"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "-18.8792",
+            "longitude": "47.5079"
+        },
+        "telephone": "+261-20-2222-333",
+        "email": "info@madagascargreentours.com",
+        "sameAs": [
+            "https://www.facebook.com/madagascargreentours",
+            "https://www.instagram.com/madagascargreentours",
+            "https://twitter.com/MGTours"
+        ],
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
+            ],
+            "opens": "08:00",
+            "closes": "17:00"
+        }
+    }
+    </script>
 </head>
 
 <body>
@@ -21,7 +152,7 @@
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="img/logo_colored.png" alt="MGT Travel Logo" class="navbar-logo">
+                <img src="assets/img/logo_colored.png" alt="MGT Travel Logo" class="navbar-logo" width="180" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,55 +195,66 @@
         <div class="container-fluid p-0">
             <div class="row no-gutters">
                 <div class="col-12">
-                    
+                    <div id="iview-overlay"></div> 
+                    <h1 class="text-center text-white display-2 font-inter-extra-bold title-slogan">Discover Madagascar with us</h1>
+                    <div id="iview">
+                        <!-- Optimized hero image with proper dimensions -->
+                        <div data-iview:thumbnail="assets/img/slide-01.webp" data-iview:image="assets/img/slide-01.webp" width="1920" height="1080" aria-label="Madagascar rainforest landscape">
+                            <div class="iview-caption caption1" data-x="100" data-y="300" data-transition="expandDown"></div>
+                        </div>
+                        <!-- Add additional slides with proper dimensions and lazy loading -->
+                        <div data-iview:thumbnail="assets/img/slide-03.webp" data-iview:image="assets/img/slide-03.webp" width="1920" height="1080" aria-label="Baobab trees in Madagascar">
+                            <div class="iview-caption caption2" data-x="100" data-y="300" data-transition="expandDown"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- About section -->
-    <section id="about" class="content-section">
+    <!-- About Us Section with Rich Content -->
+    <section id="about" class="py-5 content-section bg-light">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <h2>About Us</h2>
-                    <p class="lead">Notice how the navbar is now fixed to the top and has changed its appearance!</p>
-                    <p>As you scroll down the page, the navbar sticks to the top, changes its background color, and adjusts its styling to be more compact.</p>
-                    <p>This provides a better user experience as navigation remains accessible throughout the page.</p>
+                <div class="col-lg-12 text-center mb-4">
+                    <h2 class="section-heading">About Madagascar Green Tours</h2>
+                    <hr class="divider my-4" />
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Services section -->
-    <section id="services" class="content-section">
-        <div class="container">
             <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <h2>Our Services</h2>
-                    <p class="lead">The navbar remains fixed at the top as you continue scrolling.</p>
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h4 class="card-title">Service One</h4>
-                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                                </div>
-                            </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="h4 mb-3">Sustainable Tourism in Madagascar</h3>
+                            <p>At <strong>Madagascar Green Tours</strong>, we are dedicated to providing unforgettable travel experiences while preserving the unique biodiversity and cultural heritage of Madagascar. As a locally owned and operated tour company, we have deep roots in the communities we visit.</p>
+                            <p>Our eco-friendly approach ensures that your adventure has a positive impact on both the environment and local communities. We work closely with conservation organizations and employ local guides who are passionate about sharing their knowledge and protecting their homeland.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-leaf text-success mr-2"></i> Eco-friendly accommodations</li>
+                                <li><i class="fas fa-users text-success mr-2"></i> Support for local communities</li>
+                                <li><i class="fas fa-seedling text-success mr-2"></i> Conservation initiatives</li>
+                                <li><i class="fas fa-hand-holding-heart text-success mr-2"></i> Responsible wildlife viewing</li>
+                            </ul>
                         </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h4 class="card-title">Service Two</h4>
-                                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <img src="assets/img/about-lemur.webp" class="card-img-top" alt="Ring-tailed lemur in Madagascar" width="600" height="400" loading="lazy">
+                        <div class="card-body">
+                            <h3 class="h4 mb-3">Why Choose Us?</h3>
+                            <p>With over 15 years of experience, our team of expert guides will take you off the beaten path to discover the true essence of Madagascar. From the iconic Avenue of the Baobabs to the lush rainforests of Andasibe, we offer customized itineraries that cater to your interests and preferences.</p>
+                            <div class="d-flex justify-content-between mt-4">
+                                <div class="text-center px-2">
+                                    <div class="h1 text-success"><i class="fas fa-globe-africa"></i></div>
+                                    <p class="mb-0"><strong>Local Expertise</strong></p>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h4 class="card-title">Service Three</h4>
-                                    <p class="card-text">This is a shorter card with supporting text below as a natural lead-in to additional content.</p>
+                                <div class="text-center px-2">
+                                    <div class="h1 text-success"><i class="fas fa-shield-alt"></i></div>
+                                    <p class="mb-0"><strong>Safe Travel</strong></p>
+                                </div>
+                                <div class="text-center px-2">
+                                    <div class="h1 text-success"><i class="fas fa-star"></i></div>
+                                    <p class="mb-0"><strong>5-Star Service</strong></p>
                                 </div>
                             </div>
                         </div>
@@ -122,78 +264,387 @@
         </div>
     </section>
     
-    <!-- Contact section -->
-    <section id="contact" class="content-section">
+
+    <!-- Featured Tours Section -->
+    <section id="our_tours" class="py-5 content-section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h2>Contact Us</h2>
-                    <p class="lead">The navbar animation enhances user experience throughout the entire page.</p>
-                    <p>This is the last section of our page. The navbar remains fixed at the top for easy navigation.</p>
-                    <a href="#home" class="btn btn-primary mt-3">Back to Top</a>
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-heading">Our Popular Tours</h2>
+                    <p class="lead">Explore our most popular Madagascar adventures</p>
+                    <hr class="divider my-4" />
+                </div>
+            </div>
+            <div class="row">
+                <!-- Tour 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="card tour-card h-100 border-0 shadow-sm">
+                        <img src="assets/img/tour-rainforest.webp" class="card-img-top" alt="Madagascar Rainforest Tour" width="400" height="300" loading="lazy">
+                        <div class="card-body">
+                            <span class="badge badge-success mb-2">Most Popular</span>
+                            <h3 class="h5 card-title">Rainforest Adventure</h3>
+                            <p class="card-text">Explore the lush rainforests of eastern Madagascar, home to countless species of lemurs, chameleons, and rare birds. Visit Andasibe-Mantadia National Park and experience the unique biodiversity.</p>
+                            <div class="tour-features mb-3">
+                                <span><i class="far fa-clock mr-1"></i> 7 days</span>
+                                <span><i class="fas fa-user-friends mr-1"></i> Max 8 people</span>
+                                <span><i class="fas fa-star mr-1"></i> 4.9/5</span>
+                            </div>
+                            <a href="#" class="btn btn-outline-success btn-sm">View Details</a>
+                        </div>
+                    </article>
+                </div>
+                <!-- Tour 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="card tour-card h-100 border-0 shadow-sm">
+                        <img src="assets/img/tour-baobab.webp" class="card-img-top" alt="Avenue of the Baobabs Tour" width="400" height="300" loading="lazy">
+                        <div class="card-body">
+                            <span class="badge badge-info mb-2">Featured</span>
+                            <h3 class="h5 card-title">Baobab & West Coast</h3>
+                            <p class="card-text">Witness the iconic Avenue of the Baobabs at sunset and explore Madagascar's stunning western coastline. Visit Kirindy Reserve and the Tsingy de Bemaraha National Park.</p>
+                            <div class="tour-features mb-3">
+                                <span><i class="far fa-clock mr-1"></i> 10 days</span>
+                                <span><i class="fas fa-user-friends mr-1"></i> Max 6 people</span>
+                                <span><i class="fas fa-star mr-1"></i> 4.8/5</span>
+                            </div>
+                            <a href="#" class="btn btn-outline-success btn-sm">View Details</a>
+                        </div>
+                    </article>
+                </div>
+                <!-- Tour 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="card tour-card h-100 border-0 shadow-sm">
+                        <img src="assets/img/tour-culture.webp" class="card-img-top" alt="Madagascar Cultural Tour" width="400" height="300" loading="lazy">
+                        <div class="card-body">
+                            <span class="badge badge-warning mb-2">Cultural</span>
+                            <h3 class="h5 card-title">Cultural Immersion</h3>
+                            <p class="card-text">Experience the rich cultural heritage of Madagascar with visits to traditional villages, artisan workshops, and local markets. Learn about the island's unique Malagasy traditions.</p>
+                            <div class="tour-features mb-3">
+                                <span><i class="far fa-clock mr-1"></i> 8 days</span>
+                                <span><i class="fas fa-user-friends mr-1"></i> Max 10 people</span>
+                                <span><i class="fas fa-star mr-1"></i> 4.7/5</span>
+                            </div>
+                            <a href="#" class="btn btn-outline-success btn-sm">View Details</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <a href="#" class="btn btn-success">View All Tours</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="reviews" class="py-5 content-section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-heading">What Our Travelers Say</h2>
+                    <hr class="divider my-4" />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="testimonial-carousel">
+                        <!-- Testimonial 1 -->
+                        <div class="testimonial-item text-center p-4">
+                            <div class="testimonial-img mb-3">
+                                <img src="assets/img/testimonial-1.webp" alt="Sarah Johnson" class="rounded-circle" width="80" height="80" loading="lazy">
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-stars mb-2">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">"Our rainforest tour with Madagascar Green Tours exceeded all expectations. The guides were knowledgeable and passionate, and we saw more wildlife than we ever imagined possible. A truly unforgettable experience!"</p>
+                                    <footer class="blockquote-footer mt-2">Sarah Johnson <cite title="Source">from United States</cite></footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section with Structured Data -->
+    <section id="faq" class="py-5 content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-heading">Frequently Asked Questions</h2>
+                    <hr class="divider my-4" />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <!-- FAQ Item 1 -->
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-header bg-white" id="headingOne">
+                                <h3 class="mb-0 h5">
+                                    <button class="btn btn-link text-success" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        When is the best time to visit Madagascar?
+                                    </button>
+                                </h3>
+                            </div>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    The best time to visit Madagascar is during the dry season from April to October. This period offers pleasant temperatures and minimal rainfall, making it ideal for wildlife viewing and outdoor activities. The months of July and August are peak tourist season, so consider May, June, September, or October for fewer crowds but still excellent weather conditions.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FAQ Item 2 -->
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-header bg-white" id="headingTwo">
+                                <h3 class="mb-0 h5">
+                                    <button class="btn btn-link text-success collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Do I need a visa to visit Madagascar?
+                                    </button>
+                                </h3>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    Yes, most visitors need a visa to enter Madagascar. Tourist visas can be obtained upon arrival at international airports for stays up to 90 days. You'll need a valid passport with at least 6 months validity, a return ticket, and the visa fee (approximately €35). For the most current information, we recommend checking with your local Malagasy embassy or consulate before traveling.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FAQ Item 3 -->
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-header bg-white" id="headingThree">
+                                <h3 class="mb-0 h5">
+                                    <button class="btn btn-link text-success collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        What wildlife can I expect to see in Madagascar?
+                                    </button>
+                                </h3>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    Madagascar is home to an incredible array of unique wildlife. You can expect to see various species of lemurs (including the iconic ring-tailed lemur), chameleons, geckos, and over 100 species of birds found nowhere else on Earth. The island is also known for its unique baobab trees and diverse plant life. About 90% of Madagascar's wildlife is endemic, meaning it can't be found anywhere else in the world.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FAQ Structured Data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [{
+                "@type": "Question",
+                "name": "When is the best time to visit Madagascar?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The best time to visit Madagascar is during the dry season from April to October. This period offers pleasant temperatures and minimal rainfall, making it ideal for wildlife viewing and outdoor activities. The months of July and August are peak tourist season, so consider May, June, September, or October for fewer crowds but still excellent weather conditions."
+                }
+            }, {
+                "@type": "Question",
+                "name": "Do I need a visa to visit Madagascar?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, most visitors need a visa to enter Madagascar. Tourist visas can be obtained upon arrival at international airports for stays up to 90 days. You'll need a valid passport with at least 6 months validity, a return ticket, and the visa fee (approximately €35). For the most current information, we recommend checking with your local Malagasy embassy or consulate before traveling."
+                }
+            }, {
+                "@type": "Question",
+                "name": "What wildlife can I expect to see in Madagascar?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Madagascar is home to an incredible array of unique wildlife. You can expect to see various species of lemurs (including the iconic ring-tailed lemur), chameleons, geckos, and over 100 species of birds found nowhere else on Earth. The island is also known for its unique baobab trees and diverse plant life. About 90% of Madagascar's wildlife is endemic, meaning it can't be found anywhere else in the world."
+                }
+            }]
+        }
+        </script>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 content-section bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-heading">Contact Us</h2>
+                    <hr class="divider my-4 bg-light" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="contact-info">
+                        <h3 class="h4 mb-4">Get in Touch</h3>
+                        <p>Ready to start planning your Madagascar adventure? Contact our team of travel experts today!</p>
+                        <ul class="list-unstyled contact-list">
+                            <li class="mb-3"><i class="fas fa-map-marker-alt mr-2 text-success"></i> 123 Green Avenue, Antananarivo, Madagascar</li>
+                            <li class="mb-3"><i class="fas fa-phone mr-2 text-success"></i> +261-20-2222-333</li>
+                            <li class="mb-3"><i class="fas fa-envelope mr-2 text-success"></i> info@madagascargreentours.com</li>
+                            <li class="mb-3"><i class="fas fa-clock mr-2 text-success"></i> Monday-Friday: 8:00 AM - 5:00 PM</li>
+                        </ul>
+                        <div class="social-icons mt-4">
+                            <a href="#" class="text-white mr-3"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-white mr-3"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-white mr-3"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-white"><i class="fab fa-tripadvisor"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <form id="contactForm" class="contact-form">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="name">Your Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="subject">Subject</label>
+                            <input type="text" class="form-control" id="subject" placeholder="Enter subject">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="message">Message</label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="Enter your message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <img src="assets/img/logo_white.png" alt="Madagascar Green Tours Logo" class="footer-logo mb-3" width="180" height="50">
+                    <p>Sustainable eco-tourism in Madagascar since 2008. Discover the unique biodiversity and culture of Madagascar with our expert local guides.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home" class="text-white-50">Home</a></li>
+                        <li class="mb-2"><a href="#about" class="text-white-50">About Us</a></li>
+                        <li class="mb-2"><a href="#our_tours" class="text-white-50">Our Tours</a></li>
+                        <li class="mb-2"><a href="#reviews" class="text-white-50">Reviews</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white-50">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Popular Tours</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50">Rainforest Adventure</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Baobab & West Coast</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Cultural Immersion</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Wildlife Safari</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Island Hopping</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <h5 class="text-uppercase mb-4">Newsletter</h5>
+                    <p>Subscribe to our newsletter for travel tips and exclusive offers</p>
+                    <form class="mb-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email" aria-label="Your email" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-success" type="button" id="button-addon2">Sign Up</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="payment-methods">
+                        <span class="mr-2"><i class="fab fa-cc-visa"></i></span>
+                        <span class="mr-2"><i class="fab fa-cc-mastercard"></i></span>
+                        <span class="mr-2"><i class="fab fa-cc-paypal"></i></span>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-left">
+                    <p class="mb-0">&copy; 2025 Madagascar Green Tours. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-right">
+                    <a href="#" class="text-white-50 mx-2">Privacy Policy</a>
+                    <a href="#" class="text-white-50 mx-2">Terms of Service</a>
+                    <a href="#" class="text-white-50 mx-2">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous" defer></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous" defer></script>
         
         
-    <script>
-        $(document).ready(function () {
+    <!-- Optimized JavaScript with defer attribute -->
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
             // Toggle fadeIn class for navbar collapse
-            $('.navbar-toggler').click(function () {
-                $('.navbar-collapse').toggleClass('fadeIn');
+            document.querySelector('.navbar-toggler').addEventListener('click', function() {
+                document.querySelector('.navbar-collapse').classList.toggle('fadeIn');
             });
             
             // Navbar scroll animation
-            $(window).scroll(function() {
-                var scroll = $(window).scrollTop();
-                var navbar = $('#mainNav');
-                var navbarSupportedContent = $("#navbarSupportedContent ul");
+            window.addEventListener('scroll', function() {
+                var scroll = window.scrollY;
+                var navbar = document.getElementById('mainNav');
+                var navbarSupportedContent = document.querySelector("#navbarSupportedContent ul");
                 
                 // Add/remove classes based on scroll position
                 if (scroll > 80) { // Increased threshold for the transition
-                    navbar.addClass('navbar-scrolled');
-                    $('body').addClass('scrolled');
-                    navbarSupportedContent.removeClass('header-styled');
+                    navbar.classList.add('navbar-scrolled');
+                    document.body.classList.add('scrolled');
+                    navbarSupportedContent.classList.remove('header-styled');
                 } else {
-                    navbar.removeClass('navbar-scrolled');
-                    navbarSupportedContent.addClass('header-styled');
-                    $('body').removeClass('scrolled');
+                    navbar.classList.remove('navbar-scrolled');
+                    navbarSupportedContent.classList.add('header-styled');
+                    document.body.classList.remove('scrolled');
                 }
             });
             
             // Initialize navbar state on page load
-            if ($(window).scrollTop() > 100) {
-                $('#mainNav').addClass('navbar-scrolled');
-                $('body').addClass('scrolled');
+            if (window.scrollY > 100) {
+                document.getElementById('mainNav').classList.add('navbar-scrolled');
+                document.body.classList.add('scrolled');
             }
             
             // Smooth scrolling for anchor links (excluding dropdown toggles on mobile)
-            $('a.nav-link').click(function(event) {
-                // Skip if this is a dropdown toggle on mobile
-                if ($(this).hasClass('dropdown-toggle') && isMobile) {
-                    return;
-                }
-                if (this.hash !== "") {
-                    event.preventDefault();
-                    var hash = this.hash;
-                    
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top
-                    }, 800, function(){
-                        window.location.hash = hash;
-                    });
-                }
+            document.querySelectorAll('a.nav-link').forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    // Skip if this is a dropdown toggle on mobile
+                    var isMobile = window.innerWidth < 992;
+                    if (this.classList.contains('dropdown-toggle') && isMobile) {
+                        return;
+                    }
+                    if (this.hash !== "") {
+                        event.preventDefault();
+                        var hash = this.hash;
+                        
+                        // Smooth scroll to the target
+                        document.querySelector(hash).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
             
             // Initialize dropdown functionality for mobile devices
@@ -230,6 +681,38 @@
             });
         });
     </script>
+
+        <!-- Defer non-critical scripts for better performance -->
+        <script src="assets/vendor/iview/js/jquery-1.7.1.min.js" defer></script>
+        <script src="assets/vendor/iview/js/raphael-min.js" defer></script>
+        <script src="assets/vendor/iview/js/jquery.easing.js" defer></script>
+        <script src="assets/vendor/iview/js/iview.js" defer></script>
+
+		<script defer>
+			// Initialize iView slider after all resources are loaded
+			window.addEventListener('load', function() {
+				if (typeof $ !== 'undefined' && $('#iview').length > 0 && typeof $('#iview').iView === 'function') {
+					$('#iview').iView({
+						pauseTime: 7000,
+						pauseOnHover: true,
+						directionNavHoverOpacity: 0,
+						controlNav: true,
+						controlNavNextPrev: false,
+						controlNavTooltip: false,
+						timer: "360Bar",
+						timerDiameter: 30,
+						timerPadding: 0,
+						timerStroke: 4,
+						timerBarStroke: 0,
+						timerColor: "#0F0",
+						timerPosition: "bottom-right"
+					});
+					console.log('iView slider initialized successfully');
+				} else {
+					console.warn('iView slider initialization failed');
+				}
+			});
+		</script>	
 </body>
 
 </html>
