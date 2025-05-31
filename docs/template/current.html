@@ -43,25 +43,29 @@
     <link rel="alternate" hreflang="es" href="https://madagascar-green-tours.ct.ws/docs/template/es/">
     <link rel="alternate" hreflang="x-default" href="https://madagascar-green-tours.ct.ws/docs/template/">
     
-    <!-- Resource hints for faster loading - optimized -->
+    <!-- Resource hints for faster loading -->
     <link rel="preconnect" href="https://maxcdn.bootstrapcdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://maxcdn.bootstrapcdn.com">
     <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="dns-prefetch" href="https://code.jquery.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://use.fontawesome.com" crossorigin>
-    <link rel="preload" href="assets/fonts/InterExtraBold.ttf" as="font" type="font/ttf" crossorigin fetchpriority="high">
-    
-    <!-- Critical CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="dns-prefetch" href="https://use.fontawesome.com">
+    <link rel="preload" href="assets/fonts/InterExtraBold.ttf" as="font" type="font/ttf" crossorigin>
     
     <!-- Deferred non-critical CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"
-        media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 
-        media="print" onload="this.media='all'" fetchpriority="low">
-    
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/styles.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/vendor/iview/css/skin 4/style.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/vendor/iview/css/iview.css" media="print" onload="this.media='all'">
+
     <noscript>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel="stylesheet" href="assets/vendor/iview/css/skin 4/style.css">
+        <link rel="stylesheet" href="assets/vendor/iview/css/iview.css">
     </noscript>
     
     <!-- JSON-LD Structured Data for Travel Agency -->
@@ -110,7 +114,7 @@
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="assets/img/logo_colored.png" alt="MGT Travel Logo" class="navbar-logo" width="180" height="60" fetchpriority="high">
+                <img src="assets/img/logo_colored.png" alt="MGT Travel Logo" class="navbar-logo" width="180" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,25 +151,26 @@
             </div>
         </div>
     </nav>
+    
         <!-- Hero section with View UI Carousel -->
-        <section id="home" class="content-section">
+        <!---section id="home" class="content-section">
             <div class="container-fluid p-0">
                 <div class="row no-gutters">
                     <div class="col-12">
                         <div id="iview-overlay"></div> 
                         <h1 class="text-center text-white display-2 font-inter-extra-bold title-slogan">Discover Madagascar with us</h1>
                         <div id="iview">
-                            <div data-iview:thumbnail="assets/img/slide-01.webp" data-iview:image="assets/img/slide-01.webp" width="1920" height="1080" aria-label="Madagascar rainforest landscape" loading="lazy">
+                            <div data-iview:thumbnail="assets/img/slide-01.webp" data-iview:image="assets/img/slide-01.webp" width="1920" height="1080" aria-label="Madagascar rainforest landscape">
                                 <div class="iview-caption caption1" data-x="100" data-y="300" data-transition="expandDown"></div>
                             </div>
-                            <div data-iview:thumbnail="assets/img/slide-03.webp" data-iview:image="assets/img/slide-03.webp" width="1920" height="1080" aria-label="Baobab trees in Madagascar" loading="lazy">
+                            <div data-iview:thumbnail="assets/img/slide-03.webp" data-iview:image="assets/img/slide-03.webp" width="1920" height="1080" aria-label="Baobab trees in Madagascar">
                                 <div class="iview-caption caption2" data-x="100" data-y="300" data-transition="expandDown"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </section-->
          <!-- About Us Section with Rich Content -->
          <section id="about" class="py-5 content-section bg-light">
             <div class="container">
@@ -217,37 +222,33 @@
             </div>
         </section>
 
-    <!-- Single jQuery source with defer -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
-        crossorigin="anonymous" defer fetchpriority="low"></script>
-    
-    <!-- Bootstrap JS with defer -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" 
-        crossorigin="anonymous" defer fetchpriority="low"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous" defer></script>
+        
+        
     <!-- Optimized JavaScript with defer attribute -->
     <script defer>
         document.addEventListener('DOMContentLoaded', function() {
             // Toggle fadeIn class for navbar collapse
-            const navbarToggler = document.querySelector('.navbar-toggler');
-            if (navbarToggler) {
-                navbarToggler.addEventListener('click', function() {
-                    document.querySelector('.navbar-collapse').classList.toggle('fadeIn');
-                });
-            }
+            document.querySelector('.navbar-toggler').addEventListener('click', function() {
+                document.querySelector('.navbar-collapse').classList.toggle('fadeIn');
+            });
             
             // Navbar scroll animation
-            function handleScroll() {
-                const scroll = window.scrollY;
-                const navbar = document.getElementById('mainNav');
-                const navbarSupportedContent = document.querySelector("#navbarSupportedContent ul");
-                
-                if (!navbar || !navbarSupportedContent) return;
+            window.addEventListener('scroll', function() {
+                var scroll = window.scrollY;
+                var navbar = document.getElementById('mainNav');
+                var navbarSupportedContent = document.querySelector("#navbarSupportedContent ul");
                 
                 // Add/remove classes based on scroll position
-                if (scroll > 80) {
+                if (scroll > 80) { // Increased threshold for the transition
                     navbar.classList.add('navbar-scrolled');
                     document.body.classList.add('scrolled');
                     navbarSupportedContent.classList.remove('header-styled');
@@ -256,58 +257,100 @@
                     navbarSupportedContent.classList.add('header-styled');
                     document.body.classList.remove('scrolled');
                 }
-            }
-            
-            // Use passive event listener for better performance
-            window.addEventListener('scroll', handleScroll, {passive: true});
+            });
             
             // Initialize navbar state on page load
-            handleScroll();
+            if (window.scrollY > 100) {
+                document.getElementById('mainNav').classList.add('navbar-scrolled');
+                document.body.classList.add('scrolled');
+            }
             
-            // Smooth scrolling for anchor links
+            // Smooth scrolling for anchor links (excluding dropdown toggles on mobile)
             document.querySelectorAll('a.nav-link').forEach(function(link) {
                 link.addEventListener('click', function(event) {
-                    if (this.hash && this.hash !== "") {
-                        const targetElement = document.querySelector(this.hash);
-                        if (targetElement) {
-                            // Skip if this is a dropdown toggle on mobile
-                            if (window.innerWidth < 992 && this.classList.contains('dropdown-toggle')) {
-                                return;
-                            }
-                            
-                            event.preventDefault();
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth'
-                            });
-                        }
+                    // Skip if this is a dropdown toggle on mobile
+                    var isMobile = window.innerWidth < 992;
+                    if (this.classList.contains('dropdown-toggle') && isMobile) {
+                        return;
+                    }
+                    if (this.hash !== "") {
+                        event.preventDefault();
+                        var hash = this.hash;
+                        
+                        // Smooth scroll to the target
+                        document.querySelector(hash).scrollIntoView({
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
             
-            // Initialize iView slider when jQuery is ready
-            window.addEventListener('load', function() {
-                if (window.jQuery && $('#iview').length > 0) {
-                    $.getScript('assets/vendor/iview/js/iview.min.js', function() {
-                        $('#iview').iView({
-                            pauseTime: 7000,
-                            pauseOnHover: true,
-                            directionNavHoverOpacity: 0,
-                            controlNav: true,
-                            controlNavNextPrev: false,
-                            controlNavTooltip: false,
-                            timer: "360Bar",
-                            timerDiameter: 30,
-                            timerPadding: 0,
-                            timerStroke: 4,
-                            timerBarStroke: 0,
-                            timerColor: "#0F0",
-                            timerPosition: "bottom-right"
-                        });
-                    });
+            // Initialize dropdown functionality for mobile devices
+            var isMobile = false;
+            if (window.matchMedia("(max-width: 991.98px)").matches) {
+                isMobile = true;
+            }
+            
+            // Handle window resize events
+            $(window).resize(function() {
+                if (window.matchMedia("(max-width: 991.98px)").matches) {
+                    isMobile = true;
+                } else {
+                    isMobile = false;
+                    // Close any open dropdowns when switching to desktop
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+            
+            // For mobile: toggle dropdown on click
+            $('.dropdown-toggle').on('click', function(e) {
+                if (isMobile) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(this).next('.dropdown-menu').toggleClass('show');
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (isMobile && !$(e.target).closest('.dropdown').length) {
+                    $('.dropdown-menu').removeClass('show');
                 }
             });
         });
-    </script>	
+    </script>
+
+        <!-- Defer non-critical scripts for better performance -->
+        <script src="assets/vendor/iview/js/jquery-1.7.1.min.js" defer></script>
+        <script src="assets/vendor/iview/js/raphael-min.js" defer></script>
+        <script src="assets/vendor/iview/js/jquery.easing.js" defer></script>
+        <script src="assets/vendor/iview/js/iview.js" defer></script>
+
+		<script defer>
+			// Initialize iView slider after all resources are loaded
+			window.addEventListener('load', function() {
+				if (typeof $ !== 'undefined' && $('#iview').length > 0 && typeof $('#iview').iView === 'function') {
+					$('#iview').iView({
+						pauseTime: 7000,
+						pauseOnHover: true,
+						directionNavHoverOpacity: 0,
+						controlNav: true,
+						controlNavNextPrev: false,
+						controlNavTooltip: false,
+						timer: "360Bar",
+						timerDiameter: 30,
+						timerPadding: 0,
+						timerStroke: 4,
+						timerBarStroke: 0,
+						timerColor: "#0F0",
+						timerPosition: "bottom-right"
+					});
+					console.log('iView slider initialized successfully');
+				} else {
+					console.warn('iView slider initialization failed');
+				}
+			});
+		</script>	
 </body>
 
 </html>
