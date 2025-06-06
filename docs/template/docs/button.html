@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap");
+
+.btn__styled {
+  font-size:12pt;
+  background-color:#154633;
+  padding: 14px;
+  padding-right: 0px;
+  align-items:center;
+  border-radius:99px;
+  position:relative;
+  transition: all .5s cubic-bezier(.77,0,.175,1);
+  text-decoration: none;
+  font-family: Montserrat;
+  
+  .text{
+    color:#fff;
+    line-height:1;
+    position:relative;
+    text-decoration: none;
+    z-index:5;
+    margin-right:32px;
+  }
+  
+  svg{
+    display:inline-block;
+    position:relative;
+    top: 3px;
+    right: 10px;
+    z-index:5;
+    transform: rotate(0deg) translateX(0);
+    transform-origin: left;
+    transition: all .5s cubic-bezier(.77,0,.175,1);
+  }
+  
+  &::before{
+    content:'';
+    background-color:#95C11F;
+    width:32px;
+    height:32px;
+    position:absolute;
+    z-index:1;
+    border-radius:99px;
+    top:50%;
+    right:6px;
+    transform:translateY(-50%);
+    transition: all .5s cubic-bezier(.77,0,.175,1);
+  }
+  
+  &.light{
+    background-color: #95C11F;
+    
+    &::before{
+      background-color: #154633;
+    }
+    
+  }
+}
+
+.btn__styled:hover{
+  
+  svg{
+    transform: rotate(45deg) translateX(-8px);
+  }
+  
+  &::before{
+    content:'';
+    width:100%;
+    height:100%;
+    right:0;
+  }
+}
+    </style>
+</head>
+<body>
+          <a class="btn__styled" href="#">
+            <span class="text">Show more</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.66669 11.3334L11.3334 4.66669" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.66669 4.66669H11.3334V11.3334" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          
+          <a class="btn__styled light" href="#">
+            <span class="text">I'm a lovely button</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.66669 11.3334L11.3334 4.66669" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.66669 4.66669H11.3334V11.3334" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          
+</body>
+</html>
