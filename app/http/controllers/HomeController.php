@@ -5,21 +5,13 @@
     class HomeController extends Controller
     {
         /**
-         * Current language code
-         *
-         * @var string|null
-         */
-        private $language = null;
-        
-        /**
          * Constructor
          *
          * @param string|null $language Language code
          */
         public function __construct($language = null)
         {
-            parent::__construct();
-            $this->language = $language;
+            parent::__construct($language);
         }
         
         /**
@@ -34,12 +26,13 @@
             if ($language !== null) {
                 $this->language = $language;
             }
-            
+                
             // SEO metadata for homepage
             $languagePrefix = $this->language === 'es' ? ' - Español' : '';
             
             echo $this->view('pages.index', [
                 'language' => $this->language,
+                'tours' => $this->tours,
                 'currentPage' => 'home',
                 'metaTitle' => 'Madagascar Green Tours - Eco-Friendly Travel Experience' . $languagePrefix,
                 'metaDescription' => 'Madagascar Green Tours offers eco-friendly travel experiences in Madagascar with sustainable tourism practices. Explore unique wildlife, breathtaking landscapes, and authentic cultural experiences.',
@@ -64,7 +57,7 @@
             // SEO metadata for about page
             $languagePrefix = $this->language === 'es' ? ' - Español' : '';
             
-            echo $this->view('pages.about', [
+            echo $this->view('pages.blank', [
                 'language' => $this->language,
                 'currentPage' => 'about',
                 'metaTitle' => 'About Madagascar Green Tours - Sustainable Tourism' . $languagePrefix,
@@ -101,7 +94,6 @@
                 'lastUpdated' => '2025-05-11T16:56:51+03:00'
             ]);
         }
-        
         /**
          * Get URL with language prefix
          *

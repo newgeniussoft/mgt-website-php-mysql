@@ -1,21 +1,58 @@
-<header class="site-header">
+@import('app/utils/helpers/helper.php')
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container">
-            <a href="{{ $_ENV['APP_URL'] }}" class="site-logo">
-                <img src="{{ assets('img/logo/logo_new_updated.png') }}" alt="Madagascar Green Tours Logo" width="180" height="40">
+            <a class="navbar-brand" href="{{ route('') }}">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="{{ assets('img/logos/logo_120.webp') }}" type="image/webp"
+                        width="120" height="42">
+                    <source media="(min-width: 769px)" srcset="{{ assets('img/logos/logo_220.webp') }}" type="image/webp"
+                        width="220" height="77">
+                    <img src="{{ assets('img/logos/logo_180.webp') }}" alt="MGT Travel Logo" class="navbar-logo" width="180"
+                        height="63" fetchpriority="high">
+                </picture>
             </a>
-            
-            <nav class="site-nav" aria-label="Main Navigation">
-                <ul>
-                    <li><a href="{{ $_ENV['APP_URL'] }}" {{ $currentPage == 'home' ? 'aria-current="page"' : '' }}>Home</a></li>
-                    <li><a href="{{ $_ENV['APP_URL'] }}/about" {{ $currentPage == 'about' ? 'aria-current="page"' : '' }}>About</a></li>
-                    <li><a href="{{ $_ENV['APP_URL'] }}/" {{ $currentPage == '' ? 'aria-current="page"' : '' }}>SEO Guide</a></li>
-                    <li>
-                        <a href="{{ $language == 'es' ? $_ENV['APP_URL'] : $_ENV['APP_URL'] . '/es' . ($_SERVER['REQUEST_URI'] != '/' ? $_SERVER['REQUEST_URI'] : '') }}">
-                            <img src="{{ assets('img/flags/' . ($language == 'es' ? 'uk' : 'spain') . '.png') }}" alt="{{ $language == 'es' ? 'English' : 'Español' }}" width="20">
-                            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav header-styled">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('') }}">{{ trans('menu.home') }} <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{{ route('tours') }}" id="toursDropdown" role="button"
+                             aria-haspopup="true" aria-expanded="true">
+                            {{ trans('menu.our-tours') }}
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="toursDropdown">
+                            <?php foreach($tours as $tour):?>
+                            <a class="dropdown-item" href="{{ route('tours/'.$tour->path) }}">{{ $tour->name }}</a>
+                            <?php endforeach?>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('about') }}">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('reviews') }}">{{ trans('menu.reviews') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('blogs') }}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('contact') }}">{{ trans('menu.contact-us') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link flag" href="{{ switchTo('en') }}"><img src="{{ assets('img/logos/uk.png') }}"
+                                alt="United Kingdom flag" width="22" height="22" /></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link flag" href="{{ switchTo('es') }}"><img src="{{ assets('img/logos/spain.png') }}" alt="Spain flag"
+                                width="22" height="22" /></a>
                     </li>
                 </ul>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>

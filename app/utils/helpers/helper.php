@@ -248,7 +248,11 @@
     if (!function_exists('currentPage')) {
         function currentPage() {
             $urlParts = explode('%2F', currentLink());
-            return end($urlParts);
+            if (end($urlParts) == "es") {
+                return "";
+            } else {
+                return end($urlParts);
+            }
         }
     }
     

@@ -26,7 +26,7 @@ class TemplateEngine {
         });
 
         // Loop directives
-        $this->directive('foreach', function ($expression) {
+       $this->directive('foreach', function ($expression) {
             return "<?php foreach ($expression): ?>";
         });
 

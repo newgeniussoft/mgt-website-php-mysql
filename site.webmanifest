@@ -1,19 +1,75 @@
 {
   "name": "Madagascar Green Tours",
   "short_name": "MGT",
+  "description": "Eco-friendly travel experiences in Madagascar with sustainable tourism practices",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4CAF50",
+  "orientation": "portrait-primary",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["travel", "tourism", "eco-tourism"],
+  "scope": "/",
   "icons": [
     {
-      "src": "/assets/img/logo/android-chrome-192x192.png",
-      "sizes": "192x192",
+      "src": "assets/img/favicon-16x16.png",
+      "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "/assets/img/logo/android-chrome-512x512.png",
-      "sizes": "512x512",
+      "src": "assets/img/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/apple-touch-icon.png",
+      "sizes": "140x140",
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  "shortcuts": [
+    {
+      "name": "Our Tours",
+      "short_name": "Tours",
+      "description": "View our popular Madagascar tours",
+      "url": "/#our_tours",
+      "icons": [{ "src": "assets/img/tour-icon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Get in touch with our team",
+      "url": "/#contact",
+      "icons": [{ "src": "assets/img/contact-icon.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "screenshots": [
+    {
+      "src": "assets/img/screenshot1.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "platform": "wide",
+      "label": "Madagascar Green Tours Homepage"
+    },
+    {
+      "src": "assets/img/screenshot2.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "platform": "wide",
+      "label": "Our Popular Tours"
+    }
+  ],
+  "iarc_rating_id": "",
+  "share_target": {
+    "action": "/share-target/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }

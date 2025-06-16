@@ -10,7 +10,7 @@ require_once __DIR__ . '/app/http/controllers/AdminController.php';
 class Router {
     private $mainController;
     private $adminController;
-    private $supportedPages = ['about', 'seo_test'];
+    private $supportedPages = ['about', 'seo_test', 'tours'];
     private $adminPages = ['dashboard', 'users', 'settings', 'login', 'logout'];
     private $supportedLanguages = ['es'];
     

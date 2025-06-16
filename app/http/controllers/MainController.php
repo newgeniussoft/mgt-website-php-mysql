@@ -2,15 +2,18 @@
 require_once 'Controller.php';
 require 'HomeController.php';
 require 'AdminController.php';
+require 'TourController.php';
 
 class MainController extends Controller
 {
     private $homeController;
     private $adminController;
+    private $tourController;
 
     public function __construct() {
         $this->homeController = new HomeController();
         $this->adminController = new AdminController();
+        $this->tourController = new TourController();
     }
 
     /**
@@ -33,6 +36,15 @@ class MainController extends Controller
     public function about($language = null)
     {
         return $this->homeController->about($language);
+    }
+
+    public function tours($language = null)
+    {$currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $pathParts = explode('/', trim($currentPath, '/'));
+        if (count($pathParts) == 2) {
+            return $this->tourController->show($language, $pathParts[1]);
+        }
+        return $this->tourController->all($language);
     }
 
     public function access()
