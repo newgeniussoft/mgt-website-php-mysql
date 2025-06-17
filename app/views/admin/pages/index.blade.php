@@ -1,7 +1,13 @@
-@extends('admin.dashboard')
-@section('content')
-<h1>Pages</h1>
-<a href="/access/pages/create" class="btn btn-primary">Create New Page</a>
+@include(admin.partials.head)
+@include(admin.partials.sidebar)
+<div class="content">
+    <div class="content-header d-flex justify-content-between align-items-center">
+        <h1>Pages</h1>
+            <div>
+                <span class="text-muted">Today: {{ date('F j, Y') }}</span>
+            </div>
+        </div>
+        <a href="/access/pages/create" class="btn btn-primary">Create New Page</a>
 <table class="table table-striped mt-3">
     <thead>
         <tr>
@@ -27,4 +33,7 @@
         @endforeach
     </tbody>
 </table>
-@endsection
+</div>
+
+@include(admin.partials.footer)
+

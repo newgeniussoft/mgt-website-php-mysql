@@ -9,11 +9,9 @@ $language = isset($language) ? $language : 'en';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Madagascar Green Tours - Eco-Friendly Travel Experiences in Madagascar</title>
-    <meta name="description"
-        content="Madagascar Green Tours offers eco-friendly travel experiences in Madagascar with sustainable tourism practices. Explore unique wildlife, breathtaking landscapes, and authentic cultural experiences with our expert local guides.">
-    <meta name="keywords"
-        content="madagascar tours, eco tourism, green travel, wildlife tours, sustainable tourism, madagascar travel, lemur tours, baobab avenue, rainforest tours, madagascar safari, antananarivo tours">
+    <title>{{ $page['meta_title']}}</title>
+    <meta name="description" content="{{ $language == 'es' ? $page['meta_description_es'] : $page['meta_description'] }}">
+    <meta name="keywords" content="{{ $language == 'es' ? $page['meta_keywords_es'] : $page['meta_keywords'] }}">
     <meta name="author" content="Madagascar Green Tours">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -31,10 +29,9 @@ $language = isset($language) ? $language : 'en';
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ route(currentPage()) }}">
-    <meta property="og:title" content="Madagascar Green Tours - Eco-Friendly Travel Experiences">
-    <meta property="og:description"
-        content="Discover Madagascar's unique wildlife and landscapes with our sustainable, eco-friendly tours led by expert local guides.">
-    <meta property="og:image" content="{{ assets('img/images/lemur.webp') }}">
+    <meta property="og:title" content="{{ $page['meta_title'] }}">
+    <meta property="og:description" content="{{ $language == 'es' ? $page['meta_description_es'] : $page['meta_description'] }}">
+    <meta property="og:image" content="{{ assets($page['meta_image']) }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_US"><!-- Don't check here if you have internet -->
@@ -43,11 +40,9 @@ $language = isset($language) ? $language : 'en';
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@MGTours">
-    <meta name="twitter:title" content="Madagascar Green Tours - Eco-Friendly Travel Experiences">
-    <meta name="twitter:description"
-        content="Discover Madagascar's unique wildlife and landscapes with our sustainable, eco-friendly tours led by expert local guides.">
-    <meta name="twitter:image"
-        content="{{ assets('img/images/lemur.webp') }}">
+    <meta name="twitter:title" content="{{ $language == 'es' ? $page['meta_title_es'] : $page['meta_title'] }}">
+    <meta name="twitter:description" content="{{ $language == 'es' ? $page['meta_description_es'] : $page['meta_description'] }}">
+    <meta name="twitter:image" content="{{ assets($page['meta_image']) }}">
 
     <!-- Alternate Language Links -->
     <link rel="alternate" hreflang="en" href="{{ switchTo('en') }}">
@@ -222,97 +217,7 @@ $language = isset($language) ? $language : 'en';
     <!-- Mobile Performance Audit: Page uses responsive meta viewport, deferred scripts, lazy-loaded images, and CSS media queries for mobile. Test on real devices for touch target size and tap delay. -->
     <style>
         /* Critical CSS: Navbar and Hero (mobile-first) */
-        body { margin: 0;padding: 0;}
-        .navbar-brand img,.navbar-logo {width: 120px; height: 42px;max-width: 100%;}
-        @media (min-width: 769px) {.navbar-brand img,.navbar-logo {width: 220px;height: 77px;}}
-
-        .navbar-toggler {
-            border: 1px solid #fff;
-            margin-left: 10px;
-            padding: 6px;
-        }
-
-        #home {
-            margin-top: 0;
-        }
-
-        @media (max-width:600px) {
-            .carousel-img {
-                max-height: 220px;
-            }
-        }
-
-        #iview-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
-        }
-
-        @media (max-width: 425px) {
-            .float-image {
-                width: 100%;
-            }
-
-            .flag {
-                padding: 0.5rem 0.8rem !important;
-            }
-
-            .card-styled {
-                padding: 2px;
-                box-shadow: none;
-            }
-
-            .card-styled-body h1 {
-                margin-top: 10px;
-            }
-
-            .card-styled-body {
-                padding: 8px;
-            }
-        }
-
-        @media (max-width: 508px) {
-            .mobile-img {
-                display: block;
-            }
-
-            .desktop-img {
-                display: none;
-            }
-
-            .float-image {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 575px) {
-            .title-slogan {
-                font-size: 1.5rem;
-            }
-
-            #about {
-                margin-top: 8px !important;
-                padding: 0;
-            }
-        }
-
-        @media (max-width: 766px) and (min-width: 508px) {
-            .mobile-img {
-                display: block;
-            }
-
-            .desktop-img {
-                display: none;
-            }
-
-            .float-image {
-                width: 250px;
-            }
-        }
+        body{margin:0;padding:0}.navbar-brand img,.navbar-logo{width:120px;height:42px;max-width:100%}@media(min-width:769px){.navbar-brand img,.navbar-logo{width:220px;height:77px}}.navbar-toggler{border:1px solid #fff;margin-left:10px;padding:6px}#home{margin-top:0}@media(max-width:600px){.carousel-img{max-height:220px}}#iview-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:1}@media(max-width:425px){.float-image{width:100%}.flag{padding:.5rem .8rem!important}.card-styled{padding:2px;box-shadow:none}.card-styled-body h1{margin-top:10px}.card-styled-body{padding:8px}}@media(max-width:508px){.mobile-img{display:block}.desktop-img{display:none}.float-image{width:100%}}@media(max-width:575px){.title-slogan{font-size:1.5rem}#about{margin-top:8px!important;padding:0}}@media(max-width:766px) and (min-width:508px){.mobile-img{display:block}.desktop-img{display:none}.float-image{width:250px}}
     </style>
 </head>
 <body>

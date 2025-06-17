@@ -7,8 +7,9 @@
                         <div id="iview-overlay"
                             style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:rgba(0,0,0,0.4);z-index:1;">
                         </div>
-                        <h3 class="text-center text-white display-2 font-inter-extra-bold title-slogan">Discover
-                            Madagascar with us</h3>
+                        <h3 class="text-center text-white display-2 font-inter-extra-bold title-slogan">
+                            Discover Madagascar with us
+                        </h3>
                         <div id="heroCarousel" class="carousel slide" data-ride="carousel"
                             aria-label="Main Highlights Carousel">
 
@@ -39,35 +40,18 @@
                     <img src="{{ assets('img/images/lemur.webp') }}" class="float-image desktop-img"
                         alt="Ring-tailed lemur in Madagascar rainforest" decoding="async">
 
-                    <h3 class="text-center font-inter-extra-bold fancy text-uppercase">Welcome to Madagascar Green Tours
+                    <h3 class="text-center font-inter-extra-bold fancy text-uppercase">
+                        {{ $language == "es" ? $page['title_h1_es'] : $page['title_h1'] }}
                     </h3>
-                    <h6 class="text-center font-inter-bold">Ready to embark on the adventure of a lifetime in
-                        Madagascar?</h4>
+                    <h6 class="text-center font-inter-bold">
+                        {{ $language == "es" ? $page['title_h2_es'] : $page['title_h2'] }}
+                    </h6>
                         <img src="{{ assets('img/images/lemur.webp') }}" class="float-image mobile-img"
                             alt="Ring-tailed lemur in Madagascar rainforest" decoding="async" fetchpriority="high">
 
-
-                        <p>Discover Madagascar your way with Madagascar Green Tours - a multi-award-winning
-                            English-speaking tour operator. We design unforgettable, tailor-made journeys across the
-                            island, personalized to your interests and budget. Whether you're dreaming of pristine
-                            beaches, lush rainforests, or cultural adventures, we’ll craft the perfect itinerary just
-                            for you. Tour operator specializing in classic birdwatching and group tours in Madagascar,
-                            catering to travelers from various countries.</p>
-                        </p>
-                        <p>Madagascar Green Tours a tour operator in Madagascar with a goal
-                            to give satisfaction of clients and meet their needs ,undoubtedly helps you discover
-                            all the facets of the country. Being in the heart of the Indian ocean , located
-                            geographically
-                            between mainland Africa and Asia, this paradisiacal Island that has a lot to offer stretches
-                            from North to South , From the intact beaches of the Mitsio</p>
-                        <p>Madagascar Green Tours expressing readiness to receive people of
-                            all Nationalities and with 25 years of experience exploring the Island .
-                            never misses to provide possibilities to discover fauna and flora that are mostly
-                            endemic plus the kindness of the people with their culture which still remains
-                            unforgettable.</p>
-                        <h5 class="text-center font-inter-bold">Guided tour in Madagascar with our private local guides
-                        </h5>
-
+                            
+                                {{ $language == "es" ? $page['content_es'] : $page['content'] }}
+                            
 
                 </div>
             </div>

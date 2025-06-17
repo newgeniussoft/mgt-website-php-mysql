@@ -12,7 +12,14 @@ class Router {
     private $mainController;
     private $adminController;
     private $pagesAdminController;
-    private $supportedPages = ['about', 'seo_test', 'tours', 'car-rental'];
+    private $supportedPages = [];
+
+    // Dynamically load supported pages from DB
+    private function loadSupportedPages() {
+        require_once __DIR__ . '/app/models/Page.php';
+        $pageModel = new Page();
+        $this->supportedPages = array_map(function($row) { return $row['path']; }, $pageModel->all());
+    }
     private $adminPages = ['dashboard', 'users', 'settings', 'login', 'logout', 'pages'];
     private $supportedLanguages = ['es'];
     
@@ -20,6 +27,7 @@ class Router {
         $this->mainController = new MainController();
         $this->adminController = new AdminController();
         $this->pagesAdminController = new PagesAdminController();
+        $this->loadSupportedPages();
     }
     
     /**
@@ -30,11 +38,6 @@ class Router {
         $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $pathParts = explode('/', trim($currentPath, '/'));
         
-        // If path is empty, show homepage
-        if (empty($pathParts[0])) {
-            return $this->mainController->index();
-        }
-        
         // Check if the first segment is a language code
         $language = null;
         $page = $pathParts[0];
@@ -44,17 +47,16 @@ class Router {
             $page = isset($pathParts[0]) ? $pathParts[0] : '';
         }
         
-        // Route based on page name
-        if (empty($page)) {
-            return $this->mainController->index($language);
-        } else if ($page === 'access') {
+        if ($page === 'access') {
             // Admin routes with 'access' prefix
             return $this->handleAdminRoutes($pathParts);
         } else {
             if (in_array($page, $this->supportedPages)) {
                 $page = str_replace("-", "_", $page);
-                // Call the page method with language parameter
-                return $this->mainController->$page($language);
+                if ($page == "tours") {
+                    return $this->mainController->tours();
+                }
+                return $this->mainController->page($page);
             } else {
                 return $this->send404();
             }

@@ -1,6 +1,7 @@
 <?php
     
     require_once 'Controller.php';
+    require_once 'PagesAdminController.php';
 
     class HomeController extends Controller
     {
@@ -9,9 +10,13 @@
          *
          * @param string|null $language Language code
          */
+        
+        private $pagesAdminController;
+
         public function __construct($language = null)
         {
             parent::__construct($language);
+            $this->pagesAdminController = new PagesAdminController();
         }
         
         /**
@@ -39,6 +44,22 @@
                 'metaKeywords' => 'madagascar tours, eco tourism, green travel, wildlife tours, sustainable tourism, madagascar travel, lemur tours',
                 'metaImage' => 'img/logo/logo_new_updated.png'
             ]);
+        }
+
+        public function page($path){
+            $page = $this->pagesAdminController->getPage($path);
+            $view = $path;
+            if ($path == "") {
+                $view = 'index';
+            }
+            if($page){
+                echo $this->view('pages.'.$view, [
+                    'tours' => $this->tours,
+                    'language' => $this->language,
+                    'page' => $page,
+                ]);
+            }
+            /*return $this->index();*/
         }
 
         /**

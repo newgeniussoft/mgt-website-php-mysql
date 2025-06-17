@@ -22,19 +22,43 @@ class PagesAdminController extends Controller {
             echo $this->view('admin.pages.index', ['pages' => $pages, 'title' => 'Manage Pages']);
         }, [new AuthMiddleware()]);
     }
+
+    // get page by path
+    public function getPage($path) {
+        $page = $this->pageModel->findByPath($path);
+        return $page;
+    }
     // Show create form & handle create
     public function create() {
         return $this->applyMiddleware(function () {
             $error = '';
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $data = $_POST;
-                if ($this->pageModel->create($data)) {
-                    header('Location: /access/pages'); exit;
-                } else {
-                    $error = 'Failed to create page.';
-                }
-            }
-            echo $this->view('admin.pages.form', ['action' => 'create', 'error' => $error, 'title' => 'Create Page']);
+    $data = $_POST;
+    // Handle file upload
+    if (isset($_FILES['meta_image']) && $_FILES['meta_image']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . '/../../../public/uploads/';
+        if (!is_dir($uploadDir)) { mkdir($uploadDir, 0777, true); }
+        $filename = time() . '_' . basename($_FILES['meta_image']['name']);
+        $targetPath = $uploadDir . $filename;
+        if (move_uploaded_file($_FILES['meta_image']['tmp_name'], $targetPath)) {
+            $data['meta_image'] = $filename;
+        } else {
+            $data['meta_image'] = '';
+        }
+    } else {
+        $data['meta_image'] = '';
+    }
+    // Ensure content fields are set (HTML from Summernote)
+$data['content'] = $_POST['content'] ?? '';
+$data['content_es'] = $_POST['content_es'] ?? '';
+if ($this->pageModel->create($data)) {
+        header('Location: /access/pages'); exit;
+    } else {
+        $error = 'Failed to create page.';
+    }
+}
+            $allPages = $this->pageModel->all();
+echo $this->view('admin.pages.form', ['action' => 'create', 'error' => $error, 'title' => 'Create Page', 'allPages' => $allPages]);
         }, [new AuthMiddleware()]);
     }
     // Show edit form & handle update
@@ -46,14 +70,33 @@ class PagesAdminController extends Controller {
             $page = $this->pageModel->find($id);
             if (!$page) { header('Location: /access/pages'); exit; }
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $data = $_POST;
-                if ($this->pageModel->update($id, $data)) {
-                    header('Location: /access/pages'); exit;
-                } else {
-                    $error = 'Failed to update page.';
-                }
-            }
-            echo $this->view('admin.pages.form', ['action' => 'edit', 'page' => $page, 'error' => $error, 'title' => 'Edit Page']);
+    $data = $_POST;
+    // Handle file upload
+    if (isset($_FILES['meta_image']) && $_FILES['meta_image']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . '/../../../public/uploads/';
+        if (!is_dir($uploadDir)) { mkdir($uploadDir, 0777, true); }
+        $filename = time() . '_' . basename($_FILES['meta_image']['name']);
+        $targetPath = $uploadDir . $filename;
+        if (move_uploaded_file($_FILES['meta_image']['tmp_name'], $targetPath)) {
+            $data['meta_image'] = $filename;
+        } else {
+            $data['meta_image'] = $page['meta_image'] ?? '';
+        }
+    } else {
+        // No new upload, keep old image
+        $data['meta_image'] = $_POST['old_meta_image'] ?? ($page['meta_image'] ?? '');
+    }
+    // Ensure content fields are set (HTML from Summernote)
+$data['content'] = $_POST['content'] ?? '';
+$data['content_es'] = $_POST['content_es'] ?? '';
+if ($this->pageModel->update($id, $data)) {
+        header('Location: /access/pages'); exit;
+    } else {
+        $error = 'Failed to update page.';
+    }
+}
+            $allPages = $this->pageModel->all();
+echo $this->view('admin.pages.form', ['action' => 'edit', 'page' => $page, 'error' => $error, 'title' => 'Edit Page', 'allPages' => $allPages]);
         }, [new AuthMiddleware()]);
     }
     // Remove page

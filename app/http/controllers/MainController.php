@@ -51,6 +51,7 @@ class MainController extends Controller
     public function access(){ return $this->adminController->index();}
     public function seo_test(){ return $this->homeController->seo_test();}
     public function car_rental(){ return $this->homeController->car_rental();}
+    public function page($path){ return $this->homeController->page($path);}
 
 }
 
