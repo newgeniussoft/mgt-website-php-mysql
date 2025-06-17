@@ -67,6 +67,27 @@
             ]);
         }
         
+        public function car_rental($language = null) 
+        {
+            // Update language if provided
+            if ($language !== null) {
+                $this->language = $language;
+            }
+            
+            // SEO metadata for about page
+            $languagePrefix = $this->language === 'es' ? ' - Español' : '';
+            
+            echo $this->view('pages.services.car-rental', [
+                'language' => $this->language,
+                'tours' => $this->tours,
+                'currentPage' => 'about',
+                'metaTitle' => 'About Madagascar Green Tours - Sustainable Tourism' . $languagePrefix,
+                'metaDescription' => 'Learn about Madagascar Green Tours, our mission for sustainable tourism, and our commitment to preserving Madagascar\'s unique biodiversity while providing unforgettable travel experiences.',
+                'metaKeywords' => 'about madagascar green tours, sustainable tourism madagascar, eco-friendly travel company, madagascar tour operator, green travel agency',
+                'metaImage' => 'img/images/lemur.jpg'
+            ]);
+        }
+        
         /**
          * SEO Test Page - Best practices for content and performance
          *

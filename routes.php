@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/app/http/controllers/MainController.php';  
 require_once __DIR__ . '/app/http/controllers/AdminController.php';  
+require_once __DIR__ . '/app/http/controllers/PagesAdminController.php';
 
 /**
  * Simple Router for MGT Website
@@ -10,13 +11,15 @@ require_once __DIR__ . '/app/http/controllers/AdminController.php';
 class Router {
     private $mainController;
     private $adminController;
-    private $supportedPages = ['about', 'seo_test', 'tours'];
-    private $adminPages = ['dashboard', 'users', 'settings', 'login', 'logout'];
+    private $pagesAdminController;
+    private $supportedPages = ['about', 'seo_test', 'tours', 'car-rental'];
+    private $adminPages = ['dashboard', 'users', 'settings', 'login', 'logout', 'pages'];
     private $supportedLanguages = ['es'];
     
     public function __construct() {
         $this->mainController = new MainController();
         $this->adminController = new AdminController();
+        $this->pagesAdminController = new PagesAdminController();
     }
     
     /**
@@ -49,6 +52,7 @@ class Router {
             return $this->handleAdminRoutes($pathParts);
         } else {
             if (in_array($page, $this->supportedPages)) {
+                $page = str_replace("-", "_", $page);
                 // Call the page method with language parameter
                 return $this->mainController->$page($language);
             } else {
@@ -64,6 +68,24 @@ class Router {
      * @return mixed
      */
     private function handleAdminRoutes($pathParts) {
+        // Admin pages CRUD for /access/pages
+        $adminPage = isset($pathParts[1]) ? $pathParts[1] : 'index';
+        if ($adminPage === 'pages') {
+            $action = $pathParts[2] ?? 'index';
+            if ($action === 'index' || $action === '') {
+                return $this->pagesAdminController->index();
+            } elseif ($action === 'create') {
+                return $this->pagesAdminController->create();
+            } elseif ($action === 'edit') {
+                return $this->pagesAdminController->edit();
+            } elseif ($action === 'delete') {
+                return $this->pagesAdminController->delete();
+            } else {
+                return $this->send404();
+            }
+        }
+        // original logic follows
+
         // Get the admin page from the URL (second segment after 'access')
         $adminPage = isset($pathParts[1]) ? $pathParts[1] : 'index';
         

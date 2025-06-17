@@ -113,7 +113,37 @@
             <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
         </footer>
         <!-- Footer End -->
-
+        <div class="floating-chat enter">
+    <img class="icon" src="http://localhost/mgt-latest/assets/img/icons/whatsapp_white.png" alt="App">
+    <div class="chat">
+        <div class="user-bar">
+            <div class="back">
+                <svg onclick="closeElement()" xmlns="http://www.w3.org/2000/svg" id="Bold" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M17.921,1.505a1.5,1.5,0,0,1-.44,1.06L9.809,10.237a2.5,2.5,0,0,0,0,3.536l7.662,7.662a1.5,1.5,0,0,1-2.121,2.121L7.688,15.9a5.506,5.506,0,0,1,0-7.779L15.36.444a1.5,1.5,0,0,1,2.561,1.061Z"></path>
+                </svg>
+            </div>
+            <div class="avatar">
+              <img src="http://localhost/mgt-latest/assets/img/logo/favicon.png" alt="Avatar">
+            </div>
+            <div class="name">
+              <span>Madagascar Green Tours</span>
+              <span class="status">online</span>
+            </div>
+          </div>
+        <ul class="messages">
+            <li class="self first">hello</li>
+            <li class="self second">Can we help you?</li>
+            <li class="self second">Scan the following QR code to communicate directly with Madagascar Green Tours 
+                        on WhatsApp from your smartphone</li>
+            <li class="self thrid">
+                <img src="http://localhost/mgt-latest/assets/img/images/qrcode.PNG" width="170" alt="qrcode">
+            </li>
+        </ul>
+        <div class="footer">
+            <a href="https://wa.me/261347107100?text=Hello" target="_blank">Open on Whatsapp <i class="fa fa-send"></i>
+        </a></div><a href="https://wa.me/261347107100?text=Hello" target="_blank">
+    </a></div><a href="https://wa.me/261347107100?text=Hello" target="_blank">
+</a></div>
         </main>
         <script src="{{ assets('js/jquery-3.2.1.slim.min.js') }}"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"
@@ -221,11 +251,94 @@
                     }
                 });
 
+                var element = $('.floating-chat');
+var myStorage = localStorage;
+
+if (!myStorage.getItem('chatID')) {
+    myStorage.setItem('chatID', createUUID());
+}
+
+setTimeout(function() {
+    element.addClass('enter');
+}, 1000);
+
+element.click(openElement);
+
+function openElement() {
+    var messages = element.find('.messages');
+    var textInput = element.find('.text-box');
+    element.find('>i').hide();
+    element.addClass('expand');
+    element.find('.chat').addClass('enter');
+    var strLength = textInput.val().length * 2;
+    textInput.keydown(onMetaAndEnter).prop("disabled", false).focus();
+    element.off('click', openElement);
+    element.find('.user-bar div').click(closeElement);
+    element.find('#sendMessage').click(sendNewMessage);
+    messages.scrollTop(messages.prop("scrollHeight"));
+}
+
+function closeElement() {
+    element.find('.chat').removeClass('enter').hide();
+    setTimeout(function() {
+        element.find('.chat').removeClass('enter').show();
+        $('.floating-chat').removeClass('expand');
+    }, 50);
+    element.click(openElement);
+}
+
+function createUUID() {
+    // http://www.ietf.org/rfc/rfc4122.txt
+    var s = [];
+    var hexDigits = "0123456789abcdef";
+    for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+    }
+    s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = "-";
+
+    var uuid = s.join("");
+    return uuid;
+}
+
+function sendNewMessage() {
+    var userInput = $('.text-box');
+    var newMessage = userInput.html().replace(/\<div\>|\<br.*?\>/ig, '\n').replace(/\<\/div\>/g, '').trim().replace(/\n/g, '<br>');
+
+    if (!newMessage) return;
+
+    var messagesContainer = $('.messages');
+
+    messagesContainer.append([
+        '<li class="self">',
+        newMessage,
+        '</li>'
+    ].join(''));
+
+    // clean out old message
+    userInput.html('');
+    // focus on input
+    userInput.focus();
+
+    messagesContainer.finish().animate({
+        scrollTop: messagesContainer.prop("scrollHeight")
+    }, 250);
+}
+
+function onMetaAndEnter(event) {
+    if ((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+        sendNewMessage();
+    }
+}
+
 
             });
 
         </script>
-
+<script>
+	
+</script>
 
 </body>
 </html>

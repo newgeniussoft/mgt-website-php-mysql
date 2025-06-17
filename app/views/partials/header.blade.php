@@ -32,8 +32,16 @@
                             <?php endforeach?>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('about') }}">Services</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="toursDropdown" role="button"
+                             aria-haspopup="true" data-toggle="dropdown"  aria-expanded="true">
+                            Service
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="toursDropdown">
+                            <a class="dropdown-item" href="{{ route('car-rental') }}">Car rental</a>
+                            <a class="dropdown-item" href="{{ route('hotel-booking') }}">Hotel booking</a>
+                            <a class="dropdown-item" href="{{ route('flight-booking') }}">Flight booking</a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('reviews') }}">{{ trans('menu.reviews') }}</a>

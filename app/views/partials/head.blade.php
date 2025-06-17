@@ -91,6 +91,7 @@ $language = isset($language) ? $language : 'en';
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ assets('css/all.css') }}" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="{{ assets('css/styles.css') }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ assets('css/timeline.css') }}" media="print" onload="this.media='all'">
 
     <noscript>
         <link rel="stylesheet" href="{{ assets('css/styles.css') }}">
