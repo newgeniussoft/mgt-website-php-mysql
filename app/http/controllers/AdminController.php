@@ -170,14 +170,25 @@ class AdminController extends Controller
     public function info()
     {
         require_once __DIR__ . '/../../models/Info.php';
+        require_once __DIR__ . '/../../models/Slide.php';
+        require_once __DIR__ . '/../../models/Video.php';
+        require_once __DIR__ . '/../../models/SocialMedia.php';
         return $this->applyMiddleware(function() {
             $infoModel = new Info();
+            $slideModel = new Slide();
+            $videoModel = new Video();
+            $socialMediaModel = new SocialMedia();
             $info = $infoModel->getInfo();
+            $slides = $slideModel->all();
+            $videos = $videoModel->all();
+            $social_media = $socialMediaModel->all();
             $success = '';
             $error = '';
 
             $uploadDir = realpath(__DIR__ . '/../../../') . '/assets/img/uploads/images/';
             if (!is_dir($uploadDir)) { mkdir($uploadDir, 0777, true); }
+            $slideUploadDir = realpath(__DIR__ . '/../../../') . '/assets/img/uploads/slides/';
+            if (!is_dir($slideUploadDir)) { mkdir($slideUploadDir, 0777, true); }
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data = [
@@ -236,9 +247,182 @@ class AdminController extends Controller
                 }
             }
 
+            // Handle Slide CRUD
+            if (isset($_POST['slide_action'])) {
+                $slideAction = $_POST['slide_action'];
+                if ($slideAction === 'create') {
+                    $caption = $_POST['caption'] ?? '';
+                    $caption_es = $_POST['caption_es'] ?? '';
+                    $image = '';
+                    if (isset($_FILES['slide_image']) && $_FILES['slide_image']['error'] === UPLOAD_ERR_OK) {
+                        $imgName = uniqid('slide_') . '_' . basename($_FILES['slide_image']['name']);
+                        $imgPath = $slideUploadDir . $imgName;
+                        if (move_uploaded_file($_FILES['slide_image']['tmp_name'], $imgPath)) {
+                            $image = 'img/uploads/slides/' . $imgName;
+                        } else {
+                            $error = 'Failed to upload slide image.';
+                        }
+                    }
+                    if (!$error) {
+                        $slideModel->create([
+                            'caption' => $caption,
+                            'caption_es' => $caption_es,
+                            'image' => $image
+                        ]);
+                        $success = 'Slide created successfully.';
+                        $slides = $slideModel->all();
+                    }
+                }
+                if ($slideAction === 'edit') {
+                    $slide_id = $_POST['slide_id'] ?? null;
+                    $caption = $_POST['caption'] ?? '';
+                    $caption_es = $_POST['caption_es'] ?? '';
+                    $image = $_POST['old_image'] ?? '';
+                    if (isset($_FILES['slide_image']) && $_FILES['slide_image']['error'] === UPLOAD_ERR_OK) {
+                        $imgName = uniqid('slide_') . '_' . basename($_FILES['slide_image']['name']);
+                        $imgPath = $slideUploadDir . $imgName;
+                        if (move_uploaded_file($_FILES['slide_image']['tmp_name'], $imgPath)) {
+                            $image = 'img/uploads/slides/' . $imgName;
+                        } else {
+                            $error = 'Failed to upload slide image.';
+                        }
+                    }
+                    if ($slide_id && !$error) {
+                        $slideModel->update($slide_id, [
+                            'caption' => $caption,
+                            'caption_es' => $caption_es,
+                            'image' => $image
+                        ]);
+                        $success = 'Slide updated successfully.';
+                        $slides = $slideModel->all();
+                    }
+                }
+                if ($slideAction === 'delete') {
+                    $slide_id = $_POST['slide_id'] ?? null;
+                    if ($slide_id) {
+                        $slideModel->delete($slide_id);
+                        $success = 'Slide deleted successfully.';
+                        $slides = $slideModel->all();
+                    }
+                }
+            }
+
+            // Handle Video CRUD
+            if (isset($_POST['video_action'])) {
+                $videoAction = $_POST['video_action'];
+                if ($videoAction === 'create') {
+                    $title = $_POST['title'] ?? '';
+                    $subtitle = $_POST['subtitle'] ?? '';
+                    $title_es = $_POST['title_es'] ?? '';
+                    $subtitle_es = $_POST['subtitle_es'] ?? '';
+                    $link = $_POST['link'] ?? '';
+                    $videoModel->create([
+                        'title' => $title,
+                        'subtitle' => $subtitle,
+                        'title_es' => $title_es,
+                        'subtitle_es' => $subtitle_es,
+                        'link' => $link
+                    ]);
+                    $success = 'Video created successfully.';
+                    $videos = $videoModel->all();
+                }
+                if ($videoAction === 'edit') {
+                    $video_id = $_POST['video_id'] ?? null;
+                    $title = $_POST['title'] ?? '';
+                    $subtitle = $_POST['subtitle'] ?? '';
+                    $title_es = $_POST['title_es'] ?? '';
+                    $subtitle_es = $_POST['subtitle_es'] ?? '';
+                    $link = $_POST['link'] ?? '';
+                    if ($video_id) {
+                        $videoModel->update($video_id, [
+                            'title' => $title,
+                            'subtitle' => $subtitle,
+                            'title_es' => $title_es,
+                            'subtitle_es' => $subtitle_es,
+                            'link' => $link
+                        ]);
+                        $success = 'Video updated successfully.';
+                        $videos = $videoModel->all();
+                    }
+                }
+                if ($videoAction === 'delete') {
+                    $video_id = $_POST['video_id'] ?? null;
+                    if ($video_id) {
+                        $videoModel->delete($video_id);
+                        $success = 'Video deleted successfully.';
+                        $videos = $videoModel->all();
+                    }
+                }
+            }
+
+            // Handle Social Media CRUD
+            $socialUploadDir = realpath(__DIR__ . '/../../../') . '/assets/img/uploads/social_media/';
+            if (!is_dir($socialUploadDir)) { mkdir($socialUploadDir, 0777, true); }
+            if (isset($_POST['social_action'])) {
+                $socialAction = $_POST['social_action'];
+                if ($socialAction === 'create') {
+                    $name = $_POST['name'] ?? '';
+                    $link = $_POST['link'] ?? '';
+                    $image = '';
+                    if (isset($_FILES['social_image']) && $_FILES['social_image']['error'] === UPLOAD_ERR_OK) {
+                        $imgName = uniqid('social_') . '_' . basename($_FILES['social_image']['name']);
+                        $imgPath = $socialUploadDir . $imgName;
+                        if (move_uploaded_file($_FILES['social_image']['tmp_name'], $imgPath)) {
+                            $image = 'img/uploads/social_media/' . $imgName;
+                        } else {
+                            $error = 'Failed to upload social media image.';
+                        }
+                    }
+                    if (!$error) {
+                        $socialMediaModel->create([
+                            'name' => $name,
+                            'link' => $link,
+                            'image' => $image
+                        ]);
+                        $success = 'Social media entry created successfully.';
+                        $social_media = $socialMediaModel->all();
+                    }
+                }
+                if ($socialAction === 'edit') {
+                    $social_id = $_POST['social_id'] ?? null;
+                    $name = $_POST['name'] ?? '';
+                    $link = $_POST['link'] ?? '';
+                    $image = $_POST['old_image'] ?? '';
+                    if (isset($_FILES['social_image']) && $_FILES['social_image']['error'] === UPLOAD_ERR_OK) {
+                        $imgName = uniqid('social_') . '_' . basename($_FILES['social_image']['name']);
+                        $imgPath = $socialUploadDir . $imgName;
+                        if (move_uploaded_file($_FILES['social_image']['tmp_name'], $imgPath)) {
+                            $image = 'img/uploads/social_media/' . $imgName;
+                        } else {
+                            $error = 'Failed to upload social media image.';
+                        }
+                    }
+                    if ($social_id && !$error) {
+                        $socialMediaModel->update($social_id, [
+                            'name' => $name,
+                            'link' => $link,
+                            'image' => $image
+                        ]);
+                        $success = 'Social media entry updated successfully.';
+                        $social_media = $socialMediaModel->all();
+                    }
+                }
+                if ($socialAction === 'delete') {
+                    $social_id = $_POST['social_id'] ?? null;
+                    if ($social_id) {
+                        $socialMediaModel->delete($social_id);
+                        $success = 'Social media entry deleted successfully.';
+                        $social_media = $socialMediaModel->all();
+                    }
+                }
+            }
+
             echo $this->view('admin.info', [
                 'title' => 'Website Info',
                 'info' => $info,
+                'slides' => $slides,
+                'videos' => $videos,
+                'social_media' => $social_media,
                 'success' => $success,
                 'error' => $error
             ]);
