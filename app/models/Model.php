@@ -5,13 +5,15 @@
         public $conn;
         public $table_name;
         public $stmt;
+        public $db;
     
         public function __construct($table)
         {
             $this->table_name = $table;
             $database = new Database();
             $this->conn = $database->getConnection();
-        }
+            $this->db = $database;
+            }
 
         private function execute($query) {
             $this->stmt = $this->conn->prepare($query);

@@ -52,5 +52,6 @@
                 'lastUpdated' => date('c', strtotime($tour->updated_at))
             ]);
         }
+        
     }
 ?>

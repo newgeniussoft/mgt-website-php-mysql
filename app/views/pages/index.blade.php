@@ -8,7 +8,7 @@
                             style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:rgba(0,0,0,0.4);z-index:1;">
                         </div>
                         <h3 class="text-center text-white display-2 font-inter-extra-bold title-slogan">
-                            Discover Madagascar with us
+                        {{ $language == "es" ? $page['title_es'] : $page['title'] }}
                         </h3>
                         <div id="heroCarousel" class="carousel slide" data-ride="carousel"
                             aria-label="Main Highlights Carousel">

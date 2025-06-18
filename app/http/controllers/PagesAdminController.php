@@ -51,6 +51,8 @@ class PagesAdminController extends Controller {
     // Ensure content fields are set (HTML from Summernote)
 $data['content'] = $_POST['content'] ?? '';
 $data['content_es'] = $_POST['content_es'] ?? '';
+$data['title'] = $_POST['title_en'] ?? '';
+$data['title_es'] = $_POST['title_es'] ?? '';
 if ($this->pageModel->create($data)) {
         header('Location: /access/pages'); exit;
     } else {
@@ -89,6 +91,8 @@ echo $this->view('admin.pages.form', ['action' => 'create', 'error' => $error, '
     // Ensure content fields are set (HTML from Summernote)
 $data['content'] = $_POST['content'] ?? '';
 $data['content_es'] = $_POST['content_es'] ?? '';
+$data['title'] = $_POST['title_en'] ?? '';
+$data['title_es'] = $_POST['title_es'] ?? '';
 if ($this->pageModel->update($id, $data)) {
         header('Location: /access/pages'); exit;
     } else {

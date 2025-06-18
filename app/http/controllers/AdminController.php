@@ -164,4 +164,84 @@ class AdminController extends Controller
         // For demo purposes, accept 'admin' / 'admin123'
         return ($username === 'admin' && $password === 'admin123');
     }
+    /**
+     * Website Info management page (edit-only, single record)
+     */
+    public function info()
+    {
+        require_once __DIR__ . '/../../models/Info.php';
+        return $this->applyMiddleware(function() {
+            $infoModel = new Info();
+            $info = $infoModel->getInfo();
+            $success = '';
+            $error = '';
+
+            $uploadDir = realpath(__DIR__ . '/../../../') . '/assets/img/uploads/images/';
+            if (!is_dir($uploadDir)) { mkdir($uploadDir, 0777, true); }
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $data = [
+                    'phone' => $_POST['phone'] ?? '',
+                    'whatsapp' => $_POST['whatsapp'] ?? '',
+                    'email' => $_POST['email'] ?? '',
+                    'short_about' => $_POST['short_about'] ?? '',
+                ];
+
+                // Handle logo upload
+                if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
+                    $logoName = uniqid('logo_') . '_' . basename($_FILES['logo']['name']);
+                    $logoPath = $uploadDir . $logoName;
+                    if (move_uploaded_file($_FILES['logo']['tmp_name'], $logoPath)) {
+                        $data['logo'] = 'img/uploads/images/' . $logoName;
+                    } else {
+                        $error = 'Failed to upload logo.';
+                    }
+                } else {
+                    $data['logo'] = $info['logo'] ?? '';
+                }
+
+                // Handle main image upload
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $imgName = uniqid('img_') . '_' . basename($_FILES['image']['name']);
+                    $imgPath = $uploadDir . $imgName;
+                    if (move_uploaded_file($_FILES['image']['tmp_name'], $imgPath)) {
+                        $data['image'] = 'img/uploads/images/' . $imgName;
+                    } else {
+                        $error = 'Failed to upload main image.';
+                    }
+                } else {
+                    $data['image'] = $info['image'] ?? '';
+                }
+
+                // Handle image_property as image upload
+                if (isset($_FILES['image_property']) && $_FILES['image_property']['error'] === UPLOAD_ERR_OK) {
+                    $imgPropName = uniqid('imgprop_') . '_' . basename($_FILES['image_property']['name']);
+                    $imgPropPath = $uploadDir . $imgPropName;
+                    if (move_uploaded_file($_FILES['image_property']['tmp_name'], $imgPropPath)) {
+                        $data['image_property'] = 'img/uploads/images/' . $imgPropName;
+                    } else {
+                        $error = 'Failed to upload image property.';
+                    }
+                } else {
+                    $data['image_property'] = $info['image_property'] ?? '';
+                }
+
+                if (!$error) {
+                    if ($infoModel->updateInfo($data)) {
+                        $success = 'Website info updated successfully.';
+                        $info = $infoModel->getInfo();
+                    } else {
+                        $error = 'Failed to update info.';
+                    }
+                }
+            }
+
+            echo $this->view('admin.info', [
+                'title' => 'Website Info',
+                'info' => $info,
+                'success' => $success,
+                'error' => $error
+            ]);
+        }, [new AuthMiddleware()]);
+    }
 }

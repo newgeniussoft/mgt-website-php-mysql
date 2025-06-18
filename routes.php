@@ -20,7 +20,7 @@ class Router {
         $pageModel = new Page();
         $this->supportedPages = array_map(function($row) { return $row['path']; }, $pageModel->all());
     }
-    private $adminPages = ['dashboard', 'users', 'settings', 'login', 'logout', 'pages'];
+    private $adminPages = ['dashboard', 'users', 'settings', 'login', 'logout', 'pages', 'tours', 'info'];
     private $supportedLanguages = ['es'];
     
     public function __construct() {
@@ -86,6 +86,7 @@ class Router {
                 return $this->send404();
             }
         }
+        
         // original logic follows
 
         // Get the admin page from the URL (second segment after 'access')
@@ -106,6 +107,10 @@ class Router {
             // Check if the method exists in the AdminController
             if (method_exists($this->adminController, $adminPage)) {
                 return $this->adminController->$adminPage();
+            }
+            // Route /access/info to info page
+            if ($adminPage === 'info') {
+                return $this->adminController->info();
             }
         }
         
