@@ -116,7 +116,7 @@ echo $this->view('admin.pages.form', ['action' => 'edit', 'page' => $page, 'erro
         }, [new AuthMiddleware()]);
     }
     // Middleware helper
-    private function applyMiddleware($callback, $middlewares = []) {
+    public function applyMiddleware($callback, $middlewares = []) {
         $handler = new MiddlewareHandler();
         foreach ($middlewares as $middleware) {
             $handler->add($middleware);

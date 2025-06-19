@@ -2,6 +2,14 @@
 require_once __DIR__ . '/app/http/controllers/MainController.php';  
 require_once __DIR__ . '/app/http/controllers/AdminController.php';  
 require_once __DIR__ . '/app/http/controllers/PagesAdminController.php';
+require_once __DIR__ . '/app/http/controllers/GalleryController.php';
+
+// Admin Gallery Route
+if (isset($_SERVER['REQUEST_URI']) && preg_match('#^/access/gallery#', $_SERVER['REQUEST_URI'])) {
+    $controller = new GalleryController();
+    $controller->index();
+    exit;
+}
 
 /**
  * Simple Router for MGT Website

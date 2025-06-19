@@ -33,6 +33,16 @@
             });
             return $this->engine->render(__DIR__ .'/../../views/'. str_replace('.','/',$view).'.blade.php', $variables);
         }
+
+        // Add this so all controllers can use middleware
+        public function applyMiddleware($callback, $middlewares = []) {
+            require_once __DIR__ . '/../middleware/MiddlewareHandler.php';
+            $handler = new MiddlewareHandler();
+            foreach ($middlewares as $middleware) {
+                $handler->add($middleware);
+            }
+            return $handler->run($callback);
+        }
     }
 
 ?>

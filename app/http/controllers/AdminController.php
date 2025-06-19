@@ -32,7 +32,7 @@ class AdminController extends Controller
      * @param array $middlewares List of middleware to apply
      * @return mixed
      */
-    private function applyMiddleware($callback, $middlewares = [])
+    public function applyMiddleware($callback, $middlewares = [])
     {
         $handler = new MiddlewareHandler();
         
