@@ -190,7 +190,7 @@ class AdminController extends Controller
             $slideUploadDir = realpath(__DIR__ . '/../../../') . '/assets/img/uploads/slides/';
             if (!is_dir($slideUploadDir)) { mkdir($slideUploadDir, 0777, true); }
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['info_action'])) {
                 $data = [
                     'phone' => $_POST['phone'] ?? '',
                     'whatsapp' => $_POST['whatsapp'] ?? '',
@@ -248,6 +248,7 @@ class AdminController extends Controller
             }
 
             // Handle Slide CRUD
+            $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
             if (isset($_POST['slide_action'])) {
                 $slideAction = $_POST['slide_action'];
                 if ($slideAction === 'create') {
@@ -305,6 +306,13 @@ class AdminController extends Controller
                         $slides = $slideModel->all();
                     }
                 }
+                if ($isAjax) {
+                    if ($error) {
+                        echo json_encode(['error' => $error]); exit;
+                    } else {
+                        echo json_encode(['success' => $success]); exit;
+                    }
+                }
             }
 
             // Handle Video CRUD
@@ -351,6 +359,13 @@ class AdminController extends Controller
                         $videoModel->delete($video_id);
                         $success = 'Video deleted successfully.';
                         $videos = $videoModel->all();
+                    }
+                }
+                if ($isAjax) {
+                    if ($error) {
+                        echo json_encode(['error' => $error]); exit;
+                    } else {
+                        echo json_encode(['success' => $success]); exit;
                     }
                 }
             }
@@ -413,6 +428,13 @@ class AdminController extends Controller
                         $socialMediaModel->delete($social_id);
                         $success = 'Social media entry deleted successfully.';
                         $social_media = $socialMediaModel->all();
+                    }
+                }
+                if ($isAjax) {
+                    if ($error) {
+                        echo json_encode(['error' => $error]); exit;
+                    } else {
+                        echo json_encode(['success' => $success]); exit;
                     }
                 }
             }

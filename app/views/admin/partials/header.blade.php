@@ -1,3 +1,4 @@
+@import('app/utils/helpers/helper.php')
 <div id="kt_app_header" class="app-header " data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}"
     data-kt-sticky-name="app-header-minimize" data-kt-sticky-offset="{default: '200px', lg: '300px'}"
     data-kt-sticky-animation="false">
@@ -10,9 +11,9 @@
                 <i class="ki-duotone ki-abstract-14 fs-2 fs-md-1"><span class="path1"></span><span
                         class="path2"></span></i>
             </div>
-            <a href="index.html">
-                <img alt="Logo" src="vendor/media/logos/star.svg" class="h-30px theme-light-show" />
-                <img alt="Logo" src="vendor/media/logos/star-dark.svg" class="h-30px theme-dark-show" />
+            <a href="{{ route('access') }}">
+                <img alt="Logo" src="{{ assets('img/logos/apple-touch-icon.png') }}" class="h-30px theme-light-show" />
+                <img alt="Logo" src="{{ assets('img/logos/apple-touch-icon.png') }}" class="h-30px theme-dark-show" />
             </a>
         </div>
         <!--end::Sidebar toggle-->
@@ -31,7 +32,7 @@
                 <div class="cursor-pointer symbol symbol-circle symbol-35px ms-3"
                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                     data-kt-menu-placement="bottom-end">
-                    <img src="vendor/media/avatars/300-3.jpg" alt="user" />
+                    <img src="{{ vendor('media/avatars/300-3.jpg') }}" alt="user" />
                 </div>
 
                 <!--begin::User account menu-->
@@ -42,7 +43,7 @@
                         <div class="menu-content d-flex align-items-center px-3">
                             <!--begin::Avatar-->
                             <div class="symbol symbol-50px me-5">
-                                <img alt="Logo" src="vendor/media/avatars/300-3.jpg" />
+                                <img alt="Logo" src="{{ vendor('media/avatars/300-3.jpg') }}" />
                             </div>
                             <!--end::Avatar-->
 
@@ -54,7 +55,7 @@
                                 </div>
 
                                 <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
-                                    johnson@kt.com </a>
+                                    info@madagascar-green-tours.com </a>
                             </div>
                             <!--end::Username-->
                         </div>

@@ -144,6 +144,12 @@
             return rtrim($_ENV['APP_URL'], '/') . '/assets/' . ltrim($path, '/');
         }
     }
+    if (!function_exists('vendor')) {
+        function vendor($path) {
+            return rtrim($_ENV['APP_URL'], '/') . '/vendor/' . ltrim($path, '/');
+        }
+    }
+
 
     /**
      * Generate a URL for a vendor asset

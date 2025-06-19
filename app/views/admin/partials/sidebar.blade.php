@@ -1,13 +1,14 @@
+@import('app/utils/helpers/helper.php')
 <div id="kt_app_sidebar" class="app-sidebar  flex-column " data-kt-drawer="true" data-kt-drawer-name="app-sidebar"
     data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px"
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="app-sidebar-logo position-relative" id="kt_app_sidebar_logo">
         <a href="index.html">
-            <img alt="Logo" src="vendor/media/logos/star.svg"
+            <img alt="Logo" src="{{ assets('img/logos/apple-touch-icon.png') }}"
                 class="h-30px app-sidebar-logo-default theme-light-show" />
-            <img alt="Logo" src="vendor/media/logos/star-dark.svg"
+            <img alt="Logo" src="{{ assets('img/logos/apple-touch-icon.png') }}"
                 class="h-30px app-sidebar-logo-default theme-dark-show" />
-            <img alt="Logo" src="vendor/media/logos/star-mini.svg" class="h-20px app-sidebar-logo-minimize" />
+            <img alt="Logo" src="{{ assets('img/logos/apple-touch-icon.png') }}" class="h-20px app-sidebar-logo-minimize" />
         </a>
 
         <!--begin::Sidebar toggle-->
@@ -26,7 +27,7 @@
         <!--begin::User info-->
         <a href="account/overview.html" class="d-flex align-items-center w-200px p-4 parent-hover">
             <span class="cursor-pointer symbol symbol-circle symbol-40px me-4">
-                <img src="vendor/media/avatars/300-3.jpg" alt="image" />
+                <img src="{{ vendor('media/avatars/300-3.jpg') }}" alt="image" />
             </span>
 
             <!--begin::Name-->
@@ -64,7 +65,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link active" href="#">
+                        <a class="menu-link {{ currentPage() == '' ? 'active' : '' }}" href="{{ route('access/') }}">
                             <span class="menu-icon">
                                 <i class="bi bi-house fs-2">
                                 </i>
@@ -74,7 +75,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="#">
+                        <a class="menu-link  {{ currentPage() == 'info' ? 'active' : '' }}" href="{{ route('access/info') }}">
                             <span class="menu-icon">
                                 <i class="bi bi-info-square fs-3">
                                 </i>
@@ -84,7 +85,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="#">
+                        <a class="menu-link {{ currentPage() == 'gallery' ? 'active' : '' }}" href="{{ route('access/gallery') }}">
                             <span class="menu-icon">
                                 <i class="bi bi-image fs-3">
                                 </i>
