@@ -1,16 +1,20 @@
+@import('app/utils/helpers/helper.php')
 @include(admin.partials.head)
-@include(admin.partials.sidebar)
-    <div class="content">
-        <div class="content-header d-flex justify-content-between align-items-center">
-            <h2>{{ $action == 'edit' ? 'Edit' : 'Create' }} Page</h2>
-            <div>
-                <span class="text-muted">Today: {{ date('F j, Y') }}</span>
-            </div>
-        </div>
-@if($error)
-<div class="alert alert-danger">{{ $error }}</div>
-@endif
-<form method="POST" enctype="multipart/form-data">
+<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+    <div class="app-page  flex-column flex-column-fluid " id="kt_app_page">
+        @include(admin.partials.header)
+            <div class="app-wrapper  flex-column flex-row-fluid " id="kt_app_wrapper">
+                <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+                    @include(admin.partials.sidebar)
+                    <div class="d-flex flex-column flex-column-fluid">
+                        <div id="kt_app_content" class="app-content  px-lg-3 ">
+                            <div id="kt_app_content_container" class="app-container  container-fluid ">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">{{ $action == 'edit' ? 'Edit' : 'Create' }} Page</h3>
+                                    </div>
+                                    <div class="card-body">
+                                    <form method="POST" enctype="multipart/form-data">
     <div class="row">
         <div class="col-lg-6">
     <div class="form-group">
@@ -146,11 +150,63 @@
         <label>Path</label>
         <input type="text" name="path" class="form-control" value="{{ $page['path'] ?? '' }}">
     </div>
+
+    <!-- Dynamic Contents CRUD Table -->
+    <div class="form-group mt-3">
+        <label>Page Contents (h1, h2, h3, etc.)</label>
+        <table class="table table-bordered" id="contentsTable">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th style="width:80px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach(($contents ?? []) as $c): ?>
+                <tr>
+                    <td>
+                        <input type="hidden" name="content_id[]" value="<?= htmlspecialchars($c['id']) ?>">
+                        <input type="text" name="content_type[]" class="form-control" value="<?= htmlspecialchars($c['type']) ?>" required>
+                    </td>
+                    <td>
+                        <input type="text" name="content_val[]" class="form-control" value="<?= htmlspecialchars($c['val']) ?>" required>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteContentRow(this, '<?= $c['id'] ?>')">Delete</button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary btn-sm" onclick="addContentRow()">Add Content</button>
+        <input type="hidden" name="delete_content_id[]" id="delete_content_ids">
+    </div>
+    <script>
+    function addContentRow() {
+        var tbody = document.querySelector('#contentsTable tbody');
+        var tr = document.createElement('tr');
+        tr.innerHTML = `<td><input type="hidden" name="content_id[]" value=""><input type="text" name="content_type[]" class="form-control" required></td><td><input type="text" name="content_val[]" class="form-control" required></td><td><button type="button" class="btn btn-danger btn-sm" onclick="deleteContentRow(this, '')">Delete</button></td>`;
+        tbody.appendChild(tr);
+    }
+    function deleteContentRow(btn, id) {
+        if(id) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'delete_content_id[]';
+            input.value = id;
+            document.forms[0].appendChild(input);
+        }
+        btn.closest('tr').remove();
+    }
+    </script>
+    <!-- End Dynamic Contents CRUD Table -->
+
     <div class="form-group mt-3">
     <label>Meta Image</label>
     <div class="mb-2" id="meta_image_preview_wrapper">
     <?php if(!empty($page['meta_image'])): ?>
-            <img id="meta_image_preview" src="http://localhost:8000/public/uploads/{{ $page['meta_image'] }}" alt="Meta Image" style="max-width:150px;max-height:80px;">
+            <img id="meta_image_preview" src="{{ assets($page['meta_image']) }}" alt="Meta Image" style="max-width:150px;max-height:80px;">
             <?php else: ?>
             <img id="meta_image_preview" src="" alt="Meta Image" style="display:none;max-width:150px;max-height:80px;">
             <?php endif ?>
@@ -213,5 +269,31 @@ function copyMetaField(field, select) {
     <button type="submit" class="btn btn-success">{{ $action == 'edit' ? 'Update' : 'Create' }}</button>
     <a href="/access/pages" class="btn btn-secondary">Cancel</a>
 </form>
-    </div>
-    @include(admin.partials.footer)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+@include(admin.partials.footer)
+<!-- jQuery (required for Summernote) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Summernote CSS/JS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.summernote').summernote({
+      height: 250,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'italic', 'underline', 'clear']],
+        ['fontname', ['fontname']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ]
+    });
+  });
+</script>

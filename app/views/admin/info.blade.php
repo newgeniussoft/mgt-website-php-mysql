@@ -213,7 +213,7 @@
 
                                         <?php if(isset($slides) && count($slides) > 0): ?>
                                         <?php foreach($slides as $slide): ?>
-                                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-12" id="slide-card-<?php echo $slide['id']; ?>">
                                             <div class="card-body pb-5">
                                                 <!--begin::Overlay-->
                                                 <a class="d-block overlay" data-fslightbox="lightbox-hot-sales"
@@ -499,6 +499,25 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(function() {
+    // DOM update helpers
+    function updateSlideDOM(action, html, id) {
+        if (action === 'create') {
+            $('#slides-list').append(html);
+        } else if (action === 'edit') {
+            $('#slide-card-' + id).replaceWith(html);
+        } else if (action === 'delete') {
+            $('#slide-card-' + id).remove();
+        }
+    }
+    function updateVideoDOM(action, html, id) {
+        if (action === 'create') {
+            $('#videos-list').append(html);
+        } else if (action === 'edit') {
+            $('#video-row-' + id).replaceWith(html);
+        } else if (action === 'delete') {
+            $('#video-row-' + id).remove();
+        }
+    }
     function ajaxFormHandler(formSelector, isCreateForm) {
         $(document).on('submit', formSelector, function(e) {
             e.preventDefault();
@@ -518,6 +537,12 @@ $(function() {
                     try { json = typeof response === 'string' ? JSON.parse(response) : response; } catch (e) { json = null; }
                     if(json && json.success) {
                         Swal.fire({icon: 'success',title: 'Success',text: json.success,timer: 1800,showConfirmButton: false});
+                        if(json.type === 'slide') {
+                            updateSlideDOM(json.action, json.html, json.id);
+                        }
+                        if(json.type === 'video') {
+                            updateVideoDOM(json.action, json.html, json.id);
+                        }
                         if(isCreateForm) form.reset();
                     } else if(json && json.error) {
                         Swal.fire({icon: 'error',title: 'Error',text: json.error});

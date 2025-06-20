@@ -10,45 +10,31 @@
                 class="h-30px app-sidebar-logo-default theme-dark-show" />
             <img alt="Logo" src="{{ assets('img/logos/apple-touch-icon.png') }}" class="h-20px app-sidebar-logo-minimize" />
         </a>
-
-        <!--begin::Sidebar toggle-->
         <div id="kt_app_sidebar_toggle"
             class="app-sidebar-toggle btn btn-icon btn-sm btn-color-gray-600 btn-active-color-primary border border-gray-300 h-30px w-30px position-absolute rounded-circle top-50 start-100 translate-middle rotate "
             data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
             data-kt-toggle-name="app-sidebar-minimize">
             <i class="bi bi-arrow-left fs-1 rotate-180"></i>
         </div>
-        <!--end::Sidebar toggle-->
-
     </div>
-    <!--begin::User-->
     <div class="app-sidebar-user-default app-sidebar-user-minimize bg-light border border-gray-300 rounded mx-9 mt-9 mt-lg-2"
         id="kt_app_sidebar_user">
-        <!--begin::User info-->
-        <a href="account/overview.html" class="d-flex align-items-center w-200px p-4 parent-hover">
+        <a href="#" class="d-flex align-items-center w-200px p-4 parent-hover">
             <span class="cursor-pointer symbol symbol-circle symbol-40px me-4">
                 <img src="{{ vendor('media/avatars/300-3.jpg') }}" alt="image" />
             </span>
-
-            <!--begin::Name-->
             <span class="d-flex flex-column">
                 <span class="text-gray-800 fs-7 fw-bold parent-hover-primary">Baba solomon</span>
                 <span class="text-gray-500 fs-8 fw-semibold">Administrateur</span>
             </span>
-            <!--end::Name-->
         </a>
-        <!--end::User info-->
     </div>
-    <!--end::User-->
-    <!--begin::sidebar menu-->
+    
     <div class="app-sidebar-menu overflow-hidden">
-        <!--begin::Menu wrapper-->
         <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper my-5">
-            <!--begin::Menu scroll-->
             <div id="kt_app_sidebar_menu_scroll" class="hover-scroll-overlay-y my-5 mx-4" data-kt-scroll="true"
                 data-kt-scroll-activate="true" data-kt-scroll-height="auto"
                 data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_user" data-kt-scroll-offset="5px">
-                <!--begin::Menu-->
                 <div class="
                     menu 
                     menu-column 
@@ -57,13 +43,11 @@
                     fw-semibold       
                     px-1
                 " id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-                    <!--begin:Menu item-->
                     <div class="menu-item pt-5 ms-2">
                         <div class="menu-content">
                             <span class="menu-heading fw-bold text-uppercase fs-5">Menu</span>
                         </div>
                     </div>
-
                     <div class="menu-item">
                         <a class="menu-link {{ currentPage() == '' ? 'active' : '' }}" href="{{ route('access/') }}">
                             <span class="menu-icon">
@@ -73,7 +57,6 @@
                             <span class="menu-title">Tableau de bord</span>
                         </a>
                     </div>
-
                     <div class="menu-item">
                         <a class="menu-link  {{ currentPage() == 'info' ? 'active' : '' }}" href="{{ route('access/info') }}">
                             <span class="menu-icon">
@@ -83,7 +66,6 @@
                             <span class="menu-title">Information</span>
                         </a>
                     </div>
-
                     <div class="menu-item">
                         <a class="menu-link {{ currentPage() == 'gallery' ? 'active' : '' }}" href="{{ route('access/gallery') }}">
                             <span class="menu-icon">
@@ -93,30 +75,32 @@
                             <span class="menu-title">Gallery</span>
                         </a>
                     </div>
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ currentPage() == 'pages' ? 'show hover' : '' }}">
+                        <span class="menu-link {{ currentPage() == 'pages' ? 'active' : '' }}">
+                            <span class="menu-icon">
+                                <i class="bi bi-file-earmark fs-2"></i>
+                            </span>
+                            <span class="menu-title">Pages</span>
+                            <span class="menu-arrow"></span></span>
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
+                                    <a class="menu-link"href="{{ route('access/pages') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">List of pages</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('access/pages/create') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">New page</span>
+                                    </a>
+                                </div>
 
-                   <!--begin:Menu item-->
-                    <div class="menu-item pt-7 ms-2"><!--begin:Menu content-->
-                        <div class="menu-content"><span class="menu-heading fw-bold text-uppercase fs-5">Pages</span>
-                        </div>
-                        <!--end:Menu content-->
-                    </div><!--end:Menu item--><!--begin:Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                        <!--begin:Menu link--><span class="menu-link"><span class="menu-icon"><i
-                                    class="ki-duotone ki-colors-square fs-1"><span class="path1"></span><span
-                                        class="path2"></span><span class="path3"></span><span
-                                        class="path4"></span></i></span><span class="menu-title">User
-                                Profile</span><span
-                                class="menu-arrow"></span></span><!--end:Menu link--><!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion"><!--begin:Menu item-->
-                            <div class="menu-item"><!--begin:Menu link--><a class="menu-link"
-                                    href="pages/user-profile/overview.html"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">Overview</span></a><!--end:Menu link--></div>
-                            <!--end:Menu item--><!--begin:Menu item-->
-                            <div class="menu-item"><!--begin:Menu link--><a class="menu-link"
-                                    href="pages/user-profile/projects.html"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">Projects</span></a><!--end:Menu link--></div>
+
                             <!--end:Menu item--><!--begin:Menu item-->
                             <div class="menu-item"><!--begin:Menu link--><a class="menu-link"
                                     href="pages/user-profile/campaigns.html"><span class="menu-bullet"><span
