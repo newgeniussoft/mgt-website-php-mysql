@@ -62,9 +62,9 @@ class Router {
             if (in_array($page, $this->supportedPages)) {
                 $page = str_replace("-", "_", $page);
                 if ($page == "tours") {
-                    return $this->mainController->tours();
+                    return $this->mainController->tours($language);
                 }
-                return $this->mainController->page($page);
+                return $this->mainController->page($language, $page);
             } else {
                 return $this->send404();
             }

@@ -8,10 +8,12 @@ require_once __DIR__ . '/../../models/Content.php';
 class PagesAdminController extends Controller {
     private $middleware;
     private $pageModel;
+    private $contentModel;
     public function __construct() {
         parent::__construct();
         $this->middleware = new MiddlewareHandler();
         $this->pageModel = new Page();
+        $this->contentModel = new Content();
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -29,6 +31,12 @@ class PagesAdminController extends Controller {
         $page = $this->pageModel->findByPath($path);
         return $page;
     }
+
+    public function getContents($path) {
+        $contents = $this->contentModel->findByPath($path);
+        return $contents;
+    }
+
     // Show create form & handle create
     public function create() {
         return $this->applyMiddleware(function () {
@@ -50,26 +58,40 @@ class PagesAdminController extends Controller {
                 } else {
                     $data['meta_image'] = '';
                 }
-                // Ensure content fields are set (HTML from Summernote)
+                // Ensure all fields are set from form (EN/ES)
+                $data['menu_title'] = $_POST['menu_title'] ?? '';
+                $data['menu_title_es'] = $_POST['menu_title_es'] ?? '';
+                $data['title'] = $_POST['title'] ?? '';
+                $data['title_es'] = $_POST['title_es'] ?? '';
+                $data['meta_title'] = $_POST['meta_title'] ?? '';
+                $data['meta_title_es'] = $_POST['meta_title_es'] ?? '';
+                $data['meta_description'] = $_POST['meta_description'] ?? '';
+                $data['meta_description_es'] = $_POST['meta_description_es'] ?? '';
+                $data['meta_keywords'] = $_POST['meta_keywords'] ?? '';
+                $data['meta_keywords_es'] = $_POST['meta_keywords_es'] ?? '';
+                $data['title_h1'] = $_POST['title_h1'] ?? '';
+                $data['title_h1_es'] = $_POST['title_h1_es'] ?? '';
+                $data['title_h2'] = $_POST['title_h2'] ?? '';
+                $data['title_h2_es'] = $_POST['title_h2_es'] ?? '';
                 $data['content'] = $_POST['content'] ?? '';
                 $data['content_es'] = $_POST['content_es'] ?? '';
-                $data['title'] = $_POST['title_en'] ?? '';
-                $data['title_es'] = $_POST['title_es'] ?? '';
                 if ($this->pageModel->create($data)) {
                     // Get last inserted page (by path or id)
                     $lastPage = $this->pageModel->findByPath($data['path']);
                     // Handle contents
                     if (!empty($_POST['content_type']) && is_array($_POST['content_type'])) {
                         foreach ($_POST['content_type'] as $i => $ctype) {
-                            $cval = $_POST['content_val'][$i] ?? '';
-                            if ($ctype && $cval) {
-                                $contentModel->create([
-                                    'page' => $lastPage['path'],
-                                    'type' => $ctype,
-                                    'val' => $cval
-                                ]);
-                            }
-                        }
+    $cval = $_POST['content_val'][$i] ?? '';
+    $cval_es = $_POST['content_val_es'][$i] ?? '';
+    if ($ctype && ($cval || $cval_es)) {
+        $contentModel->create([
+            'page' => $lastPage['path'],
+            'type' => $ctype,
+            'val' => $cval,
+            'val_es' => $cval_es
+        ]);
+    }
+}
                     }
                     header('Location: /access/pages'); exit;
                 } else {
@@ -112,11 +134,23 @@ class PagesAdminController extends Controller {
                     // No new upload, keep old image
                     $data['meta_image'] = $_POST['old_meta_image'] ?? ($page['meta_image'] ?? '');
                 }
-                // Ensure content fields are set (HTML from Summernote)
+                // Ensure all fields are set from form (EN/ES)
+                $data['menu_title'] = $_POST['menu_title'] ?? '';
+                $data['menu_title_es'] = $_POST['menu_title_es'] ?? '';
+                $data['title'] = $_POST['title'] ?? '';
+                $data['title_es'] = $_POST['title_es'] ?? '';
+                $data['meta_title'] = $_POST['meta_title'] ?? '';
+                $data['meta_title_es'] = $_POST['meta_title_es'] ?? '';
+                $data['meta_description'] = $_POST['meta_description'] ?? '';
+                $data['meta_description_es'] = $_POST['meta_description_es'] ?? '';
+                $data['meta_keywords'] = $_POST['meta_keywords'] ?? '';
+                $data['meta_keywords_es'] = $_POST['meta_keywords_es'] ?? '';
+                $data['title_h1'] = $_POST['title_h1'] ?? '';
+                $data['title_h1_es'] = $_POST['title_h1_es'] ?? '';
+                $data['title_h2'] = $_POST['title_h2'] ?? '';
+                $data['title_h2_es'] = $_POST['title_h2_es'] ?? '';
                 $data['content'] = $_POST['content'] ?? '';
                 $data['content_es'] = $_POST['content_es'] ?? '';
-                $data['title'] = $_POST['title_en'] ?? '';
-                $data['title_es'] = $_POST['title_es'] ?? '';
                 if ($this->pageModel->update($id, $data)) {
                     // Handle contents CRUD
                     $pagePath = $page['path'];
@@ -129,20 +163,22 @@ class PagesAdminController extends Controller {
                     // Update & Create
                     if (!empty($_POST['content_type']) && is_array($_POST['content_type'])) {
                         foreach ($_POST['content_type'] as $i => $ctype) {
-                            $cid = $_POST['content_id'][$i] ?? null;
-                            $cval = $_POST['content_val'][$i] ?? '';
-                            if ($cid) {
-                                // Update
-                                $contentModel->update($cid, ['type' => $ctype, 'val' => $cval]);
-                            } elseif ($ctype && $cval) {
-                                // Create
-                                $contentModel->create([
-                                    'page' => $pagePath,
-                                    'type' => $ctype,
-                                    'val' => $cval
-                                ]);
-                            }
-                        }
+    $cid = $_POST['content_id'][$i] ?? null;
+    $cval = $_POST['content_val'][$i] ?? '';
+    $cval_es = $_POST['content_val_es'][$i] ?? '';
+    if ($cid) {
+        // Update
+        $contentModel->update($cid, ['type' => $ctype, 'val' => $cval, 'val_es' => $cval_es]);
+    } elseif ($ctype && ($cval || $cval_es)) {
+        // Create
+        $contentModel->create([
+            'page' => $pagePath,
+            'type' => $ctype,
+            'val' => $cval,
+            'val_es' => $cval_es
+        ]);
+    }
+}
                     }
                     header('Location: /access/pages'); exit;
                 } else {

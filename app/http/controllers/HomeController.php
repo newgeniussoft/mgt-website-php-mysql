@@ -2,6 +2,7 @@
     
     require_once 'Controller.php';
     require_once 'PagesAdminController.php';
+    require_once __DIR__ . '/../../models/Video.php';
 
     class HomeController extends Controller
     {
@@ -34,10 +35,13 @@
                 
             // SEO metadata for homepage
             $languagePrefix = $this->language === 'es' ? ' - Español' : '';
+            $modelVideo = new Video();
+            $videos = $modelVideo->all();
             
             echo $this->view('pages.index', [
                 'language' => $this->language,
                 'tours' => $this->tours,
+                'videos' => $videos,
                 'currentPage' => 'home',
                 'metaTitle' => 'Madagascar Green Tours - Eco-Friendly Travel Experience' . $languagePrefix,
                 'metaDescription' => 'Madagascar Green Tours offers eco-friendly travel experiences in Madagascar with sustainable tourism practices. Explore unique wildlife, breathtaking landscapes, and authentic cultural experiences.',
@@ -46,8 +50,10 @@
             ]);
         }
 
-        public function page($path){
+        public function page($lang, $path){
             $page = $this->pagesAdminController->getPage($path);
+            $modelVideo = new Video();
+            $videos = $modelVideo->all();
             $view = $path;
             if ($path == "") {
                 $view = 'index';
@@ -55,8 +61,10 @@
             if($page){
                 echo $this->view('pages.'.$view, [
                     'tours' => $this->tours,
-                    'language' => $this->language,
+                    'language' => $lang,
+                    'videos' => $videos,
                     'page' => $page,
+                    'contents' => $this->pagesAdminController->getContents($path)
                 ]);
             }
             /*return $this->index();*/

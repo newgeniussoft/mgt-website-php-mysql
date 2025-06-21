@@ -59,12 +59,20 @@
         <!-- Our Tours Section with Rich Content -->
         <section id="our_tours" class="py-5 content-section">
             <div class="container">
-                <h2 class="section-heading">Our Tours</h2>
-                <h6 class="section-subtitle">Here our popular tours</h6>
+                <h2 class="section-heading">
+                    {{ isset($contents[0]) ? ($language == 'es' ? ($contents[0]['val_es'] ?? $contents[0]['val']) : $contents[0]['val']) : 'Our Tours' }}
+                </h2>
+                <h6 class="section-subtitle">
+                {{ isset($contents[1]) ? ($language == 'es' ? ($contents[1]['val_es'] ?? $contents[1]['val']) : $contents[1]['val']) : 'Our Tours' }}
+                    
+                </h6>
                 <center>
                     <div class="line-title"></div>
                 </center>
                 <div class="row mt-6">
+
+                <?php foreach($tours as $t): ?>
+
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <article class="card__styled card--1">
                             <div class="card__info-hover">
@@ -76,72 +84,29 @@
                                     <svg class="card__clock" viewBox="0 0 24 24">
                                         <path
                                             d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z" />
-                                    </svg><span class="card__time">15 min</span>
+                                    </svg><span class="card__time">15 days</span>
                                 </div>
 
                             </div>
                             <div class="card__img"
                                 style="background-image: url('{{ assets('img/tours/combination-tour.webp') }}');">
                             </div>
-                            <a href="#" class="card_link">
+                            <a href="{{ route('tours/'.$t->path) }}" class="card_link">
                                 <div class="card__img--hover"
                                     style="background-image: url('{{ assets('img/tours/combination-tour.webp') }}');">
                                 </div>
                             </a>
                             <div class="card__info">
                                 <span class="card__category"></span>
-                                <h3 class="card__title">Adventure tour</h3>
-                                <p class="card__by">This tour combines a 3-day boat trip on the Tsiribihina river,
-                                    followed by the Tsingy de Bemaraha NP, the Avenue des Baobab, a trip on the RN7
-                                    where we visit several parks and the jingle train tours, and also hiking in
-                                    Andringitra Mountaine and a tour to Andasibe NP,
-                                    in the Eastern part of Madagascar, where you can see the largest lemurs (Indri
-                                    Indri) <a href="#" class="card__author" title="author">Show more</a></p>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <article class="card__styled card--1">
-                            <div class="card__info-hover">
-                                <svg class="card__like" viewBox="0 0 24 24">
-                                    <path fill="#000000"
-                                        d="M12.1,18.55L12,18.65L11.89,18.55C7.14,14.24 4,11.39 4,8.5C4,6.5 5.5,5 7.5,5C9.04,5 10.54,6 11.07,7.36H12.93C13.46,6 14.96,5 16.5,5C18.5,5 20,6.5 20,8.5C20,11.39 16.86,14.24 12.1,18.55M16.5,3C14.76,3 13.09,3.81 12,5.08C10.91,3.81 9.24,3 7.5,3C4.42,3 2,5.41 2,8.5C2,12.27 5.4,15.36 10.55,20.03L12,21.35L13.45,20.03C18.6,15.36 22,12.27 22,8.5C22,5.41 19.58,3 16.5,3Z" />
-                                </svg>
-                                <div class="card__clock-info">
-                                    <svg class="card__clock" viewBox="0 0 24 24">
-                                        <path
-                                            d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z" />
-                                    </svg><span class="card__time">15 min</span>
-                                </div>
-
-                            </div>
-                            <div class="card__img"
-                                style="background-image: url('{{ assets('img/tours/birding-tour.webp') }}');">
-                            </div>
-                            <a href="#" class="card_link">
-                                <div class="card__img--hover"
-                                    style="background-image: url('{{ assets('img/tours/birding-tour.webp') }}');">
-                                </div>
-                            </a>
-                            <div class="card__info">
-                                <span class="card__category"></span>
-                                <h3 class="card__title">Birding tour</h3>
-                                <p class="card__by"> With around 270 bird species, Madagascar is a great place for
-                                    ornithologists. Around 40% of these birds is endemic. There are very rare birds,
-                                    like
-                                    three kinds of mesites. The most famous endemic bird on the island is the vanga,
-                                    which
-                                    is specialized in catching insects. There are several kinds of birds of prey, like
-                                    the
-                                    buzzard, the hawk, the owl and some very rare eagles. During our 19-day Birding Tour
-                                    you
-                                    visit the best places for birding. Beside lots of birds, you will see a lot of other
-                                    kind of animals like lemurs, chameleons, spiders, snakes and frogs.
-                                    <a href="#" class="card__author" title="author">Show more</a>
+                                <h3 class="card__title">{{ $language == "es" ? $t->name_es : $t->name }}</h3>
+                                <p class="card__by"> {{ $language == "es" ? $t->text_for_customer_es : $t->text_for_customer }}
+                                    <a href="{{ route('tours/'.$t->path) }}" class="card__author" title="author">Show more</a>
                                 </p>
                             </div>
                         </article>
                     </div>
+
+                <?php endforeach ?>
 
                 </div>
 
@@ -152,8 +117,8 @@
             </div>
             <center>
 
-                <a class="btn__styled mt-6" href="#" role="button" aria-label="Show more tours">
-                    <span class="text">Show more</span>
+                <a class="btn__styled mt-6" href="{{ route('tours') }}" role="button" aria-label="Show more tours">
+                    <span class="text">{{ trans('btn.show-more') }}</span>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.66669 11.3334L11.3334 4.66669" stroke="white" stroke-width="1.33333"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -165,50 +130,45 @@
         </section>
 
         <section id="video" class="container">
-
-            <h2 class="section-heading">Video</h2>
-            <h6 class="section-subtitle">Experience the magic of Madagascar - watch these stunning videos now!</h6>
+            <h2 class="section-heading">
+                {{ isset($contents[2]) ? ($language == 'es' ? ($contents[2]['val_es'] ?? $contents[2]['val']) : $contents[2]['val']) : 'Videos' }}
+            </h2>
+            <h6 class="section-subtitle">
+            {{ isset($contents[3]) ? ($language == 'es' ? ($contents[3]['val_es'] ?? $contents[3]['val']) : $contents[3]['val']) : 'Videos' }}
+        </h6>
             <center>
                 <div class="line-title"></div>
             </center>
             <div class="row" style="margin-top: 50px;">
+            <?php foreach($videos as $video): ?>
                 <div class="col-lg-6">
                     <h5 class="card-title section-heading text-center fontInterRegularExtraBold"
                         style="font-size: 18pt; text-transform: capitalize;">
-                        Adventure tours 28 days<br>
+                        {{ $language == "es" ? $video['title_es'] : $video['title_es'] }}
                     </h5>
-                    <p class="text-center fontRegular">Thanks to Benoit Maheux Family for capturing video during the
-                        trip
-                        with Madagascar Green Tours!</p>
-                    <a href="https://www.youtube.com/watch?v=rEmaEklG0Ek" class="text-center" target="_blank"
+                    <p class="text-center fontRegular">
+                    {{ $language == "es" ? $video['subtitle_es'] : $video['subtitle_es'] }}
+                    
+                    </p>
+                    <a href="{{ $video['link'] }}" class="text-center" target="_blank"
                         rel="noopener noreferrer">
                         <img src="{{ assets('img/logos/play-youtube.png') }}" alt="youtube" class="youtube-play">
-                        <img src="https://img.youtube.com/vi/rEmaEklG0Ek/hqdefault.jpg" style="width: 100%"
-                            alt="Adventure tours 28 days" class="img-thumbnail" width="320" height="180">
+                        <img src="https://img.youtube.com/vi/{{ idYoutubeVideo($video['link']) }}/hqdefault.jpg" style="width: 100%"
+                            alt="{{ $video['title_es'] }}" class="img-thumbnail" width="320" height="180">
                     </a>
                 </div>
-                <div class="col-lg-6">
-                    <h5 class="card-title section-heading text-center fontInterRegularExtraBold"
-                        style="font-size: 18pt; text-transform: capitalize;">
-                        Combination tours<br>
-                    </h5>
-                    <p class="text-center fontRegular">Gracias a Gorka Ferrer por capturar vídeo durante el viaje con
-                        Madagascar Green Tours</p>
-                    <a href="https://www.youtube.com/watch?v=W0joop_UvCM" class="text-center" target="_blank"
-                        rel="noopener noreferrer">
-                        <img src="{{ assets('img/logos/play-youtube.png') }}" alt="youtube" class="youtube-play">
-                        <img src="https://img.youtube.com/vi/W0joop_UvCM/hqdefault.jpg" style="width: 100%"
-                            alt="Adventure tours 28 days" class="img-thumbnail" width="320" height="180">
-                    </a>
-
-
-                </div>
+                
+            <?php endforeach ?>
             </div>
         </section>
         <section id="services" class="container" style="padding-bottom: 50px;">
 
-            <h2 class="section-heading">Services</h2>
-            <h6 class="section-subtitle">Experience our best-selling service</h6>
+        <h2 class="section-heading">
+                {{ isset($contents[4]) ? ($language == 'es' ? ($contents[4]['val_es'] ?? $contents[4]['val']) : $contents[4]['val']) : 'Services' }}
+            </h2>
+            <h6 class="section-subtitle">
+            {{ isset($contents[5]) ? ($language == 'es' ? ($contents[5]['val_es'] ?? $contents[5]['val']) : $contents[5 ]['val']) : 'Yout best service' }}
+        </h6>
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="car-rental-card awesome-card position-relative overflow-hidden rounded shadow-sm">

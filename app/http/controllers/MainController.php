@@ -42,8 +42,18 @@ class MainController extends Controller
     {
         $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $pathParts = explode('/', trim($currentPath, '/'));
-        if (count($pathParts) == 2) {
-            return $this->tourController->show($language, $pathParts[1]);
+        if (count($pathParts) == 1) {
+            return $this->tourController->all($language);
+        } else {
+            if (count($pathParts) == 2 && $language == "es") {
+                return $this->tourController->all($language);
+            } else {
+                if (count($pathParts) == 3 && $language == "es") {
+                return $this->tourController->show($language, $pathParts[2]);
+                } else {
+                    return $this->tourController->show($language, $pathParts[1]);
+                }
+            }
         }
         return $this->tourController->all($language);
     }
@@ -51,7 +61,7 @@ class MainController extends Controller
     public function access(){ return $this->adminController->index();}
     public function seo_test(){ return $this->homeController->seo_test();}
     public function car_rental(){ return $this->homeController->car_rental();}
-    public function page($path){ return $this->homeController->page($path);}
+    public function page($lang, $path){ return $this->homeController->page($lang, $path);}
 
 }
 

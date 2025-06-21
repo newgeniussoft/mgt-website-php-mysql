@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
         <label>Title (EN)</label>
-        <input type="text" name="title_en" class="form-control" value="{{ $page['title_en'] ?? '' }}">
+        <input type="text" name="title" class="form-control" value="{{ $page['title'] ?? '' }}">
     </div>
     <div class="form-group">
     <label>Meta Title (EN)</label>
@@ -158,7 +158,8 @@
             <thead>
                 <tr>
                     <th>Type</th>
-                    <th>Value</th>
+                    <th>Value (EN)</th>
+                    <th>Value (ES)</th>
                     <th style="width:80px;">Action</th>
                 </tr>
             </thead>
@@ -171,6 +172,9 @@
                     </td>
                     <td>
                         <input type="text" name="content_val[]" class="form-control" value="<?= htmlspecialchars($c['val']) ?>" required>
+                    </td>
+                    <td>
+                        <input type="text" name="content_val_es[]" class="form-control" value="<?= htmlspecialchars($c['val_es'] ?? '') ?>">
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm" onclick="deleteContentRow(this, '<?= $c['id'] ?>')">Delete</button>
@@ -186,7 +190,7 @@
     function addContentRow() {
         var tbody = document.querySelector('#contentsTable tbody');
         var tr = document.createElement('tr');
-        tr.innerHTML = `<td><input type="hidden" name="content_id[]" value=""><input type="text" name="content_type[]" class="form-control" required></td><td><input type="text" name="content_val[]" class="form-control" required></td><td><button type="button" class="btn btn-danger btn-sm" onclick="deleteContentRow(this, '')">Delete</button></td>`;
+        tr.innerHTML = `<td><input type="hidden" name="content_id[]" value=""><input type="text" name="content_type[]" class="form-control" required></td><td><input type="text" name="content_val[]" class="form-control" required></td><td><input type="text" name="content_val_es[]" class="form-control"></td><td><button type="button" class="btn btn-danger btn-sm" onclick="deleteContentRow(this, '')">Delete</button></td>`;
         tbody.appendChild(tr);
     }
     function deleteContentRow(btn, id) {

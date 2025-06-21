@@ -163,6 +163,18 @@
         }
     }
 
+    if (!function_exists('idYoutubeVideo')) {
+        function idYoutubeVideo($link) {
+            ///https://www.youtube.com/watch?v=rEmaEklG0Ek
+            $lnkParts = explode("?v=", $link);
+            if (count($lnkParts) == 2) {
+                return substr($lnkParts[1], 0, 11);
+            } else {
+                return 'invalide';
+            }
+        }
+    }
+
     /**
      * Include an SVG file
      *
