@@ -3,11 +3,11 @@
         <div class="container">
             <a class="navbar-brand" href="{{ route('') }}">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="{{ assets('img/logos/logo_120.webp') }}" type="image/webp"
+                    <source media="(max-width: 768px)" srcset="{{ assets($info['logo']) }}" type="image/webp"
                         width="120" height="42">
-                    <source media="(min-width: 769px)" srcset="{{ assets('img/logos/logo_220.webp') }}" type="image/webp"
+                    <source media="(min-width: 769px)" srcset="{{ assets($info['logo']) }}" type="image/webp"
                         width="220" height="77">
-                    <img src="{{ assets('img/logos/logo_180.webp') }}" alt="MGT Travel Logo" class="navbar-logo" width="180"
+                    <img src="{{ assets($info['logo']) }}" alt="Madagascar Green tours Travel Logo" class="navbar-logo" width="180"
                         height="63" fetchpriority="high">
                 </picture>
             </a>

@@ -3,6 +3,10 @@
     require_once 'Controller.php';
     require_once 'PagesAdminController.php';
     require_once __DIR__ . '/../../models/Video.php';
+    require_once __DIR__ . '/../../models/Review.php';
+    require_once __DIR__ . '/../../models/Gallery.php';
+    require_once __DIR__ . '/../../models/SocialMedia.php';
+    require_once __DIR__ . '/../../models/Slide.php';
 
     class HomeController extends Controller
     {
@@ -20,40 +24,21 @@
             $this->pagesAdminController = new PagesAdminController();
         }
         
-        /**
-         * Show homepage
-         *
-         * @param string|null $language Language code
-         * @return string
-         */
-        public function index($language = null)
-        {
-            // Update language if provided
-            if ($language !== null) {
-                $this->language = $language;
-            }
-                
-            // SEO metadata for homepage
-            $languagePrefix = $this->language === 'es' ? ' - Español' : '';
-            $modelVideo = new Video();
-            $videos = $modelVideo->all();
-            
-            echo $this->view('pages.index', [
-                'language' => $this->language,
-                'tours' => $this->tours,
-                'videos' => $videos,
-                'currentPage' => 'home',
-                'metaTitle' => 'Madagascar Green Tours - Eco-Friendly Travel Experience' . $languagePrefix,
-                'metaDescription' => 'Madagascar Green Tours offers eco-friendly travel experiences in Madagascar with sustainable tourism practices. Explore unique wildlife, breathtaking landscapes, and authentic cultural experiences.',
-                'metaKeywords' => 'madagascar tours, eco tourism, green travel, wildlife tours, sustainable tourism, madagascar travel, lemur tours',
-                'metaImage' => 'img/logo/logo_new_updated.png'
-            ]);
-        }
 
         public function page($lang, $path){
             $page = $this->pagesAdminController->getPage($path);
             $modelVideo = new Video();
+            $modelReview = new Review();
+            $modelGallery = new Gallery();
+            $modelSocialMedia = new SocialMedia();
+            $modelSlide = new Slide();
             $videos = $modelVideo->all();
+            $reviews = $modelReview->all();
+            $galleries = $modelGallery->all();
+            $socialMedia = $modelSocialMedia->all();
+            $slides = $modelSlide->all();
+
+            
             $view = $path;
             if ($path == "") {
                 $view = 'index';
@@ -63,6 +48,10 @@
                     'tours' => $this->tours,
                     'language' => $lang,
                     'videos' => $videos,
+                    'reviews' => $reviews,
+                    'galleries' => $galleries,
+                    'socialMedia' => $socialMedia,
+                    'slides' => $slides,
                     'page' => $page,
                     'info' => $this->info,
                     'contents' => $this->pagesAdminController->getContents($path)
