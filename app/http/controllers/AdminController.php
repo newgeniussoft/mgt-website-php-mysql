@@ -3,6 +3,7 @@
 require_once 'Controller.php';
 require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 require_once __DIR__ . '/../middleware/MiddlewareHandler.php';
+require_once __DIR__ . '/ServicesController.php';
 
 class AdminController extends Controller
 {
@@ -448,6 +449,21 @@ class AdminController extends Controller
                 'success' => $success,
                 'error' => $error
             ]);
+        }, [new AuthMiddleware()]);
+    /**
+     * Services admin CRUD page (protected by auth middleware)
+     */
+        
+    }
+    public function services()
+    {
+        return $this->applyMiddleware(function() {
+            $controller = new ServicesController();
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller->handle();
+            } else {
+                $controller->index();
+            }
         }, [new AuthMiddleware()]);
     }
 }

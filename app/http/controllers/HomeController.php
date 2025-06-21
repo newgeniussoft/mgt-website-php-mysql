@@ -64,6 +64,7 @@
                     'language' => $lang,
                     'videos' => $videos,
                     'page' => $page,
+                    'info' => $this->info,
                     'contents' => $this->pagesAdminController->getContents($path)
                 ]);
             }

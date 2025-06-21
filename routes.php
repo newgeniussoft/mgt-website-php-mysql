@@ -104,6 +104,10 @@ class Router {
         if ($adminPage === 'login') {
             return $this->adminController->login();
         }
+        // Route /access/services to services CRUD
+        if ($adminPage === 'services') {
+            return $this->adminController->services();
+        }
         
         // For all other admin routes, the middleware in the AdminController methods
         // will handle authentication checks

@@ -217,13 +217,15 @@
         </section>
         <section id="testimonials" class="container py-5" aria-labelledby="reviews-heading">
             <h2 id="reviews-heading" class="sr-only">Customer Reviews</h2>
-            <h2 class="section-heading">Reviews</h2>
-            <h6 class="section-subtitle">What our customers are saying about us</h6>
-
+            
+        <h2 class="section-heading">
+                {{ isset($contents[6]) ? ($language == 'es' ? ($contents[6]['val_es'] ?? $contents[6]['val']) : $contents[6]['val']) : 'Reviews' }}
+            </h2>
+            <h6 class="section-subtitle">
+            {{ isset($contents[7]) ? ($language == 'es' ? ($contents[7]['val_es'] ?? $contents[7]['val']) : $contents[7]['val']) : 'The review of your customer' }}
+        </h6>
             <!-- Reviews List -->
             <div id="reviewsList">
-
-
                 <!-- Example Review Post -->
                 <div class="review-post card shadow-sm mb-3 p-3">
                     <div class="d-flex align-items-center mb-2">
