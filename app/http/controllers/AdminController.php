@@ -4,6 +4,7 @@ require_once 'Controller.php';
 require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 require_once __DIR__ . '/../middleware/MiddlewareHandler.php';
 require_once __DIR__ . '/ServicesController.php';
+require_once __DIR__ . '/ReviewsController.php';
 
 class AdminController extends Controller
 {
@@ -459,6 +460,21 @@ class AdminController extends Controller
     {
         return $this->applyMiddleware(function() {
             $controller = new ServicesController();
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $controller->handle();
+            } else {
+                $controller->index();
+            }
+        }, [new AuthMiddleware()]);
+    }
+
+    /**
+     * Reviews admin CRUD page (protected by auth middleware)
+     */
+    public function reviews()
+    {
+        return $this->applyMiddleware(function() {
+            $controller = new ReviewsController();
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $controller->handle();
             } else {
