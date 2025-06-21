@@ -21,12 +21,10 @@
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-12">
                         <h5>{{ trans('title.tour.hightlights') }}</h5>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                            Tempora aspernatur qui fugiat, aliquam sapiente rerum magni 
-                            laboriosam debitis? Perspiciatis ipsum nam id atque quasi obcaecati 
-                            eligendi! Aliquid quo error iste.
-                        </p>
+                        <div>
+                          <!-- here -->
+
+                        </div>
                         <h5>{{ trans('title.tour.itinerary') }}</h5>
                         <p>{{ $tour->itinerary }}</p>
                         <table class="table">

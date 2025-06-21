@@ -15,7 +15,7 @@
             $this->db = $database;
             }
 
-        private function execute($query) {
+        public function execute($query) {
             $this->stmt = $this->conn->prepare($query);
             return $this->stmt->execute();
         }

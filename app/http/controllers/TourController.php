@@ -31,13 +31,14 @@
                 echo $this->view('pages.tours.all', [
                     'tours' => $this->tours,
                     'language' => $language,
+                    'info' => $this->info,
                     'page' => $page,
                     'contents' => $this->pagesAdminController->getContents($path)
                 ]);
             }
         }
         public function show($lang = null, $path) {
-            $tour = $this->tourModel->fetchBy('path', $path);
+            $tour = $this->tourModel->fetchByPath($path);
             $path = "tours";
             $page = $this->pagesAdminController->getPage($path);
 
@@ -45,6 +46,7 @@
                 echo $this->view('pages.tours.show', [
                     'tours' => $this->tours,
                     'tour' => $tour,
+                    'info' => $this->info,
                     'language' => $lang,
                     'page' => $page,
                     'contents' => $this->pagesAdminController->getContents($path)
