@@ -60,6 +60,13 @@
         }
     }
 
+    if (!function_exists('csrf_token')) {
+        function csrf_token() {
+            return bin2hex(random_bytes(32));
+
+        }
+    }
+
     /**
      * Get a value from an array by key
      *

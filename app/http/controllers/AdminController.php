@@ -198,6 +198,8 @@ class AdminController extends Controller
                     'whatsapp' => $_POST['whatsapp'] ?? '',
                     'email' => $_POST['email'] ?? '',
                     'short_about' => $_POST['short_about'] ?? '',
+'short_about_es' => $_POST['short_about_es'] ?? '',
+'address' => $_POST['address'] ?? '',
                 ];
 
                 // Handle logo upload

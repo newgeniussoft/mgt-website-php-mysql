@@ -1,0 +1,3072 @@
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 59166
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750597640.2558
+    [REQUEST_TIME] => 1750597640
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 59555
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750597713.6251
+    [REQUEST_TIME] => 1750597713
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 59556
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750597747.1394
+    [REQUEST_TIME] => 1750597747
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 49429
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750599863.5688
+    [REQUEST_TIME] => 1750599863
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 49430
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750599884.7331
+    [REQUEST_TIME] => 1750599884
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 49559
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750599933.9832
+    [REQUEST_TIME] => 1750599933
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 50420
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600107.8797
+    [REQUEST_TIME] => 1750600107
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 50693
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600169.5679
+    [REQUEST_TIME] => 1750600169
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 50694
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600217.7142
+    [REQUEST_TIME] => 1750600217
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 50945
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600244.18
+    [REQUEST_TIME] => 1750600244
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 51513
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600369.6232
+    [REQUEST_TIME] => 1750600369
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 51514
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600403.7454
+    [REQUEST_TIME] => 1750600403
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 51698
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600407.1293
+    [REQUEST_TIME] => 1750600407
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 51751
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600415.8239
+    [REQUEST_TIME] => 1750600415
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 51836
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600427.7977
+    [REQUEST_TIME] => 1750600427
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 53028
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600687.4458
+    [REQUEST_TIME] => 1750600687
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 53391
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750600783.2613
+    [REQUEST_TIME] => 1750600783
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 56687
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750601933.8918
+    [REQUEST_TIME] => 1750601933
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 56688
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750601979.0514
+    [REQUEST_TIME] => 1750601979
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 56926
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602003.7698
+    [REQUEST_TIME] => 1750602003
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 57514
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602145.2967
+    [REQUEST_TIME] => 1750602145
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 57515
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602188.4564
+    [REQUEST_TIME] => 1750602188
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 57701
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602215.7174
+    [REQUEST_TIME] => 1750602215
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 57859
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602242.8165
+    [REQUEST_TIME] => 1750602242
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 58333
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602329.4131
+    [REQUEST_TIME] => 1750602329
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 58701
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602434.5508
+    [REQUEST_TIME] => 1750602434
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 58702
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602467.9249
+    [REQUEST_TIME] => 1750602467
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 58854
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602481.8093
+    [REQUEST_TIME] => 1750602481
+)
+
+---
+POST: Array
+(
+    [_token] => 05b1dab707f443fa8d24b4f33e14ecad19048e62daf909ede0f62f1c783848d1
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => zaez
+    [title_es] => azea
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qsqs
+    [description_es] => qsdqs
+    [text_for_customer] => sdqs
+    [text_for_customer_es] => sqd
+    [itinerary] => sdq
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => sqd
+    [meta_description_es] => sqd
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 58949
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 2605
+    [HTTP_CONTENT_LENGTH] => 2605
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrzAfgj5yAJApAxam
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602497.3284
+    [REQUEST_TIME] => 1750602497
+)
+
+---
+POST: Array
+(
+    [_token] => c672f635a5a228128212105aa8b44e5ece523a62a32e2f035a10cf0e2cada72d
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => hello world
+    [title_es] => dssdf 
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qdqs
+    [description_es] => sdq
+    [text_for_customer] => sdq
+    [text_for_customer_es] => sqzea 
+    [itinerary] => a zz ea
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => aaa za
+    [meta_description_es] => rrga az 
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => Screenshot_20230723-080256_Lite.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php23A1.tmp
+            [error] => 0
+            [size] => 619174
+        )
+
+    [image_cover] => Array
+        (
+            [name] => GettyImages-1468857117_opt.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php23A2.tmp
+            [error] => 0
+            [size] => 23109
+        )
+
+    [map] => Array
+        (
+            [name] => téléchargement (2).jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php23A3.tmp
+            [error] => 0
+            [size] => 70646
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 59402
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 715602
+    [HTTP_CONTENT_LENGTH] => 715602
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundary9ll6q1lIw5HGKP5U
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundary9ll6q1lIw5HGKP5U
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602567.6122
+    [REQUEST_TIME] => 1750602567
+)
+
+---
+POST: Array
+(
+    [_token] => c672f635a5a228128212105aa8b44e5ece523a62a32e2f035a10cf0e2cada72d
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => hello world
+    [title_es] => dssdf 
+    [subtitle] => ADVENTURE TOURS
+    [subtitle_es] => ADVENTURE TOURS
+    [description] => qdqs
+    [description_es] => sdq
+    [text_for_customer] => sdq
+    [text_for_customer_es] => sqzea 
+    [itinerary] => a zz ea
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => aaa za
+    [meta_description_es] => rrga az 
+    [meta_keywords] => ZADVENTUR Z EAE TOURS
+    [meta_keywords_es] => ADVENTURE TOURS AAZEA 
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => Screenshot_20230723-080256_Lite.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpC081.tmp
+            [error] => 0
+            [size] => 619174
+        )
+
+    [image_cover] => Array
+        (
+            [name] => GettyImages-1468857117_opt.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpC082.tmp
+            [error] => 0
+            [size] => 23109
+        )
+
+    [map] => Array
+        (
+            [name] => téléchargement (2).jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpC083.tmp
+            [error] => 0
+            [size] => 70646
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 59403
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 715602
+    [HTTP_CONTENT_LENGTH] => 715602
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundary9ll6q1lIw5HGKP5U
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundary9ll6q1lIw5HGKP5U
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750602607.7611
+    [REQUEST_TIME] => 1750602607
+)
+
+---
+POST: Array
+(
+    [_token] => 4c3cb681d7316c6a6a8637fb0d7366dd8a6afa6231504d7371e793b5edb5ba6a
+    [name] => ADVENTURE TOURS
+    [name_es] => ADVENTURE TOURS
+    [title] => Hotel booking
+    [title_es] => Descubra Madagascar con nosotros!
+    [subtitle] => Hellow
+    [subtitle_es] => erz
+    [description] => qsd
+    [description_es] => aa 
+    [text_for_customer] => zae z
+    [text_for_customer_es] => ze a
+    [itinerary] => ze azz eaz eaz eaz
+    [meta_title] => ADVENTURE TOURSSD QD
+    [meta_title_es] => ADVENTURE TOURSSQ DSZAA 
+    [meta_description] => fefsddfsd
+    [meta_description_es] => dfsd
+    [meta_keywords] => dfs
+    [meta_keywords_es] => dfsd
+    [path] => adventure_tour
+)
+
+FILES: Array
+(
+    [image] => Array
+        (
+            [name] => 46760f800dd58942.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpBAB3.tmp
+            [error] => 0
+            [size] => 127268
+        )
+
+    [image_cover] => Array
+        (
+            [name] => 147560fa8d2747767.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpBAB4.tmp
+            [error] => 0
+            [size] => 689326
+        )
+
+    [map] => Array
+        (
+            [name] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+SERVER: Array
+(
+    [DOCUMENT_ROOT] => C:\xampp\htdocs\mgt-new
+    [REMOTE_ADDR] => ::1
+    [REMOTE_PORT] => 50107
+    [SERVER_SOFTWARE] => PHP 7.4.7 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 8000
+    [REQUEST_URI] => /access/tours/store
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /index.php
+    [SCRIPT_FILENAME] => C:\xampp\htdocs\mgt-new\index.php
+    [PATH_INFO] => /access/tours/store
+    [PHP_SELF] => /index.php/access/tours/store
+    [HTTP_HOST] => localhost:8000
+    [HTTP_CONNECTION] => keep-alive
+    [CONTENT_LENGTH] => 819214
+    [HTTP_CONTENT_LENGTH] => 819214
+    [HTTP_CACHE_CONTROL] => max-age=0
+    [HTTP_SEC_CH_UA] => "Microsoft Edge";v="137", "Chromium";v="137", "Not/A)Brand";v="24"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_ORIGIN] => http://localhost:8000
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryHRLxMZueXqAPAYUs
+    [HTTP_CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryHRLxMZueXqAPAYUs
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_SEC_FETCH_MODE] => navigate
+    [HTTP_SEC_FETCH_USER] => ?1
+    [HTTP_SEC_FETCH_DEST] => document
+    [HTTP_REFERER] => http://localhost:8000/access/tours/create
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    [HTTP_COOKIE] => PHPSESSID=ntgk5kaqjiatd7d4gmv6mk8pkb; _ga=GA1.1.786131031.1750578509; _gcl_au=1.1.1390190360.1750578509; _swa_u=5ee2a519-ef6c-4f08-aaf6-1a167b04ebef; _ga_66EPLS0N4D=GS2.1.s1750591993$o3$g1$t1750592030$j23$l0$h0; sidebar_minimize_state=off
+    [REQUEST_TIME_FLOAT] => 1750604179.1764
+    [REQUEST_TIME] => 1750604179
+)
+
+---

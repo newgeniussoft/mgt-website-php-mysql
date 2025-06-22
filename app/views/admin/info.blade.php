@@ -70,11 +70,23 @@
                                                     </div>
 
                                                     <div class="mb-3">
-                                                        <label for="short_about" class="form-label">About</label>
-                                                        <textarea class="form-control" id="short_about"
-                                                            name="short_about"
-                                                            rows="2">{{ $info['short_about'] ?? '' }}</textarea>
-                                                    </div>
+    <label for="short_about" class="form-label">About</label>
+    <textarea class="form-control" id="short_about"
+        name="short_about"
+        rows="2">{{ $info['short_about'] ?? '' }}</textarea>
+</div>
+<div class="mb-3">
+    <label for="short_about_es" class="form-label">About (Spanish)</label>
+    <textarea class="form-control" id="short_about_es"
+        name="short_about_es"
+        rows="2">{{ $info['short_about_es'] ?? '' }}</textarea>
+</div>
+<div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <textarea class="form-control" id="address"
+        name="address"
+        rows="2">{{ $info['address'] ?? '' }}</textarea>
+</div>
                                                     <!--end::Editor-->
                                                     <!--end::Description-->
                                                 </div>
@@ -519,46 +531,52 @@ $(function() {
         }
     }
     function ajaxFormHandler(formSelector, isCreateForm) {
-        $(document).on('submit', formSelector, function(e) {
-            e.preventDefault();
-            var form = this;
-            var formData = new FormData(form);
-            var btn = $(form).find('[type=submit]');
-            btn.prop('disabled', true);
-            $('#admin-ajax-messages').html('');
-            $.ajax({
-                url: '',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    var json;
-                    try { json = typeof response === 'string' ? JSON.parse(response) : response; } catch (e) { json = null; }
-                    if(json && json.success) {
-                        Swal.fire({icon: 'success',title: 'Success',text: json.success,timer: 1800,showConfirmButton: false});
-                        if(json.type === 'slide') {
-                            updateSlideDOM(json.action, json.html, json.id);
-                        }
-                        if(json.type === 'video') {
-                            updateVideoDOM(json.action, json.html, json.id);
-                        }
-                        if(isCreateForm) form.reset();
-                    } else if(json && json.error) {
-                        Swal.fire({icon: 'error',title: 'Error',text: json.error});
-                    } else {
-                        Swal.fire({icon: 'error',title: 'Error',text: 'Unexpected server response.'});
+    $(document).on('submit', formSelector, function(e) {
+        e.preventDefault();
+        var form = this;
+        var formData = new FormData(form);
+        var btn = $(form).find('[type=submit]');
+        btn.prop('disabled', true);
+        $('#admin-ajax-messages').html('');
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                var json;
+                try { json = typeof response === 'string' ? JSON.parse(response) : response; } catch (e) { json = null; }
+                if(json && json.success) {
+                    Swal.fire({icon: 'success',title: 'Success',text: json.success,timer: 1800,showConfirmButton: false});
+                    // If this is the main info form, reload the page after success
+                    if (formSelector === '#kt_ecommerce_add_product_form') {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000); // Wait for the success message to show
                     }
-                },
-                error: function(xhr) {
-                    Swal.fire({icon: 'error',title: 'Error',text: 'Server error. Please try again.'});
-                },
-                complete: function() {
-                    btn.prop('disabled', false);
+                    if(json.type === 'slide') {
+                        updateSlideDOM(json.action, json.html, json.id);
+                    }
+                    if(json.type === 'video') {
+                        updateVideoDOM(json.action, json.html, json.id);
+                    }
+                    if(isCreateForm) form.reset();
+                } else if(json && json.error) {
+                    Swal.fire({icon: 'error',title: 'Error',text: json.error});
+                } else {
+                    Swal.fire({icon: 'error',title: 'Error',text: 'Unexpected server response.'});
                 }
-            });
+            },
+            error: function(xhr) {
+                Swal.fire({icon: 'error',title: 'Error',text: 'Server error. Please try again.'});
+            },
+            complete: function() {
+                btn.prop('disabled', false);
+            }
         });
-    }
+    });
+}
     // Slides
     ajaxFormHandler('#slide-create-form', true);
     ajaxFormHandler('.slide-edit-form', false);

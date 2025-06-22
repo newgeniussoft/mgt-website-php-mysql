@@ -20,6 +20,7 @@
             return $this->stmt->execute();
         }
     
+    
         public function fetchAll()
         {
             $this->execute("SELECT * FROM " . $this->table_name);
@@ -29,6 +30,7 @@
             }
             return $data;
         }
+
         public function fetchBy($col, $value) {
             $this->execute("SELECT * FROM " . $this->table_name." WHERE ".$col." = '".$value."'");
             $tour = null;

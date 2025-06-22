@@ -3,6 +3,7 @@ require_once __DIR__ . '/app/http/controllers/MainController.php';
 require_once __DIR__ . '/app/http/controllers/AdminController.php';  
 require_once __DIR__ . '/app/http/controllers/PagesAdminController.php';
 require_once __DIR__ . '/app/http/controllers/GalleryController.php';
+require_once __DIR__ . '/app/http/controllers/AdminTourController.php';
 
 // Admin Gallery Route
 if (isset($_SERVER['REQUEST_URI']) && preg_match('#^/access/gallery#', $_SERVER['REQUEST_URI'])) {
@@ -35,6 +36,7 @@ class Router {
         $this->mainController = new MainController();
         $this->adminController = new AdminController();
         $this->pagesAdminController = new PagesAdminController();
+        $this->adminTourController = new AdminTourController();
         $this->loadSupportedPages();
     }
     
@@ -80,6 +82,26 @@ class Router {
     private function handleAdminRoutes($pathParts) {
         // Admin pages CRUD for /access/pages
         $adminPage = isset($pathParts[1]) ? $pathParts[1] : 'index';
+        // Route /access/tours to AdminTourController CRUD
+        if ($adminPage === 'tours') {
+            $action = $pathParts[2] ?? 'index';
+            $id = $pathParts[3] ?? null;
+            if ($action === 'index' || $action === '') {
+                return $this->adminTourController->index();
+            } elseif ($action === 'create') {
+                return $this->adminTourController->create();
+            } elseif ($action === 'store') {
+                return $this->adminTourController->store();
+            } elseif ($action === 'edit' && $id) {
+                return $this->adminTourController->edit($id);
+            } elseif ($action === 'update' && $id) {
+                return $this->adminTourController->update($id);
+            } elseif ($action === 'delete' && $id) {
+                return $this->adminTourController->delete($id);
+            } else {
+                return $this->send404();
+            }
+        }
         if ($adminPage === 'pages') {
             $action = $pathParts[2] ?? 'index';
             if ($action === 'index' || $action === '') {

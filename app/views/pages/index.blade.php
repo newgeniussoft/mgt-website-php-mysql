@@ -40,7 +40,7 @@
 
     <div class="card-styled">
         <div class="card-styled-body">
-            <img src="{{ assets('img/images/lemur.webp') }}" class="float-image desktop-img"
+            <img src="{{ assets($info['image']) }}" class="float-image desktop-img"
                 alt="Ring-tailed lemur in Madagascar rainforest" decoding="async">
 
             <h3 class="text-center font-inter-extra-bold fancy text-uppercase">
@@ -132,10 +132,10 @@
         <div class="col-lg-6">
             <h5 class="card-title section-heading text-center fontInterRegularExtraBold"
                 style="font-size: 18pt; text-transform: capitalize;">
-                {{ $language == "es" ? $video['title_es'] : $video['title_es'] }}
+                {{ $language == "es" ? $video['title_es'] : $video['title'] }}
             </h5>
             <p class="text-center fontRegular">
-                {{ $language == "es" ? $video['subtitle_es'] : $video['subtitle_es'] }}
+                {{ $language == "es" ? $video['subtitle_es'] : $video['subtitle'] }}
 
             </p>
             <a href="{{ $video['link'] }}" class="text-center" target="_blank" rel="noopener noreferrer">
@@ -192,10 +192,10 @@
                 <img src="{{ assets('img/images/user.png') }}" alt="User avatar icon" width="64" height="64"
                     class="review-avatar me-2" loading="lazy" decoding="async">
                 <div class="review-user-content">
-                    <div class="fw-bold">{{ $review['name_user'] }}</div>
+                    <div class="fw-bold">{{ $review->name_user }}</div>
                     <div class="review-stars">
                         <?php for ($i = 0; $i <5; $i++): ?>
-                            <?php if($i < $review['rating']): ?>
+                            <?php if($i < $review->rating): ?>
                         <span class="star filled">&#9733;</span>
                         <?php else: ?>
                             <span class="star">&#9733;</span>
@@ -204,11 +204,11 @@
                         
                         <?php endfor; ?>
                     </div>
-                    <div class="text-muted small">Posted on {{ $review['daty'] }}</div>
+                    <div class="text-muted small">Posted on {{ $review->daty }}</div>
                 </div>
             </div>
-            <div class="review-text">
-            {{ $review['message'] }}
+            <div class="review-text text-justify">
+            {{ $review->message }}
             </div>
         </div>
         <?php endforeach; ?>

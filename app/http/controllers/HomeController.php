@@ -35,7 +35,7 @@
             $modelSlide = new Slide();
             $modelService = new Service();
             $videos = $modelVideo->all();
-            $reviews = $modelReview->all();
+            $reviews = $modelReview->fetchLimit('4');
             $galleries = $modelGallery->all();
             $socialMedia = $modelSocialMedia->all();
             $slides = $modelSlide->all();

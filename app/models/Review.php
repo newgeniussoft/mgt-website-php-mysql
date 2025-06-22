@@ -17,6 +17,17 @@ class Review extends Model {
             $this->$key = $value;
         }
     }
+    
+    public function fetchLimit($limit)
+    {
+        $query = "SELECT * FROM " . $this->table_name." WHERE pending = 0 ORDER BY id DESC LIMIT ".$limit."";
+        $this->execute($query);
+        $data = array();
+        while($item = $this->stmt->fetch(PDO::FETCH_OBJ)) {
+            $data[] = $item;
+        }
+        return $data;
+    }
 
     public function all() {
         $db = $this->db->getConnection();
