@@ -26,12 +26,12 @@
         {
             $path = "tours";
             $page = $this->pagesAdminController->getPage($path);
-
             if($page){
                 echo $this->view('pages.tours.all', [
                     'tours' => $this->tours,
                     'language' => $language,
                     'info' => $this->info,
+                    'socialMedia' => $this->socialMedia,
                     'page' => $page,
                     'contents' => $this->pagesAdminController->getContents($path)
                 ]);
@@ -47,6 +47,7 @@
                     'tours' => $this->tours,
                     'tour' => $tour,
                     'info' => $this->info,
+                    'socialMedia' => $this->socialMedia,
                     'language' => $lang,
                     'page' => $page,
                     'contents' => $this->pagesAdminController->getContents($path)

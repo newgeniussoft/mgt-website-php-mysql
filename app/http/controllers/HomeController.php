@@ -7,6 +7,7 @@
     require_once __DIR__ . '/../../models/Gallery.php';
     require_once __DIR__ . '/../../models/SocialMedia.php';
     require_once __DIR__ . '/../../models/Slide.php';
+    require_once __DIR__ . '/../../models/Service.php';
 
     class HomeController extends Controller
     {
@@ -32,11 +33,13 @@
             $modelGallery = new Gallery();
             $modelSocialMedia = new SocialMedia();
             $modelSlide = new Slide();
+            $modelService = new Service();
             $videos = $modelVideo->all();
             $reviews = $modelReview->all();
             $galleries = $modelGallery->all();
             $socialMedia = $modelSocialMedia->all();
             $slides = $modelSlide->all();
+            $services = $modelService->all();
 
             
             $view = $path;
@@ -52,6 +55,7 @@
                     'galleries' => $galleries,
                     'socialMedia' => $socialMedia,
                     'slides' => $slides,
+                    'services' => $services,
                     'page' => $page,
                     'info' => $this->info,
                     'contents' => $this->pagesAdminController->getContents($path)

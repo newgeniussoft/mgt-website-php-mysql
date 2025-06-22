@@ -2,6 +2,7 @@
    require_once __DIR__ . '/../../config/TemplateEngine.php';
    require_once __DIR__ . '/../../models/Tour.php';
    require_once __DIR__ . '/../../models/Info.php';
+   require_once __DIR__ . '/../../models/SocialMedia.php';
 
     
     class Controller
@@ -10,9 +11,11 @@
         public $engine;
         public $tourModel;
         public $infoModel;
+        public $socialMediaModel;
         public $tours;
         public $info;
         public $meta;
+        public $socialMedia;
 
         public function __construct($lang = null)
         {
@@ -20,8 +23,11 @@
             $this->engine = new TemplateEngine();
             $this->tourModel = new Tour();
             $this->infoModel = new Info();
+            $this->socialMediaModel = new SocialMedia();
+
             $this->info = $this->infoModel->getInfo();
             $this->tours = $this->tourModel->fetchAll();
+            $this->socialMedia = $this->socialMediaModel->all();
         }
 
         public function setLang($lang) {

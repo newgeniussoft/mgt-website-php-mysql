@@ -157,49 +157,20 @@
         {{ isset($contents[5]) ? ($language == 'es' ? ($contents[5]['val_es'] ?? $contents[5]['val']) : $contents[5]['val']) : 'Yout best service' }}
     </h6>
     <div class="row">
+        <?php foreach($services as $service): ?>
         <div class="col-lg-4 col-md-6">
             <div class="car-rental-card awesome-card position-relative overflow-hidden rounded shadow-sm">
-                <img src="{{ assets('img/images/car_rental.webp') }}" alt="Car rental" class="car-rental-img w-100"
+                <img src="{{ assets($service['image']) }}" alt="Car rental" class="car-rental-img w-100"
                     loading="lazy" width="350" height="220" style="object-fit:cover; border-radius:1.2rem;">
                 <div class="car-rental-title-overlay">
-                    <h3 class="car-rental-title">Car rental</h3>
+                    <h3 class="car-rental-title">{{ $service['title'] }}</h3>
                 </div>
                 <div class="car-rental-content p-3 text-center">
-                    <a href="#" class="btn btn-success car-rental-btn">Show more</a>
+                    <a href="{{ strtolower(str_replace(' ','_',$service['title']))  }}" class="btn btn-success car-rental-btn">Show more</a>
                 </div>
             </div>
-
         </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="car-rental-card awesome-card position-relative overflow-hidden rounded shadow-sm">
-                <!-- Consider compressing air_madagascar.jpg to WebP for better performance -->
-                <img src="{{ assets('img/images/flight_booking.webp') }}"
-                    alt="Air Madagascar airplane for flight booking" class="car-rental-img w-100" loading="lazy"
-                    decoding="async" width="350" height="220" style="object-fit:cover; border-radius:1.2rem;">
-                <div class="car-rental-title-overlay">
-                    <h3 class="car-rental-title">Hotel booking</h3>
-                </div>
-                <div class="car-rental-content p-3 text-center">
-                    <a href="#" class="btn btn-success car-rental-btn">Show more</a>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="car-rental-card awesome-card position-relative overflow-hidden rounded shadow-sm">
-                <!-- Consider compressing air_madagascar.jpg to WebP for better performance -->
-                <img src="{{ assets('img/images/flight_booking.webp') }}"
-                    alt="Air Madagascar airplane for flight booking" class="car-rental-img w-100" loading="lazy"
-                    decoding="async" width="350" height="220" style="object-fit:cover; border-radius:1.2rem;">
-                <div class="car-rental-title-overlay">
-                    <h3 class="car-rental-title">Flight booking</h3>
-                </div>
-                <div class="car-rental-content p-3 text-center">
-                    <a href="#" class="btn btn-success car-rental-btn">Show more</a>
-                </div>
-            </div>
-
-        </div>
+        <?php endforeach; ?>
     </div>
 </section>
 <section id="testimonials" class="container py-5" aria-labelledby="reviews-heading">
@@ -261,7 +232,7 @@
         <?php foreach($galleries as $gallery): ?>
         <a href="{{ assets($gallery['image']) }}" data-sub-html=""
             class="gallery-card col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-3 px-2">
-            <img class="gallery-thumb" src="{{ assets($gallery['image']) }}" alt="Gallery"
+            <img class="gallery-thumb" src="{{ assets($gallery['image']) }}" style="width: 100%" alt="Gallery"
                 loading="lazy" width="320" height="180">
             <span class="gallery-hover-icon" aria-hidden="true">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
