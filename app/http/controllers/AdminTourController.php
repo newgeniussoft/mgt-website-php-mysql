@@ -61,9 +61,148 @@ class AdminTourController extends Controller
 
     public function edit($id)
     {
+        require_once __DIR__ . '/../../models/TourHighlight.php';
+        require_once __DIR__ . '/../../models/TourDetail.php';
+        require_once __DIR__ . '/../../models/TourPrice.php';
         $tourModel = new Tour();
         $tour = $tourModel->find($id);
-        echo $this->view('admin.tours_edit', ['tour' => (array)$tour]);
+        $highlightModel = new TourHighlight();
+        $detailModel = new TourDetail();
+        $priceModel = new TourPrice();
+        $highlights = $highlightModel->where('name_tour', $tour->name);
+        $details = $detailModel->where('name_tour', $tour->name);
+        $prices = $priceModel->where('name_tour', $tour->name);
+        echo $this->view('admin.tours_edit', [
+            'tour' => (array)$tour,
+            'highlights' => $highlights,
+            'details' => $details,
+            'prices' => $prices
+        ]);
+    }
+
+    // --- CRUD for TourHighlight ---
+    public function storeHighlight($tourId)
+    {
+        require_once __DIR__ . '/../../models/TourHighlight.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'name_tour' => $_POST['name_tour'],
+                'texte' => $_POST['texte'],
+                'texte_es' => $_POST['texte_es']
+            ];
+            $highlightModel = new TourHighlight();
+            $highlightModel->insert($data);
+            header('Location: ' . route('access/tours/edit/' . $tourId));
+            exit;
+        }
+    }
+    public function updateHighlight($id, $tourId)
+    {
+        require_once __DIR__ . '/../../models/TourHighlight.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'texte' => $_POST['texte'],
+                'texte_es' => $_POST['texte_es']
+            ];
+            $highlightModel = new TourHighlight();
+            $highlightModel->update($id, $data);
+            header('Location: ' . route('access/tours/edit/' . $tourId));
+            exit;
+        }
+    }
+    public function deleteHighlight($id, $tourId)
+    {
+        require_once __DIR__ . '/../../models/TourHighlight.php';
+        $highlightModel = new TourHighlight();
+        $highlightModel->delete($id);
+        header('Location: ' . route('access/tours/edit/' . $tourId));
+        exit;
+    }
+
+    // --- CRUD for TourDetail ---
+    public function storeDetail($tourId)
+    {
+        require_once __DIR__ . '/../../models/TourDetail.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'title' => $_POST['title'],
+                'day' => $_POST['day'],
+                'name_tour' => $_POST['name_tour'],
+                'title_es' => $_POST['title_es'],
+                'details_es' => $_POST['details_es'],
+                'name_tours_es' => $_POST['name_tours_es']
+            ];
+            $detailModel = new TourDetail();
+            $detailModel->insert($data);
+            header('Location: ' . route('access/tours/edit/' . $tourId));
+            exit;
+        }
+    }
+    public function updateDetail($id, $tourId)
+    {
+        require_once __DIR__ . '/../../models/TourDetail.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'title' => $_POST['title'],
+                'day' => $_POST['day'],
+                'title_es' => $_POST['title_es'],
+                'details_es' => $_POST['details_es'],
+                'name_tours_es' => $_POST['name_tours_es']
+            ];
+            $detailModel = new TourDetail();
+            $detailModel->update($id, $data);
+            header('Location: ' . route('access/tours/edit/' . $tourId));
+            exit;
+        }
+    }
+    public function deleteDetail($id, $tourId)
+    {
+        require_once __DIR__ . '/../../models/TourDetail.php';
+        $detailModel = new TourDetail();
+        $detailModel->delete($id);
+        header('Location: ' . route('access/tours/edit/' . $tourId));
+        exit;
+    }
+
+    // --- CRUD for TourPrice ---
+    public function storePrice($tourId)
+    {
+        require_once __DIR__ . '/../../models/TourPrice.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'name_tour' => $_POST['name_tour'],
+                'type' => $_POST['type'],
+                'texte' => $_POST['texte'],
+                'texte_es' => $_POST['texte_es']
+            ];
+            $priceModel = new TourPrice();
+            $priceModel->insert($data);
+            header('Location: ' . route('access/tours/edit/' . $tourId));
+            exit;
+        }
+    }
+    public function updatePrice($id, $tourId)
+    {
+        require_once __DIR__ . '/../../models/TourPrice.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'type' => $_POST['type'],
+                'texte' => $_POST['texte'],
+                'texte_es' => $_POST['texte_es']
+            ];
+            $priceModel = new TourPrice();
+            $priceModel->update($id, $data);
+            header('Location: ' . route('access/tours/edit/' . $tourId));
+            exit;
+        }
+    }
+    public function deletePrice($id, $tourId)
+    {
+        require_once __DIR__ . '/../../models/TourPrice.php';
+        $priceModel = new TourPrice();
+        $priceModel->delete($id);
+        header('Location: ' . route('access/tours/edit/' . $tourId));
+        exit;
     }
 
     public function update($id)

@@ -113,7 +113,3 @@
                     </div>
                 </div>
                 @include(admin.partials.footer)
-            </div>
-        </div>
-    </div>
-</div>

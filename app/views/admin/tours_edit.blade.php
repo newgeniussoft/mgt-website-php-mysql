@@ -1,3 +1,4 @@
+@import('app/utils/helpers/helper.php')
 @include(admin.partials.head)
 <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
     <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
@@ -115,13 +116,135 @@
                                     </form>
                                 </div>
                             </div>
+
+                            <!-- Tour Highlights Management -->
+                            <div class="card mt-4">
+                                <div class="card-header"><h4>Tour Highlights</h4></div>
+                                <div class="card-body">
+                                    <form action="{{ route('access/tours/highlight/store/' . $tour['id']) }}" method="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="name_tour" value="{{ $tour['name'] }}">
+                                        <div class="row">
+                                            <div class="col-md-4 mb-2">
+                                                <input type="text" name="texte" class="form-control" placeholder="Highlight (EN)" required>
+                                            </div>
+                                            <div class="col-md-4 mb-2">
+                                                <input type="text" name="texte_es" class="form-control" placeholder="Highlight (ES)">
+                                            </div>
+                                            <div class="col-md-4 mb-2">
+                                                <button type="submit" class="btn btn-success">Add Highlight</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <table class="table table-bordered mt-3">
+                                        <thead><tr><th>EN</th><th>ES</th><th>Actions</th></tr></thead>
+                                        <tbody>
+                                            <?php foreach($highlights as $h): ?>
+                                            <tr>
+                                                <form action="{{ route('access/tours/highlight/update/' . $h->id . '/' . $tour['id']) }}" method="POST" style="display:inline-block;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <td><input type="text" name="texte" value="{{ $h->texte }}" class="form-control"></td>
+                                                    <td><input type="text" name="texte_es" value="{{ $h->texte_es }}" class="form-control"></td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                                </form>
+                                                <form action="{{ route('access/tours/highlight/delete/' . $h->id . '/' . $tour['id']) }}" method="POST" style="display:inline-block;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this highlight?')">Delete</button>
+                                                </form>
+                                                    </td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Tour Details Management -->
+                            <div class="card mt-4">
+                                <div class="card-header"><h4>Tour Details</h4></div>
+                                <div class="card-body">
+                                    <form action="{{ route('access/tours/detail/store/' . $tour['id']) }}" method="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="name_tour" value="{{ $tour['name'] }}">
+                                        <div class="row">
+                                            <div class="col-md-2 mb-2"><input type="text" name="title" class="form-control" placeholder="Title (EN)"></div>
+                                            <div class="col-md-1 mb-2"><input type="text" name="day" class="form-control" placeholder="Day"></div>
+                                            <div class="col-md-2 mb-2"><input type="text" name="title_es" class="form-control" placeholder="Title (ES)"></div>
+                                            <div class="col-md-2 mb-2"><input type="text" name="details_es" class="form-control" placeholder="Details (ES)"></div>
+                                            <div class="col-md-2 mb-2"><input type="text" name="name_tours_es" class="form-control" placeholder="Name Tours (ES)"></div>
+                                            <div class="col-md-2 mb-2"><button type="submit" class="btn btn-success">Add Detail</button></div>
+                                        </div>
+                                    </form>
+                                    <table class="table table-bordered mt-3">
+                                        <thead><tr><th>Title (EN)</th><th>Day</th><th>Title (ES)</th><th>Details (ES)</th><th>Name Tours (ES)</th><th>Actions</th></tr></thead>
+                                        <tbody>
+                                            <?php foreach($details as $d): ?>
+                                            <tr>
+                                                <form action="{{ route('access/tours/detail/update/' . $d['id'] . '/' . $tour['id']) }}" method="POST" style="display:inline-block;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <td><input type="text" name="title" value="{{ $d['title'] }}" class="form-control"></td>
+                                                    <td><input type="text" name="day" value="{{ $d['day'] }}" class="form-control"></td>
+                                                    <td><input type="text" name="title_es" value="{{ $d['title_es'] }}" class="form-control"></td>
+                                                    <td><input type="text" name="details_es" value="{{ $d['details_es'] }}" class="form-control"></td>
+                                                    <td><input type="text" name="name_tours_es" value="{{ $d['name_tours_es'] }}" class="form-control"></td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                                </form>
+                                                <form action="{{ route('access/tours/detail/delete/' . $d['id'] . '/' . $tour['id']) }}" method="POST" style="display:inline-block;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this detail?')">Delete</button>
+                                                </form>
+                                                    </td>
+                                            </tr>
+                                            <?php endforeach ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Tour Price Management -->
+                            <div class="card mt-4">
+                                <div class="card-header"><h4>Tour Prices</h4></div>
+                                <div class="card-body">
+                                    <form action="{{ route('access/tours/price/store/' . $tour['id']) }}" method="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="name_tour" value="{{ $tour['name'] }}">
+                                        <div class="row">
+                                            <div class="col-md-3 mb-2"><input type="text" name="type" class="form-control" placeholder="Type"></div>
+                                            <div class="col-md-3 mb-2"><input type="text" name="texte" class="form-control" placeholder="Text (EN)"></div>
+                                            <div class="col-md-3 mb-2"><input type="text" name="texte_es" class="form-control" placeholder="Text (ES)"></div>
+                                            <div class="col-md-3 mb-2"><button type="submit" class="btn btn-success">Add Price</button></div>
+                                        </div>
+                                    </form>
+                                    <table class="table table-bordered mt-3">
+                                        <thead><tr><th>Type</th><th>Text (EN)</th><th>Text (ES)</th><th>Actions</th></tr></thead>
+                                        <tbody>
+                                            <?php foreach($prices as $p): ?>
+                                            <tr>
+                                                <form action="{{ route('access/tours/price/update/' . $p['id'] . '/' . $tour['id']) }}" method="POST" style="display:inline-block;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <td><input type="text" name="type" value="{{ $p['type'] }}" class="form-control"></td>
+                                                    <td><input type="text" name="texte" value="{{ $p['texte'] }}" class="form-control"></td>
+                                                    <td><input type="text" name="texte_es" value="{{ $p['texte_es'] }}" class="form-control"></td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                                </form>
+                                                <form action="{{ route('access/tours/price/delete/' . $p['id'] . '/' . $tour['id']) }}" method="POST" style="display:inline-block;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this price?')">Delete</button>
+                                                </form>
+                                                    </td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
                 @include(admin.partials.footer)
-            </div>
-        </div>
-    </div>
-</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

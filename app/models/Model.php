@@ -39,6 +39,25 @@
             }
             return $tour;
         }
+        public function where($col, $value) {
+            $this->execute("SELECT * FROM " . $this->table_name." WHERE ".$col." = '".$value."'");
+            $tour = [];
+            while($item = $this->stmt->fetch(PDO::FETCH_OBJ)) {
+                $tour[] = $item;
+            }
+            return $tour;
+        }
+
+        public function insert($data) {
+            $sql = "INSERT INTO " . $this->table_name . " (" . implode(", ", array_keys($data)) . ") VALUES ('" . implode("', '", array_values($data)) . "')";
+            $this->execute($sql);
+            return $this->conn->lastInsertId();
+        }
+
+        public function update($data, $id) {
+            $this->execute("UPDATE " . $this->table_name . " SET " . implode(", ", array_map(function($k){ return $k." = '".$data[$k]."'"; }, array_keys($data))) . " WHERE id = '".$id."'");
+            return $this->conn->lastInsertId();
+        }
     }
 
 ?>

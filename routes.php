@@ -86,6 +86,53 @@ class Router {
         if ($adminPage === 'tours') {
             $action = $pathParts[2] ?? 'index';
             $id = $pathParts[3] ?? null;
+            $id2 = $pathParts[4] ?? null;
+            // CRUD for TourHighlight
+            if ($action === 'highlight') {
+                $subaction = $pathParts[3] ?? null;
+                $highlightId = $pathParts[4] ?? null;
+                $tourId = $pathParts[5] ?? null;
+                if ($subaction === 'store' && $id) {
+                    return $this->adminTourController->storeHighlight($id);
+                } elseif ($subaction === 'update' && $highlightId && $tourId) {
+                    return $this->adminTourController->updateHighlight($highlightId, $tourId);
+                } elseif ($subaction === 'delete' && $highlightId && $tourId) {
+                    return $this->adminTourController->deleteHighlight($highlightId, $tourId);
+                } else {
+                    return $this->send404();
+                }
+            }
+            // CRUD for TourDetail
+            if ($action === 'detail') {
+                $subaction = $pathParts[3] ?? null;
+                $detailId = $pathParts[4] ?? null;
+                $tourId = $pathParts[5] ?? null;
+                if ($subaction === 'store' && $id) {
+                    return $this->adminTourController->storeDetail($id);
+                } elseif ($subaction === 'update' && $detailId && $tourId) {
+                    return $this->adminTourController->updateDetail($detailId, $tourId);
+                } elseif ($subaction === 'delete' && $detailId && $tourId) {
+                    return $this->adminTourController->deleteDetail($detailId, $tourId);
+                } else {
+                    return $this->send404();
+                }
+            }
+            // CRUD for TourPrice
+            if ($action === 'price') {
+                $subaction = $pathParts[3] ?? null;
+                $priceId = $pathParts[4] ?? null;
+                $tourId = $pathParts[5] ?? null;
+                if ($subaction === 'store' && $id) {
+                    return $this->adminTourController->storePrice($id);
+                } elseif ($subaction === 'update' && $priceId && $tourId) {
+                    return $this->adminTourController->updatePrice($priceId, $tourId);
+                } elseif ($subaction === 'delete' && $priceId && $tourId) {
+                    return $this->adminTourController->deletePrice($priceId, $tourId);
+                } else {
+                    return $this->send404();
+                }
+            }
+            // Default Tour routes
             if ($action === 'index' || $action === '') {
                 return $this->adminTourController->index();
             } elseif ($action === 'create') {
