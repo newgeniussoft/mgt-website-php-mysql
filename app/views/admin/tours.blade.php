@@ -58,7 +58,7 @@
                                     <h5 class="modal-title" id="addTourModalLabel">Add New Tour</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
-                                  <form action="{{ url('admin/tours/store') }}" method="POST" enctype="multipart/form-data">
+                                  <form action="{{ route('admin/tours/store') }}" method="POST" enctype="multipart/form-data">
                                     <div class="modal-body">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="row">

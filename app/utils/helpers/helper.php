@@ -170,6 +170,7 @@
         }
     }
 
+
     if (!function_exists('idYoutubeVideo')) {
         function idYoutubeVideo($link) {
             ///https://www.youtube.com/watch?v=rEmaEklG0Ek
@@ -262,6 +263,25 @@
             
             // URL encode the slashes for special use cases
             return str_replace([':', '/', '?', '&'], ['%3A', '%2F', '%3F', '%26'], $fullUrl);
+        }
+    }
+
+    if (!function_exists('currentPath')) {
+        function currentPath() {
+            $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+            
+            // Build and encode the full URL
+            $fullUrl = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            return  str_replace($_ENV['APP_URL'], '', $fullUrl);
+        }
+    }
+    
+    if (!function_exists('isInCurrentPath')) {
+        function isInCurrentPath($keys) {
+            $isIn = false;
+            $pathParts = explode("/", currentPath());
+            $isIn = count(array_intersect($pathParts, $keys)) === count($keys);
+            return $isIn;
         }
     }
 
