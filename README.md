@@ -1,7 +1,7 @@
 # MGT Website PHP/MySQL
 
 This is a simple website built with PHP and MySQL database. It is designed to be a simple and easy to use website for a small business.
-
+<img src="screenshots/2025-10-02 171424.png" alt="Home">
 ## Features
 
 * Simple and easy to use
