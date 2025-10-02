@@ -45,14 +45,6 @@ class TemplateEngine {
         $this->directive('import', function ($expression) {
             return "<?php include $expression; ?>";
         });
-
-        $this->directive('navlink', function ($path) {
-            $params = explode(",", $path);
-            $template = '<li class="menu-item x-menu-item x-sub-menu-standard">';
-            $template .= '<a href="{{route(\''.$params[1].'\')}}" class="x-menu-a-text">';
-            $template .= '<span class="x-menu-text">'.$params[0].'</span></a></li>';
-            return $template;
-        });
         
     }
 

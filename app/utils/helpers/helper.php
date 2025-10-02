@@ -60,6 +60,19 @@
         }
     }
 
+    if (!function_exists('getKeys')) {
+        function getKeys($object) {
+            return array_keys((array)$object);
+        }
+    }
+
+    if (!function_exists('csrf_token')) {
+        function csrf_token() {
+            return bin2hex(random_bytes(32));
+
+        }
+    }
+
     /**
      * Get a value from an array by key
      *
@@ -74,6 +87,34 @@
             } else {
                 return $key;
             }
+        }
+    }
+
+    if (!function_exists('thumbnail')) {
+        function thumbnail($path) {
+            // img_685abe4b46e3a5.46675215.jpg
+            $pathParts = explode('/', $path);
+            $path = $pathParts[count($pathParts) - 1];
+            $path = explode('.', $path);
+            $thumb = '';
+            for($i = 0; $i < count($path) - 1; $i++) {
+                $thumb .= $path[$i].".";
+            }
+            $thumb = substr($thumb, 0, strlen($thumb) - 1) . '_thumbnail.webp';
+            $pathParts[count($pathParts) - 1] = $thumb;
+            return implode('/', $pathParts);
+        }
+    }
+
+    /**
+     * Generate a URL for a given path, considering language settings
+     *
+     * @param string $path The path to generate URL for
+     * @return string The complete URL
+     */
+    if (!function_exists('url_admin')) {
+        function url_admin($path) {
+            return rtrim($_ENV['APP_URL'], '/') . '/' . $_ENV['PATH_ADMIN'] . '/' . ltrim($path, '/');
         }
     }
 
@@ -106,19 +147,24 @@
     if (!function_exists('switchTo')) {
         function switchTo($lang) {
             $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-            // DEBUG HERE
-            // Replace or add language code
-            if (!empty($urlParts[0])) {
-                $urlParts[0] = $lang;
-            } else {
-                array_unshift($urlParts, $lang);
+            $supportedLanguages = ['es', 'en'];
+
+            // Remove the first segment if it is a supported language code
+            if (!empty($urlParts) && in_array($urlParts[0], $supportedLanguages)) {
+                array_shift($urlParts);
             }
-            
-            // Remove 'en' language code if present (default language)
-            $url = '/' . implode('/', $urlParts);
-            $url = str_replace("/en", "", $url);
-            
-            return rtrim($_ENV['APP_URL'], '/') . $url;
+
+            // Build the new path
+            $newPath = '';
+            if ($lang === 'en') {
+                // For English (default), no language prefix
+                $newPath = implode('/', $urlParts);
+            } else {
+                // For other languages, add the language prefix
+                $newPath = $lang . (count($urlParts) ? '/' . implode('/', $urlParts) : '');
+            }
+
+            return rtrim($_ENV['APP_URL'], '/') . ($newPath ? '/' . $newPath : '');
         }
     }
 
@@ -130,9 +176,15 @@
      */
     if (!function_exists('assets')) {
         function assets($path) {
-            return rtrim($_ENV['APP_URL'], '/') . '/assets/' . ltrim($path, '/');
+            return  mainUrl() . '/assets/' . ltrim($path, '/');
         }
     }
+    if (!function_exists('vendor')) {
+        function vendor($path) {
+            return mainUrl() . '/vendor/' . ltrim($path, '/');
+        }
+    }
+
 
     /**
      * Generate a URL for a vendor asset
@@ -143,6 +195,19 @@
     if (!function_exists('vendors')) {
         function vendors($path) {
             return rtrim($_ENV['APP_URL'], '/') . '/assets/' . str_replace('assets', 'vendor', $path);
+        }
+    }
+
+
+    if (!function_exists('idYoutubeVideo')) {
+        function idYoutubeVideo($link) {
+            ///https://www.youtube.com/watch?v=rEmaEklG0Ek
+            $lnkParts = explode("?v=", $link);
+            if (count($lnkParts) == 2) {
+                return substr($lnkParts[1], 0, 11);
+            } else {
+                return 'invalide';
+            }
         }
     }
 
@@ -196,7 +261,7 @@
     if (!function_exists('namePage')) {
         function namePage() {
             $baseUrlParts = explode('/', rtrim($_ENV['APP_URL'], '/'));
-            $requestParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+            $requestParts = explode('/', trim(str_replace('/es', '', $_SERVER['REQUEST_URI']), '/'));
             
             // Extract page name by filtering out base URL parts
             $pageParts = [];
@@ -229,6 +294,34 @@
         }
     }
 
+    if (!function_exists('currentPath')) {
+        function currentPath() {
+            $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+            
+            // Build and encode the full URL
+            $fullUrl = $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            $url = str_replace($_ENV['APP_URL'], '', $fullUrl);
+            $url = str_replace('/es', '', $url);
+            return $url;
+        }
+    }
+    
+    if (!function_exists('isInCurrentPath')) {
+        function isInCurrentPath($keys) {
+            $isIn = false;
+            $pathParts = explode("/", currentPath());
+            $isIn = count(array_intersect($pathParts, $keys)) === count($keys);
+            return $isIn;
+        }
+    }
+
+    if (!function_exists('formatDateTime')) {
+        function formatDateTime($date) {
+            $date = new DateTime($date);
+            return $date->format('l j F Y H:i');
+        }
+    }
+
     /**
      * Get the last segment of the current URL path
      *
@@ -237,7 +330,11 @@
     if (!function_exists('currentPage')) {
         function currentPage() {
             $urlParts = explode('%2F', currentLink());
-            return end($urlParts);
+            if (end($urlParts) == "es") {
+                return "";
+            } else {
+                return end($urlParts);
+            }
         }
     }
     
@@ -350,16 +447,45 @@
             echo '</ul>';
             echo '</div>';
             
-            // Helper function to render a page link
-            function renderPageLink($pageNum, $currentPage) {
-                if ($pageNum == $currentPage) {
-                    echo '<li><span>' . $pageNum . '</span></li>';
-                } else {
-                    echo '<li><a href="?page=' . $pageNum . '">' . $pageNum . '</a></li>';
-                }
+           
+        }
+    }
+
+    if (!function_exists('renderPageLink')) {
+         // Helper function to render a page link
+         function renderPageLink($pageNum, $currentPage) {
+            if ($pageNum == $currentPage) {
+                echo '<li><span>' . $pageNum . '</span></li>';
+            } else {
+                echo '<li><a href="?page=' . $pageNum . '">' . $pageNum . '</a></li>';
             }
         }
     }
+    if (!function_exists('scan_dir')) {
+    function scan_dir($directory, &$results = []) {
+        $dir = __DIR__ . $directory;
+        $files = scandir($dir);
+    
+        foreach ($files as $key => $value) {
+            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            if (!$path) continue;
+    
+            if (!is_dir($path)) {
+                $results[] = $path;
+            } elseif ($value != "." && $value != "..") {
+                scan_dir($path, $results);
+            }
+        }
+    
+        return $results;
+    }
+}
+
+    /*if (!function_exists('urlencode')) {
+        function urlencode($path) {
+            return urlencode($path);
+        }
+    }*/
 
     if(isset($_SESSION['lang'])) {
         $LANG = $_SESSION['lang'];
