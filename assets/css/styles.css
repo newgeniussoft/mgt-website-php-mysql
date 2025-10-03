@@ -86,6 +86,10 @@ p {
   font-size: 32pt;
 }
 
+#iview-overlay {
+  width:100%;height:100%;position:absolute;top:0;left:0;background-color:rgba(0,0,0,0.4);z-index:1;
+}
+
 body::before {
   content: '';
   height: 100vh;
@@ -172,6 +176,10 @@ body::before {
   text-transform: uppercase;
 }
 
+.bg-gradient {
+  background: linear-gradient(90deg,rgb(35, 152, 199) 0%, rgb(47, 179, 102) 50%, rgb(224, 205, 31) 100%) !important;
+}
+
 .fancy{
   background-image: linear-gradient(90deg,rgb(35, 152, 199) 0%, rgb(47, 179, 102) 50%, rgb(224, 205, 31) 100%);
   background-size: 110% auto;
@@ -190,6 +198,25 @@ body::before {
 body {
     padding-top: 0; /* No padding needed as navbar will overlay */
     background-image: linear-gradient(180deg,rgba(255, 255, 255, 1) 0%, rgb(245, 245, 245) 100%);
+}
+
+.card-w-img { 
+  display: flex; 
+  gap: 12px; 
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 0;
+ }
+.card-w-img-head { flex: 0 0 25%; }
+.card-w-img-body { 
+  flex: 0 0 75%; 
+  padding: 12px;
+}
+.card-img {
+  width: 100%;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 
 .card-transparent {
@@ -750,6 +777,13 @@ body.scrolled {
 
 /* For mobile - still support click behavior */
 @media (max-width: 991.98px) {
+  .card-w-img-head {
+    display: none;
+  }
+  .card-w-img-body {
+    padding: 17px;
+    flex: 0 0 100%; 
+  }
     .dropdown-menu {
         display: none;
         opacity: 1;
@@ -2235,7 +2269,7 @@ input[name="nav"]:checked + .page .page-contents > * {
   overflow: hidden;
   border-radius: 10px;
   transition: all 0.4s;
-  box-shadow: 0px 0px 120px -25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px 0px rgba(209, 209, 209, 0.5);
 }
 /*
 .movie_card:hover {
@@ -2373,12 +2407,113 @@ input[name="nav"]:checked + .page .page-contents > * {
   color: #fff;
  }
 }
-.bright_back {
-  background: url("https://occ-0-2433-448.1.nflxso.net/art/cd5c9/3e192edf2027c536e25bb5d3b6ac93ced77cd5c9.jpg");
+.adventure_back {
+  background: url("../img/images/plage.jpg");
 }
 .tomb_back {
   background: url("../img/images/baobab.jpg");
 }
-.ave_back {
-  background: url("https://www.gannett-cdn.com/-mm-/c03fd140debe8ad4c05cf81a5cad7ad61a12ce52/c=0-1580-2985-3266&r=x803&c=1600x800/local/-/media/2017/06/09/USATODAY/USATODAY/636326272873599176-Black-Panther-Teaser.jpg");
+.bird_back {
+  background: url("../img/images/bird.png");
+}
+
+figure.snip1157 {
+  font-family: 'Raleway', Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 220px;
+  max-width: 310px;
+  width: 100%;
+  color: #333;
+  text-align: left;
+  box-shadow: none !important;
+}
+figure.snip1157 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.35s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+  transition: all 0.35s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+}
+figure.snip1157 img.sq-sample3{
+  max-width: 100%;
+  vertical-align: middle;
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+  margin: 40px 0 0 10px;
+}
+figure.snip1157 p.content {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+figure.snip1157 blockquote {
+  display: block;
+  border-radius: 8px;
+  position: relative;
+  background-color: #fafafa;
+  padding: 25px 50px 30px 50px;
+  font-size: 0.8em;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.6em;
+  font-style: italic;
+}
+figure.snip1157 blockquote:before,
+figure.snip1157 blockquote:after {
+  font-family: 'FontAwesome';
+  content: "\201C";
+  position: absolute;
+  font-size: 50px;
+  opacity: 0.3;
+  font-style: normal;
+}
+figure.snip1157 blockquote:before {
+  top: 25px;
+  left: 20px;
+}
+figure.snip1157 blockquote:after {
+  content: "\201D";
+  right: 20px;
+  bottom: 0;
+}
+figure.snip1157 .arrow {
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-left: 0 solid transparent;
+  border-right: 25px solid transparent;
+  border-top: 25px solid #fafafa;
+  margin: 0;
+  position: absolute;
+}
+figure.snip1157 .author {
+  position: absolute;
+  bottom: 45px;
+  padding: 0 10px 0 120px;
+  margin: 0;
+  text-transform: uppercase;
+  color: #ffffff;
+  -webkit-transform: translateY(50%);
+  transform: translateY(50%);
+}
+figure.snip1157 .author h5 {
+  opacity: 0.8;
+  margin: 0;
+  font-weight: 800;
+}
+figure.snip1157 .author h5 span {
+  font-weight: 400;
+  text-transform: none;
+  padding-left: 5px;
+}
+.testimonials {
+  background: linear-gradient(45deg,rgb(1, 243, 74), rgb(47, 179, 102) 20%, rgb(224, 205, 31) 100%) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: wrap;  
+  margin: 0;
+  height: 100%;
+  border-radius: 12px;
 }

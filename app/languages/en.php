@@ -165,6 +165,15 @@ return [ // TITLE & TEXT
         'subtitle-1' => 'The reliable travel agency Receptive Local Tour Operator and Destination 
                          Management Company for your tours in Madagascar',
         'subtitle-2' => 'Exclusive experiences & best guides',
+        'benefit' => 'Benefit',
+        'details' => 'Details',
+        'iconic'     => 'Choose from our most iconic routes:',
+        'contact' => [
+            'title' => 'Contact us', 
+            'p1' => 'Ready for your next adventure? As your dedicated tour operator in Madagascar, we will assist you from arrival to departure. Reach out via email or WhatsApp — we\'re here to design the ideal Madagascar travel package just for you',
+            'p2' => 'With Madagascar Green Tours, explore the wonders of the Red Island through responsible and personalized Madagascar Tours. Contact our travel agency Madagascar today and experience a once-in-a-lifetime journey, led by professional drivers and guides also accompany every moment of your adventure.',
+            'p3' => 'You can also reach us on',
+        ]
     ],
     'car-rental'     => [//PAGE CAR RENTAL
         'b1'         => 'We have the following cars for rent:',

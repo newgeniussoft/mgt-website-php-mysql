@@ -166,6 +166,15 @@ return [ // TITLE & TEXT
         'subtitle-1' => 'La agencia de viajes confiable Operador turístico receptivo y Compañía de gestión de 
                          destinos para sus viajes en Madagascar. Experiencias exclusivas y mejores guías.',
         'subtitle-2' => 'Experiencias exclusivas y los mejores guías',
+        'benefit' => 'Beneficio',
+        'details' => 'Detalles',
+        'iconic'     => 'Elija entre nuestros recorridos icónicos:',
+        'contact' => [
+            'title' => 'Contáctenos', 
+            'p1' => '¿Listo para su próxima aventura? Como su operador turístico dedicado en Madagascar, le ayudaremos desde su llegada hasta su salida. Contáctenos por correo electrónico o WhatsApp — estamos aquí para diseñar el paquete de viaje ideal de Madagascar solo para usted',
+            'p2' => 'Con Madagascar Green Tours, explore los maravillosos de la Isla Roja a través de tours de Madagascar responsables y personalizados. Contacte nuestra agencia de viajes Madagascar hoy y experimente un viaje una vez por la vida, guiado por conductores y guías profesionales que también acompañan cada momento de su aventura.',
+            'p3' => 'También puede contactarnos en',
+        ]
     ],
     'car-rental'     => [//PAGE CAR RENTAL
         'b1'         => 'Tenemos los siguientes coches en alquiler:',

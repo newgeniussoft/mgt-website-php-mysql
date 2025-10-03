@@ -2,6 +2,8 @@
 require_once 'app/http/controllers/HomeController.php';
 require_once 'app/http/controllers/MoreController.php';
 require_once 'app/http/controllers/PageController.php';
+require_once 'app/config/env.php';
+
 
 
 class Router {
@@ -281,7 +283,7 @@ class Router {
 
             if (in_array($pathParts[0], $this->supportedLanguages)) {
                 if ($currentPath == "/es/") {
-                    header('Location: https://madagascar-green-tours.com/es');
+                    header('Location: '.$_ENV['APP_URL'].'/es');
                     exit;
                 }
                 $language = array_shift($pathParts);
