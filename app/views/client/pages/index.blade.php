@@ -18,7 +18,8 @@
                 <h3 class="text-center text-white display-2 font-inter-bold title-slogan">
                     {{ $language == "es" ? $page->title_es : $page->title }}
                 </h3>
-                <div id="heroCarousel" class="carousel slide" data-ride="carousel" aria-label="Main Highlights Carousel">
+                <div id="heroCarousel" class="carousel slide" data-ride="carousel"
+                    aria-label="Main Highlights Carousel">
                     <div class="carousel-inner">
                         <?php
                             $pos = 0;
@@ -44,14 +45,16 @@
 <section id="about" class="container content-section bg-light" aria-labelledby="about-heading">
     <div class="card-styled">
         <div class="card-styled-body">
-            <img src="{{ assets($info->image) }}" class="float-image desktop-img" alt="Ring-tailed lemur in Madagascar rainforest" decoding="async">
+            <img src="{{ assets($info->image) }}" class="float-image desktop-img"
+                alt="Ring-tailed lemur in Madagascar rainforest" decoding="async">
             <h3 class="text-center font-inter-extra-bold text-primary">
                 {{ $language == "es" ? $page->title_h1_es : $page->title_h1 }}
             </h3>
             <img src="{{ assets($info->image) }}" class="float-image mobile-img"
                 alt="Ring-tailed lemur in Madagascar rainforest" decoding="async" fetchpriority="high">
             {{ $language == "es" ? $page->content_es : $page->content }}
-            <img src="{{ assets('img/images/shape-6.webp')}}" alt="shape-6" style="position: absolute; bottom: 0; right: 0;">
+            <img src="{{ assets('img/images/shape-6.webp')}}" alt="shape-6"
+                style="position: absolute; bottom: 0; right: 0;">
         </div>
     </div>
 </section>
@@ -61,43 +64,48 @@
         <h2 class="text-center text-primary font-inter-extra-bold fs-24 mb-4" data-aos="fade-in">
             {{ isset($contents[0]) ? ($language == 'es' ? ($contents[0]->val_es ?? $contents[0]->val) : $contents[0]->val) : 'Our Tours' }}
         </h2>
-
         <div class="movie_card mt-1 mb-0" id="tomb" data-aos="fade-up">
-        <div class="info_section">
-            <div class="movie_header">
-                <h4 class="text-left font-inter-bold">
-                Madagascar birding tours - A birdwatcher's paradise
-                </h4>
-            </div>
-            <div class="movie_desc">
-                <p>
-                With over 270 bird species, many of them endemic, our Madagascar birding tours offer unforgettable discoveries from north to south, guided by passionate experts.
-                </p>
-                <div class="movie_social text-center">
-                    <a href="{{ route('madagascar') }}" class="btn btn-success car-rental-btn">{{ trans('btn.show-more') }}</a>
+            <div class="info_section">
+                <div class="movie_header">
+                    <h4 class="text-left font-inter-bold">
+                        Madagascar birding tours - A birdwatcher's paradise
+                    </h4>
+                </div>
+                <div class="movie_desc">
+                    <p>
+                        With over 270 bird species, many of them endemic, our Madagascar birding tours offer
+                        unforgettable discoveries from north to south, guided by passionate experts.
+                    </p>
+                    <div class="movie_social text-center">
+                        <a href="{{ route('madagascar') }}" class="btn btn-success car-rental-btn">{{
+                            trans('btn.show-more') }}</a>
+                    </div>
                 </div>
             </div>
+            <div class="blur_back bird_back"></div>
         </div>
-        <div class="blur_back bird_back"></div>
-    </div>
         <div class="movie_card mt-2" id="tomb" data-aos="fade-up">
-        <div class="info_section">
-            <div class="movie_header">
-                <h4 class="text-left font-inter-bold">
-                Madagascar Adventures - Spectacular Landscapes and Cultural Diversity
-                </h4>
+            <div class="info_section">
+                <div class="movie_header">
+                    <h4 class="text-left font-inter-bold">
+                        Madagascar Adventures - Spectacular Landscapes and Cultural Diversity
+                    </h4>
+                </div>
+                <div class="movie_desc">
+                    <p>Choose from our most iconic routes:</p>
+                    <ul class="font-inter-regular">
+                        <li><a href="{{ route('tours/adventure_tour') }}" class="text-primary">Adventure Tours</a> on
+                            the Tsiribihina River and the Tsingy of Bemaraha</li>
+                        <li><a href="{{ route('tours/wonderful_classic_tour') }}" class="text-primary">Wonderful
+                                Classic</a> Tour through Andasibe, Ranomafana, Isalo, and the RN7</li>
+                        <li><a href="{{ route('tours/combination_tour') }}" class="text-primary">Combination tours</a>
+                            including the RN7, Nosy Be Wonders, Masoala Adventure, and many other fully customized
+                            circuits tailored to your travel goals</li>
+                    </ul>
+                </div>
             </div>
-            <div class="movie_desc">
-                <p>Choose from our most iconic routes:</p>
-                <ul class="font-inter-regular">
-                <li><a href="{{ route('tours/adventure_tour') }}" class="text-primary">Adventure Tours</a> on the Tsiribihina River and the Tsingy of Bemaraha</li>
-                <li><a href="{{ route('tours/wonderful_classic_tour') }}" class="text-primary">Wonderful Classic</a> Tour through Andasibe, Ranomafana, Isalo, and the RN7</li>
-                <li><a href="{{ route('tours/combination_tour') }}" class="text-primary">Combination tours</a> including the RN7, Nosy Be Wonders, Masoala Adventure, and many other fully customized circuits tailored to your travel goals</li>
-                </ul>
-            </div>
+            <div class="blur_back adventure_back"></div>
         </div>
-        <div class="blur_back adventure_back"></div>
-    </div>
 
         <div class="row mt-6">
 
@@ -120,7 +128,7 @@
 
                         </p>
                         <a href="{{ route('tours/'.$t->path) }}" class="card__author" title="author">
-                            {{  trans('btn.show-more') }}
+                            {{ trans('btn.show-more') }}
                         </a>
                     </div>
                 </article>
@@ -168,7 +176,8 @@
                         </div>
                         <div class="card-text">
                             <p class="text-center mt-0 mb-0">
-                            Professional drivers and guides also accompany every excursion — fluent in English and Spanish, and specialized in Malagasy flora, fauna, and culture
+                                Professional drivers and guides also accompany every excursion — fluent in English and
+                                Spanish, and specialized in Malagasy flora, fauna, and culture
                             </p>
                         </div>
                     </div>
@@ -182,7 +191,8 @@
                         </div>
                         <div class="card-text">
                             <p class="text-center">
-                            An eco-friendly approach promoting local guides, sustainable accommodations, and support for local communities
+                                An eco-friendly approach promoting local guides, sustainable accommodations, and support
+                                for local communities
                             </p>
                         </div>
                     </div>
@@ -196,7 +206,7 @@
     <div class="card-styled">
         <div class="card-body">
             <h3 class="text-center text-primary font-inter-extra-bold mb-4">
-             Why trust us for your Madagascar travel packages? 
+                Why trust us for your Madagascar travel packages?
             </h3>
             <table class="table font-inter-regular">
                 <thead>
@@ -231,7 +241,7 @@
         </div>
     </div>
 </section>
-<section id="testimonials" class="container mb-4" aria-labelledby="reviews-heading">
+<section id="testimonials bg-gradient" class="container mb-4" aria-labelledby="reviews-heading">
     <h2 id="reviews-heading" class="sr-only">Customer Reviews</h2>
 
     <h2 class="section-heading" data-aos="fade-up">
@@ -242,33 +252,35 @@
     </h6>
 
     <div class="testimonials">
-        
-    <?php foreach($reviews as $review): ?>
-    <figure class="snip1157">
-  <blockquote>
-    <p class="content">
-    {{ $review->message }}
-    </p>
-    <div class="arrow"></div>
-  </blockquote>
-  <img src="{{ assets('img/images/user.png') }}" class="sq-sample3" alt="sq-sample3" />
-  <div class="author">
-    <h5>{{ $review->name_user }} <span> 
-    <p>
-                        <?php for ($i = 0; $i <5; $i++): ?>
-                        <?php if($i < $review->rating): ?>
-                        <img src="{{ assets('img/logos/star_filled.png') }}" style="width:20px; height:20px;" class="star filled">
-                        <?php else: ?>
-                            <img src="{{ assets('img/logos/star_outline.png') }}" style="width:20px; height:20px;" class="star outline">
-                        <?php endif; ?>
+
+        <?php foreach($reviews as $review): ?>
+        <figure class="snip1157">
+            <blockquote>
+                <p class="content">
+                    {{ $review->message }}
+                </p>
+                <div class="arrow"></div>
+            </blockquote>
+            <img src="{{ assets('img/images/user.png') }}" class="sq-sample3" alt="sq-sample3" />
+            <div class="author">
+                <h5>{{ $review->name_user }} <span>
+                        <p>
+                            <?php for ($i = 0; $i <5; $i++): ?>
+                            <?php if($i < $review->rating): ?>
+                            <img src="{{ assets('img/logos/star_filled.png') }}" style="width:20px; height:20px;"
+                                class="star filled">
+                            <?php else: ?>
+                            <img src="{{ assets('img/logos/star_outline.png') }}" style="width:20px; height:20px;"
+                                class="star outline">
+                            <?php endif; ?>
 
 
-                        <?php endfor; ?>
-                    </p>
-    </span></h5>
-  </div>
-</figure>
-<?php endforeach; ?>
+                            <?php endfor; ?>
+                        </p>
+                    </span></h5>
+            </div>
+        </figure>
+        <?php endforeach; ?>
     </div>
 </section>
 <section id="video" class="container mb-4">
@@ -278,7 +290,6 @@
     <h6 class="section-subtitle" data-aos="fade-up">
         {{ isset($contents[3]) ? ($language == 'es' ? ($contents[3]->val_es ?? $contents[3]->val) : $contents[3]->val) : 'Videos' }}
     </h6>
-                            
     <div class="row" style="margin-top: 50px;">
         <?php foreach($videos as $video): ?>
         <div class="col-lg-6" data-aos="fade-up">
@@ -303,32 +314,32 @@
 <section id="gallery" class="container mb-4" aria-labelledby="gallery-heading">
     <div class="card-styled">
         <div class="card-body">
-        <h2 id="gallery-heading" class="sr-only">Gallery</h2>
-    <h2 class="section-heading" data-aos="fade-up">
-        {{ isset($contents[8]) ? ($language == 'es' ? ($contents[8]->val_es ?? $contents[8]->val) : $contents[8]->val) :'Gallery' }}
-    </h2>
-    <h6 class="section-subtitle" data-aos="fade-up">
-        {{ isset($contents[9]) ? ($language == 'es' ? ($contents[9]->val_es ?? $contents[9]->val) : $contents[9]->val) :'Pictures' }}
-    </h6>
-    <div id="grid" class="grid-container lightgallery" data-aos="fade-up">
-        <?php foreach($galleries as $gallery): ?>
-        <a href="{{ assets($gallery->image) }}" class="griditem"
-            style="background-image: url('{{ thumbnail(assets($gallery->image)) }}');">
-            <img class="gallery-thumb" src="{{ assets(thumbnail($gallery->image)) }}" style="display: none;"
-                alt="Gallery" loading="lazy" width="320" height="180">
-        </a>
-        <?php endforeach; ?>
-    </div>
-    <div class="car-rental-content p-3 mt-2 text-center">
-        <a href="{{ route('gallery') }}" class="btn btn-success car-rental-btn">{{ trans('btn.show-more') }}</a>
-    </div>
+            <h2 id="gallery-heading" class="sr-only">Gallery</h2>
+            <h2 class="section-heading" data-aos="fade-up">
+                {{ isset($contents[8]) ? ($language == 'es' ? ($contents[8]->val_es ?? $contents[8]->val) : $contents[8]->val) :'Gallery' }}
+            </h2>
+            <h6 class="section-subtitle" data-aos="fade-up">
+                {{ isset($contents[9]) ? ($language == 'es' ? ($contents[9]->val_es ?? $contents[9]->val) : $contents[9]->val) :'Pictures' }}
+            </h6>
+            <div id="grid" class="grid-container lightgallery" data-aos="fade-up">
+                <?php foreach($galleries as $gallery): ?>
+                <a href="{{ assets($gallery->image) }}" class="griditem"
+                    style="background-image: url('{{ thumbnail(assets($gallery->image)) }}');">
+                    <img class="gallery-thumb" src="{{ assets(thumbnail($gallery->image)) }}" style="display: none;"
+                        alt="Gallery" loading="lazy" width="320" height="180">
+                </a>
+                <?php endforeach; ?>
+            </div>
+            <div class="car-rental-content p-3 mt-2 text-center">
+                <a href="{{ route('gallery') }}" class="btn btn-success car-rental-btn">{{ trans('btn.show-more') }}</a>
+            </div>
         </div>
     </div>
-   
+
 </section>
 <section class="container">
-    
-<div class="card-w-img" data-aos="fade-up" >
+
+    <div class="card-w-img" data-aos="fade-up">
         <div class="card-w-img-head">
             <img src="assets/img/images/baobab_pic.jpg" class="card-img" alt="Baobab">
         </div>
@@ -336,21 +347,24 @@
             <h2 class="text-primary font-inter-extra-bold mb-0">Contact us</h2>
             <p class="text-justify">
                 Ready for your next adventure? As your dedicated tour operator in Madagascar,
-                 we will assist you from arrival to departure. 
-                 Reach out via email or WhatsApp — we're here to design 
-                 the ideal Madagascar travel package just for you.
+                we will assist you from arrival to departure.
+                Reach out via email or WhatsApp — we're here to design
+                the ideal Madagascar travel package just for you.
             </p>
             <p class="text-justify">
-            With Madagascar Green Tours, explore the wonders of the Red Island through responsible and personalized Madagascar Tours. Contact our travel agency Madagascar today and experience a once-in-a-lifetime journey, led by professional drivers and guides also accompany every moment of your adventure.
+                With Madagascar Green Tours, explore the wonders of the Red Island through responsible and personalized
+                Madagascar Tours. Contact our travel agency Madagascar today and experience a once-in-a-lifetime
+                journey, led by professional drivers and guides also accompany every moment of your adventure.
             </p>
-            <p class="mb-0">Contact us: <a href="mailto:info@madagascar-green-tours.com" class="text-primary">info@madagascar-green-tours.com</a> or <a href="tel:+261347107100" class="text-primary">+261 34 71 071 00</a></p>
+            <p class="mb-0">Contact us: <a href="mailto:info@madagascar-green-tours.com"
+                    class="text-primary">info@madagascar-green-tours.com</a> or <a href="tel:+261347107100"
+                    class="text-primary">+261 34 71 071 00</a></p>
             <p class="mb-1">You can also reach us on:</p>
             <?php foreach($socialMedia as $sMedia): ?>
-                            <a href="{{ $sMedia->link }}" aria-label="{{ $sMedia->name }}" rel="noopener"
-                                target="_blank"><img src="{{ assets($sMedia->image) }}" alt="{{ $sMedia->name }}" width="24"
-                                    height="24"></a>
-                            <?php endforeach; ?>
-    </div>
+            <a href="{{ $sMedia->link }}" aria-label="{{ $sMedia->name }}" rel="noopener" target="_blank"><img
+                    src="{{ assets($sMedia->image) }}" alt="{{ $sMedia->name }}" width="24" height="24"></a>
+            <?php endforeach; ?>
+        </div>
 </section>
 
 @include(client.partials.footer)

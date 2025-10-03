@@ -176,6 +176,10 @@ body::before {
   text-transform: uppercase;
 }
 
+.bg-gradient {
+  background: linear-gradient(90deg,rgb(35, 152, 199) 0%, rgb(47, 179, 102) 50%, rgb(224, 205, 31) 100%) !important;
+}
+
 .fancy{
   background-image: linear-gradient(90deg,rgb(35, 152, 199) 0%, rgb(47, 179, 102) 50%, rgb(224, 205, 31) 100%);
   background-size: 110% auto;
@@ -2504,7 +2508,7 @@ figure.snip1157 .author h5 span {
   padding-left: 5px;
 }
 .testimonials {
-  background-color: #089157;
+  background: linear-gradient(45deg,rgb(1, 243, 74), rgb(47, 179, 102) 20%, rgb(224, 205, 31) 100%) !important;
   display: flex;
   justify-content: center;
   align-items: center;
