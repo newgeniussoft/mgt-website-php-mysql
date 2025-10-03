@@ -2427,6 +2427,9 @@ input[name="nav"]:checked + .page .page-contents > * {
 .bird_back {
   background: url("../img/images/bird.png");
 }
+.nosy_back {
+  background: url("../img/images/cover-nosy-be.jpg");
+}
 
 .car_back {
   background: url("../img/images/car.jpg");
