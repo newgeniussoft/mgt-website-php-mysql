@@ -68,17 +68,17 @@
             <div class="info_section">
                 <div class="movie_header">
                     <h4 class="text-left font-inter-bold">
-                        Madagascar birding tours - A birdwatcher's paradise
+                        {{ $language == "es" ? $contents[1]->val_es : $contents[1]->val }}
                     </h4>
                 </div>
                 <div class="movie_desc">
                     <p>
-                        With over 270 bird species, many of them endemic, our Madagascar birding tours offer
-                        unforgettable discoveries from north to south, guided by passionate experts.
+                    {{ $language == "es" ? $contents[2]->val_es : $contents[2]->val }}
                     </p>
                     <div class="movie_social text-center">
-                        <a href="{{ route('madagascar') }}" class="btn btn-success car-rental-btn">{{
-                            trans('btn.show-more') }}</a>
+                        <a href="{{ route('madagascar') }}" class="btn btn-success car-rental-btn">
+                            {{ trans('btn.show-more') }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -88,19 +88,27 @@
             <div class="info_section">
                 <div class="movie_header">
                     <h4 class="text-left font-inter-bold">
-                        Madagascar Adventures - Spectacular Landscapes and Cultural Diversity
+                        {{ $language == "es" ? $contents[3]->val_es : $contents[3]->val }}
                     </h4>
                 </div>
                 <div class="movie_desc">
-                    <p>Choose from our most iconic routes:</p>
+                    <p>
+                        {{ trans('home.iconic') }}
+                    </p>
                     <ul class="font-inter-regular">
-                        <li><a href="{{ route('tours/adventure_tour') }}" class="text-primary">Adventure Tours</a> on
-                            the Tsiribihina River and the Tsingy of Bemaraha</li>
-                        <li><a href="{{ route('tours/wonderful_classic_tour') }}" class="text-primary">Wonderful
-                                Classic</a> Tour through Andasibe, Ranomafana, Isalo, and the RN7</li>
-                        <li><a href="{{ route('tours/combination_tour') }}" class="text-primary">Combination tours</a>
-                            including the RN7, Nosy Be Wonders, Masoala Adventure, and many other fully customized
-                            circuits tailored to your travel goals</li>
+                        <li>
+                            <a href="{{ route('tours/adventure_tour') }}" class="text-primary">Adventure Tours</a>
+                            {{ $language == "es" ? $contents[4]->val_es : $contents[4]->val }}
+                        </li>
+                        <li>
+                            <a href="{{ route('tours/wonderful_classic_tour') }}" class="text-primary">Wonderful
+                                Classic Tours</a>
+                            {{ $language == "es" ? $contents[5]->val_es : $contents[5]->val }}
+                        </li>
+                        <li>
+                            <a href="{{ route('tours/combination_tour') }}" class="text-primary">Combination tours</a>
+                            {{ $language == "es" ? $contents[6]->val_es : $contents[6]->val }}
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -152,7 +160,9 @@
 
 <section class="container">
     <div class="card-styled">
-        <h2 class="text-primary font-inter-extra-bold text-center">Our commitments</h2>
+        <h2 class="text-primary font-inter-extra-bold text-center">
+            {{ $language == "es" ? $contents[7]->val_es : $contents[7]->val }}
+        </h2>
         <div class="row">
             <div class="col-lg-4 col-md-4 col-12">
                 <div class="card-w-icon">
@@ -162,7 +172,7 @@
                         </div>
                         <div class="card-text">
                             <p class="text-center">
-                                A recognized and experienced travel agency Madagascar known for its service quality
+                                {{ $language == "es" ? $contents[8]->val_es : $contents[8]->val }}
                             </p>
                         </div>
                     </div>
@@ -176,8 +186,7 @@
                         </div>
                         <div class="card-text">
                             <p class="text-center mt-0 mb-0">
-                                Professional drivers and guides also accompany every excursion — fluent in English and
-                                Spanish, and specialized in Malagasy flora, fauna, and culture
+                                {{ $language == "es" ? $contents[9]->val_es : $contents[9]->val }}
                             </p>
                         </div>
                     </div>
@@ -191,8 +200,7 @@
                         </div>
                         <div class="card-text">
                             <p class="text-center">
-                                An eco-friendly approach promoting local guides, sustainable accommodations, and support
-                                for local communities
+                                {{ $language == "es" ? $contents[10]->val_es : $contents[10]->val }}
                             </p>
                         </div>
                     </div>
@@ -206,35 +214,35 @@
     <div class="card-styled">
         <div class="card-body">
             <h3 class="text-center text-primary font-inter-extra-bold mb-4">
-                Why trust us for your Madagascar travel packages?
+                {{ $language == "es" ? $contents[11]->val_es : $contents[11]->val }}
             </h3>
             <table class="table font-inter-regular">
                 <thead>
                     <tr class="text-primary">
-                        <th>Benefit</th>
-                        <th>Detais</th>
+                        <th>{{ trans('home.benefit') }}</th>
+                        <th>{{ trans('home.details') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Local expertise</td>
-                        <td>25 years of experience in Malagasy ecotourism</td>
+                        <td>{{ $language == "es" ? $contents[12]->val_es : $contents[12]->val }}</td>
+                        <td>{{ $language == "es" ? $contents[13]->val_es : $contents[13]->val }}</td>
                     </tr>
                     <tr>
-                        <td>Flexibility</td>
-                        <td>Custom-made tours based on your interests</td>
+                        <td>{{ $language == "es" ? $contents[14]->val_es : $contents[14]->val }}</td>
+                        <td>{{ $language == "es" ? $contents[15]->val_es : $contents[15]->val }}</td>
                     </tr>
                     <tr>
-                        <td>Professional Assistance</td>
-                        <td>Professional drivers and guides also accompany each travel step</td>
+                        <td>{{ $language == "es" ? $contents[16]->val_es : $contents[16]->val }}</td>
+                        <td>{{ $language == "es" ? $contents[17]->val_es : $contents[17]->val }}</td>
                     </tr>
                     <tr>
-                        <td>Wide Range of Tours</td>
-                        <td>Madagascar tours, Madagascar birding tours, Madagascar adventures</td>
+                        <td>{{ $language == "es" ? $contents[18]->val_es : $contents[18]->val }}</td>
+                        <td>{{ $language == "es" ? $contents[19]->val_es : $contents[19]->val }}</td>
                     </tr>
                     <tr>
-                        <td>Sustainable Commitment</td>
-                        <td>Support for communities and biodiversity conservation</td>
+                        <td>{{ $language == "es" ? $contents[20]->val_es : $contents[20]->val }}</td>
+                        <td>{{ $language == "es" ? $contents[21]->val_es : $contents[21]->val }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -245,10 +253,10 @@
     <h2 id="reviews-heading" class="sr-only">Customer Reviews</h2>
 
     <h2 class="section-heading" data-aos="fade-up">
-        {{ isset($contents[6]) ? ($language == 'es' ? ($contents[6]->val_es ?? $contents[6]->val) : $contents[6]->val) :'Reviews' }}
+        {{ $language == "es" ? $contents[22]->val_es : $contents[22]->val }}
     </h2>
     <h6 class="section-subtitle" data-aos="fade-up">
-        {{ isset($contents[7]) ? ($language == 'es' ? ($contents[7]->val_es ?? $contents[7]->val) : $contents[7]->val) : 'The review of your customer' }}
+        {{ $language == "es" ? $contents[23]->val_es : $contents[23]->val }}
     </h6>
 
     <div class="testimonials">
@@ -285,10 +293,10 @@
 </section>
 <section id="video" class="container mb-4">
     <h2 class="section-heading " data-aos="fade-up">
-        {{ isset($contents[2]) ? ($language == 'es' ? ($contents[2]->val_es ?? $contents[2]->val) : $contents[2]->val) : 'Videos' }}
+        {{ $language == "es" ? $contents[24]->val_es : $contents[24]->val }}
     </h2>
     <h6 class="section-subtitle" data-aos="fade-up">
-        {{ isset($contents[3]) ? ($language == 'es' ? ($contents[3]->val_es ?? $contents[3]->val) : $contents[3]->val) : 'Videos' }}
+        {{ $language == "es" ? $contents[25]->val_es : $contents[25]->val }}
     </h6>
     <div class="row" style="margin-top: 50px;">
         <?php foreach($videos as $video): ?>
@@ -316,10 +324,9 @@
         <div class="card-body">
             <h2 id="gallery-heading" class="sr-only">Gallery</h2>
             <h2 class="section-heading" data-aos="fade-up">
-                {{ isset($contents[8]) ? ($language == 'es' ? ($contents[8]->val_es ?? $contents[8]->val) : $contents[8]->val) :'Gallery' }}
-            </h2>
+                {{ $language == "es" ? $contents[26]->val_es : $contents[26]->val }} </h2>
             <h6 class="section-subtitle" data-aos="fade-up">
-                {{ isset($contents[9]) ? ($language == 'es' ? ($contents[9]->val_es ?? $contents[9]->val) : $contents[9]->val) :'Pictures' }}
+                {{ $language == "es" ? $contents[27]->val_es : $contents[27]->val }}
             </h6>
             <div id="grid" class="grid-container lightgallery" data-aos="fade-up">
                 <?php foreach($galleries as $gallery): ?>
@@ -344,22 +351,17 @@
             <img src="assets/img/images/baobab_pic.jpg" class="card-img" alt="Baobab">
         </div>
         <div class="card-w-img-body px-4">
-            <h2 class="text-primary font-inter-extra-bold mb-0">Contact us</h2>
+            <h2 class="text-primary font-inter-extra-bold mb-0">{{ trans('home.contact.title') }}</h2>
             <p class="text-justify">
-                Ready for your next adventure? As your dedicated tour operator in Madagascar,
-                we will assist you from arrival to departure.
-                Reach out via email or WhatsApp — we're here to design
-                the ideal Madagascar travel package just for you.
+                {{ trans('home.contact.p1') }}
             </p>
             <p class="text-justify">
-                With Madagascar Green Tours, explore the wonders of the Red Island through responsible and personalized
-                Madagascar Tours. Contact our travel agency Madagascar today and experience a once-in-a-lifetime
-                journey, led by professional drivers and guides also accompany every moment of your adventure.
+                {{ trans('home.contact.p2') }}
             </p>
-            <p class="mb-0">Contact us: <a href="mailto:info@madagascar-green-tours.com"
+            <p class="mb-1">{{ trans('home.contact.title') }}: <a href="mailto:info@madagascar-green-tours.com"
                     class="text-primary">info@madagascar-green-tours.com</a> or <a href="tel:+261347107100"
                     class="text-primary">+261 34 71 071 00</a></p>
-            <p class="mb-1">You can also reach us on:</p>
+            <p class="mb-1">{{ trans('home.contact.p3') }}:</p>
             <?php foreach($socialMedia as $sMedia): ?>
             <a href="{{ $sMedia->link }}" aria-label="{{ $sMedia->name }}" rel="noopener" target="_blank"><img
                     src="{{ assets($sMedia->image) }}" alt="{{ $sMedia->name }}" width="24" height="24"></a>
