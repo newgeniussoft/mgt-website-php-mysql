@@ -405,8 +405,7 @@ return [ // TITLE & TEXT
                 ]
             ],
         ],
-        
-            'incoming' => [
+        'incoming' => [
                 'title' => [
                     'why' => 'Why choose an incoming travel agency in Madagascar?',
                     'services' => 'Our services as a tour operator in Madagascar',
@@ -468,7 +467,69 @@ return [ // TITLE & TEXT
                         'p' => 'Choosing an incoming travel agency in Madagascar is the key to fully enjoying your journey. With our expertise as a tour operator and local travel agency, we provide much more than just a holiday: a human adventure and an authentic experience at the heart of one of the world\'s most unique islands.',
                     ],
                 ]
-            
+        ],
+        'travel' => [
+            'title' => [
+                'camp' => 'Camping in Madagascar - A Unique Adventure Close to Nature',
+                'veh' => 'Vehicles - Safe & Reliable Transport Across Madagascar',
+                'trav' => 'Travel Security - Your Safety Comes First',
+                'trav-kit' => 'Our Travel Kit - Practical Information for Your Journey',
+                'conc' => 'Conclusion'
+            ],
+            'ul' => [
+                'li-1' => 'A practical packing list with recommended gear',
+                'li-2' => 'Photography tips to capture Madagascar\'s unique wildlife and landscapes',
+                'li-3' => 'A checklist for a basic first-aid kit',
+                'li-4' => 'Useful Malagasy phrases to help you interact with locals',
+            ],
+            'content' => [
+                'camp' => [
+                    'p-1' => 'Because we specialize in tours “off the beaten path,” some itineraries include camping experiences. 
+                        This is the best way to immerse yourself in Madagascar\'s pristine nature, 
+                        far from crowded tourist areas. We provide modern lightweight tents with excellent 
+                        waterproof protection (up to 4000 mm water column), ensuring comfort even during tropical rains.',
+                    'p-2' => 'Guests usually sleep in single or double tents, with extra space for luggage and equipment. 
+                        While camping, our professional cooks prepare three fresh meals daily, with special attention 
+                        to vegetarian diets and allergy-friendly options. Many travelers say the food served on our 
+                        camping tours is among the best they enjoy during their entire trip. It\'s a truly memorable 
+                        way to experience Madagascar\'s landscapes and wilderness.'
+                ],
+                'veh' => [
+                    'p-1' => 'Traveling across Madagascar requires reliable transport, as distances are long and road conditions 
+                            can be challenging. Our vehicles for Madagascar tours include 4x4 off-road cars, minibuses, 
+                            and larger buses, depending on group size. Each vehicle meets strict safety standards, 
+                            is fully insured, and is driven by experienced Malagasy drivers.',
+                    'p-2' => 'Our drivers are experts in navigating Madagascar\'s toughest terrains, from rugged 
+                            highlands to sandy coastal roads. With their knowledge of the country and its landscapes, 
+                            they guarantee that you will reach your destination safely and comfortably, while also 
+                            enjoying scenic views along the way.'
+                ],
+                'trav' => [
+                    'p-1' => 'When booking a trip, safety and financial protection are essential. 
+                            Every package tour we offer includes a travel security note, required by European and Swiss law. 
+                            This guarantees that your prepaid travel expenses are insured in the unlikely event of insolvency 
+                            by the tour operator.',
+                    'p-2' => 'If you encounter travel offers without such a security guarantee, proceed with caution. 
+                            Reliable tour companies always protect their guests with full insurance coverage—not 
+                            only for finances, but also for vehicles and travelers. With Madagascar Green Tours, 
+                            you can book with confidence, knowing your trip is fully protected.'
+                ],
+                'trav-kit' => [
+                    'p-1' => 'To ensure our guests are well prepared, each booking includes a custom Madagascar travel kit. 
+                            This guide contains essential information about the island, 
+                            its people, and its culture. You\'ll also find:',
+                    'p-2' => 'In short, our travel kit is designed to give you 
+                            everything you need for a smooth, enjoyable, and unforgettable 
+                            journey in Madagascar.'
+                ],
+                'conc' => [
+                    'p' => 'From carefully selected Madagascar hotels and lodges, to adventurous camping tours, 
+                            reliable vehicles, and full safety guarantees, Madagascar Green Tours ensures every detail 
+                            of your trip is thoughtfully planned. With over two decades of experience as a trusted Madagascar 
+                            tour operator, we provide travelers with authentic experiences, professional guidance, 
+                            and lasting memories.'
+                ]
+            ]
         ]
     ]
 ]
