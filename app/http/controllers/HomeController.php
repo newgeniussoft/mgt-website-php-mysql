@@ -89,7 +89,9 @@
         }
 
         public function page($lang, $page, $params = null) {
-            $landingPages = ['incoming-travel-agency-madagascar', 'madagascar-tour-guide'];
+            $landingPages = [
+                'incoming-travel-agency-madagascar', 'madagascar-tour-guide', 'madagascar-travel-information', 'nosy-be-tours', 'about'
+            ];
             
             $this->vars['language'] = $lang;
             $this->vars['slides'] = $this->slideModel->all();
