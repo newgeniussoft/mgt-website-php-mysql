@@ -530,6 +530,49 @@ return [ // TITLE & TEXT
                             and lasting memories.'
                 ]
             ]
+        ],
+        'nosy' => [
+            'title' => [
+                'why' => 'Why choose Nosy Be tours?',
+                'more' => 'Nosy Be tours: more than just beaches',
+                'book' => 'Book your Nosy Be tour with Madagascar Green Tours'
+            ],
+            'sub' => [
+                'title-1' => 'Island Hopping:',
+                'title-2' => 'Marine Adventures:',
+                'title-3' => 'Cultural Discovery:',
+                'title-4' => 'Scenic Views:',
+                'title-5' => 'Wildlife Encounters:'
+            ],
+            'ul' => [
+                "why" => [
+                    'li-1' => 'Visit Nosy Komba, Nosy Tanikely, and the world-famous Nosy Iranja',
+                    'li-2' => 'Snorkel or dive in crystal-clear waters, home to sea turtles, dolphins, and colorful coral reefs.',
+                    'li-3' => 'Explore local markets, villages, and ylang-ylang plantations for a true Malagasy experience.',
+                    'li-4' => 'Climb Mont Passot to enjoy stunning sunsets over volcanic lakes',
+                    'li-5' => 'Meet lemurs, chameleons, and exotic birds in their natural habitat.',
+                ],
+                'book' => [
+                    'li-1' => 'Professional and experienced local guides.',
+                    'li-2' => 'Flexible itineraries tailored to your needs.',
+                    'li-3' => 'Eco-friendly and community-based tourism approach.'
+                ]
+            ],
+            'content' => [
+                'why' => [
+                    'p-1' => 'When you book a Nosy Be Tour, you are choosing an experience that combines breathtaking landscapes, adventure, and authentic encounters. Our local guides ensure that every excursion is meaningful, safe, and enriching.',
+                    'p-2' => 'Here\'s why Nosy Be Tours are a must-do during your stay in Madagascar:',
+                ],
+                'more' => [
+                    'p-1' => 'While Nosy Be is world-renowned for its white sandy beaches, our tours go far beyond relaxation. Each excursion offers a balance between discovery and leisure. Imagine starting your day with a guided walk through lush rainforests, followed by a traditional Malagasy meal, and ending it with a sunset cruise across the Indian Ocean.',
+                    'p-2' => 'With Nosy Be Tours, every moment becomes a lasting memory. Whether you are an adventure seeker, a couple on a honeymoon, or a family looking for fun activities, our itineraries are tailored to your expectations.'
+                ],
+                'book' => [
+                    'p-1' => 'Choosing Madagascar Green Tours means traveling with a trusted local operator who values authenticity, sustainability, and your comfort. We take care of every detail so you can focus on enjoying the magic of Nosy Be.',
+                    'p-2' => '👉 Start your journey today:',
+                    'p-3' => 'Nosy Be is more than just a tropical getaway - it is a world of discoveries waiting for you. From its vibrant marine life to its cultural heritage, every tour reveals something unique. With Nosy Be Tours by Madagascar Green Tours, you will experience the perfect balance between relaxation and adventure, guided by passionate experts who know the island inside out. Book your Nosy Be tour now and let the island of perfumes capture your heart. For more informations, plesace contact-us'
+                ]
+            ]
         ]
     ]
 ]
