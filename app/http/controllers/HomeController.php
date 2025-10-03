@@ -97,7 +97,7 @@
             $this->vars['videos'] = $this->videoModel->all();
             $this->vars['contents'] = $this->contentModel->where('page', $this->vars['page']->path);
             $this->vars['services'] = $this->serviceModel->all();
-            $this->vars['reviews'] = $this->reviewModel->limitOffset(4, 0, "WHERE pending='0'", 'DESC');
+            $this->vars['reviews'] = $this->reviewModel->limitOffset(3, 0, "WHERE pending='0'", 'DESC');
             $this->vars['galleries'] = $this->galleryModel->limitOffset(8, 0, "WHERE type=''", 'DESC');
             $this->view = $this->prefix.$page;
             if ($page == "") {
