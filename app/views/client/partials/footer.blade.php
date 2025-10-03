@@ -11,26 +11,35 @@
                         </p>
                     </div>
                     <div class="col-md-3 mb-4 mb-md-0">
-                        <h4 class="mt-2 mb-1" itemprop="name">{{ trans('btn.more') }}</h4>
+                        <h4 class="mt-2 mb-1" itemprop="name">Quick links</h4>
                         <nav aria-label="Footer Navigation">
                             <ul class="list-unstyled mb-0 text-secondary font-inter-regular text-center">
                                 <li><a href="{{ route('information') }}" class="text-secondary font-inter-regular">{{ trans('menu.info') }}</a></li>
-                                <li><a href="{{ route('sales-conditions') }}" class="text-secondary font-inter-regular">{{ trans('menu.sales-cond') }}</a>
-                                </li>
+                                <li><a href="{{ route('sales-conditions') }}" class="text-secondary font-inter-regular">{{ trans('menu.sales-cond') }}</a></li>
+                                <li><a href="{{ route('blogs') }}" class="text-secondary font-inter-regular">Blogs</a></li>
                                 <li><a href="{{ route('madagascar') }}" class="text-secondary font-inter-regular">Madagascar</a></li>
-                                <li><a href="{{ route('madagascar-tour-guide') }}" class="text-secondary font-inter-regular">Madagascar tour guide</a></li>
-                                <li><a href="{{ route('incoming-travel-agency-madagascar') }}" class="text-secondary font-inter-regular">Incoming travel agency Madagascar</a></li>
-                            </ul>
+                             </ul>
                         </nav>
                     </div>
                     <div class="col-md-3 mb-4 mb-md-0">
-                        <h4 class="mt-2 mb-1" itemprop="name">{{ trans('title.desti') }}</h4>
+                        <h4 class="mt-2 mb-1" itemprop="name">{{ trans('btn.more') }}</h4>
                         <nav aria-label="Footer Navigation">
                             <ul class="list-unstyled mb-0 text-secondary font-inter-regular text-center">
-                                <li><a href="{{ route('tours/nosy_be_wonders_tour') }}" class="text-secondary">{{ $language == "es" ? 'Gira' : "" }} {{ trans('north')}} {{ $language != "es" ? 'Tours' : "" }}</a></li>
-                                <li><a href="{{ route('tours/rn7_active_south_tour') }}" class="text-secondary">{{ $language == "es" ? 'Gira' : "" }} {{ trans('south')}} {{ $language != "es" ? 'Tours' : "" }}</a></li>
-                                <li><a href="{{ route('tours/tropical_tour') }}" class="text-secondary">{{ $language == "es" ? 'Gira' : "" }} {{ trans('east')}} {{ $language != "es" ? 'Tours' : "" }}</a></li>
-                                <li><a href="{{ route('tours/tsiribihina_adventure_tour') }}" class="text-secondary">{{ $language == "es" ? 'Gira' : "" }} {{ trans('west')}} {{ $language != "es" ? 'Tours' : "" }}</a></li>
+                                <li>
+                                    <a href="{{ route('madagascar-tour-guide') }}" class="text-secondary">
+                                        Madagascar tour guide
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('incoming-travel-agency-madagascar') }}" class="text-secondary">
+                                        Incoming travel agency Madagascar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('madagascar-travel-information') }}" class="text-secondary">
+                                        Madagascar travel information
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
