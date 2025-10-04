@@ -2117,6 +2117,17 @@ vertical-align: middle;
         z-index: 999 !important;
         transform: scale(1, 1);
 }
+.top_inside_divider {
+  background-image: url('../img/images/vector.svg');
+        background-size: 100% 32px;
+        position: relative;
+        width: 100%;
+        top: 0px;
+        height: 32px;
+        z-index: 999 !important;
+        transform: scale(1, 1);
+        rotate: 180deg;
+}
 .layout_tab {
   display: grid;
   width: 100%;
@@ -2415,6 +2426,13 @@ input[name="nav"]:checked + .page .page-contents > * {
 }
 .bird_back {
   background: url("../img/images/bird.png");
+}
+.nosy_back {
+  background: url("../img/images/cover-nosy-be.jpg");
+}
+
+.car_back {
+  background: url("../img/images/car.jpg");
 }
 
 figure.snip1157 {

@@ -468,6 +468,157 @@ return [ // TITLE & TEXT
                     'p' => 'Elegir una agencia de viaje entrante en Madagascar es la clave para disfrutar plenamente de tu viaje. Con nuestro conocimiento como operador turístico y agencia de viaje local, proporcionamos mucho más que solo un viaje: una aventura humana y una experiencia auténtica en el corazón de una de las islas más únicas del mundo.',
                 ],
             ],
+        ],
+        'travel' => [
+            'title' => [
+                'camp' => 'Camping en Madagascar - Un Aventura Única Cerca de la Naturaleza',
+                'veh' => 'Vehículos - Transporte Seguro y Reliable en Madagascar',
+                'trav' => 'Seguridad en Viaje - Tu Seguridad viene Primero',
+                'trav-kit' => 'Nuestro Kit de Viaje - Información práctica para tu viaje',
+                'conc' => 'Conclusión'
+            ],
+            'ul' => [
+                'li-1' => 'Una lista práctica de equipaje con equipo recomendado',
+                'li-2' => 'Consejos de fotografía para capturar la vida silvestre única de Madagascar y sus paisajes',
+                'li-3' => 'Una lista de verificación para un kit de primeros auxilios básico',
+                'li-4' => 'Frases útiles en malagache para ayudarte a interactuar con los locales',
+            ],
+            'content' => [
+                'camp' => [
+                    'p-1' => 'Porque nos especializamos en tours “off the beaten path,” algunos itinerarios incluyen experiencias de camping. 
+                        Esta es la mejor manera de sumergirse en la naturaleza pura de Madagascar, 
+                        lejos de las áreas turísticas congestionadas. Proporcionamos modernas tiendas livianas con excelente 
+                        protección contra la lluvia (hasta 4000 mm de columna de agua), garantizando comodidad incluso durante las lluvias tropicales.',
+                    'p-2' => 'Los huéspedes generalmente duermen en tiendas individuales o dobles, con espacio extra para equipaje y equipo. 
+                        Mientras se hospeda, nuestros cocineros profesionales preparan tres comidas frescas diarias, con especial atención 
+                        a dietas vegetarianas y opciones aptas para alérgicos. Muchos viajeros dicen que la comida que se sirve en nuestros 
+                        tours de camping es de lo mejor que disfrutan durante todo su viaje. Es una forma verdaderamente memorable 
+                        de experimentar los paisajes y la naturaleza salvaje de Madagascar.'
+                ],
+                'veh' => [
+                    'p-1' => 'Viajar por Madagascar requiere un transporte confiable, ya que las distancias son largas y las condiciones de la carretera 
+                            pueden ser desafiantes. Nuestros vehículos para tours de Madagascar incluyen 4x4 off-road cars, minibuses, 
+                            y autobuses más grandes, dependiendo del tamaño del grupo. Cada vehículo cumple con estándares estrictos de seguridad, 
+                            está completamente segurizado y conducido por conductores malagache experimentados.',
+                    'p-2' => 'Nuestros conductores son expertos en navegar las terrazas más difíciles de Madagascar, desde las altas montañas hasta las carreteras costeras de arena. Con su conocimiento del país y sus paisajes, 
+                            garantizan que llegarás a tu destino de manera segura y cómoda, mientras también disfrutarás de vistas panorámicas a lo largo del camino.',
+                ],
+                'trav' => [
+                    'p-1' => 'Cuando se reserva un viaje, la seguridad y la protección financiera son esenciales. 
+                            Cada paquete de viaje que ofrecemos incluye una nota de seguridad en viaje, requerida por la ley europea y suiza. 
+                            Esto garantiza que tus gastos de viaje previamente pagados estén seguros en el caso de insolvencia 
+                            por el operador turístico.',
+                    'p-2' => 'Si encuentras ofertas de viaje sin tal garantía de seguridad, procede con precaución. 
+                            Las empresas de viaje confiables siempre protegen a sus huéspedes con cobertura de seguros completos—not 
+                            no solo para las finanzas, sino también para los vehículos y los viajeros. Con Madagascar Green Tours, 
+                            puedes reservar con confianza, sabiendo que tu viaje está completamente protegido.'
+                ],
+                'trav-kit' => [
+                    'p-1' => 'Para asegurar que nuestros huéspedes estén bien preparados, cada reserva incluye un kit de viaje personalizado para Madagascar. 
+                            Este guía contiene información esencial sobre la isla, 
+                            su gente y su cultura. También encontrarás:',
+                    'p-2' => 'En resumen, nuestro kit de viaje está diseñado para darte 
+                            todo lo que necesitas para un viaje suave, agradable y memorable 
+                            en Madagascar.'
+                ],
+                'conc' => [
+                    'p' => 'Desde los hoteles y lodges de Madagascar cuidadosamente seleccionados, hasta los tours de camping aventureros, 
+                            vehículos confiables y garantías de seguridad completas, Madagascar Green Tours asegura que cada detalle 
+                            de tu viaje esté planeado con atención. Con más de dos décadas de experiencia como operador turístico confiable en Madagascar 
+                            operador turístico, proporcionamos a los viajeros experiencias auténticas, orientación profesional y recuerdos duraderos.'
+                ]
+            ]
+        ],
+        'nosy' => [
+            'title' => [
+                'why' => '¿Por qué escoger tours de Nosy Be?',
+                'more' => 'Nosy Be tours: más que solo playas',
+                'book' => 'Reserva tu tour de Nosy Be con Madagascar Green Tours'
+            ],
+            'sub' => [
+                'title-1' => 'Saltar entre islas:',
+                'title-2' => 'Aventuras marinas:',
+                'title-3' => 'Descubrimiento cultural:',
+                'title-4' => 'Vistas panorámicas:',
+                'title-5' => 'Encuentros con la vida silvestre:'
+            ],
+            'ul' => [
+                "why" => [
+                    'li-1' => 'Visita Nosy Komba, Nosy Tanikely y el famoso Nosy Iranja',
+                    'li-2' => 'Natale o nadar en aguas cristalinas, hogar de tortugas marinas, delfines y arrecifes de coral coloridos.',
+                    'li-3' => 'Explora mercados locales, pueblos y plantaciones de ylang-ylang para una verdadera experiencia malagache.',
+                    'li-4' => 'Sube a Mont Passot para disfrutar de los hermosos atardeceres sobre lagos volcánicos',
+                    'li-5' => 'Conoce loros, chamaletos y aves exóticas en su hábitat natural.',
+                ],
+                'book' => [
+                    'li-1' => 'Guías locales profesionales y experimentados.',
+                    'li-2' => 'Itinerarios flexibles adaptados a tus necesidades.',
+                    'li-3' => 'Enfoque turístico ecológico y basado en la comunidad.'
+                ]
+            ],
+            'content' => [
+                'why' => [
+                    'p-1' => 'Cuando reservas un tour de Nosy Be, estás eligiendo una experiencia que combina paisajes impresionantes, aventura y encuentros auténticos. Nuestros guías locales aseguran que cada excursión sea significativa, segura y enriquecedora.',
+                    'p-2' => 'Aquí está por qué los tours de Nosy Be son un must-do durante tu estancia en Madagascar:',
+                ],
+                'more' => [
+                    'p-1' => 'Mientras que Nosy Be es mundialmente famoso por sus playas de arena blanca, nuestros tours van más allá de la relajación. Cada excursión ofrece un equilibrio entre descubrimiento y ocio. Imagina comenzar tu día con una caminata guiada por selvas lluviosas, seguida de una cena tradicional malagache, y terminando con un crucero por el océano Índico.',
+                    'p-2' => 'Con Nosy Be Tours, cada momento se convierte en una memoria duradera. Ya sea un buscador de aventuras, un par de bodas o una familia buscando actividades divertidas, nuestros itinerarios están diseñados para tus expectativas.'
+                ],
+                'book' => [
+                    'p-1' => 'Elegir Madagascar Green Tours significa viajar con un operador local de confianza que valoriza la autenticidad, la sostenibilidad y tu comodidad. Nos encargamos de cada detalle para que puedas enfocarte en disfrutar la magia de Nosy Be.',
+                    'p-2' => '👉 Comienza tu viaje hoy mismo:',
+                    'p-3' => 'Nosy Be es más que solo un viaje de relajación - es un mundo de descubrimientos esperando por ti. Desde su vida marina vibrante hasta su patrimonio cultural, cada tour revela algo único. Con Nosy Be Tours por Madagascar Green Tours, experimentarás el equilibrio perfecto entre relajación y aventura, guiado por expertos apasionados que conocen la isla por dentro. Reserva tu tour de Nosy Be ahora y deja que la isla de perfumes capture tu corazón. Para más información, por favor contáctanos'
+                ]
+            ]
+        ],
+        'local' => [
+            'title' => [
+                'why' => '¿Por qué escoger Madagascar para tu próxima aventura?',
+                'exp' => 'Tours de Madagascar guiados por expertos',
+                'pers' => 'Servicios de viaje personalizados',
+                'sust' => 'Experiencias sostenibles y auténticas',
+                'plan' => 'Planifica tu vacación en Madagascar hoy mismo'
+            ],
+            'subtitle' => [
+                'wild' => 'Tours de vida silvestre',
+                'adv' => 'Viaje de aventura',
+                'beach' => 'Paquetes de playa y bodas',
+                'cult' => 'Tours culturales',
+            ],
+            'content' => [
+                'why' => [
+                    'p-1' => 'Madagascar es un territorio de contraste, rico en biodiversidad y patrimonio cultural. 
+                        Más del 80% de su vida silvestre se encuentra en ningún otro lugar en la Tierra, lo que lo hace 
+                        uno de los destinos de viaje más únicos del mundo. Desde los árboles baobáicos icónicos 
+                        hasta los chamaletos raros, los pájaros coloridos y los reptiles fascinantes, cada día de tu 
+                        viaje estará lleno de descubrimientos.',
+                    'p-2' => 'A diferencia de otros destinos llenos de turismo masivo, Madagascar permanece un paraíso exclusivo. Viajeros
+                        buscando un escape tranquilo encontrarán un equilibrio perfecto entre aventura y tranquilidad. Esto es por eso que nuestros paquetes de vacaciones en Madagascar están diseñados para aquellos que quieren sumergirse en la naturaleza mientras disfrutan
+                        encuentros auténticos con comunidades locales.',
+                ],
+                'exp' => [
+                    'p' => 'Nuestra agencia de viaje en Madagascar ofrece una amplia gama de opciones de tour, desde excursiones cortas hasta expediciones de varias semanas. Ofrecemos:',
+                    'wild' => 'Descubre los lemurios, los chamaletos y otros especies durante las visitas guiadas a los parques nacionales de Madagascar',
+                    'adv' => 'Recorre los bosques lluviosos, camina por senderos desiertos o explora los pueblos remotos.',
+                    'beach' => 'Relájese en las impresionantes playas de Madagascar, como Nosy Be, perfectas para parejas que buscan una escapada romántica.',
+                    'cult' => 'Conoce a los artesanos locales, experimenta las tradiciones malagaches y siente la cocina auténtica.',
+                ],
+                'pers' => [
+                    'p-1' => 'A diferencia de grandes operadores, creamos tours de Madagascar personalizados que se adaptan a tus preferencias. Ya sea un viaje de lujo con alojamiento premium o una verdadera aventura fuera del camino, diseñaremos un itinerario que se ajuste a tu presupuesto y expectativas.',
+                    'p-2' => 'Si tienes destinos específicos en mente o deseas ajustar la duración de tu viaje, somos flexibles. Nuestra prioridad es crear un itinerario personalizado que haga tu visita verdaderamente inolvidable.',
+                ],
+                'sust' => [
+                    'p-1' => 'Creemos que el viaje responsable es la mejor manera de explorar Madagascar. Nuestros tours enfatizan la interacción local, el turismo sostenible y el respeto por el medio ambiente. Al viajar por la isla, no solo verás la belleza natural de Madagascar, sino que también te conectarás con su gente amable y hospitalaria.',
+                    'p-2' => 'Muchos de nuestros huéspedes dicen que el punto más destacado de su viaje no es solo los paisajes y la vida silvestre, sino también los sonrisas genuinas y los intercambios culturales con las comunidades locales.',
+                ],
+                'plan' => [
+                    'p-1' => 'Si buscas un operador de tours de Madagascar confiable que combine profesionalismo, pasión y experiencia local, has llegado al lugar correcto. Nuestra misión es proporcionarte la experiencia auténtica y enriquecedora posible.',
+                    'p-2' => 'Desde tours de vida silvestre en Madagascar hasta vacaciones románticas en la playa, desde aventuras familiares hasta itinerarios personalizados, prometemos entregar un viaje que exceda tus expectativas.',
+                    'p-3' => 'Ven y explora este paraíso tropical, donde la aventura se une a la serenidad y cada día trae consigo un nuevo descubrimiento. Ponte en contacto con nosotros hoy mismo para empezar a planificar el viaje de tus sueños con una agencia de viajes de confianza en Madagascar dedicada a hacer que tus vacaciones sean realmente inolvidables.',
+                    'p-4' => 'Para cualquier pregunta o información, no dudes en contactar',
+                ]
+            ]
         ]
     ]
 ]
