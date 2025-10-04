@@ -107,10 +107,12 @@ return [ // TITLE & TEXT
         'show-more' => 'Show more',
     ],
     'menu' => [//        MENU
+        'about-us'   => 'About us',
         'car-rental' => 'Car rental',
         'contact-us' => 'Contact us',
         'home'       => 'Home',
         'info'       => 'Information',
+        'more'       => 'More',
         'our-tours'  => 'Our tours',
         'reviews'    => 'Reviews',
         'sales-cond' => 'Sales condition',

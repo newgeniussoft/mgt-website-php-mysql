@@ -104,10 +104,12 @@ return [ // TITLE & TEXT
         'show-more' => 'Ver más',
     ],
     'menu' => [//        MENU
+        'about-us'   => 'Sobre nosotros',
         'car-rental' => 'Alquiler de autos',
         'contact-us' => 'Contáctenos',
         'home'       => 'Inicio',
         'info'       => 'Información',
+        'more'       => 'Más',  
         'our-tours'  => 'Nuestras tours',
         'reviews'    => 'Reseñas',
         'sales-cond' => 'Condiciones de venta',

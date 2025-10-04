@@ -88,11 +88,18 @@
                             <a class="dropdown-item" href="{{ route('flight-booking') }}">{{ trans('menu.flight-booking') }}</a>
                         </div>
                     </li>
-                    <li class="nav-item {{ currentPage() == 'reviews' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('reviews') }}">{{ trans('menu.reviews') }}</a>
+                    <li class="nav-item dropdown {{ currentPage() == 'services' ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#" id="toursDropdown" role="button"
+                             aria-haspopup="true" data-toggle="dropdown"  aria-expanded="true">
+                            {{ trans('menu.more') }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="toursDropdown">
+                            <a class="dropdown-item" href="{{ route('reviews') }}">{{ trans('menu.reviews') }}</a>
+                            <a class="dropdown-item" href="{{ route('blogs') }}">{{ trans('menu.blogs') }}</a>
+                        </div>
                     </li>
-                    <li class="nav-item {{ currentPage() == 'blogs' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('blogs') }}">Blogs</a>
+                    <li class="nav-item {{ currentPage() == 'about-us' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('about-us') }}">{{ trans('menu.about-us') }}</a>
                     </li>
                     <li class="nav-item {{ currentPage() == 'contact' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('contact') }}">{{ trans('menu.contact-us') }}</a>
