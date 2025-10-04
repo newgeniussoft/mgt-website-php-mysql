@@ -432,14 +432,14 @@ return [ // TITLE & TEXT
                         'li-3' => 'Trips combining adventure, relaxation, and immersion',
                     ],
                     'tailor' => [
-                        'li-1' => 'Exploration of national parks (Andasibe, Ranomafana, Isalo, Tsingy de Bemaraha)',
-                        'li-2' => 'Cultural tours and encounters with local communities',
-                        'li-3' => 'Trips combining adventure, relaxation, and immersion',
+                        'li-1' => 'Romantic honeymoons',
+                        'li-2' => 'Beach stays in Nosy Be, Sainte-Marie, or Ifaty',
+                        'li-3' => 'Photo and birdwatching tours for nature lovers',
                     ],
                     'full' => [
-                        'li-1' => 'Exploration of national parks (Andasibe, Ranomafana, Isalo, Tsingy de Bemaraha)',
-                        'li-2' => 'Cultural tours and encounters with local communities',
-                        'li-3' => 'Trips combining adventure, relaxation, and immersion',
+                        'li-1' => 'Airport meet-and-greet and transfers',
+                        'li-2' => 'Booking of carefully selected accommodations',
+                        'li-3' => 'Ongoing support and assistance throughout your stay',
                     ],
                     'why-trust' => [
                         'li-1' => 'Promoting responsible and sustainable tourism',
