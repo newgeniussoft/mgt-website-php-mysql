@@ -90,7 +90,8 @@
 
         public function page($lang, $page, $params = null) {
             $landingPages = [
-                'incoming-travel-agency-madagascar', 'madagascar-tour-guide', 'madagascar-travel-information', 'nosy-be-tours', 'about'
+                'incoming-travel-agency-madagascar', 'madagascar-tour-guide', 
+                'madagascar-travel-information', 'nosy-be-tours', 'madagascar-local-tour-operator'
             ];
             
             $this->vars['language'] = $lang;

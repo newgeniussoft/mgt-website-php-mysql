@@ -17,7 +17,7 @@
 <section id="about" class="container content-section bg-light" aria-labelledby="about-heading">
   <div class="card-styled">
     <div class="card-styled-body">
-      <img src="{{ assets('img/images/hotel-beach.jpg') }}" class="float-image desktop-img"
+      <img src="{{ assets('img/images/hotel-ranomafana.jpg') }}" class="float-image desktop-img"
         alt="Ring-tailed lemur in Madagascar rainforest" decoding="async">
         
         <h1 class="text-center text-primary font-inter-extra-bold fs-20">

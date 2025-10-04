@@ -40,6 +40,16 @@
                                         Madagascar travel information
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('nosy-be-tours') }}" class="text-secondary">
+                                        Nosy be tours
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('madagascar-local-tour-operator') }}" class="text-secondary">
+                                        Madagascar local tour operator
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
