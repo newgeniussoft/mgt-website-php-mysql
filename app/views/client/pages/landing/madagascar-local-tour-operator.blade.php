@@ -13,11 +13,12 @@
 <section class="container mb-4" style="margin-top: -90px;">
   <div class="card-styled">
     <div class="card-styled-body px-4">
-      <h3 class="text-center font-inter-extra-bold text-primary">
-        {{ trans('land.travel.title.camp') }}
+    <h3 class="text-center font-inter-extra-bold fancy text-uppercase mt-1 mb-3">
+        {{ $language == "es" ? $page->title_h1_es : $page->title_h1 }}
       </h3>
-      <p>{{ trans('land.travel.content.camp.p-1') }}</p>
-      <p>{{ trans('land.travel.content.camp.p-2') }}</p>
+      <div class="text-center px-4">
+      {{ $language == "es" ? $page->content_es : $page->content }}
+      </div>
     </div>
   </div>
 </section>
@@ -26,21 +27,15 @@
     <div class="info_section">
       <div class="movie_header">
         <h3 class="text-left font-inter-extra-bold text-primary">
-          Why Choose Madagascar for Your Next Adventure?
+          {{ trans('land.local.title.why') }}
         </h3>
       </div>
       <div class="movie_desc">
         <p class="text text-justify">
-          Madagascar is a land of contrasts, rich in biodiversity and cultural heritage. Over 80% of its wildlife is
-          found nowhere else on Earth, making it one of the world’s most unique travel destinations. From the iconic
-          baobab trees to rare chameleons, colorful birds, and fascinating reptiles, every day of your trip will be
-          filled with discovery.
+          {{ trans('land.local.content.why.p-1') }}
         </p>
         <p class="text-justify">
-          Unlike other destinations crowded with mass tourism, Madagascar remains an exclusive paradise. Travelers
-          looking for a peaceful escape will find a perfect balance of adventure and tranquility. This is why our
-          Madagascar holiday packages are designed for those who want to immerse themselves in nature while enjoying
-          authentic cultural encounters with local communities.
+          {{ trans('land.local.content.why.p-2') }}
         </p>
       </div>
     </div>
@@ -50,9 +45,8 @@
 <section class="container mt-2">
   <div class="card card-styled">
     <div class="card-body">
-      <h3 class="section-heading mb-2">Expertly Guided Madagascar Tours</h3>
-      <p class="text-center">Our Madagascar travel agency provides a wide range of tour options, from short excursions
-        to multi-week expeditions. We offer:</p>
+      <h3 class="section-heading mb-2">{{ trans('land.local.title.exp') }}</h3>
+      <p class="text-center">{{ trans('land.local.content.exp.p') }}</p>
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12">
           <div class="card-w-icon">
@@ -61,9 +55,9 @@
                 <img src="{{ assets('img/logos/lemure.png') }}" alt="lemure icon">
               </div>
               <div class="card-text">
-                <h4 class="font-inter-bold text-primary">Wildlife tours</h4>
+                <h4 class="font-inter-bold text-primary">{{ trans('land.local.subtitle.wild') }}</h4>
                 <p class="text-center">
-                  Discover lemurs, chameleons, and other species during guided visits to Madagascar's national parks
+                  {{ trans('land.local.content.exp.wild') }}
                 </p>
               </div>
             </div>
@@ -76,9 +70,9 @@
                 <img src="{{ assets('img/logos/hill.png') }}" alt="Travel icon">
               </div>
               <div class="card-text">
-                <h4 class="font-inter-bold text-primary">Adventure travel</h4>
+                <h4 class="font-inter-bold text-primary">{{ trans('land.local.subtitle.adv') }}</h4>
                 <p class="text-center">
-                  Trek through rainforests, hike along rugged trails, or explore remote villages.
+                  {{ trans('land.local.content.exp.adv') }}
                 </p>
               </div>
             </div>
@@ -91,10 +85,9 @@
                 <img src="{{ assets('img/logos/vacations.png') }}" alt="vacations icon">
               </div>
               <div class="card-text">
-                <h5 class="font-inter-bold text-primary">Beach and honeymoon packages </h5>
+                <h5 class="font-inter-bold text-primary">{{ trans('land.local.subtitle.beach') }}</h5>
                 <p class="text-center">
-                  Relax on Madagascar's stunning beaches, such as Nosy Be, perfect for couples seeking a romantic
-                  escape.
+                  {{ trans('land.local.content.exp.beach') }}
                 </p>
               </div>
             </div>
@@ -107,9 +100,9 @@
                 <img src="{{ assets('img/logos/finish.png') }}" alt="Flag icon">
               </div>
               <div class="card-text">
-                <h5 class="font-inter-bold text-primary">Cultural tours</h5>
+                <h5 class="font-inter-bold text-primary">{{ trans('land.local.subtitle.cult') }}</h5>
                 <p class="text-center">
-                  Meet local artisans, experience Malagasy traditions, and taste authentic cuisine.
+                  {{ trans('land.local.content.exp.cult') }}
                 </p>
               </div>
             </div>
@@ -131,16 +124,13 @@
             </div>
             <div class="card__text px-4">
               <h3 class=" fs-30 text-primary font-inter-bold text-center">
-                Personalized Travel Services
+                {{ trans('land.local.title.pers') }}
               </h3>
               <p class="text-justify">
-                Unlike large operators, we create tailor-made Madagascar tours that adapt to your preferences. Whether
-                you want a luxury holiday with premium accommodation or a true adventure off the beaten path, we will
-                design a travel plan that suits your budget and expectations.
+              {{ trans('land.local.content.pers.p-1') }}
               </p>
-              <p class="text-justify">If you have specific destinations in mind or would like to adjust the length of
-                your trip, we are flexible.
-                Our priority is to craft a personalized itinerary that makes your visit truly unforgettable.
+              <p class="text-justify">
+              {{ trans('land.local.content.pers.p-2') }}
               </p>
             </div>
           </div>
@@ -156,17 +146,13 @@
             </div>
             <div class="card__text px-4">
               <h3 class=" fs-20 text-primary mt-0 font-inter-bold text-center mb-1">
-                Sustainable and Authentic Experiences
+                {{ trans('land.local.title.sust') }}
               </h3>
               <p class="text-justify mb-1">
-                We believe that responsible travel is the best way to explore Madagascar.
-                Our tours emphasize local interaction, sustainable tourism, and respect
-                for the environment. As you travel across the island, you will not only
-                witness Madagascar's natural beauty but also connect with its warm and hospitable people.
+                {{ trans('land.local.content.sust.p-1') }}
               </p>
               <p class="text-justify">
-                Many of our guests say the highlight of their journey is not only the landscapes
-                and wildlife but also the genuine smiles and cultural exchanges with local communities.
+                {{ trans('land.local.content.sust.p-2') }}
               </p>
             </div>
           </div>
@@ -180,19 +166,12 @@
   <div class="card-styled">
     <div class="card-styled-body px-4">
       <h3 class="text-center font-inter-extra-bold text-primary">
-        Plan Your Madagascar Holiday Today
+        {{ trans('land.local.title.plan') }}
       </h3>
-      <p>If you are searching for a reliable Madagascar tour operator who combines professionalism,
-        passion, and local expertise, you have come to the right place.
-        Our mission is to provide you with the most authentic and enriching experience possible.</p>
-      <p>From Madagascar wildlife tours to romantic beach holidays, from family adventures to custom-made
-        itineraries, we promise to deliver a trip that exceeds your expectations.</p>
-      <p>Come and explore this tropical paradise, where adventure meets serenity,
-        and every day brings a new discovery. Contact us today to start planning your dream
-        journey with a trusted Madagascar travel agency dedicated to making your vacation
-        truly unforgettable.</p>
-      <p>For any questions or information, do not hesitate to
-        <a href="{{ route('contact') }}" class="text-primary">contact the Madagascar Green Tours team.</a>
+      <p>{{ trans('land.local.content.plan.p-1') }}</p>
+      <p>{{ trans('land.local.content.plan.p-2') }}</p>
+      <p>{{ trans('land.local.content.plan.p-3') }}</p>
+      <p>{{ trans('land.local.content.plan.p-4') }} <a href="{{ route('contact') }}" class="text-primary"> Madagascar Green Tours team.</a>
       </p>
     </div>
   </div>

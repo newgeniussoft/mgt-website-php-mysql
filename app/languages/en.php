@@ -573,6 +573,55 @@ return [ // TITLE & TEXT
                     'p-3' => 'Nosy Be is more than just a tropical getaway - it is a world of discoveries waiting for you. From its vibrant marine life to its cultural heritage, every tour reveals something unique. With Nosy Be Tours by Madagascar Green Tours, you will experience the perfect balance between relaxation and adventure, guided by passionate experts who know the island inside out. Book your Nosy Be tour now and let the island of perfumes capture your heart. For more informations, plesace contact-us'
                 ]
             ]
+        ],
+        'local' => [
+            'title' => [
+                'why' => 'Why Choose Madagascar for Your Next Adventure?',
+                'exp' => 'Expertly Guided Madagascar Tours',
+                'pers' => 'Personalized Travel Services',
+                'sust' => 'Sustainable and Authentic Experiences',
+                'plan' => 'Plan Your Madagascar Holiday Today'
+            ],
+            'subtitle' => [
+                'wild' => 'Wildlife tours',
+                'adv' => 'Adventure travel',
+                'beach' => 'Beach and honeymoon packages',
+                'cult' => 'Cultural tours',
+            ],
+            'content' => [
+                'why' => [
+                    'p-1' => 'Madagascar is a land of contrasts, rich in biodiversity and cultural
+                        heritage. Over 80% of its wildlife is found nowhere else on Earth, making it
+                        one of the world\'s most unique travel destinations. From the iconic baobab trees
+                        to rare chameleons,  colorful birds, and fascinating reptiles, every day of your 
+                        trip will be filled with discovery.',
+                    'p-2' => 'Unlike other destinations crowded with mass tourism, Madagascar remains an exclusive paradise. Travelers
+                        looking for a peaceful escape will find a perfect balance of adventure and tranquility. This is why our
+                        Madagascar holiday packages are designed for those who want to immerse themselves in nature while enjoying
+                        authentic cultural encounters with local communities.',
+                ],
+                'exp' => [
+                    'p' => 'Our Madagascar travel agency provides a wide range of tour options, from short excursions to multi-week expeditions. We offer:',
+                    'wild' => 'Discover lemurs, chameleons, and other species during guided visits to Madagascar\'s national parks',
+                    'adv' => 'Trek through rainforests, hike along rugged trails, or explore remote villages.',
+                    'beach' => 'Relax on Madagascar\'s stunning beaches, such as Nosy Be, perfect for couples seeking a romantic escape.',
+                    'cult' => 'Meet local artisans, experience Malagasy traditions, and taste authentic cuisine.',
+                ],
+                'pers' => [
+                    'p-1' => 'Unlike large operators, we create tailor-made Madagascar tours that adapt to your preferences. Whether you want a luxury holiday with premium accommodation or a true adventure off the beaten path, we will design a travel plan that suits your budget and expectations.',
+                    'p-2' => 'If you have specific destinations in mind or would like to adjust the length of your trip, we are flexible. Our priority is to craft a personalized itinerary that makes your visit truly unforgettable.',
+                ],
+                'sust' => [
+                    'p-1' => 'We believe that responsible travel is the best way to explore Madagascar. Our tours emphasize local interaction, sustainable tourism, and respect for the environment. As you travel across the island, you will not only witness Madagascar\'s natural beauty but also connect with its warm and hospitable people.',
+                    'p-2' => 'Many of our guests say the highlight of their journey is not only the landscapes and wildlife but also the genuine smiles and cultural exchanges with local communities.',
+                ],
+                'plan' => [
+                    'p-1' => 'If you are searching for a reliable Madagascar tour operator who combines professionalism, passion, and local expertise, you have come to the right place. Our mission is to provide you with the most authentic and enriching experience possible.',
+                    'p-2' => 'From Madagascar wildlife tours to romantic beach holidays, from family adventures to custom-made itineraries, we promise to deliver a trip that exceeds your expectations.',
+                    'p-3' => 'Come and explore this tropical paradise, where adventure meets serenity, and every day brings a new discovery. Contact us today to start planning your dream journey with a trusted Madagascar travel agency dedicated to making your vacation truly unforgettable.',
+                    'p-4' => 'For any questions or information, do not hesitate to contact',
+                ]
+            ]
         ]
     ]
 ]
