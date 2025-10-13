@@ -15,7 +15,7 @@
                 <div id="iview-overlay">
                     <div class="bottom_inside_divider"></div>
                 </div>
-                <h3 class="text-center text-white display-2 font-inter-bold title-slogan">
+                <h3 class="text-center text-white  font-inter-bold title-slogan">
                     {{ $language == "es" ? $page->title_es : $page->title }}
                 </h3>
                 <div id="heroCarousel" class="carousel slide" data-ride="carousel"
@@ -43,14 +43,14 @@
 </section>
 
 <section id="about" class="container content-section bg-light" aria-labelledby="about-heading">
-    <div class="card-styled">
+    <div class="card-styled card-home">
         <div class="card-styled-body">
             <img src="{{ assets($info->image) }}" class="float-image desktop-img"
                 alt="Ring-tailed lemur in Madagascar rainforest" decoding="async">
-            <h3 class="text-center font-inter-extra-bold text-primary">
+            <h3 class="text-center font-inter-bold fs-16 text-primary">
                 {{ $language == "es" ? $page->title_h1_es : $page->title_h1 }}
             </h3>
-            <img src="{{ assets($info->image) }}" class="float-image mobile-img"
+            <img src="{{ assets($info->image) }}" class="float-image mobile-img mb-2"
                 alt="Ring-tailed lemur in Madagascar rainforest" decoding="async" fetchpriority="high">
             {{ $language == "es" ? $page->content_es : $page->content }}
             <img src="{{ assets('img/images/shape-6.webp')}}" alt="shape-6"
@@ -61,7 +61,7 @@
 <!-- Our Tours Section with Rich Content -->
 <section id="our_tours" class="py-5 content-section">
     <div class="container " data-aos="fade-up">
-        <h2 class="text-center text-primary font-inter-extra-bold fs-24 mb-4" data-aos="fade-in">
+        <h2 class="text-center text-primary font-inter-extra-bold fs-16 mb-4" data-aos="fade-in">
             {{ isset($contents[0]) ? ($language == 'es' ? ($contents[0]->val_es ?? $contents[0]->val) : $contents[0]->val) : 'Our Tours' }}
         </h2>
         <div class="movie_card mt-1 mb-0" id="tomb" data-aos="fade-up">
@@ -76,7 +76,7 @@
                     {{ $language == "es" ? $contents[2]->val_es : $contents[2]->val }}
                     </p>
                     <div class="movie_social text-center">
-                        <a href="{{ route('madagascar') }}" class="btn btn-success car-rental-btn">
+                        <a href="{{ route('tours/birding-tour') }}" class="btn btn-success car-rental-btn">
                             {{ trans('btn.show-more') }}
                         </a>
                     </div>
@@ -97,16 +97,16 @@
                     </p>
                     <ul class="font-inter-regular">
                         <li>
-                            <a href="{{ route('tours/adventure_tour') }}" class="text-primary">Adventure Tours</a>
+                            <a href="{{ route('tours/adventure-tour') }}" class="text-primary">Adventure Tours</a>
                             {{ $language == "es" ? $contents[4]->val_es : $contents[4]->val }}
                         </li>
                         <li>
-                            <a href="{{ route('tours/wonderful_classic_tour') }}" class="text-primary">Wonderful
+                            <a href="{{ route('tours/wonderful-classic-tour') }}" class="text-primary">Wonderful
                                 Classic Tours</a>
                             {{ $language == "es" ? $contents[5]->val_es : $contents[5]->val }}
                         </li>
                         <li>
-                            <a href="{{ route('tours/combination_tour') }}" class="text-primary">Combination tours</a>
+                            <a href="{{ route('tours/combination-tour') }}" class="text-primary">Combination tours</a>
                             {{ $language == "es" ? $contents[6]->val_es : $contents[6]->val }}
                         </li>
                     </ul>
@@ -159,7 +159,7 @@
 </section>
 
 <section class="container">
-    <div class="card-styled">
+    <div class="card-styled" data-aos="fade-up" >
         <h2 class="text-primary font-inter-extra-bold text-center">
             {{ $language == "es" ? $contents[7]->val_es : $contents[7]->val }}
         </h2>
@@ -211,7 +211,7 @@
 </section>
 
 <section class="container mt-4 mb-3">
-    <div class="card-styled">
+    <div class="card-styled" data-aos="fade-up" >
         <div class="card-body">
             <h3 class="text-center text-primary font-inter-extra-bold mb-4">
                 {{ $language == "es" ? $contents[11]->val_es : $contents[11]->val }}
@@ -259,7 +259,7 @@
         {{ $language == "es" ? $contents[23]->val_es : $contents[23]->val }}
     </h6>
 
-    <div class="testimonials">
+    <div class="testimonials" data-aos="fade-up" >
 
         <?php foreach($reviews as $review): ?>
         <figure class="snip1157">
@@ -289,6 +289,9 @@
             </div>
         </figure>
         <?php endforeach; ?>
+    </div>
+    <div class="text-center mt-1 mb-3">
+        <a class="btn btn-success btn-lg font-inter-regular" style="border-radius: 30px; background:#55B957; border-color:#55B957" href="{{ route('reviews') }}">{{ trans('btn.show-more') }}</a>
     </div>
 </section>
 <section id="video" class="container mb-4">
@@ -359,7 +362,9 @@
                 {{ trans('home.contact.p2') }}
             </p>
             <p class="mb-1">{{ trans('home.contact.title') }}: <a href="mailto:info@madagascar-green-tours.com"
-                    class="text-primary">info@madagascar-green-tours.com</a> or <a href="tel:+261347107100"
+                    class="text-primary">info@madagascar-green-tours.com</a><br>
+                    Whatsapp: 
+                    <a href="https://wa.me/261347107100?text=Hello"
                     class="text-primary">+261 34 71 071 00</a></p>
             <p class="mb-1">{{ trans('home.contact.p3') }}:</p>
             <?php foreach($socialMedia as $sMedia): ?>

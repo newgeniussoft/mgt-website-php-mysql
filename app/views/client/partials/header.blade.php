@@ -95,7 +95,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="toursDropdown">
                             <a class="dropdown-item" href="{{ route('reviews') }}">{{ trans('menu.reviews') }}</a>
-                            <a class="dropdown-item" href="{{ route('blogs') }}">{{ trans('menu.blogs') }}</a>
+                            <a class="dropdown-item" href="{{ route('blog') }}">Blog</a>
                         </div>
                     </li>
                     <li class="nav-item {{ currentPage() == 'about-us' ? 'active' : '' }}">

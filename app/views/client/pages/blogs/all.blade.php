@@ -17,7 +17,7 @@
                 <div class="row mt-6">
                 @foreach($blogs as $blog)
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-6 mt-6">
-                        <article class="card__styled card--1" onclick="window.location='{{ route('blogs/'.strtolower(str_replace(' ','_',$blog->title))) }}'">
+                        <article class="card__styled card--1" onclick="window.location='{{ route('blogs/'.strtolower(str_replace(' ','-',$blog->title))) }}'">
                             <div class="card__info-hover">
                                 <svg class="card__like" viewBox="0 0 24 24">
                                     <path fill="#000000"
@@ -45,7 +45,7 @@
                                 <h3 class="card__title">{{ $language == "es" ? $blog->title_es : $blog->title }}</h3>
                                 <p class="card__by">{{ $language == "es" ? $blog->short_texte_es : $blog->short_texte }}</p>
                             <center>
-                <a class="btn__styled mt-2 mb-4" href="{{ route('blogs/'.strtolower(str_replace(' ','_',$blog->title))) }}" role="button" aria-label="Show more tours">
+                <a class="btn__styled mt-2 mb-4" href="{{ route('blog/'.strtolower(str_replace(' ','-',$blog->title))) }}" role="button" aria-label="Show more tours">
                     <span class="text">{{ trans('btn.show-more') }}</span>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.66669 11.3334L11.3334 4.66669" stroke="white" stroke-width="1.33333"

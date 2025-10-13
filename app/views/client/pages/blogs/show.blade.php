@@ -61,7 +61,7 @@
                         <h4 class="text-primary font-inter-bold">Recent blogs</h4>
                         <div class="list-group">
                             <?php foreach($recentBlogs as $b): ?>
-                            <a href="{{ route('blogs/'.strtolower(str_replace(' ','_',$b->title))) }}" class="list-group-item list-group-item-action">{{ $b->title }}</a>
+                            <a href="{{ route('blog/'.strtolower(str_replace(' ','-',$b->title))) }}" class="list-group-item list-group-item-action">{{ $b->title }}</a>
                             <?php endforeach; ?>
                         </div>
                     </div>

@@ -16,7 +16,7 @@
                             <ul class="list-unstyled mb-0 text-secondary font-inter-regular text-center">
                                 <li><a href="{{ route('information') }}" class="text-secondary font-inter-regular">{{ trans('menu.info') }}</a></li>
                                 <li><a href="{{ route('sales-conditions') }}" class="text-secondary font-inter-regular">{{ trans('menu.sales-cond') }}</a></li>
-                                <li><a href="{{ route('blogs') }}" class="text-secondary font-inter-regular">Blogs</a></li>
+                                <li><a href="{{ route('blog') }}" class="text-secondary font-inter-regular">Blog</a></li>
                                 <li><a href="{{ route('madagascar') }}" class="text-secondary font-inter-regular">Madagascar</a></li>
                              </ul>
                         </nav>

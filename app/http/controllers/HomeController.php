@@ -151,14 +151,18 @@
                 $this->vars['tours_home'] = $this->tourModel->where('show_in_home', '1');
                 $this->view = $this->prefix."index";
             } elseif ($page == "tours") {
-                $this->tours($params);
+                if(strpos($params, "_") !== false) {
+                    $params = str_replace('_', '-', $params);
+                    header('location: https://madagascar-green-tours.com/tours/'.$params);
+                }
+               $this->tours($params);
             } elseif ($page == "reviews") {
                 $this->reviews();
             } elseif ($page == "gallery") {
                 $this->vars['galleries'] = $this->galleryModel->all('DESC');
             }
              
-            elseif ($page == "blogs") {
+            elseif ($page == "blog") {
                 $this->blogs($params);
             } elseif ($page == "car-rental") {
                 $this->vars['galleries'] = $this->galleryModel->where('type', 'car-rental');
@@ -278,7 +282,7 @@
                 $this->vars['blogs'] = $this->blogModel->all("DESC");
                 $this->view = $this->prefix."blogs.all";
             } else {
-                $title = str_replace("_", " ", $params);
+                $title = str_replace("-", " ", $params);
                 $recentBlogs = $this->blogModel->limit(5);
 
                 $blog = $this->blogModel->where('title', $title);
