@@ -15,10 +15,10 @@
         {{ $language == "es" ? $page->menu_title_es :  $page->menu_title }}
     </h2>
     <h6 class="section-subtitle">
-        {{ $language == 'es' ? $page->title_es : $page->title }}
+        {{ $language == 'es' ? $page->title_es : $page->title }} eto ve
     </h6>
     <div class="text-center">
-            <button class="btn btn-success car-rental-btn modal-button mb-2"><i class="fa fa-plus"></i> {{ trans('add-review') }}</button>
+            <a class="btn btn-success car-rental-btn mb-2" href="{{ route('reviews/new') }}"><i class="fa fa-plus"></i> {{ trans('add-review') }}</a>
         </div>
         
     <!-- Reviews List -->
