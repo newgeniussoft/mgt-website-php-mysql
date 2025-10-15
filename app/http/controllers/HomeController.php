@@ -214,7 +214,10 @@
         }
 
         private function reviews() {
-            $this->view = $this->prefix."reviews";
+            $this->view = $this->prefix."reviews.all";
+            if (currentPath() == "/reviews/new") {
+                $this->view = $this->prefix."reviews.new";
+            }
             if(isset($_GET['page'])) {
                 $this->vars['p'] = $_GET['page'];
             } else {
