@@ -12,7 +12,7 @@ class HomeController extends Controller {
 
     public function index()
     {
-        $this->view('index', ['hello_world' => 'Hello World']);    
+        echo $this->view('frontend.pages.view', ['hello_world' => 'Hello World']);    
     }
     
 }
