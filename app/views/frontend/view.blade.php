@@ -1,0 +1,1 @@
+{{ $language == "es" ? "Reservas de vuelos a Madagascar fáciles y rápidas" : "Madagascar Flight Booking Made Easy" }}
