@@ -1,5 +1,26 @@
 <?php
 return [
-    'title' => 'Madagascar Flight Booking Made Easy',
-    'button' => 'Book Now'
+    'welcome' => 'Welcome',
+    'hello' => 'Hello, :name!',
+    'goodbye' => 'Goodbye!',
+    
+    'messages' => [
+        'success' => 'Operation successful!',
+        'error' => 'An error occurred.',
+        'saved' => 'The :item has been saved.'
+    ],
+    
+    'users' => [
+        'profile' => 'User Profile',
+        'count' => [
+            'zero' => 'No users',
+            'one' => 'One user',
+            'other' => ':count users'
+        ]
+    ],
+    
+    'validation' => [
+        'required' => 'The :field field is required.',
+        'email' => 'Please enter a valid email.',
+    ]
 ];
