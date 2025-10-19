@@ -5,16 +5,33 @@ class BladeEngine
     protected $viewPath;
     protected $cachePath;
     protected $extensions = [];
+    protected $host;
     
     public function __construct($viewPath, $cachePath)
     {
         $this->viewPath = rtrim($viewPath, '/');
         $this->cachePath = rtrim($cachePath, '/');
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+        $this->host = "{$protocol}://{$_SERVER['HTTP_HOST']}";
         
         if (!is_dir($this->cachePath)) {
             mkdir($this->cachePath, 0755, true);
         }
+        
+        // Auto-load helper functions if not already loaded
+        if (!function_exists('url')) {
+            $this->loadHelpers();
+        }
     }
+    
+    /**
+     * Load helper functions
+     */
+    protected function loadHelpers()
+    {
+        require_once __DIR__ . '/Helper.php';
+    }
+
     
     /**
      * Render a blade template
@@ -61,6 +78,8 @@ class BladeEngine
         $content = $this->compileJson($content);
         $content = $this->compileCsrf($content);
         $content = $this->compileMethod($content);
+        $content = $this->compileTranslations($content);
+        $content = $this->compileHelpers($content);
         $content = $this->compileRawEchos($content);
         $content = $this->compileEchos($content);
         
@@ -309,6 +328,52 @@ class BladeEngine
     protected function compileMethod($content)
     {
         $content = preg_replace('/\@method\s*\([\'"](.+?)[\'"]\)/', '<?php echo \'<input type="hidden" name="_method" value="$1">\'; ?>', $content);
+        return $content;
+    }
+    
+    /**
+     * Compile helper functions: @route, @asset, @url, etc.
+     */
+    protected function compileHelpers($content)
+    {
+        // @route directive
+        $content = preg_replace('/\@route\s*\((.+?)\)/', '<?php echo route($1); ?>', $content);
+        
+        // @url directive
+        $content = preg_replace('/\@url\s*\((.+?)\)/', '<?php echo url($1); ?>', $content);
+        
+        // @asset directive
+        $content = preg_replace('/\@asset\s*\((.+?)\)/', '<?php echo asset($1); ?>', $content);
+
+        // @assets directive
+        $content = preg_replace('/\@assets\s*\((.+?)\)/', '<?php echo $this->host . "/assets/" . $1; ?>', $content);
+        
+        // @css directive
+        $content = preg_replace('/\@css\s*\((.+?)\)/', '<?php echo css($1); ?>', $content);
+        
+        // @js directive
+        $content = preg_replace('/\@js\s*\((.+?)\)/', '<?php echo js($1); ?>', $content);
+        
+        // @image directive
+        $content = preg_replace('/\@image\s*\((.+?)\)/', '<?php echo image($1); ?>', $content);
+
+        // @set_language directive
+        $content = preg_replace('/\@set_language\s*\((.+?)\)/', '<?php echo set_language($1); ?>', $content);
+        
+        return $content;
+    }
+    
+    /**
+     * Compile translation directives: @lang, @choice
+     */
+    protected function compileTranslations($content)
+    {
+        // @lang directive - same as trans()
+        $content = preg_replace('/\@lang\s*\((.+?)\)/', '<?php echo trans($1); ?>', $content);
+        
+        // @choice directive - for pluralization
+        $content = preg_replace('/\@choice\s*\((.+?)\)/', '<?php echo trans_choice($1); ?>', $content);
+        
         return $content;
     }
     
