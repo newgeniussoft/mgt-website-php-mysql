@@ -272,9 +272,16 @@ class BladeEngine
      */
     protected function compileStacks($content)
     {
-        $content = preg_replace('/\@push\s*\([\'"](.+?)[\'"]\)/', '<?php ob_start(); ?>', $content);
-        $content = preg_replace('/\@endpush/', '<?php $__stacks["$1"][] = ob_get_clean(); ?>', $content);
-        $content = preg_replace('/\@stack\s*\([\'"](.+?)[\'"]\)/', '<?php echo implode("", $__stacks["$1"] ?? []); ?>', $content);
+        // Use a callback to properly capture stack names
+        $content = preg_replace_callback('/\@push\s*\([\'"](.+?)[\'"]\)(.*?)\@endpush/s', function($matches) {
+            $stackName = $matches[1];
+            $stackContent = $matches[2];
+            return '<?php if(!isset($__stacks["' . $stackName . '"])) $__stacks["' . $stackName . '"] = []; ob_start(); ?>' 
+                   . $stackContent 
+                   . '<?php $__stacks["' . $stackName . '"][] = ob_get_clean(); ?>';
+        }, $content);
+        
+        $content = preg_replace('/\@stack\s*\([\'"](.+?)[\'"]\)/', '<?php echo isset($__stacks["$1"]) ? implode("", $__stacks["$1"]) : ""; ?>', $content);
         return $content;
     }
     
