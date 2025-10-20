@@ -5,6 +5,16 @@
  * This file contains various helper functions used throughout the application.
  */
 
+ /**
+  * Returns the main URL.
+  *
+  * @return string The fully main URL.
+  */
+function main_url(): string {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    return rtrim("{$protocol}://{$host}", '/');
+}
 /**
  * Returns the fully qualified URL for a given path.
  *
@@ -35,7 +45,7 @@ function url(string $path = ''): string {
  */
 function asset(string $path): string {
     $path = ltrim($path, '/');
-    return url("assets/{$path}");
+    return main_url()."/assets/{$path}";
 }
 
 /**

@@ -10,6 +10,7 @@
     @include('frontend.partials.header')
     @yield('content')
     </main>
+    @include('frontend.partials.footer')
     @stack('scripts')
 </body>
 </html> 

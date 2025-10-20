@@ -3,14 +3,45 @@
 
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 // In your router or index.php
+// In your router or index.php
 if (preg_match('#^/assets/(.+)$#', $_SERVER['REQUEST_URI'], $matches)) {
     $file = __DIR__ . '/public/assets/' . $matches[1];
     
     if (file_exists($file) && is_file($file)) {
-        // Set appropriate content type
-        $mime = mime_content_type($file);
-        header('Content-Type: ' . $mime);
+        // Get file extension
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        
+        // Set correct MIME type
+        $mimeTypes = [
+            'css'  => 'text/css',
+            'js'   => 'application/javascript',
+            'jpg'  => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png'  => 'image/png',
+            'gif'  => 'image/gif',
+            'svg'  => 'image/svg+xml',
+            'webp' => 'image/webp',
+            'woff' => 'font/woff',
+            'woff2'=> 'font/woff2',
+            'ttf'  => 'font/ttf',
+            'eot'  => 'application/vnd.ms-fontobject',
+        ];
+        
+        $mimeType = $mimeTypes[$ext] ?? 'application/octet-stream';
+        
+        // IMPORTANT: Set the Content-Type header
+        header('Content-Type: ' . $mimeType);
+        
+        // Optional: Add cache headers
+        header('Cache-Control: public, max-age=31536000');
+        header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
+        
+        // Output the file
         readfile($file);
+        exit;
+    } else {
+        // File not found
+        header("HTTP/1.0 404 Not Found");
         exit;
     }
 }

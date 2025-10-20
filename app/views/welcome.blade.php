@@ -1,18 +1,27 @@
-@extends('layout')
+@extends('frontend.layout')
 
-@section('content')
-    <h1>Welcome Page</h1>
-@endsection
-
+@section('title', 'Welcome Page')
 @push('styles')
     <link rel="stylesheet" href="page-specific.css">
 @endpush
+@section('content')
+    <h1>{{ $title }} & {{ $language }}</h1>
+    <h4>{{ trans('messages.success') }}</h4>
+<a href="@route('tours/windsurf')">Home</a>
+<img src="@assets('logo.png')" alt="Logo">
+<a href="@url('contact')">Contact</a>
+
+<a href="@set_language('es')">Español</a>
+<a href="@set_language('en')">English</a>
+
+    @forelse($users as $user)
+        <div>{{ $user['name'] }} - {{ $user['email'] }}</div>
+    @empty
+        <p>No users found</p>
+    @endforelse
+@endsection
+
 
 @push('scripts')
-    <script src="jquery.js"></script>
-    <script>
-        $(document).ready(function() {
-            console.log('Page loaded');
-        });
-    </script>
+    <script>console.log('Hello');</script>
 @endpush
