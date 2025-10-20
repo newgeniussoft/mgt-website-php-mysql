@@ -1,0 +1,127 @@
+<?php
+/**
+ * Helper Functions
+ *
+ * This file contains various helper functions used throughout the application.
+ */
+
+ /**
+  * Returns the main URL.
+  *
+  * @return string The fully main URL.
+  */
+function main_url(): string {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    return rtrim("{$protocol}://{$host}", '/');
+}
+/**
+ * Returns the fully qualified URL for a given path.
+ *
+ * @param string $path The path to the resource.
+ * @return string The fully qualified URL.
+ */
+function url(string $path = ''): string {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $path = ltrim($path, '/');
+
+    // Check if current URL has language prefix
+    $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+
+    // Add language prefix if needed
+    if (!empty($urlParts[0]) && $urlParts[0] === 'es') {
+        $path = 'es/' . ltrim($path, '/');
+    }
+
+    return rtrim("{$protocol}://{$host}", '/') . "/{$path}";
+}
+
+/**
+ * Returns the fully qualified URL for an asset.
+ *
+ * @param string $path The path to the asset.
+ * @return string The fully qualified URL.
+ */
+function asset(string $path): string {
+    $path = ltrim($path, '/');
+    return main_url()."/assets/{$path}";
+}
+
+/**
+ * Returns the fully qualified URL for a CSS file.
+ *
+ * @param string $file The name of the CSS file.
+ * @return string The fully qualified URL.
+ */
+function css(string $file): string {
+    return asset("css/{$file}");
+}
+
+/**
+ * Returns the fully qualified URL for a JavaScript file.
+ *
+ * @param string $file The name of the JavaScript file.
+ * @return string The fully qualified URL.
+ */
+function js(string $file): string {
+    return asset("js/{$file}");
+}
+
+/**
+ * Returns the fully qualified URL for an image file.
+ *
+ * @param string $file The name of the image file.
+ * @return string The fully qualified URL.
+ */
+function image(string $file): string {
+    return asset("images/{$file}");
+}
+
+/**
+ * Returns the URL for a named route.
+ *
+ * @param string $name The name of the route.
+ * @param array $params The parameters for the route.
+ * @return string The URL for the route.
+ */
+function route(string $name, array $params = []): string {
+    global $routes;
+    if (!isset($routes[$name])) {
+        return url('/');
+    }
+    $url = $routes[$name];
+    foreach ($params as $key => $value) {
+        $url = str_replace("{{$key}}", $value, $url);
+    }
+    return url($url);
+}
+
+/**
+ * Switches the language for the application.
+ *
+ * @param string $lang The language code (e.g., 'en', 'es').
+ */
+function set_language(string $lang): string {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+            $supportedLanguages = ['es', 'en'];
+
+            // Remove the first segment if it is a supported language code
+            if (!empty($urlParts) && in_array($urlParts[0], $supportedLanguages)) {
+                array_shift($urlParts);
+            }
+
+            // Build the new path
+            $newPath = '';
+            if ($lang === 'en') {
+                // For English (default), no language prefix
+                $newPath = implode('/', $urlParts);
+            } else {
+                // For other languages, add the language prefix
+                $newPath = $lang . (count($urlParts) ? '/' . implode('/', $urlParts) : '');
+            }
+
+            return rtrim("{$protocol}://{$host}", '/') . ($newPath ? '/' . $newPath : '');
+}
