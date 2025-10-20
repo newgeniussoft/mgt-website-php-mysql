@@ -1,21 +1,29 @@
 <?php
 return [
-    'welcome' => 'Bienvenue',
-    'hello' => 'Bonjour, :name!',
-    'goodbye' => 'Au revoir!',
+    'welcome' => 'Bienvenido',
+    'hello' => 'Hola, :name!',
+    'goodbye' => 'Adios!',
     
     'messages' => [
-        'success' => 'Opération réussie!',
-        'error' => 'Une erreur est survenue.',
-        'saved' => 'Le :item a été enregistré.'
+        'success' => 'Operación exitosa!',
+        'error' => 'Ocurrió un error.',
+        'saved' => 'El :item ha sido guardado.'
     ],
     
     'users' => [
-        'profile' => 'Profil utilisateur',
+        'profile' => 'Perfil de usuario',
         'count' => [
-            'zero' => 'Aucun utilisateur',
-            'one' => 'Un utilisateur',
-            'other' => ':count utilisateurs'
+            'zero' => 'No hay usuarios',
+            'one' => 'Un usuario',
+            'other' => ':count usuarios'
         ]
+    ],
+    'menu' => [
+        'home' => 'Inicio',
+        'our-tours' => 'Nuestros tours',
+        'services' => 'Servicios',
+        'more' => 'Mas',
+        'about-us' => 'Sobre nosotros',
+        'contact-us' => 'Contactenos',
     ]
 ];

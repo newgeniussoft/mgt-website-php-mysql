@@ -22,5 +22,13 @@ return [
     'validation' => [
         'required' => 'The :field field is required.',
         'email' => 'Please enter a valid email.',
+    ],
+    'menu' => [
+        'home' => 'Home',
+        'our-tours' => 'Our Tours',
+        'services' => 'Services',
+        'more' => 'More',
+        'about-us' => 'About Us',
+        'contact-us' => 'Contact Us',
     ]
 ];
