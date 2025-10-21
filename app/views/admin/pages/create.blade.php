@@ -6,8 +6,10 @@
     <title>{{ $page_title ?? 'Create New Page' }} - Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- TinyMCE Editor -->
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- Summernote Editor -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body class="bg-gray-100">
     <!-- Navigation -->
@@ -211,6 +213,35 @@
                             
                             <div class="space-y-4">
                                 <div>
+                                    <label for="language" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Language
+                                    </label>
+                                    <select 
+                                        id="language" 
+                                        name="language"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option value="en" {{ ($_POST['language'] ?? 'en') === 'en' ? 'selected' : '' }}>English</option>
+                                        <option value="es" {{ ($_POST['language'] ?? '') === 'es' ? 'selected' : '' }}>Español</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="translation_group" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Translation Group
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="translation_group" 
+                                        name="translation_group" 
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Leave empty to auto-generate"
+                                        value="{{ $_POST['translation_group'] ?? '' }}"
+                                    >
+                                    <p class="mt-1 text-sm text-gray-500">Used to link translations of the same page</p>
+                                </div>
+                                
+                                <div>
                                     <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
                                         Status
                                     </label>
@@ -350,21 +381,32 @@
     </div>
 
     <script>
-        // Initialize TinyMCE
-        tinymce.init({
-            selector: '#content',
-            height: 400,
-            menubar: false,
-            plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'help', 'wordcount'
-            ],
-            toolbar: 'undo redo | blocks | ' +
-                'bold italic forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
-            content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; }'
+        $(document).ready(function() {
+            // Initialize Summernote
+            $('#content').summernote({
+                height: 400,
+                placeholder: 'Enter your page content here...',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica Neue', 'Helvetica', 'Impact', 'Lucida Grande', 'Tahoma', 'Times New Roman', 'Verdana'],
+                fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '24', '36', '48'],
+                callbacks: {
+                    onImageUpload: function(files) {
+                        // Handle image upload if needed
+                        for (let i = 0; i < files.length; i++) {
+                            uploadImage(files[i]);
+                        }
+                    }
+                }
+            });
         });
 
         // Generate slug from title
@@ -399,6 +441,20 @@
                 counter.textContent = `${length}/${maxLength} characters`;
                 counter.className = `mt-1 text-sm ${length > maxLength ? 'text-red-500' : 'text-gray-500'}`;
             });
+        }
+
+        // Image upload function for Summernote
+        function uploadImage(file) {
+            const data = new FormData();
+            data.append("file", file);
+            
+            // You can implement image upload to server here
+            // For now, we'll just insert a placeholder
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $('#content').summernote('insertImage', e.target.result);
+            };
+            reader.readAsDataURL(file);
         }
     </script>
 </body>

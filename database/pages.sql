@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `featured_image` varchar(255),
   `template` varchar(100) DEFAULT 'default',
   `status` enum('draft','published','private','archived') NOT NULL DEFAULT 'draft',
+  `language` varchar(5) DEFAULT 'en',
+  `translation_group` varchar(50) DEFAULT NULL,
   `author_id` int(11) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
   `menu_order` int(11) DEFAULT 0,
@@ -22,8 +24,10 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `slug` (`slug`),
+  UNIQUE KEY `slug_language` (`slug`, `language`),
   KEY `status` (`status`),
+  KEY `language` (`language`),
+  KEY `translation_group` (`translation_group`),
   KEY `author_id` (`author_id`),
   KEY `parent_id` (`parent_id`),
   KEY `menu_order` (`menu_order`),
@@ -68,47 +72,14 @@ INSERT INTO `page_categories` (`name`, `slug`, `description`) VALUES
 ('Blog', 'blog', 'Blog posts and articles'),
 ('Legal', 'legal', 'Legal pages like privacy policy, terms of service');
 
--- Insert sample homepage
-INSERT INTO `pages` (`title`, `slug`, `content`, `excerpt`, `meta_title`, `meta_description`, `template`, `status`, `author_id`, `is_homepage`, `show_in_menu`, `published_at`) VALUES
-('Welcome to Our Website', 'home', 
-'<h1>Welcome to Our Amazing Website</h1>
-<p>This is your homepage content. You can edit this page from the admin panel to customize your website''s main page.</p>
-<p>Features of our CMS:</p>
-<ul>
-<li>Easy page management</li>
-<li>SEO-friendly URLs</li>
-<li>Rich text editor</li>
-<li>Template system</li>
-<li>Menu management</li>
-</ul>', 
-'Welcome to our website - your gateway to amazing content and services.',
-'Welcome to Our Website | Home',
-'Welcome to our amazing website. Discover our services, read our blog, and learn more about what we do.',
-'homepage', 'published', 1, 1, 1, NOW());
+-- Insert sample pages (English)
+INSERT INTO `pages` (`title`, `slug`, `content`, `excerpt`, `meta_title`, `meta_description`, `template`, `status`, `language`, `translation_group`, `author_id`, `is_homepage`, `show_in_menu`, `published_at`) VALUES
+('Welcome to Our Website', 'home', '<h2>Welcome to Our Amazing Website</h2><p>This is the homepage of your new website. You can edit this content from the admin panel.</p><p>Features of this CMS:</p><ul><li>Easy content management</li><li>SEO optimization</li><li>Responsive design</li><li>Multiple templates</li></ul>', 'Welcome to our amazing website with powerful CMS features', 'Welcome to Our Website - Home', 'Discover our amazing website with powerful CMS features, SEO optimization, and responsive design', 'homepage', 'published', 'en', 'home-group', 1, 1, 1, NOW()),
+('About Us', 'about', '<h2>About Our Company</h2><p>We are a dynamic company focused on delivering exceptional web solutions.</p><p>Our mission is to create beautiful, functional websites that help businesses grow and succeed in the digital world.</p>', 'Learn more about our company and mission', 'About Us - Our Story', 'Learn about our company, mission, and the team behind our success', 'about', 'published', 'en', 'about-group', 1, 0, 1, NOW()),
+('Contact Us', 'contact', '<h2>Get in Touch</h2><p>We would love to hear from you! Contact us for any inquiries or support.</p><p>Our team is ready to help you with your project needs.</p>', 'Contact us for inquiries and support', 'Contact Us - Get in Touch', 'Contact our team for inquiries, support, and project discussions', 'contact', 'published', 'en', 'contact-group', 1, 0, 1, NOW());
 
--- Insert sample about page
-INSERT INTO `pages` (`title`, `slug`, `content`, `excerpt`, `meta_title`, `meta_description`, `template`, `status`, `author_id`, `show_in_menu`, `published_at`) VALUES
-('About Us', 'about-us', 
-'<h1>About Our Company</h1>
-<p>We are a dynamic company dedicated to providing excellent services to our clients.</p>
-<p>Our mission is to deliver high-quality solutions that exceed expectations.</p>
-<h2>Our Team</h2>
-<p>Our team consists of experienced professionals who are passionate about what they do.</p>', 
-'Learn more about our company, mission, and the team behind our success.',
-'About Us | Our Company Story',
-'Learn about our company history, mission, values, and the dedicated team that makes it all possible.',
-'default', 'published', 1, 1, NOW());
-
--- Insert sample contact page
-INSERT INTO `pages` (`title`, `slug`, `content`, `excerpt`, `meta_title`, `meta_description`, `template`, `status`, `author_id`, `show_in_menu`, `published_at`) VALUES
-('Contact Us', 'contact', 
-'<h1>Get in Touch</h1>
-<p>We''d love to hear from you. Send us a message and we''ll respond as soon as possible.</p>
-<h2>Contact Information</h2>
-<p><strong>Email:</strong> info@example.com</p>
-<p><strong>Phone:</strong> +1 (555) 123-4567</p>
-<p><strong>Address:</strong> 123 Main Street, City, State 12345</p>', 
-'Contact us for inquiries, support, or to learn more about our services.',
-'Contact Us | Get in Touch',
-'Contact us today for any questions, support, or business inquiries. We are here to help you.',
-'contact', 'published', 1, 1, NOW());
+-- Insert sample pages (Spanish)
+INSERT INTO `pages` (`title`, `slug`, `content`, `excerpt`, `meta_title`, `meta_description`, `template`, `status`, `language`, `translation_group`, `author_id`, `is_homepage`, `show_in_menu`, `published_at`) VALUES
+('Bienvenido a Nuestro Sitio Web', 'inicio', '<h2>Bienvenido a Nuestro Increíble Sitio Web</h2><p>Esta es la página de inicio de su nuevo sitio web. Puede editar este contenido desde el panel de administración.</p><p>Características de este CMS:</p><ul><li>Gestión de contenido fácil</li><li>Optimización SEO</li><li>Diseño responsivo</li><li>Múltiples plantillas</li></ul>', 'Bienvenido a nuestro increíble sitio web con potentes características de CMS', 'Bienvenido a Nuestro Sitio Web - Inicio', 'Descubre nuestro increíble sitio web con potentes características de CMS, optimización SEO y diseño responsivo', 'homepage', 'published', 'es', 'home-group', 1, 1, 1, NOW()),
+('Acerca de Nosotros', 'acerca-de', '<h2>Acerca de Nuestra Empresa</h2><p>Somos una empresa dinámica enfocada en brindar soluciones web excepcionales.</p><p>Nuestra misión es crear sitios web hermosos y funcionales que ayuden a las empresas a crecer y tener éxito en el mundo digital.</p>', 'Conoce más sobre nuestra empresa y misión', 'Acerca de Nosotros - Nuestra Historia', 'Conoce sobre nuestra empresa, misión y el equipo detrás de nuestro éxito', 'about', 'published', 'es', 'about-group', 1, 0, 1, NOW()),
+('Contáctanos', 'contacto', '<h2>Ponte en Contacto</h2><p>¡Nos encantaría saber de ti! Contáctanos para cualquier consulta o soporte.</p><p>Nuestro equipo está listo para ayudarte con las necesidades de tu proyecto.</p>', 'Contáctanos para consultas y soporte', 'Contáctanos - Ponte en Contacto', 'Contacta a nuestro equipo para consultas, soporte y discusiones de proyectos', 'contact', 'published', 'es', 'contact-group', 1, 0, 1, NOW());

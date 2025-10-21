@@ -151,23 +151,38 @@ class Router {
         
         // Check if this is the homepage
         if (!isset($pathParts[0]) || $pathParts[0] == "") {
-            // Try to get homepage from database
-            $homepage = $pageModel->getHomepage();
+            // Try to get homepage from database for the current language
+            $homepage = $pageModel->getHomepage($language);
             if ($homepage) {
                 $controller->showPage($homepage);
             } else {
-                $controller->index();
+                // Fallback to English if no homepage in current language
+                $homepage = $pageModel->getHomepage('en');
+                if ($homepage) {
+                    $controller->showPage($homepage);
+                } else {
+                    $controller->index();
+                }
             }
             return;
         }
         
         $slug = $pathParts[0];
         
-        // First check if it's a page from database
-        $page = $pageModel->getBySlug($slug);
+        // First check if it's a page from database for current language
+        $page = $pageModel->getBySlug($slug, $language);
         if ($page && $page->status === 'published') {
             $controller->showPage($page);
             return;
+        }
+        
+        // If not found in current language, try English as fallback
+        if ($language !== 'en') {
+            $page = $pageModel->getBySlug($slug, 'en');
+            if ($page && $page->status === 'published') {
+                $controller->showPage($page);
+                return;
+            }
         }
         
         // Fallback to static pages if they exist

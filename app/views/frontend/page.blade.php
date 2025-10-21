@@ -85,13 +85,40 @@
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-600 hover:text-blue-600 transition duration-200">Home</a>
+                    <a href="/" class="text-gray-600 hover:text-blue-600 transition duration-200">
+                        {{ $current_language === 'es' ? 'Inicio' : 'Home' }}
+                    </a>
                     @foreach($menu_pages as $menuPage)
                         <a href="/{{ $menuPage['slug'] }}" 
                            class="text-gray-600 hover:text-blue-600 transition duration-200 {{ $page->slug === $menuPage['slug'] ? 'text-blue-600 font-medium' : '' }}">
                             {{ $menuPage['title'] }}
                         </a>
                     @endforeach
+                    
+                    <!-- Language Switcher -->
+                    @if(!empty($translations) && count($translations) > 1)
+                        <div class="relative group">
+                            <button class="flex items-center text-gray-600 hover:text-blue-600 transition duration-200">
+                                <i class="fas fa-globe mr-1"></i>
+                                {{ $current_language === 'es' ? 'ES' : 'EN' }}
+                                <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                                @foreach($translations as $translation)
+                                    @if($translation['language'] !== $current_language && $translation['status'] === 'published')
+                                        <a href="/{{ $translation['slug'] }}" 
+                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            @if($translation['language'] === 'es')
+                                                🇪🇸 Español
+                                            @else
+                                                🇺🇸 English
+                                            @endif
+                                        </a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 
                 <!-- Mobile menu button -->
@@ -105,13 +132,34 @@
             <!-- Mobile menu -->
             <div class="md:hidden hidden" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
-                    <a href="/" class="block px-3 py-2 text-gray-600 hover:text-blue-600">Home</a>
+                    <a href="/" class="block px-3 py-2 text-gray-600 hover:text-blue-600">
+                        {{ $current_language === 'es' ? 'Inicio' : 'Home' }}
+                    </a>
                     @foreach($menu_pages as $menuPage)
                         <a href="/{{ $menuPage['slug'] }}" 
                            class="block px-3 py-2 text-gray-600 hover:text-blue-600 {{ $page->slug === $menuPage['slug'] ? 'text-blue-600 font-medium' : '' }}">
                             {{ $menuPage['title'] }}
                         </a>
                     @endforeach
+                    
+                    <!-- Mobile Language Switcher -->
+                    @if(!empty($translations) && count($translations) > 1)
+                        <div class="border-t pt-2 mt-2">
+                            <p class="px-3 py-1 text-xs font-medium text-gray-500 uppercase">{{ $current_language === 'es' ? 'Idioma' : 'Language' }}</p>
+                            @foreach($translations as $translation)
+                                @if($translation['language'] !== $current_language && $translation['status'] === 'published')
+                                    <a href="/{{ $translation['slug'] }}" 
+                                       class="block px-3 py-2 text-gray-600 hover:text-blue-600">
+                                        @if($translation['language'] === 'es')
+                                            🇪🇸 Español
+                                        @else
+                                            🇺🇸 English
+                                        @endif
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

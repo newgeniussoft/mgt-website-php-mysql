@@ -107,6 +107,19 @@
                     </div>
                     
                     <div>
+                        <label for="language" class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                        <select 
+                            id="language" 
+                            name="language"
+                            class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                            <option value="">All Languages</option>
+                            <option value="en" {{ $language === 'en' ? 'selected' : '' }}>English</option>
+                            <option value="es" {{ $language === 'es' ? 'selected' : '' }}>Español</option>
+                        </select>
+                    </div>
+                    
+                    <div>
                         <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                         <select 
                             id="status" 
@@ -128,7 +141,7 @@
                         </button>
                     </div>
                     
-                    @if($search || $status)
+                    @if($search || $status || $language)
                         <div class="flex items-end">
                             <a href="/admin/pages" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">
                                 <i class="fas fa-times mr-2"></i>
@@ -164,6 +177,9 @@
                                     Title
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Language
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Status
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -197,6 +213,26 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @php
+                                            $languageColors = [
+                                                'en' => 'bg-blue-100 text-blue-800',
+                                                'es' => 'bg-orange-100 text-orange-800'
+                                            ];
+                                            $languageNames = [
+                                                'en' => 'English',
+                                                'es' => 'Español'
+                                            ];
+                                            $languageFlags = [
+                                                'en' => '🇺🇸',
+                                                'es' => '🇪🇸'
+                                            ];
+                                        @endphp
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $languageColors[$page['language'] ?? 'en'] }}">
+                                            <span class="mr-1">{{ $languageFlags[$page['language'] ?? 'en'] }}</span>
+                                            {{ $languageNames[$page['language'] ?? 'en'] }}
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @php
@@ -254,13 +290,13 @@
                     <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                         <div class="flex-1 flex justify-between sm:hidden">
                             @if($currentPage > 1)
-                                <a href="/admin/pages?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}" 
+                                <a href="/admin/pages?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                     Previous
                                 </a>
                             @endif
                             @if($currentPage < $totalPages)
-                                <a href="/admin/pages?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}" 
+                                <a href="/admin/pages?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                     Next
                                 </a>
@@ -275,7 +311,7 @@
                             <div>
                                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
                                     @if($currentPage > 1)
-                                        <a href="/admin/pages?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}" 
+                                        <a href="/admin/pages?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
@@ -285,14 +321,14 @@
                                      $minPages = max(1, $currentPage - 2);
                                     @endphp
                                     @for($i = $minPages; $i <= $maxPages; $i++)
-                                        <a href="/admin/pages?page={{ $i }}&search={{ $search }}&status={{ $status }}" 
+                                        <a href="/admin/pages?page={{ $i }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-4 py-2 border text-sm font-medium {{ $i === $currentPage ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50' }}">
                                             {{ $i }}
                                         </a>
                                     @endfor
                                     
                                     @if($currentPage < $totalPages)
-                                        <a href="/admin/pages?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}" 
+                                        <a href="/admin/pages?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>

@@ -23,6 +23,8 @@ class Page
     public $featured_image;
     public $template;
     public $status;
+    public $language;
+    public $translation_group;
     public $author_id;
     public $parent_id;
     public $menu_order;
@@ -327,19 +329,39 @@ class Page
     }
     
     /**
-     * Get page by slug
+     * Get available languages
      */
-    public function getBySlug($slug) 
+    public function getAvailableLanguages() 
+    {
+        return [
+            'en' => 'English',
+            'es' => 'Español'
+        ];
+    }
+    
+    /**
+     * Generate translation group ID
+     */
+    public function generateTranslationGroup($title = null) 
+    {
+        $base = $title ? strtolower(preg_replace('/[^a-zA-Z0-9]/', '-', $title)) : 'page';
+        return $base . '-' . uniqid();
+    }
+    
+    /**
+     * Get page by slug and language
+     */
+    public function getBySlug($slug, $language = 'en') 
     {
         try {
             $stmt = $this->db->prepare("
                 SELECT p.*, u.username as author_name 
                 FROM pages p 
                 LEFT JOIN users u ON p.author_id = u.id 
-                WHERE p.slug = ? AND p.status = 'published'
+                WHERE p.slug = ? AND p.language = ? AND p.status = 'published'
                 LIMIT 1
             ");
-            $stmt->execute([$slug]);
+            $stmt->execute([$slug, $language]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($result) {
@@ -354,20 +376,20 @@ class Page
     }
     
     /**
-     * Get homepage
+     * Get homepage by language
      */
-    public function getHomepage() 
+    public function getHomepage($language = 'en') 
     {
         try {
             $stmt = $this->db->prepare("
                 SELECT p.*, u.username as author_name 
                 FROM pages p 
                 LEFT JOIN users u ON p.author_id = u.id 
-                WHERE p.is_homepage = 1 AND p.status = 'published'
+                WHERE p.is_homepage = 1 AND p.language = ? AND p.status = 'published'
                 ORDER BY p.updated_at DESC
                 LIMIT 1
             ");
-            $stmt->execute();
+            $stmt->execute([$language]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($result) {
@@ -382,21 +404,41 @@ class Page
     }
     
     /**
-     * Get menu pages
+     * Get menu pages by language
      */
-    public function getMenuPages() 
+    public function getMenuPages($language = 'en') 
     {
         try {
             $stmt = $this->db->prepare("
-                SELECT id, title, slug, parent_id, menu_order 
+                SELECT id, title, slug, parent_id, menu_order, language 
                 FROM pages 
-                WHERE status = 'published' AND show_in_menu = 1 
+                WHERE status = 'published' AND show_in_menu = 1 AND language = ?
                 ORDER BY menu_order ASC, title ASC
             ");
-            $stmt->execute();
+            $stmt->execute([$language]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error getting menu pages: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * Get translations of a page
+     */
+    public function getTranslations($translationGroup) 
+    {
+        try {
+            $stmt = $this->db->prepare("
+                SELECT id, title, slug, language, status 
+                FROM pages 
+                WHERE translation_group = ?
+                ORDER BY language ASC
+            ");
+            $stmt->execute([$translationGroup]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting translations: " . $e->getMessage());
             return [];
         }
     }
@@ -417,6 +459,8 @@ class Page
         $this->featured_image = $row['featured_image'];
         $this->template = $row['template'];
         $this->status = $row['status'];
+        $this->language = $row['language'] ?? 'en';
+        $this->translation_group = $row['translation_group'];
         $this->author_id = $row['author_id'];
         $this->parent_id = $row['parent_id'];
         $this->menu_order = $row['menu_order'];

@@ -108,7 +108,7 @@ CREATE TABLE `page_categories` (
 ## ✨ Features
 
 ### Content Management
-- **WYSIWYG Editor** - Rich text editor with TinyMCE
+- **WYSIWYG Editor** - Rich text editor with Summernote
 - **Auto-save Drafts** - Automatic draft saving
 - **Version Control** - Track content changes
 - **Bulk Operations** - Manage multiple pages at once
@@ -208,14 +208,23 @@ ALTER TABLE pages ADD COLUMN custom_field VARCHAR(255);
 
 ### Styling the Editor
 
-Customize TinyMCE editor in the create/edit views:
+Customize Summernote editor in the create/edit views:
 
 ```javascript
-tinymce.init({
-    selector: '#content',
+$('#content').summernote({
+    height: 400,
+    toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'italic', 'underline', 'clear']],
+        ['fontname', ['fontname']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+    ],
     // Add your custom configuration
-    content_css: '/path/to/your/custom.css',
-    // ... other options
+    styleTags: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 });
 ```
 
@@ -268,8 +277,8 @@ All admin interfaces are fully responsive and work on:
    - Ensure proper file permissions
 
 3. **Editor Not Loading**
-   - Check internet connection (TinyMCE loads from CDN)
-   - Verify JavaScript is enabled
+   - Check internet connection (Summernote loads from CDN)
+   - Verify jQuery is loaded before Summernote
    - Check browser console for errors
 
 4. **Slugs Not Generating**

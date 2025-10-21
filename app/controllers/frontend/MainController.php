@@ -40,7 +40,14 @@ class MainController extends Controller {
      */
     public function showPage($page) {
         $pageModel = new Page();
-        $menuPages = $pageModel->getMenuPages();
+        $currentLanguage = $page->language ?? $this->language ?? 'en';
+        $menuPages = $pageModel->getMenuPages($currentLanguage);
+        
+        // Get translations for language switcher
+        $translations = [];
+        if ($page->translation_group) {
+            $translations = $pageModel->getTranslations($page->translation_group);
+        }
         
         // Determine which template to use
         $template = $this->getPageTemplate($page->template);
@@ -50,7 +57,9 @@ class MainController extends Controller {
             'title' => $page->meta_title ?: $page->title,
             'meta_description' => $page->meta_description ?: $page->excerpt,
             'meta_keywords' => $page->meta_keywords,
-            'menu_pages' => $menuPages
+            'menu_pages' => $menuPages,
+            'translations' => $translations,
+            'current_language' => $currentLanguage
         ]);
     }
     
