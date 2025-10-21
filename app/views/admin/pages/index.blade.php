@@ -279,6 +279,11 @@
                                                title="Manage Sections">
                                                 <i class="fas fa-puzzle-piece"></i>
                                             </a>
+                                            <a href="/admin/pages/section-builder?page_id={{ $page['id'] }}" 
+                                               class="text-purple-600 hover:text-purple-900" 
+                                               title="Section Builder">
+                                                <i class="fas fa-code"></i>
+                                            </a>
                                             <button onclick="deletePage({{ $page['id'] }}, '{{ addslashes($page['title']) }}')" 
                                                     class="text-red-600 hover:text-red-900" 
                                                     title="Delete">

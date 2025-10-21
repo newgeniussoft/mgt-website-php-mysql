@@ -126,24 +126,93 @@ class BladeEngine
      */
     protected function compileConditionals($content)
     {
-        $content = preg_replace('/\@if\s*\((.+?)\)/', '<?php if($1): ?>', $content);
-        $content = preg_replace('/\@elseif\s*\((.+?)\)/', '<?php elseif($1): ?>', $content);
+        // Use callback to properly handle nested parentheses
+        $content = preg_replace_callback('/\@if\s*\((.+)\)/', [$this, 'compileConditionalCallback'], $content);
+        $content = preg_replace_callback('/\@elseif\s*\((.+)\)/', [$this, 'compileElseifCallback'], $content);
         $content = preg_replace('/\@else/', '<?php else: ?>', $content);
         $content = preg_replace('/\@endif/', '<?php endif; ?>', $content);
         
         // @unless, @endunless
-        $content = preg_replace('/\@unless\s*\((.+?)\)/', '<?php if(!($1)): ?>', $content);
+        $content = preg_replace_callback('/\@unless\s*\((.+)\)/', [$this, 'compileUnlessCallback'], $content);
         $content = preg_replace('/\@endunless/', '<?php endif; ?>', $content);
         
         // @isset, @endisset
-        $content = preg_replace('/\@isset\s*\((.+?)\)/', '<?php if(isset($1)): ?>', $content);
+        $content = preg_replace_callback('/\@isset\s*\((.+)\)/', [$this, 'compileIssetCallback'], $content);
         $content = preg_replace('/\@endisset/', '<?php endif; ?>', $content);
         
         // @empty, @endempty
-        $content = preg_replace('/\@empty\s*\((.+?)\)/', '<?php if(empty($1)): ?>', $content);
+        $content = preg_replace_callback('/\@empty\s*\((.+)\)/', [$this, 'compileEmptyCallback'], $content);
         $content = preg_replace('/\@endempty/', '<?php endif; ?>', $content);
         
         return $content;
+    }
+    
+    /**
+     * Extract balanced parentheses content
+     */
+    protected function extractBalancedParentheses($content, $startPos = 0)
+    {
+        $level = 0;
+        $start = strpos($content, '(', $startPos);
+        if ($start === false) return false;
+        
+        $length = strlen($content);
+        for ($i = $start; $i < $length; $i++) {
+            if ($content[$i] === '(') {
+                $level++;
+            } elseif ($content[$i] === ')') {
+                $level--;
+                if ($level === 0) {
+                    return substr($content, $start + 1, $i - $start - 1);
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Compile @if callback
+     */
+    protected function compileConditionalCallback($matches)
+    {
+        $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+        return '<?php if(' . $condition . '): ?>';
+    }
+    
+    /**
+     * Compile @elseif callback
+     */
+    protected function compileElseifCallback($matches)
+    {
+        $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+        return '<?php elseif(' . $condition . '): ?>';
+    }
+    
+    /**
+     * Compile @unless callback
+     */
+    protected function compileUnlessCallback($matches)
+    {
+        $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+        return '<?php if(!(' . $condition . ')): ?>';
+    }
+    
+    /**
+     * Compile @isset callback
+     */
+    protected function compileIssetCallback($matches)
+    {
+        $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+        return '<?php if(isset(' . $condition . ')): ?>';
+    }
+    
+    /**
+     * Compile @empty callback
+     */
+    protected function compileEmptyCallback($matches)
+    {
+        $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+        return '<?php if(empty(' . $condition . ')): ?>';
     }
     
     /**
@@ -185,26 +254,61 @@ class BladeEngine
      */
     protected function compileLoops($content)
     {
-        // @foreach
-        $content = preg_replace('/\@foreach\s*\((.+?)\)/', '<?php foreach($1): ?>', $content);
+        // @foreach - use callback for balanced parentheses
+        $content = preg_replace_callback('/\@foreach\s*\((.+)\)/', function($matches) {
+            $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+            return '<?php foreach(' . $condition . '): ?>';
+        }, $content);
         $content = preg_replace('/\@endforeach/', '<?php endforeach; ?>', $content);
         
-        // @forelse
-        $content = preg_replace('/\@forelse\s*\((.+?)\s+as\s+(.+?)\)/', '<?php if(!empty($1)): foreach($1 as $2): ?>', $content);
+        // @forelse - more complex pattern, handle carefully
+        $content = preg_replace_callback('/\@forelse\s*\((.+)\s+as\s+(.+?)\)/', function($matches) {
+            // Extract the array part before 'as'
+            $fullMatch = $matches[1] . ' as ' . $matches[2];
+            $condition = $this->extractBalancedParentheses('(' . $fullMatch . ')');
+            
+            // Split on ' as ' to get array and variable parts
+            $parts = explode(' as ', $condition);
+            if (count($parts) >= 2) {
+                $array = trim($parts[0]);
+                $variable = trim($parts[1]);
+                return '<?php if(!empty(' . $array . ')): foreach(' . $array . ' as ' . $variable . '): ?>';
+            }
+            return '<?php if(!empty($1)): foreach($1 as $2): ?>';
+        }, $content);
         $content = preg_replace('/\@empty/', '<?php endforeach; else: ?>', $content);
         $content = preg_replace('/\@endforelse/', '<?php endif; ?>', $content);
         
-        // @for
-        $content = preg_replace('/\@for\s*\((.+?)\)/', '<?php for($1): ?>', $content);
+        // @for - use callback for balanced parentheses
+        $content = preg_replace_callback('/\@for\s*\((.+)\)/', function($matches) {
+            $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+            return '<?php for(' . $condition . '): ?>';
+        }, $content);
         $content = preg_replace('/\@endfor/', '<?php endfor; ?>', $content);
         
-        // @while
-        $content = preg_replace('/\@while\s*\((.+?)\)/', '<?php while($1): ?>', $content);
+        // @while - use callback for balanced parentheses
+        $content = preg_replace_callback('/\@while\s*\((.+)\)/', function($matches) {
+            $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+            return '<?php while(' . $condition . '): ?>';
+        }, $content);
         $content = preg_replace('/\@endwhile/', '<?php endwhile; ?>', $content);
         
-        // @continue, @break
-        $content = preg_replace('/\@continue(\s*\((.+?)\))?/', '<?php if(empty($2) || $2) continue; ?>', $content);
-        $content = preg_replace('/\@break(\s*\((.+?)\))?/', '<?php if(empty($2) || $2) break; ?>', $content);
+        // @continue, @break - handle optional conditions
+        $content = preg_replace_callback('/\@continue(\s*\((.+)\))?/', function($matches) {
+            if (isset($matches[2]) && !empty($matches[2])) {
+                $condition = $this->extractBalancedParentheses('(' . $matches[2] . ')');
+                return '<?php if(' . $condition . ') continue; ?>';
+            }
+            return '<?php continue; ?>';
+        }, $content);
+        
+        $content = preg_replace_callback('/\@break(\s*\((.+)\))?/', function($matches) {
+            if (isset($matches[2]) && !empty($matches[2])) {
+                $condition = $this->extractBalancedParentheses('(' . $matches[2] . ')');
+                return '<?php if(' . $condition . ') break; ?>';
+            }
+            return '<?php break; ?>';
+        }, $content);
         
         return $content;
     }
@@ -214,8 +318,18 @@ class BladeEngine
      */
     protected function compileSwitchStatements($content)
     {
-        $content = preg_replace('/\@switch\s*\((.+?)\)/', '<?php switch($1): ?>', $content);
-        $content = preg_replace('/\@case\s*\((.+?)\)/', '<?php case $1: ?>', $content);
+        // @switch - use callback for balanced parentheses
+        $content = preg_replace_callback('/\@switch\s*\((.+)\)/', function($matches) {
+            $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+            return '<?php switch(' . $condition . '): ?>';
+        }, $content);
+        
+        // @case - use callback for balanced parentheses
+        $content = preg_replace_callback('/\@case\s*\((.+)\)/', function($matches) {
+            $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+            return '<?php case ' . $condition . ': ?>';
+        }, $content);
+        
         $content = preg_replace('/\@default/', '<?php default: ?>', $content);
         $content = preg_replace('/\@endswitch/', '<?php endswitch; ?>', $content);
         return $content;
@@ -309,7 +423,10 @@ class BladeEngine
      */
     protected function compileJson($content)
     {
-        $content = preg_replace('/\@json\s*\((.+?)\)/', '<?php echo json_encode($1); ?>', $content);
+        $content = preg_replace_callback('/\@json\s*\((.+)\)/', function($matches) {
+            $condition = $this->extractBalancedParentheses('(' . $matches[1] . ')');
+            return '<?php echo json_encode(' . $condition . '); ?>';
+        }, $content);
         return $content;
     }
     

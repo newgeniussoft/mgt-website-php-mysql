@@ -468,4 +468,69 @@ class PageController extends Controller
         
         $this->redirect("/admin/pages/sections?page_id={$pageId}");
     }
+    
+    /**
+     * Advanced section builder interface
+     */
+    public function sectionBuilder() {
+        AuthMiddleware::requireAdmin();
+        
+        $pageId = $_GET['page_id'] ?? null;
+        if (!$pageId || !$this->page->findById($pageId)) {
+            $this->redirectWithError('/admin/pages', 'Page not found.');
+            return;
+        }
+        
+        $sections = $this->pageSection->getByPageId($pageId, false);
+        $sectionTypes = $this->pageSection->getSectionTypes();
+        
+        $this->render('admin.pages.section-builder', [
+            'page' => $this->page,
+            'sections' => $sections,
+            'sectionTypes' => $sectionTypes,
+            'page_title' => 'Section Builder - ' . $this->page->title
+        ]);
+    }
+    
+    /**
+     * Update section via AJAX
+     */
+    public function updateSection() {
+        AuthMiddleware::requireAdmin();
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+            return;
+        }
+        
+        $input = json_decode(file_get_contents('php://input'), true);
+        
+        if (!isset($input['id'])) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Section ID is required']);
+            return;
+        }
+        
+        $sectionId = $input['id'];
+        $data = [
+            'title' => $input['title'] ?? '',
+            'section_html' => $input['section_html'] ?? '',
+            'section_css' => $input['section_css'] ?? '',
+            'section_js' => $input['section_js'] ?? '',
+            'content' => $input['content'] ?? '',
+            'layout_template' => $input['layout_template'] ?? 'custom',
+            'settings' => $input['settings'] ?? [],
+            'sort_order' => $input['sort_order'] ?? 0,
+            'is_active' => $input['is_active'] ?? 1
+        ];
+        
+        $success = $this->pageSection->update($sectionId, $data);
+        
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => $success,
+            'message' => $success ? 'Section updated successfully' : 'Failed to update section'
+        ]);
+    }
 }
