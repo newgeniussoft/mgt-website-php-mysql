@@ -73,10 +73,12 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="/" class="text-blue-600 font-medium">Home</a>
                     @foreach($menu_pages as $menuPage)
+                    @if(!$menuPage['is_homepage'])
                         <a href="/{{ $menuPage['slug'] }}" 
                            class="text-gray-600 hover:text-blue-600 transition duration-200">
                             {{ $menuPage['title'] }}
                         </a>
+                    @endif
                     @endforeach
                 </div>
                 

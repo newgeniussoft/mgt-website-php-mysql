@@ -423,14 +423,34 @@ class Page
     public function getMenuPages($language = 'en') 
     {
         try {
+            // Get regular menu pages (excluding homepage)
             $stmt = $this->db->prepare("
-                SELECT id, title, slug, parent_id, menu_order, language 
+                SELECT id, title, slug, parent_id, menu_order, language, is_homepage
                 FROM pages 
-                WHERE status = 'published' AND show_in_menu = 1 AND language = ?
+                WHERE status = 'published' AND show_in_menu = 1 AND is_homepage = 0 AND language = ?
                 ORDER BY menu_order ASC, title ASC
             ");
             $stmt->execute([$language]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $pages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Get homepage separately
+            $homepageStmt = $this->db->prepare("
+                SELECT id, title, slug, parent_id, menu_order, language, is_homepage
+                FROM pages 
+                WHERE status = 'published' AND is_homepage = 1 AND language = ?
+                LIMIT 1
+            ");
+            $homepageStmt->execute([$language]);
+            $homepage = $homepageStmt->fetch(PDO::FETCH_ASSOC);
+            
+            // If homepage exists, add it as "Home" at the beginning
+            if ($homepage) {
+                $homepage['title'] = $language === 'es' ? 'Inicio' : 'Home';
+                $homepage['menu_order'] = -1;
+                array_unshift($pages, $homepage);
+            }
+            
+            return $pages;
         } catch (PDOException $e) {
             error_log("Error getting menu pages: " . $e->getMessage());
             return [];

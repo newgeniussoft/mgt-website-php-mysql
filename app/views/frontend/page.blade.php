@@ -85,12 +85,15 @@
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-600 hover:text-blue-600 transition duration-200">
-                        {{ $current_language === 'es' ? 'Inicio' : 'Home' }}
-                    </a>
                     @foreach($menu_pages as $menuPage)
-                        <a href="/{{ $menuPage['slug'] }}" 
-                           class="text-gray-600 hover:text-blue-600 transition duration-200 {{ $page->slug === $menuPage['slug'] ? 'text-blue-600 font-medium' : '' }}">
+                    
+                        @php
+                            $menuUrl = $menuPage['is_homepage'] || $menuPage['slug'] == 'home' ? '/' : '/' . $menuPage['slug'];
+                            $isActive = ($menuPage['is_homepage'] && $page->is_homepage) || 
+                                       (!$menuPage['is_homepage'] && $page->slug === $menuPage['slug']);
+                        @endphp
+                        <a href="{{ $menuUrl }}" 
+                           class="text-gray-600 hover:text-blue-600 transition duration-200 {{ $isActive ? 'text-blue-600 font-medium' : '' }}">
                             {{ $menuPage['title'] }}
                         </a>
                     @endforeach
@@ -135,12 +138,14 @@
             <!-- Mobile menu -->
             <div class="md:hidden hidden" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
-                    <a href="/" class="block px-3 py-2 text-gray-600 hover:text-blue-600">
-                        {{ $current_language === 'es' ? 'Inicio' : 'Home' }}
-                    </a>
                     @foreach($menu_pages as $menuPage)
-                        <a href="/{{ $menuPage['slug'] }}" 
-                           class="block px-3 py-2 text-gray-600 hover:text-blue-600 {{ $page->slug === $menuPage['slug'] ? 'text-blue-600 font-medium' : '' }}">
+                        @php
+                            $menuUrl = $menuPage['is_homepage'] ? '/' : '/' . $menuPage['slug'];
+                            $isActive = ($menuPage['is_homepage'] && $page->is_homepage) || 
+                                       (!$menuPage['is_homepage'] && $page->slug === $menuPage['slug']);
+                        @endphp
+                        <a href="{{ $menuUrl }}" 
+                           class="block px-3 py-2 text-gray-600 hover:text-blue-600 {{ $isActive ? 'text-blue-600 font-medium' : '' }}">
                             {{ $menuPage['title'] }}
                         </a>
                     @endforeach
@@ -238,10 +243,12 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="/" class="text-gray-300 hover:text-white transition duration-200">Home</a></li>
                         @foreach($menu_pages as $menuPage)
+                            @php
+                                $menuUrl = $menuPage['is_homepage'] ? '/' : '/' . $menuPage['slug'];
+                            @endphp
                             <li>
-                                <a href="/{{ $menuPage['slug'] }}" 
+                                <a href="{{ $menuUrl }}" 
                                    class="text-gray-300 hover:text-white transition duration-200">
                                     {{ $menuPage['title'] }}
                                 </a>
