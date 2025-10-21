@@ -22,6 +22,7 @@ class Page
     public $meta_keywords;
     public $featured_image;
     public $template;
+    public $layout_id;
     public $use_sections;
     public $status;
     public $language;
@@ -471,6 +472,7 @@ class Page
         $this->meta_keywords = $row['meta_keywords'];
         $this->featured_image = $row['featured_image'];
         $this->template = $row['template'];
+        $this->layout_id = $row['layout_id'];
         $this->use_sections = $row['use_sections'];
         $this->status = $row['status'];
         $this->language = $row['language'] ?? 'en';

@@ -50,7 +50,6 @@
 
         <!-- Error Messages -->
         @php
-            session_start();
             $error = $_SESSION['error_message'] ?? '';
             unset($_SESSION['error_message']);
         @endphp
