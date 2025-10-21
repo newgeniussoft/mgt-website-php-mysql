@@ -33,12 +33,6 @@ class Router {
             return;
         }
         
-        // Check if this is an API route
-        if (isset($pathParts[0]) && $pathParts[0] === 'admin' && isset($pathParts[1]) && $pathParts[1] === 'api') {
-            $this->handleApiRoutes($pathParts, $language);
-            return;
-        }
-        
         // Handle frontend routes
         $this->handleFrontendRoutes($pathParts, $language);
     }
@@ -156,10 +150,6 @@ class Router {
                 $controller->addSection();
                 break;
                 
-            case 'update-section':
-                $controller->updateSection();
-                break;
-                
             case 'update-section-order':
                 $controller->updateSectionOrder();
                 break;
@@ -232,37 +222,6 @@ class Router {
                 } else {
                     $this->notFound();
                 }
-                break;
-        }
-    }
-    
-    /**
-     * Handle API routes
-     */
-    private function handleApiRoutes($pathParts, $language) {
-        // Remove 'admin' and 'api' from path parts
-        array_shift($pathParts); // Remove 'admin'
-        array_shift($pathParts); // Remove 'api'
-        
-        if (empty($pathParts)) {
-            $this->notFound();
-            return;
-        }
-        
-        $endpoint = $pathParts[0];
-        
-        switch ($endpoint) {
-            case 'section-templates':
-                require_once __DIR__ . '/../models/SectionLayoutTemplate.php';
-                $templateModel = new SectionLayoutTemplate();
-                $templates = $templateModel->getAll();
-                
-                header('Content-Type: application/json');
-                echo json_encode($templates);
-                break;
-                
-            default:
-                $this->notFound();
                 break;
         }
     }

@@ -111,23 +111,47 @@
     @endif
 
     <!-- Page Content -->
-    <div class="max-w-4xl mx-auto px-4 py-12">
-        @if($page->content)
+    <div class="max-w-7xl mx-auto px-4 py-12">
+        @if($page->use_sections && !empty($sections_html))
+            <!-- Section-based content -->
+            <div class="mb-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                        <span class="text-blue-800 font-medium">This page uses modular sections</span>
+                    </div>
+                </div>
+                <div class="sections-container">
+                    {!! $sections_html !!}
+                </div>
+            </div>
+        @elseif($page->content)
+            <!-- Traditional content -->
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <div class="content-area prose prose-lg max-w-none">
                     {!! $page->content !!}
                 </div>
             </div>
         @else
+            <!-- No content -->
             <div class="bg-white rounded-lg shadow-lg p-8 text-center">
                 <i class="fas fa-file-alt text-gray-400 text-4xl mb-4"></i>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">No Content</h3>
                 <p class="text-gray-600">This page doesn't have any content yet.</p>
-                <a href="/admin/pages/edit?id={{ $page->id }}" 
-                   class="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition duration-200">
-                    <i class="fas fa-edit mr-2"></i>
-                    Add Content
-                </a>
+                <div class="mt-4 space-x-2">
+                    <a href="/admin/pages/edit?id={{ $page->id }}" 
+                       class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition duration-200">
+                        <i class="fas fa-edit mr-2"></i>
+                        Add Content
+                    </a>
+                    @if($page->use_sections)
+                        <a href="/admin/pages/sections?page_id={{ $page->id }}" 
+                           class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition duration-200">
+                            <i class="fas fa-puzzle-piece mr-2"></i>
+                            Manage Sections
+                        </a>
+                    @endif
+                </div>
             </div>
         @endif
     </div>

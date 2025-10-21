@@ -48,8 +48,8 @@ class PageSection {
         }
         
         $query = "INSERT INTO {$this->table} 
-                  (page_id, section_type, title, content, section_html, section_css, section_js, layout_template, settings, sort_order, is_active) 
-                  VALUES (:page_id, :section_type, :title, :content, :section_html, :section_css, :section_js, :layout_template, :settings, :sort_order, :is_active)";
+                  (page_id, section_type, title, content, settings, sort_order, is_active) 
+                  VALUES (:page_id, :section_type, :title, :content, :settings, :sort_order, :is_active)";
         
         $stmt = $this->db->prepare($query);
         
@@ -60,10 +60,6 @@ class PageSection {
         $stmt->bindParam(':section_type', $data['section_type']);
         $stmt->bindParam(':title', $data['title']);
         $stmt->bindParam(':content', $data['content']);
-        $stmt->bindParam(':section_html', $data['section_html'] ?? '');
-        $stmt->bindParam(':section_css', $data['section_css'] ?? '');
-        $stmt->bindParam(':section_js', $data['section_js'] ?? '');
-        $stmt->bindParam(':layout_template', $data['layout_template'] ?? 'default');
         $stmt->bindParam(':settings', $settings);
         $stmt->bindParam(':sort_order', $data['sort_order']);
         $stmt->bindParam(':is_active', $isActive);
@@ -80,9 +76,8 @@ class PageSection {
      */
     public function update($id, $data) {
         $query = "UPDATE {$this->table} 
-                  SET section_type = :section_type, title = :title, content = :content,
-                      section_html = :section_html, section_css = :section_css, section_js = :section_js,
-                      layout_template = :layout_template, settings = :settings, sort_order = :sort_order, is_active = :is_active 
+                  SET section_type = :section_type, title = :title, content = :content, 
+                      settings = :settings, sort_order = :sort_order, is_active = :is_active 
                   WHERE id = :id";
         
         $stmt = $this->db->prepare($query);
@@ -93,10 +88,6 @@ class PageSection {
         $stmt->bindParam(':section_type', $data['section_type']);
         $stmt->bindParam(':title', $data['title']);
         $stmt->bindParam(':content', $data['content']);
-        $stmt->bindParam(':section_html', $data['section_html'] ?? '');
-        $stmt->bindParam(':section_css', $data['section_css'] ?? '');
-        $stmt->bindParam(':section_js', $data['section_js'] ?? '');
-        $stmt->bindParam(':layout_template', $data['layout_template'] ?? 'default');
         $stmt->bindParam(':settings', $settings);
         $stmt->bindParam(':sort_order', $data['sort_order']);
         $stmt->bindParam(':is_active', $data['is_active']);

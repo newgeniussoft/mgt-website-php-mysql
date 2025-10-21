@@ -194,14 +194,21 @@
     @endif
 
     <!-- Page Content -->
-    <main class="max-w-4xl mx-auto px-4 py-12">
-        @if($page->content)
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        @if($page->use_sections && !empty($sections_html))
+            <!-- Section-based content -->
+            <div class="sections-container">
+                {!! $sections_html !!}
+            </div>
+        @elseif($page->content)
+            <!-- Traditional content -->
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <div class="content-area prose prose-lg max-w-none">
                     {!! $page->content !!}
                 </div>
             </div>
         @else
+            <!-- No content -->
             <div class="bg-white rounded-lg shadow-lg p-8 text-center">
                 <i class="fas fa-file-alt text-gray-400 text-4xl mb-4"></i>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">Content Coming Soon</h3>

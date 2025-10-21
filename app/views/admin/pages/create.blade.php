@@ -44,7 +44,6 @@
 
         <!-- Error Messages -->
         @php
-            session_start();
             $error = $_SESSION['error_message'] ?? '';
             unset($_SESSION['error_message']);
         @endphp
@@ -301,11 +300,21 @@
                                         value="1"
                                         class="form-check-input"
                                         {{ ($_POST['use_sections'] ?? '') ? 'checked' : '' }}
+                                        onchange="toggleSectionBuilder()"
                                     >
                                     <label for="use_sections" class="form-check-label text-sm text-gray-700">
                                         Enable modular sections for this page
                                     </label>
                                     <p class="mt-1 text-sm text-gray-500">Allow adding and reordering content sections</p>
+                                </div>
+                                
+                                <div id="section-builder-notice" class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-md" style="display: none;">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                                        <span class="text-blue-800 text-sm">
+                                            <strong>Note:</strong> Save the page first, then use the "Manage Sections" button to add and edit sections with CodeMirror.
+                                        </span>
+                                    </div>
                                 </div>
                                 
                                 <div>
@@ -490,6 +499,23 @@
             };
             reader.readAsDataURL(file);
         }
+
+        // Toggle section builder notice
+        function toggleSectionBuilder() {
+            const checkbox = document.getElementById('use_sections');
+            const notice = document.getElementById('section-builder-notice');
+            
+            if (checkbox.checked) {
+                notice.style.display = 'block';
+            } else {
+                notice.style.display = 'none';
+            }
+        }
+
+        // Initialize section builder toggle on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSectionBuilder();
+        });
     </script>
 </body>
 </html>

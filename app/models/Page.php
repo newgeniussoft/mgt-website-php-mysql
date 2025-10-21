@@ -22,6 +22,7 @@ class Page
     public $meta_keywords;
     public $featured_image;
     public $template;
+    public $use_sections;
     public $status;
     public $language;
     public $translation_group;
@@ -46,11 +47,11 @@ class Page
     {
         $query = "INSERT INTO {$this->table} (
             title, slug, content, excerpt, meta_title, meta_description, meta_keywords,
-            featured_image, template, status, author_id, parent_id, menu_order,
+            featured_image, template, layout_id, use_sections, status, author_id, parent_id, menu_order,
             is_homepage, show_in_menu, published_at
         ) VALUES (
             :title, :slug, :content, :excerpt, :meta_title, :meta_description, :meta_keywords,
-            :featured_image, :template, :status, :author_id, :parent_id, :menu_order,
+            :featured_image, :template, :layout_id, :use_sections, :status, :author_id, :parent_id, :menu_order,
             :is_homepage, :show_in_menu, :published_at
         )";
         
@@ -75,6 +76,8 @@ class Page
         $stmt->bindParam(':meta_keywords', $data['meta_keywords']);
         $stmt->bindParam(':featured_image', $data['featured_image']);
         $stmt->bindParam(':template', $data['template']);
+        $stmt->bindParam(':layout_id', $data['layout_id']);
+        $stmt->bindParam(':use_sections', $data['use_sections']);
         $stmt->bindParam(':status', $data['status']);
         $stmt->bindParam(':author_id', $data['author_id']);
         $stmt->bindParam(':parent_id', $data['parent_id']);
@@ -107,7 +110,7 @@ class Page
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();
             $this->mapRowToProperties($row);
-            return true;
+            return $row;
         }
         
         return false;
@@ -130,7 +133,7 @@ class Page
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();
             $this->mapRowToProperties($row);
-            return true;
+            return $row;
         }
         
         return false;
@@ -246,8 +249,8 @@ class Page
         
         $allowedFields = [
             'title', 'slug', 'content', 'excerpt', 'meta_title', 'meta_description', 
-            'meta_keywords', 'featured_image', 'template', 'status', 'parent_id', 
-            'menu_order', 'is_homepage', 'show_in_menu', 'published_at'
+            'meta_keywords', 'featured_image', 'template', 'layout_id', 'use_sections',
+            'status', 'parent_id', 'menu_order', 'is_homepage', 'show_in_menu', 'published_at'
         ];
         
         foreach ($data as $key => $value) {
@@ -468,6 +471,7 @@ class Page
         $this->meta_keywords = $row['meta_keywords'];
         $this->featured_image = $row['featured_image'];
         $this->template = $row['template'];
+        $this->use_sections = $row['use_sections'];
         $this->status = $row['status'];
         $this->language = $row['language'] ?? 'en';
         $this->translation_group = $row['translation_group'];

@@ -338,7 +338,7 @@
                                         name="use_sections" 
                                         value="1"
                                         class="form-check-input"
-                                        {{ ($_POST['use_sections'] ?? ($page->use_sections ?? 0)) ? 'checked' : '' }}
+                                        {{ ($_POST['use_sections'] ?? $page->use_sections) ? 'checked' : '' }}
                                     >
                                     <label for="use_sections" class="form-check-label text-sm text-gray-700">
                                         Enable modular sections for this page
@@ -447,6 +447,20 @@
                                     <i class="fas fa-save mr-2"></i>
                                     Update Page
                                 </button>
+                                
+                                @if($page->use_sections)
+                                    <a href="/admin/pages/sections?page_id={{ $page->id }}" 
+                                       class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition duration-200 block text-center">
+                                        <i class="fas fa-puzzle-piece mr-2"></i>
+                                        Manage Sections
+                                    </a>
+                                    
+                                    <a href="/admin/pages/section-builder?page_id={{ $page->id }}" 
+                                       class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md transition duration-200 block text-center">
+                                        <i class="fas fa-code mr-2"></i>
+                                        Section Builder (CodeMirror)
+                                    </a>
+                                @endif
                                 
                                 <a href="/admin/pages" 
                                    class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200 block text-center">
