@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../controllers/admin/AuthController.php';
 require_once __DIR__ . '/../controllers/admin/PageController.php';
+require_once __DIR__ . '/../controllers/admin/LayoutController.php';
 require_once __DIR__ . '/../controllers/frontend/MainController.php';
 require_once __DIR__ . '/../models/Page.php';
 
@@ -55,6 +56,12 @@ class Router {
         // Handle page management routes
         if ($action === 'pages') {
             $this->handlePageRoutes($pathParts, $language);
+            return;
+        }
+        
+        // Handle layout management routes
+        if ($action === 'layouts') {
+            $this->handleLayoutRoutes($pathParts, $language);
             return;
         }
         
@@ -125,6 +132,79 @@ class Router {
                 
             case 'delete':
                 $controller->delete();
+                break;
+                
+            case 'preview':
+                $controller->preview();
+                break;
+                
+            case 'sections':
+                $controller->sections();
+                break;
+                
+            case 'add-section':
+                $controller->addSection();
+                break;
+                
+            case 'update-section-order':
+                $controller->updateSectionOrder();
+                break;
+                
+            case 'delete-section':
+                $controller->deleteSection();
+                break;
+                
+            default:
+                // Check if method exists
+                if (method_exists($controller, $action)) {
+                    $controller->$action();
+                } else {
+                    $this->notFound();
+                }
+                break;
+        }
+    }
+    
+    /**
+     * Handle layout management routes
+     */
+    private function handleLayoutRoutes($pathParts, $language) {
+        $controller = new LayoutController($language);
+        
+        // Remove 'layouts' from path parts
+        array_shift($pathParts);
+        
+        // Default to index if no specific action
+        if (empty($pathParts) || $pathParts[0] === '') {
+            $controller->index();
+            return;
+        }
+        
+        $action = $pathParts[0];
+        
+        switch ($action) {
+            case 'create':
+                $controller->create();
+                break;
+                
+            case 'store':
+                $controller->store();
+                break;
+                
+            case 'edit':
+                $controller->edit();
+                break;
+                
+            case 'update':
+                $controller->update();
+                break;
+                
+            case 'delete':
+                $controller->delete();
+                break;
+                
+            case 'duplicate':
+                $controller->duplicate();
                 break;
                 
             case 'preview':

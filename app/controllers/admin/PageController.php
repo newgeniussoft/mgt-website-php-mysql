@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../../core/Controller.php';
 require_once __DIR__ . '/../../core/AuthMiddleware.php';
 require_once __DIR__ . '/../../models/Page.php';
+require_once __DIR__ . '/../../models/Layout.php';
+require_once __DIR__ . '/../../models/PageSection.php';
 
 /**
  * Page Controller for CMS functionality
@@ -12,11 +14,15 @@ require_once __DIR__ . '/../../models/Page.php';
 class PageController extends Controller 
 {
     private $page;
+    private $layout;
+    private $pageSection;
 
     public function __construct($lang = 'en') 
     {
         parent::__construct($lang);
         $this->page = new Page();
+        $this->layout = new Layout();
+        $this->pageSection = new PageSection();
     }
 
     /**
@@ -65,8 +71,13 @@ class PageController extends Controller
     {
         AuthMiddleware::requireAdmin();
 
+        $layouts = $this->layout->getAll();
+        $sectionTypes = $this->pageSection->getSectionTypes();
+
         $this->render('admin.pages.create', [
             'templates' => $this->page->getAvailableTemplates(),
+            'layouts' => $layouts,
+            'sectionTypes' => $sectionTypes,
             'csrf_token' => AuthMiddleware::generateCSRFToken(),
             'page_title' => 'Create New Page'
         ]);
@@ -112,9 +123,14 @@ class PageController extends Controller
             return;
         }
 
+        $layouts = $this->layout->getAll();
+        $sectionTypes = $this->pageSection->getSectionTypes();
+
         $this->render('admin.pages.edit', [
             'page' => $this->page,
             'templates' => $this->page->getAvailableTemplates(),
+            'layouts' => $layouts,
+            'sectionTypes' => $sectionTypes,
             'csrf_token' => AuthMiddleware::generateCSRFToken(),
             'page_title' => 'Edit Page: ' . $this->page->title
         ]);
@@ -216,6 +232,8 @@ class PageController extends Controller
         $metaDescription = trim($_POST['meta_description'] ?? '');
         $metaKeywords = trim($_POST['meta_keywords'] ?? '');
         $template = $_POST['template'] ?? 'default';
+        $layoutId = !empty($_POST['layout_id']) ? $_POST['layout_id'] : null;
+        $useSections = isset($_POST['use_sections']) ? 1 : 0;
         $status = $_POST['status'] ?? 'draft';
         $language = $_POST['language'] ?? 'en';
         $translationGroup = trim($_POST['translation_group'] ?? '');
@@ -255,6 +273,8 @@ class PageController extends Controller
             'meta_description' => $metaDescription,
             'meta_keywords' => $metaKeywords,
             'template' => $template,
+            'layout_id' => $layoutId,
+            'use_sections' => $useSections,
             'status' => $status,
             'language' => $language,
             'translation_group' => $translationGroup,
@@ -321,5 +341,131 @@ class PageController extends Controller
     {
         header("Location: {$url}");
         exit();
+    }
+
+    /**
+     * Manage page sections
+     */
+    public function sections() 
+    {
+        AuthMiddleware::requireAdmin();
+        
+        $pageId = $_GET['page_id'] ?? null;
+        if (!$pageId) {
+            $this->redirectWithError('/admin/pages', 'Page ID is required.');
+        }
+        
+        $page = $this->page->getById($pageId);
+        if (!$page) {
+            $this->redirectWithError('/admin/pages', 'Page not found.');
+        }
+        
+        $sections = $this->pageSection->getByPageId($pageId, false);
+        $sectionTypes = $this->pageSection->getSectionTypes();
+        
+        $this->render('admin.pages.sections', [
+            'page' => $page,
+            'sections' => $sections,
+            'sectionTypes' => $sectionTypes,
+            'csrf_token' => AuthMiddleware::generateCSRFToken(),
+            'page_title' => 'Manage Sections: ' . $page['title']
+        ]);
+    }
+
+    /**
+     * Add new section to page
+     */
+    public function addSection() 
+    {
+        AuthMiddleware::requireAdmin();
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirectWithError('/admin/pages', 'Invalid request method.');
+        }
+        
+        $pageId = $_POST['page_id'] ?? null;
+        $sectionType = $_POST['section_type'] ?? '';
+        $title = $_POST['title'] ?? '';
+        $content = $_POST['content'] ?? '';
+        $settings = $_POST['settings'] ?? [];
+        
+        if (!$pageId || !$sectionType) {
+            $this->redirectWithError("/admin/pages/sections?page_id={$pageId}", 'Page ID and section type are required.');
+        }
+        
+        $data = [
+            'page_id' => $pageId,
+            'section_type' => $sectionType,
+            'title' => $title,
+            'content' => $content,
+            'settings' => $settings,
+            'is_active' => 1
+        ];
+        
+        $sectionId = $this->pageSection->create($data);
+        
+        if ($sectionId) {
+            $_SESSION['success_message'] = 'Section added successfully!';
+        } else {
+            $_SESSION['error_message'] = 'Failed to add section.';
+        }
+        
+        $this->redirect("/admin/pages/sections?page_id={$pageId}");
+    }
+
+    /**
+     * Update section order
+     */
+    public function updateSectionOrder() 
+    {
+        AuthMiddleware::requireAdmin();
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+            return;
+        }
+        
+        $sections = json_decode(file_get_contents('php://input'), true);
+        
+        if (!$sections) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Invalid data']);
+            return;
+        }
+        
+        $success = $this->pageSection->updateSortOrder($sections);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => $success]);
+    }
+
+    /**
+     * Delete section
+     */
+    public function deleteSection() 
+    {
+        AuthMiddleware::requireAdmin();
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirectWithError('/admin/pages', 'Invalid request method.');
+        }
+        
+        $sectionId = $_POST['section_id'] ?? null;
+        $pageId = $_POST['page_id'] ?? null;
+        
+        if (!$sectionId || !$pageId) {
+            $this->redirectWithError("/admin/pages/sections?page_id={$pageId}", 'Section ID is required.');
+        }
+        
+        $success = $this->pageSection->delete($sectionId);
+        
+        if ($success) {
+            $_SESSION['success_message'] = 'Section deleted successfully!';
+        } else {
+            $_SESSION['error_message'] = 'Failed to delete section.';
+        }
+        
+        $this->redirect("/admin/pages/sections?page_id={$pageId}");
     }
 }

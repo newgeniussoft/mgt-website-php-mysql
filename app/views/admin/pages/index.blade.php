@@ -274,6 +274,11 @@
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
+                                            <a href="/admin/pages/sections?page_id={{ $page['id'] }}" 
+                                               class="text-green-600 hover:text-green-900" 
+                                               title="Manage Sections">
+                                                <i class="fas fa-puzzle-piece"></i>
+                                            </a>
                                             <button onclick="deletePage({{ $page['id'] }}, '{{ addslashes($page['title']) }}')" 
                                                     class="text-red-600 hover:text-red-900" 
                                                     title="Delete">

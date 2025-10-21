@@ -313,6 +313,40 @@
                                 </div>
                                 
                                 <div>
+                                    <label for="layout_id" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Custom Layout
+                                    </label>
+                                    <select 
+                                        id="layout_id" 
+                                        name="layout_id"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option value="">Use Default Template</option>
+                                        @foreach($layouts as $layout)
+                                            <option value="{{ $layout['id'] }}" {{ ($_POST['layout_id'] ?? $page->layout_id) == $layout['id'] ? 'selected' : '' }}>
+                                                {{ $layout['name'] }}{{ $layout['is_system'] ? ' (System)' : '' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <p class="mt-1 text-sm text-gray-500">Choose a custom layout or leave empty to use the template above</p>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input 
+                                        type="checkbox" 
+                                        id="use_sections" 
+                                        name="use_sections" 
+                                        value="1"
+                                        class="form-check-input"
+                                        {{ ($_POST['use_sections'] ?? $page->use_sections) ? 'checked' : '' }}
+                                    >
+                                    <label for="use_sections" class="form-check-label text-sm text-gray-700">
+                                        Enable modular sections for this page
+                                    </label>
+                                    <p class="mt-1 text-sm text-gray-500">Allow adding and reordering content sections</p>
+                                </div>
+                                
+                                <div>
                                     <label for="menu_order" class="block text-sm font-medium text-gray-700 mb-2">
                                         Menu Order
                                     </label>
