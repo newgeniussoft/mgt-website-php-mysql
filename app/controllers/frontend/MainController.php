@@ -53,18 +53,10 @@ class MainController extends Controller {
         // Load sections if page uses sections
         $sections = [];
         $sectionsHtml = '';
-        
-        // Debug: Check if use_sections field exists and its value
-        error_log("DEBUG: Page ID: " . $page->id);
-        error_log("DEBUG: use_sections exists: " . (isset($page->use_sections) ? 'YES' : 'NO'));
-        error_log("DEBUG: use_sections value: " . ($page->use_sections ?? 'NULL'));
-        
         if (isset($page->use_sections) && $page->use_sections) {
             $pageSectionModel = new PageSection();
             $sections = $pageSectionModel->getByPageId($page->id, true); // Only active sections
-            error_log("DEBUG: Found " . count($sections) . " sections");
             $sectionsHtml = $this->renderSections($sections);
-            error_log("DEBUG: Sections HTML length: " . strlen($sectionsHtml));
         }
         
         // Determine which template to use

@@ -195,14 +195,6 @@
 
     <!-- Page Content -->
     <main class="max-w-7xl mx-auto px-4 py-12">
-        <!-- Debug Information -->
-        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4" style="display: block;">
-            <strong>Debug Info:</strong><br>
-            use_sections: {{ $page->use_sections ?? 'NULL' }}<br>
-            sections_html length: {{ strlen($sections_html ?? '') }}<br>
-            sections count: {{ count($sections ?? []) }}
-        </div>
-        
         @if($page->use_sections && !empty($sections_html))
             <!-- Section-based content -->
             <div class="sections-container">
