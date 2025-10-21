@@ -511,7 +511,7 @@
             }
             
             // Handle conditionals (basic implementation)
-            previewHtml = previewHtml.replace(/if\(([^)]+)\)(.*?)endif/gs, function(match, condition, content) {
+            previewHtml = previewHtml.replace(/@if\(([^)]+)\)(.*?)@endif/gs, function(match, condition, content) {
                 if (sampleData[condition.trim()]) {
                     return content;
                 }

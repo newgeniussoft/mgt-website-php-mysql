@@ -338,7 +338,7 @@
                                         name="use_sections" 
                                         value="1"
                                         class="form-check-input"
-                                        {{ ($_POST['use_sections'] ?? ($page->use_sections ?? 0)) ? 'checked' : '' }}
+                                        {{ ($_POST['use_sections'] ?? $page->use_sections) ? 'checked' : '' }}
                                     >
                                     <label for="use_sections" class="form-check-label text-sm text-gray-700">
                                         Enable modular sections for this page
