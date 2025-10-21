@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $page_title ?? 'Create New Page' }} - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- TinyMCE Editor -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            <i class="fas fa-tachometer-alt mr-2 text-blue-600"></i>
+                            Admin Panel
+                        </h1>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="/admin/pages" class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-arrow-left mr-1"></i>
+                        Back to Pages
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto py-6 px-4">
+        <!-- Header -->
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-900">Create New Page</h2>
+            <p class="text-gray-600">Add a new page to your website</p>
+        </div>
+
+        <!-- Error Messages -->
+        @php
+            session_start();
+            $error = $_SESSION['error_message'] ?? '';
+            unset($_SESSION['error_message']);
+        @endphp
+
+        @if($error)
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <span>{{ $error }}</span>
+                </div>
+            </div>
+        @endif
+
+        <form method="POST" action="/admin/pages/store" enctype="multipart/form-data" class="space-y-6">
+            <input type="hidden" name="csrf_token" value="{{ $csrf_token }}">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Basic Information -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">
+                                <i class="fas fa-file-alt mr-2"></i>
+                                Basic Information
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Title *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="title" 
+                                        name="title" 
+                                        required 
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Enter page title"
+                                        value="{{ $_POST['title'] ?? '' }}"
+                                        onkeyup="generateSlug()"
+                                    >
+                                </div>
+                                
+                                <div>
+                                    <label for="slug" class="block text-sm font-medium text-gray-700 mb-2">
+                                        URL Slug
+                                    </label>
+                                    <div class="flex">
+                                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                            /
+                                        </span>
+                                        <input 
+                                            type="text" 
+                                            id="slug" 
+                                            name="slug" 
+                                            class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="auto-generated-from-title"
+                                            value="{{ $_POST['slug'] ?? '' }}"
+                                        >
+                                    </div>
+                                    <p class="mt-1 text-sm text-gray-500">Leave empty to auto-generate from title</p>
+                                </div>
+                                
+                                <div>
+                                    <label for="excerpt" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Excerpt
+                                    </label>
+                                    <textarea 
+                                        id="excerpt" 
+                                        name="excerpt" 
+                                        rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Brief description of the page"
+                                    >{{ $_POST['excerpt'] ?? '' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">
+                                <i class="fas fa-edit mr-2"></i>
+                                Content
+                            </h3>
+                            
+                            <div>
+                                <label for="content" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Page Content
+                                </label>
+                                <textarea 
+                                    id="content" 
+                                    name="content" 
+                                    class="w-full"
+                                    style="height: 400px;"
+                                >{{ $_POST['content'] ?? '' }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEO Settings -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">
+                                <i class="fas fa-search mr-2"></i>
+                                SEO Settings
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="meta_title" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Meta Title
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="meta_title" 
+                                        name="meta_title" 
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="SEO title for search engines"
+                                        value="{{ $_POST['meta_title'] ?? '' }}"
+                                    >
+                                </div>
+                                
+                                <div>
+                                    <label for="meta_description" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Meta Description
+                                    </label>
+                                    <textarea 
+                                        id="meta_description" 
+                                        name="meta_description" 
+                                        rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="SEO description for search engines (160 characters max)"
+                                    >{{ $_POST['meta_description'] ?? '' }}</textarea>
+                                </div>
+                                
+                                <div>
+                                    <label for="meta_keywords" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Meta Keywords
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="meta_keywords" 
+                                        name="meta_keywords" 
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="keyword1, keyword2, keyword3"
+                                        value="{{ $_POST['meta_keywords'] ?? '' }}"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Publish Settings -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">
+                                <i class="fas fa-cog mr-2"></i>
+                                Publish Settings
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Status
+                                    </label>
+                                    <select 
+                                        id="status" 
+                                        name="status"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option value="draft" {{ ($_POST['status'] ?? 'draft') === 'draft' ? 'selected' : '' }}>Draft</option>
+                                        <option value="published" {{ ($_POST['status'] ?? '') === 'published' ? 'selected' : '' }}>Published</option>
+                                        <option value="private" {{ ($_POST['status'] ?? '') === 'private' ? 'selected' : '' }}>Private</option>
+                                        <option value="archived" {{ ($_POST['status'] ?? '') === 'archived' ? 'selected' : '' }}>Archived</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="template" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Template
+                                    </label>
+                                    <select 
+                                        id="template" 
+                                        name="template"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        @foreach($templates as $key => $name)
+                                            <option value="{{ $key }}" {{ ($_POST['template'] ?? 'default') === $key ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="menu_order" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Menu Order
+                                    </label>
+                                    <input 
+                                        type="number" 
+                                        id="menu_order" 
+                                        name="menu_order" 
+                                        min="0"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        value="{{ $_POST['menu_order'] ?? '0' }}"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page Options -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">
+                                <i class="fas fa-sliders-h mr-2"></i>
+                                Page Options
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <input 
+                                        type="checkbox" 
+                                        id="is_homepage" 
+                                        name="is_homepage" 
+                                        value="1"
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        {{ isset($_POST['is_homepage']) ? 'checked' : '' }}
+                                    >
+                                    <label for="is_homepage" class="ml-2 block text-sm text-gray-700">
+                                        Set as Homepage
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center">
+                                    <input 
+                                        type="checkbox" 
+                                        id="show_in_menu" 
+                                        name="show_in_menu" 
+                                        value="1"
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        {{ !isset($_POST['show_in_menu']) || $_POST['show_in_menu'] ? 'checked' : '' }}
+                                    >
+                                    <label for="show_in_menu" class="ml-2 block text-sm text-gray-700">
+                                        Show in Menu
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Featured Image -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">
+                                <i class="fas fa-image mr-2"></i>
+                                Featured Image
+                            </h3>
+                            
+                            <div>
+                                <label for="featured_image" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Upload Image
+                                </label>
+                                <input 
+                                    type="file" 
+                                    id="featured_image" 
+                                    name="featured_image" 
+                                    accept="image/*"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                >
+                                <p class="mt-1 text-sm text-gray-500">Recommended size: 1200x630px</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-6">
+                            <div class="space-y-3">
+                                <button 
+                                    type="submit" 
+                                    class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200"
+                                >
+                                    <i class="fas fa-save mr-2"></i>
+                                    Create Page
+                                </button>
+                                
+                                <a href="/admin/pages" 
+                                   class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200 block text-center">
+                                    <i class="fas fa-times mr-2"></i>
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Initialize TinyMCE
+        tinymce.init({
+            selector: '#content',
+            height: 400,
+            menubar: false,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; }'
+        });
+
+        // Generate slug from title
+        function generateSlug() {
+            const title = document.getElementById('title').value;
+            const slug = title
+                .toLowerCase()
+                .replace(/[^a-z0-9 -]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .trim('-');
+            
+            document.getElementById('slug').value = slug;
+        }
+
+        // Character counter for meta description
+        const metaDescription = document.getElementById('meta_description');
+        if (metaDescription) {
+            metaDescription.addEventListener('input', function() {
+                const length = this.value.length;
+                const maxLength = 160;
+                
+                // Create or update character counter
+                let counter = document.getElementById('meta-desc-counter');
+                if (!counter) {
+                    counter = document.createElement('p');
+                    counter.id = 'meta-desc-counter';
+                    counter.className = 'mt-1 text-sm';
+                    this.parentNode.appendChild(counter);
+                }
+                
+                counter.textContent = `${length}/${maxLength} characters`;
+                counter.className = `mt-1 text-sm ${length > maxLength ? 'text-red-500' : 'text-gray-500'}`;
+            });
+        }
+    </script>
+</body>
+</html>
