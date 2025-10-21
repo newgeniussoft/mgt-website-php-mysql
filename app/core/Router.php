@@ -142,6 +142,10 @@ class Router {
                 $controller->sections();
                 break;
                 
+            case 'section-builder':
+                $controller->sectionBuilder();
+                break;
+                
             case 'add-section':
                 $controller->addSection();
                 break;

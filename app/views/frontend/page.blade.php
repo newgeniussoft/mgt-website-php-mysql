@@ -194,14 +194,29 @@
     @endif
 
     <!-- Page Content -->
-    <main class="max-w-4xl mx-auto px-4 py-12">
-        @if($page->content)
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <!-- Debug Information -->
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4" style="display: block;">
+            <strong>Debug Info:</strong><br>
+            use_sections: {{ $page->use_sections ?? 'NULL' }}<br>
+            sections_html length: {{ strlen($sections_html ?? '') }}<br>
+            sections count: {{ count($sections ?? []) }}
+        </div>
+        
+        @if($page->use_sections && !empty($sections_html))
+            <!-- Section-based content -->
+            <div class="sections-container">
+                {!! $sections_html !!}
+            </div>
+        @elseif($page->content)
+            <!-- Traditional content -->
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <div class="content-area prose prose-lg max-w-none">
                     {!! $page->content !!}
                 </div>
             </div>
         @else
+            <!-- No content -->
             <div class="bg-white rounded-lg shadow-lg p-8 text-center">
                 <i class="fas fa-file-alt text-gray-400 text-4xl mb-4"></i>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">Content Coming Soon</h3>

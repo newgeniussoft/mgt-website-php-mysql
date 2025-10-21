@@ -107,7 +107,7 @@ class Page
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();
             $this->mapRowToProperties($row);
-            return true;
+            return $row;
         }
         
         return false;

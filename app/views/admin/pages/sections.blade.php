@@ -114,10 +114,10 @@
                         <a href="/admin/pages" class="btn btn-outline-secondary me-2">
                             <i class="fas fa-arrow-left me-2"></i>Back to Pages
                         </a>
-                        <a href="/admin/pages/edit?id={{ $page['id'] }}" class="btn btn-outline-primary me-2">
+                        <a href="/admin/pages/edit?id={{ $page->id }}" class="btn btn-outline-primary me-2">
                             <i class="fas fa-edit me-2"></i>Edit Page
                         </a>
-                        <a href="/admin/pages/preview?id={{ $page['id'] }}" class="btn btn-outline-info" target="_blank">
+                        <a href="/admin/pages/preview?id={{ $page->id }}" class="btn btn-outline-info" target="_blank">
                             <i class="fas fa-eye me-2"></i>Preview
                         </a>
                     </div>
@@ -143,13 +143,13 @@
                 <!-- Page Info -->
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $page['title'] }}</h5>
-                        <p class="card-text text-muted">{{ $page['excerpt'] ?: 'No excerpt available' }}</p>
+                        <h5 class="card-title">{{ $page->title }}</h5>
+                        <p class="card-text text-muted">{{ $page->excerpt ?: 'No excerpt available' }}</p>
                         <div class="d-flex gap-2">
-                            <span class="badge bg-{{ $page['status'] === 'published' ? 'success' : 'secondary' }}">
-                                {{ ucfirst($page['status']) }}
+                            <span class="badge bg-{{ $page->status === 'published' ? 'success' : 'secondary' }}">
+                                {{ ucfirst($page->status) }}
                             </span>
-                            <span class="badge bg-info">{{ $page['language'] === 'es' ? 'Spanish' : 'English' }}</span>
+                            <span class="badge bg-info">{{ $page->language === 'es' ? 'Spanish' : 'English' }}</span>
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="page_id" value="{{ $page['id'] }}">
+                        <input type="hidden" name="page_id" value="{{ $page->id }}">
                         
                         <div class="mb-3">
                             <label for="section_type" class="form-label">Section Type *</label>
@@ -316,7 +316,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <form id="deleteForm" method="POST" action="/admin/pages/delete-section" style="display: inline;">
                         <input type="hidden" name="section_id" id="deleteSectionId">
-                        <input type="hidden" name="page_id" value="{{ $page['id'] }}">
+                        <input type="hidden" name="page_id" value="{{ $page->id }}">
                         <button type="submit" class="btn btn-danger">Delete Section</button>
                     </form>
                 </div>

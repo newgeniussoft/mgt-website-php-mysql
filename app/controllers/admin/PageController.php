@@ -213,10 +213,49 @@ class PageController extends Controller
             return;
         }
 
+        // Load sections if page uses sections
+        $sections = [];
+        $sectionsHtml = '';
+        if ($this->page->use_sections) {
+            $sections = $this->pageSection->getByPageId($id, true); // Only active sections
+            $sectionsHtml = $this->renderSectionsForPreview($sections);
+        }
+
         $this->render('admin.pages.preview', [
             'page' => $this->page,
+            'sections' => $sections,
+            'sections_html' => $sectionsHtml,
             'page_title' => 'Preview: ' . $this->page->title
         ]);
+    }
+
+    /**
+     * Render sections for preview (simplified version)
+     */
+    private function renderSectionsForPreview($sections) {
+        if (empty($sections)) {
+            return '';
+        }
+        
+        $html = '';
+        foreach ($sections as $section) {
+            $html .= '<div class="preview-section mb-8 p-6 bg-white rounded-lg shadow">';
+            $html .= '<div class="preview-section-header mb-4">';
+            $html .= '<span class="inline-block px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">' . ucfirst($section['section_type']) . '</span>';
+            $html .= '</div>';
+            
+            if (!empty($section['title'])) {
+                $html .= '<h3 class="text-xl font-semibold mb-3">' . htmlspecialchars($section['title']) . '</h3>';
+            }
+            
+            if (!empty($section['content'])) {
+                $html .= '<div class="section-content">' . $section['content'] . '</div>';
+            }
+            
+            $html .= '</div>';
+        }
+        
+        return $html;
     }
 
     /**
@@ -355,20 +394,19 @@ class PageController extends Controller
             $this->redirectWithError('/admin/pages', 'Page ID is required.');
         }
         
-        $page = $this->page->getById($pageId);
+        $page = (object) $this->page->findById($pageId);
         if (!$page) {
             $this->redirectWithError('/admin/pages', 'Page not found.');
         }
         
         $sections = $this->pageSection->getByPageId($pageId, false);
         $sectionTypes = $this->pageSection->getSectionTypes();
-        
         $this->render('admin.pages.sections', [
             'page' => $page,
             'sections' => $sections,
             'sectionTypes' => $sectionTypes,
             'csrf_token' => AuthMiddleware::generateCSRFToken(),
-            'page_title' => 'Manage Sections: ' . $page['title']
+            'page_title' => 'Manage Sections: ' . $page->title
         ]);
     }
 
@@ -467,5 +505,55 @@ class PageController extends Controller
         }
         
         $this->redirect("/admin/pages/sections?page_id={$pageId}");
+    }
+
+    /**
+     * Section builder with CodeMirror
+     */
+    public function sectionBuilder() 
+    {
+        AuthMiddleware::requireAdmin();
+        
+        $pageId = $_GET['page_id'] ?? null;
+        
+        if (!$pageId) {
+            $this->redirectWithError('/admin/pages', 'Page ID is required.');
+        }
+        
+        $page = $this->page->findById($pageId);
+        
+        if (!$page) {
+            $this->redirectWithError('/admin/pages', 'Page not found.');
+        }
+        
+        $sections = $this->pageSection->getByPageId($pageId, false);
+        $sectionTypes = $this->pageSection->getSectionTypes();
+        
+        // Get section layout templates
+        $sectionLayoutTemplates = $this->getSectionLayoutTemplates();
+        
+        $this->render('admin.pages.section-builder', [
+            'page' => $page,
+            'sections' => $sections,
+            'sectionTypes' => $sectionTypes,
+            'sectionLayoutTemplates' => $sectionLayoutTemplates,
+            'csrf_token' => AuthMiddleware::generateCSRFToken(),
+            'page_title' => 'Section Builder: ' . $page->title
+        ]);
+    }
+
+    /**
+     * Get section layout templates
+     */
+    private function getSectionLayoutTemplates() 
+    {
+        try {
+            $query = "SELECT * FROM section_layout_templates WHERE is_active = 1 ORDER BY category, name";
+            $stmt = $this->page->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return [];
+        }
     }
 }
