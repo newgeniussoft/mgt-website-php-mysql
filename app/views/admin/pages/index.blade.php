@@ -66,7 +66,6 @@
 
         <!-- Success/Error Messages -->
         @php
-            session_start();
             $success = $_SESSION['success_message'] ?? '';
             $error = $_SESSION['error_message'] ?? '';
             unset($_SESSION['success_message'], $_SESSION['error_message']);
@@ -140,8 +139,11 @@
                             Filter
                         </button>
                     </div>
+                    @php
+                        $hasFilters = $search || $status || $language;
+                    @endphp
                     
-                    @if($search || $status || $language)
+                    @if($hasFilters)
                         <div class="flex items-end">
                             <a href="/admin/pages" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">
                                 <i class="fas fa-times mr-2"></i>

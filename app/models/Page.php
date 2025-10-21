@@ -166,6 +166,11 @@ class Page
             $params[':template'] = $filters['template'];
         }
         
+        if (!empty($filters['language'])) {
+            $whereConditions[] = "p.language = :language";
+            $params[':language'] = $filters['language'];
+        }
+        
         $whereClause = !empty($whereConditions) ? 'WHERE ' . implode(' AND ', $whereConditions) : '';
         
         $query = "SELECT p.*, u.username as author_name 
@@ -209,6 +214,11 @@ class Page
         if (!empty($filters['search'])) {
             $whereConditions[] = "(title LIKE :search OR content LIKE :search)";
             $params[':search'] = '%' . $filters['search'] . '%';
+        }
+        
+        if (!empty($filters['language'])) {
+            $whereConditions[] = "language = :language";
+            $params[':language'] = $filters['language'];
         }
         
         $whereClause = !empty($whereConditions) ? 'WHERE ' . implode(' AND ', $whereConditions) : '';
@@ -277,15 +287,15 @@ class Page
 
 
     /**
-     * Generate unique slug
+     * Generate unique slug for a specific language
      */
-    public function generateSlug($title, $id = null) 
+    public function generateSlug($title, $id = null, $language = 'en') 
     {
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
         $originalSlug = $slug;
         $counter = 1;
         
-        while ($this->slugExists($slug, $id)) {
+        while ($this->slugExists($slug, $id, $language)) {
             $slug = $originalSlug . '-' . $counter;
             $counter++;
         }
@@ -294,12 +304,12 @@ class Page
     }
 
     /**
-     * Check if slug exists
+     * Check if slug exists for a specific language
      */
-    public function slugExists($slug, $excludeId = null) 
+    public function slugExists($slug, $excludeId = null, $language = 'en') 
     {
-        $query = "SELECT id FROM {$this->table} WHERE slug = :slug";
-        $params = [':slug' => $slug];
+        $query = "SELECT id FROM {$this->table} WHERE slug = :slug AND language = :language";
+        $params = [':slug' => $slug, ':language' => $language];
         
         if ($excludeId) {
             $query .= " AND id != :id";

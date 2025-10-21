@@ -96,7 +96,10 @@
                     @endforeach
                     
                     <!-- Language Switcher -->
-                    @if(!empty($translations) && count($translations) > 1)
+                    @php
+                        $is_trans = !empty($translations) && count($translations) > 1;
+                    @endphp
+                    @if($is_trans)
                         <div class="relative group">
                             <button class="flex items-center text-gray-600 hover:text-blue-600 transition duration-200">
                                 <i class="fas fa-globe mr-1"></i>
@@ -143,7 +146,7 @@
                     @endforeach
                     
                     <!-- Mobile Language Switcher -->
-                    @if(!empty($translations) && count($translations) > 1)
+                    @if($is_trans)
                         <div class="border-t pt-2 mt-2">
                             <p class="px-3 py-1 text-xs font-medium text-gray-500 uppercase">{{ $current_language === 'es' ? 'Idioma' : 'Language' }}</p>
                             @foreach($translations as $translation)

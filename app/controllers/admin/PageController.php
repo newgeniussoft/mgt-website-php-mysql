@@ -30,6 +30,7 @@ class PageController extends Controller
         $perPage = 10;
         $search = $_GET['search'] ?? '';
         $status = $_GET['status'] ?? '';
+        $language = $_GET['language'] ?? '';
         
         $filters = [];
         if (!empty($search)) {
@@ -37,6 +38,9 @@ class PageController extends Controller
         }
         if (!empty($status)) {
             $filters['status'] = $status;
+        }
+        if (!empty($language)) {
+            $filters['language'] = $language;
         }
 
         $pages = $this->page->getAll($filters, $currentPage, $perPage);
@@ -48,6 +52,7 @@ class PageController extends Controller
             'totalPages' => $totalPages,
             'search' => $search,
             'status' => $status,
+            'language' => $language,
             'csrf_token' => AuthMiddleware::generateCSRFToken(),
             'page_title' => 'Page Management'
         ]);
@@ -212,6 +217,8 @@ class PageController extends Controller
         $metaKeywords = trim($_POST['meta_keywords'] ?? '');
         $template = $_POST['template'] ?? 'default';
         $status = $_POST['status'] ?? 'draft';
+        $language = $_POST['language'] ?? 'en';
+        $translationGroup = trim($_POST['translation_group'] ?? '');
         $parentId = !empty($_POST['parent_id']) ? $_POST['parent_id'] : null;
         $menuOrder = intval($_POST['menu_order'] ?? 0);
         $isHomepage = isset($_POST['is_homepage']) ? 1 : 0;
@@ -223,12 +230,17 @@ class PageController extends Controller
         }
 
         if (empty($slug)) {
-            $slug = $this->page->generateSlug($title, $id);
+            $slug = $this->page->generateSlug($title, $id, $language);
         } else {
-            // Check if slug is unique
-            if ($this->page->slugExists($slug, $id)) {
-                return ['success' => false, 'message' => 'Slug already exists. Please choose a different one.'];
+            // Check if slug is unique for this language
+            if ($this->page->slugExists($slug, $id, $language)) {
+                return ['success' => false, 'message' => 'Slug already exists for this language. Please choose a different one.'];
             }
+        }
+        
+        // Generate translation group if empty
+        if (empty($translationGroup)) {
+            $translationGroup = $this->page->generateTranslationGroup($title);
         }
 
         // Get current user
@@ -244,6 +256,8 @@ class PageController extends Controller
             'meta_keywords' => $metaKeywords,
             'template' => $template,
             'status' => $status,
+            'language' => $language,
+            'translation_group' => $translationGroup,
             'author_id' => $currentUser->id,
             'parent_id' => $parentId,
             'menu_order' => $menuOrder,
