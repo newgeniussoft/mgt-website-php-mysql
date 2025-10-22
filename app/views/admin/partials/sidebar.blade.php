@@ -19,9 +19,9 @@
 						</a>
 					</li>
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="">
+						<a class="sidebar-link" href="/admin/pages">
 							<i class="align-middle" data-feather="book"></i> <span class="align-middle">
-								Information
+								Pages
 							</span>
 						</a>
 					</li>
