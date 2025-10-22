@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Allow direct access to assets
+    RewriteCond %{REQUEST_URI} ^/assets/
+    RewriteRule ^ - [L]
+    
+    # Redirect to index.php if file/directory doesn't exist
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>

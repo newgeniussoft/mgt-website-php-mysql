@@ -1,106 +1,98 @@
-@import('app/utils/helpers/helper.php')
-<div id="kt_app_header" class="app-header " data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}"
-    data-kt-sticky-name="app-header-minimize" data-kt-sticky-offset="{default: '200px', lg: '300px'}"
-    data-kt-sticky-animation="false">
-    <!--begin::Header container-->
-    <div class="app-container  container-fluid d-flex align-items-stretch flex-stack " id="kt_app_header_container">
-        <!--begin::Sidebar toggle-->
-        <div class="d-flex align-items-center d-block d-lg-none ms-n3" title="Show sidebar menu">
-            <div class="btn btn-icon btn-color-gray-600 btn-active-color-primary w-35px h-35px me-1"
-                id="kt_app_sidebar_mobile_toggle">
-                <i class="ki-duotone ki-abstract-14 fs-2 fs-md-1"><span class="path1"></span><span
-                        class="path2"></span></i>
-            </div>
-            <a href="{{ url_admin('dashboard') }}">
-                <img alt="Logo" src="{{ assets('img/logos/apple-touch-icon.png') }}" class="h-30px theme-light-show" />
-                <img alt="Logo" src="{{ assets('img/logos/apple-touch-icon.png') }}" class="h-30px theme-dark-show" />
-            </a>
-        </div>
-        <!--end::Sidebar toggle-->
+<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
 
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+								<div class="position-relative">
+									<i class="align-middle" data-feather="bell"></i>
+									<span class="indicator">4</span>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+								aria-labelledby="alertsDropdown">
+								<div class="dropdown-menu-header">
+									4 New Notifications
+								</div>
+								<div class="list-group">
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-danger" data-feather="alert-circle"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Update completed</div>
+												<div class="text-muted small mt-1">Restart server 12 to complete the
+													update.</div>
+												<div class="text-muted small mt-1">30m ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-warning" data-feather="bell"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Lorem ipsum</div>
+												<div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate
+													hendrerit et.</div>
+												<div class="text-muted small mt-1">2h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-primary" data-feather="home"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Login from 192.186.1.8</div>
+												<div class="text-muted small mt-1">5h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-success" data-feather="user-plus"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">New connection</div>
+												<div class="text-muted small mt-1">Christina accepted your request.
+												</div>
+												<div class="text-muted small mt-1">14h ago</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all notifications</a>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+								data-bs-toggle="dropdown">
+								<i class="align-middle" data-feather="settings"></i>
+							</a>
 
-        <!--begin::Toolbar wrapper-->
-        <div class="app-navbar flex-lg-grow-1" id="kt_app_header_navbar">
-            <!--begin::Search-->
-            <div class="app-navbar-item d-flex align-items-stretch flex-lg-grow-1 me-2 me-lg-0">
-                <div class="py-8">
-                    <h2>
-                        
-        <?php if(isset($tour)): ?>
-            <?= $tour->title ?>
-        <?php else: ?>
-            <?php if(isset($page)): ?>
-                <?= $page['menu_title'] ?>
-            <?php else: ?>
-                <?php if (strpos(currentPath(), 'users') !== false): ?>
-                    Users
-                <?php else: ?>
-                    <?= ucwords(currentPage()) ?>
-                <?php endif; ?>
-            <?php endif; ?>
-        <?php endif; ?>
-                    </h2>
-                </div>  
-            </div>
-            <div class="app-navbar-item me-2 ms-1 ms-md-2" id="kt_header_user_menu_toggle">
-                <!--begin::Menu wrapper-->
-                <div class="cursor-pointer symbol symbol-circle symbol-35px ms-3"
-                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-                    data-kt-menu-placement="bottom-end">
-                    <img src="{{ assets('img/images/user.png') }}" alt="user" />
-                </div>
-
-                <!--begin::User account menu-->
-                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
-                    data-kt-menu="true">
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-3">
-                        <div class="menu-content d-flex align-items-center px-3">
-                            <!--begin::Avatar-->
-                            <div class="symbol symbol-50px me-5">
-                                <img alt="user" src="{{ assets('img/images/user.png') }}" />
-                            </div>
-                            <!--end::Avatar-->
-
-                            <!--begin::Username-->
-                            <div class="d-flex flex-column">
-                                <div class="fw-bold d-flex align-items-center fs-5">
-                                    {{ $user->fullname ?? '' }} <span
-                                        class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Admin</span>
-                                </div>
-
-                                <a href="{{ url_admin('users/edit/'.$user->id) }}" class="fw-semibold text-muted text-hover-primary fs-7">
-                                    {{ $user->email ?? '' }} </a>
-                            </div>
-                            <!--end::Username-->
-                        </div>
-                    </div>
-                    <!--end::Menu item-->
-
-                    <!--begin::Menu separator-->
-                    <div class="separator my-2"></div>
-                    <!--end::Menu separator-->
-
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-5">
-                        <a href="{{ url_admin('users/edit/'.$user->id) }}" class="menu-link px-5">
-                            My Profile
-                        </a>
-                    </div>
-                    <!--begin::Menu separator-->
-                    <div class="separator my-2"></div>
-                    <!--end::Menu separator-->
-                    <!--begin::Menu item-->
-                    <div class="menu-item px-5">
-                        <a href="{{ url_admin('logout') }}" class="menu-link px-5">
-                            Sign Out
-                        </a>
-                    </div>
-                    <!--end::Menu item-->
-                </div>
-                <!--end::User account menu-->
-                <!--end::Menu wrapper-->
-            </div>
-        </div>
-    </div>
-</div>
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+								data-bs-toggle="dropdown">
+								<img src="@asset('img/avatars/avatar.jpg')" class="avatar img-fluid rounded me-1"
+									alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="/admin/profile"><i class="align-middle me-1"
+										data-feather="user"></i> Profile</a>
+								
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="/admin/logout">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>

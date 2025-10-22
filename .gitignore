@@ -1,7 +1,5 @@
-/vendor
-/uploads
+/old
+/public/assets
 /template
-/template_v2
-/assets/img/uploads
 
 *.zip
