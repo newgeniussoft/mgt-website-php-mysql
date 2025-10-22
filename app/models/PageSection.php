@@ -56,14 +56,20 @@ class PageSection {
         $settings = isset($data['settings']) ? json_encode($data['settings']) : '{}';
         $isActive = isset($data['is_active']) ? $data['is_active'] : 1;
         
+        // Create variables for bindParam (cannot use expressions directly)
+        $sectionHtml = $data['section_html'] ?? '';
+        $sectionCss = $data['section_css'] ?? '';
+        $sectionJs = $data['section_js'] ?? '';
+        $layoutTemplate = $data['layout_template'] ?? 'custom';
+        
         $stmt->bindParam(':page_id', $data['page_id']);
         $stmt->bindParam(':section_type', $data['section_type']);
         $stmt->bindParam(':title', $data['title']);
         $stmt->bindParam(':content', $data['content']);
-        $stmt->bindParam(':section_html', $data['section_html'] ?? '');
-        $stmt->bindParam(':section_css', $data['section_css'] ?? '');
-        $stmt->bindParam(':section_js', $data['section_js'] ?? '');
-        $stmt->bindParam(':layout_template', $data['layout_template'] ?? 'custom');
+        $stmt->bindParam(':section_html', $sectionHtml);
+        $stmt->bindParam(':section_css', $sectionCss);
+        $stmt->bindParam(':section_js', $sectionJs);
+        $stmt->bindParam(':layout_template', $layoutTemplate);
         $stmt->bindParam(':settings', $settings);
         $stmt->bindParam(':sort_order', $data['sort_order']);
         $stmt->bindParam(':is_active', $isActive);
@@ -89,14 +95,20 @@ class PageSection {
         
         $settings = isset($data['settings']) ? json_encode($data['settings']) : '{}';
         
+        // Create variables for bindParam (cannot use expressions directly)
+        $sectionHtml = $data['section_html'] ?? '';
+        $sectionCss = $data['section_css'] ?? '';
+        $sectionJs = $data['section_js'] ?? '';
+        $layoutTemplate = $data['layout_template'] ?? 'custom';
+        
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':section_type', $data['section_type']);
         $stmt->bindParam(':title', $data['title']);
         $stmt->bindParam(':content', $data['content']);
-        $stmt->bindParam(':section_html', $data['section_html'] ?? '');
-        $stmt->bindParam(':section_css', $data['section_css'] ?? '');
-        $stmt->bindParam(':section_js', $data['section_js'] ?? '');
-        $stmt->bindParam(':layout_template', $data['layout_template'] ?? 'custom');
+        $stmt->bindParam(':section_html', $sectionHtml);
+        $stmt->bindParam(':section_css', $sectionCss);
+        $stmt->bindParam(':section_js', $sectionJs);
+        $stmt->bindParam(':layout_template', $layoutTemplate);
         $stmt->bindParam(':settings', $settings);
         $stmt->bindParam(':sort_order', $data['sort_order']);
         $stmt->bindParam(':is_active', $data['is_active']);

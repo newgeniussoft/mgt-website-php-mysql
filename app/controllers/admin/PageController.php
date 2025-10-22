@@ -569,9 +569,15 @@ public function updateSection()
     
     $input = json_decode(file_get_contents('php://input'), true);
     
-    if (!$input || !isset($input['id'])) {
+    if (!$input) {
         http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Invalid data']);
+        echo json_encode(['success' => false, 'message' => 'Invalid JSON data received']);
+        return;
+    }
+    
+    if (!isset($input['id'])) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Section ID is required', 'received_data' => array_keys($input)]);
         return;
     }
     
@@ -677,5 +683,36 @@ public function getSectionTemplatesApi()
     
     header('Content-Type: application/json');
     echo json_encode($templates);
+}
+
+/**
+ * Get section data (AJAX endpoint)
+ */
+public function getSection() 
+{
+    AuthMiddleware::requireAdmin();
+    
+    if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+        http_response_code(405);
+        echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+        return;
+    }
+    
+    $sectionId = $_GET['id'] ?? null;
+    
+    if (!$sectionId) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Section ID is required']);
+        return;
+    }
+    
+    $section = $this->pageSection->getById($sectionId);
+    
+    header('Content-Type: application/json');
+    if ($section) {
+        echo json_encode(['success' => true, 'section' => $section]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Section not found']);
+    }
 }
 }

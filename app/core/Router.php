@@ -183,6 +183,10 @@ class Router {
                 $controller->deleteSectionAjax();
                 break;
                 
+            case 'get-section':
+                $controller->getSection();
+                break;
+                
             default:
                 // Check if method exists
                 if (method_exists($controller, $action)) {

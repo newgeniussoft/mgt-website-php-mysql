@@ -324,6 +324,83 @@
         </div>
     </div>
 
+    <!-- Edit Section Modal -->
+    <div class="modal fade" id="editSectionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="editSectionForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Section</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="edit_section_id" name="section_id">
+                        <input type="hidden" id="edit_page_id" name="page_id" value="{{ $page->id }}">
+                        
+                        <div class="mb-3">
+                            <label for="edit_section_type" class="form-label">Section Type *</label>
+                            <select class="form-select" id="edit_section_type" name="section_type" required>
+                                @foreach($sectionTypes as $type => $name)
+                                    <option value="{{ $type }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_section_title" class="form-label">Section Title</label>
+                            <input type="text" class="form-control" id="edit_section_title" name="title" 
+                                   placeholder="Enter section title (optional)">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_section_content" class="form-label">Content</label>
+                            <textarea class="form-control" id="edit_section_content" name="content" rows="8"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_section_html" class="form-label">Custom HTML (Optional)</label>
+                            <textarea class="form-control" id="edit_section_html" name="section_html" rows="4" 
+                                      placeholder="Custom HTML code for this section"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_section_css" class="form-label">Custom CSS (Optional)</label>
+                            <textarea class="form-control" id="edit_section_css" name="section_css" rows="4" 
+                                      placeholder="Custom CSS styles for this section"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_section_js" class="form-label">Custom JavaScript (Optional)</label>
+                            <textarea class="form-control" id="edit_section_js" name="section_js" rows="4" 
+                                      placeholder="Custom JavaScript code for this section"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_layout_template" class="form-label">Layout Template</label>
+                            <select class="form-select" id="edit_layout_template" name="layout_template">
+                                <option value="custom">Custom Layout</option>
+                                <!-- Template options will be loaded here -->
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="edit_is_active" name="is_active" value="1" checked>
+                                <label class="form-check-label" for="edit_is_active">
+                                    Section Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Section</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.js"></script>
@@ -333,8 +410,8 @@
         let sortable;
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Summernote
-            $('#section_content').summernote({
+            // Initialize Summernote for both add and edit modals
+            $('#section_content, #edit_section_content').summernote({
                 height: 200,
                 toolbar: [
                     ['style', ['style']],
@@ -365,6 +442,12 @@
             document.getElementById('section_type').addEventListener('change', function() {
                 const sectionType = this.value;
                 showSectionSettings(sectionType);
+            });
+            
+            // Edit section form submit handler
+            document.getElementById('editSectionForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                updateSection();
             });
         });
 
@@ -405,8 +488,82 @@
         }
 
         function editSection(sectionId) {
-            // For now, just show an alert. You can implement a full edit modal later
-            alert('Edit functionality coming soon! Section ID: ' + sectionId);
+            // Fetch section data and populate edit modal
+            fetch(`/admin/pages/get-section?id=${sectionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const section = data.section;
+                        
+                        // Populate form fields
+                        document.getElementById('edit_section_id').value = section.id;
+                        document.getElementById('edit_section_type').value = section.section_type;
+                        document.getElementById('edit_section_title').value = section.title || '';
+                        document.getElementById('edit_section_html').value = section.section_html || '';
+                        document.getElementById('edit_section_css').value = section.section_css || '';
+                        document.getElementById('edit_section_js').value = section.section_js || '';
+                        document.getElementById('edit_layout_template').value = section.layout_template || 'custom';
+                        document.getElementById('edit_is_active').checked = section.is_active == 1;
+                        
+                        // Set Summernote content
+                        $('#edit_section_content').summernote('code', section.content || '');
+                        
+                        // Show modal
+                        const modal = new bootstrap.Modal(document.getElementById('editSectionModal'));
+                        modal.show();
+                    } else {
+                        alert('Failed to load section data: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to load section data');
+                });
+        }
+        
+        function updateSection() {
+            const formData = new FormData(document.getElementById('editSectionForm'));
+            
+            // Get Summernote content
+            formData.set('content', $('#edit_section_content').summernote('code'));
+            
+            // Convert FormData to JSON
+            const data = {};
+            formData.forEach((value, key) => {
+                // Map section_id to id for backend compatibility
+                if (key === 'section_id') {
+                    data['id'] = value;
+                } else {
+                    data[key] = value;
+                }
+            });
+            data.is_active = document.getElementById('edit_is_active').checked ? 1 : 0;
+            
+            // Debug: Log the data being sent
+            console.log('Sending data:', data);
+            
+            fetch('/admin/pages/update-section', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    // Close modal and reload page
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('editSectionModal'));
+                    modal.hide();
+                    location.reload();
+                } else {
+                    alert('Failed to update section: ' + result.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to update section');
+            });
         }
 
         function toggleSection(sectionId, isActive) {
