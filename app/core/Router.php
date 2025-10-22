@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../controllers/admin/AuthController.php';
 require_once __DIR__ . '/../controllers/admin/PageController.php';
 require_once __DIR__ . '/../controllers/admin/LayoutController.php';
+require_once __DIR__ . '/../controllers/admin/PageTemplateController.php';
 require_once __DIR__ . '/../controllers/frontend/MainController.php';
 require_once __DIR__ . '/../models/Page.php';
 
@@ -62,6 +63,12 @@ class Router {
         // Handle layout management routes
         if ($action === 'layouts') {
             $this->handleLayoutRoutes($pathParts, $language);
+            return;
+        }
+        
+        // Handle page template management routes
+        if ($action === 'page-templates') {
+            $this->handlePageTemplateRoutes($pathParts, $language);
             return;
         }
         
@@ -231,6 +238,67 @@ class Router {
                 
             case 'preview':
                 $controller->preview();
+                break;
+                
+            default:
+                // Check if method exists
+                if (method_exists($controller, $action)) {
+                    $controller->$action();
+                } else {
+                    $this->notFound();
+                }
+                break;
+        }
+    }
+    
+    /**
+     * Handle page template management routes
+     */
+    private function handlePageTemplateRoutes($pathParts, $language) {
+        $controller = new PageTemplateController($language);
+        
+        // Remove 'page-templates' from path parts
+        array_shift($pathParts);
+        
+        // Default to index if no specific action
+        if (empty($pathParts) || $pathParts[0] === '') {
+            $controller->index();
+            return;
+        }
+        
+        $action = $pathParts[0];
+        
+        switch ($action) {
+            case 'create':
+                $controller->create();
+                break;
+                
+            case 'store':
+                $controller->store();
+                break;
+                
+            case 'edit':
+                $controller->edit();
+                break;
+                
+            case 'update':
+                $controller->update();
+                break;
+                
+            case 'delete':
+                $controller->delete();
+                break;
+                
+            case 'duplicate':
+                $controller->duplicate();
+                break;
+                
+            case 'preview':
+                $controller->preview();
+                break;
+                
+            case 'extract-variables':
+                $controller->extractVariables();
                 break;
                 
             default:

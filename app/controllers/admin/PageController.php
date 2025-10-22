@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../core/AuthMiddleware.php';
 require_once __DIR__ . '/../../models/Page.php';
 require_once __DIR__ . '/../../models/Layout.php';
 require_once __DIR__ . '/../../models/PageSection.php';
+require_once __DIR__ . '/../../models/PageTemplate.php';
 
 /**
  * Page Controller for CMS functionality
@@ -16,6 +17,7 @@ class PageController extends Controller
     private $page;
     private $layout;
     private $pageSection;
+    private $pageTemplate;
 
     public function __construct($lang = 'en') 
     {
@@ -23,6 +25,7 @@ class PageController extends Controller
         $this->page = new Page();
         $this->layout = new Layout();
         $this->pageSection = new PageSection();
+        $this->pageTemplate = new PageTemplate();
     }
 
     /**
@@ -76,6 +79,7 @@ class PageController extends Controller
 
         $this->render('admin.pages.create', [
             'templates' => $this->page->getAvailableTemplates(),
+            'page_templates' => $this->pageTemplate->getByType('page'),
             'layouts' => $layouts,
             'sectionTypes' => $sectionTypes,
             'csrf_token' => AuthMiddleware::generateCSRFToken(),
