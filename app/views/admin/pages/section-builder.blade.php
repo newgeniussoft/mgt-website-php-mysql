@@ -576,7 +576,7 @@
         }
 
         function createSection(data) {
-            fetch('/admin/pages/add-section', {
+            fetch('/admin/pages/add-section-ajax', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -751,7 +751,7 @@
         function deleteSection(sectionId) {
             if (!confirm('Are you sure you want to delete this section?')) return;
 
-            fetch('/admin/pages/delete-section', {
+            fetch('/admin/pages/delete-section-ajax', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

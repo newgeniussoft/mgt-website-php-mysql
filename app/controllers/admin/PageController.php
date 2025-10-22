@@ -542,18 +542,136 @@ class PageController extends Controller
         ]);
     }
 
-    /**
-     * Get section layout templates
-     */
-    private function getSectionLayoutTemplates() 
-    {
-        try {
-            $query = "SELECT * FROM section_layout_templates WHERE is_active = 1 ORDER BY category, name";
-            $stmt = $this->page->db->prepare($query);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            return [];
-        }
+/**
+ * Get section layout templates
+ */
+private function getSectionLayoutTemplates() 
+{
+    return $this->pageSection->getSectionLayoutTemplates();
+}
+
+/**
+ * Update section (AJAX endpoint)
+ */
+public function updateSection() 
+{
+    AuthMiddleware::requireAdmin();
+    
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+        return;
     }
+    
+    $input = json_decode(file_get_contents('php://input'), true);
+    
+    if (!$input || !isset($input['id'])) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Invalid data']);
+        return;
+    }
+    
+    $sectionId = $input['id'];
+    $data = [
+        'section_type' => $input['section_type'] ?? 'custom',
+        'title' => $input['title'] ?? '',
+        'content' => $input['content'] ?? '',
+        'section_html' => $input['section_html'] ?? '',
+        'section_css' => $input['section_css'] ?? '',
+        'section_js' => $input['section_js'] ?? '',
+        'layout_template' => $input['layout_template'] ?? 'custom',
+        'settings' => $input['settings'] ?? [],
+        'sort_order' => $input['sort_order'] ?? 0,
+        'is_active' => $input['is_active'] ?? 1
+    ];
+    
+    $success = $this->pageSection->update($sectionId, $data);
+    
+    header('Content-Type: application/json');
+    echo json_encode(['success' => $success]);
+}
+
+/**
+ * Add section (AJAX endpoint)
+ */
+public function addSectionAjax() 
+{
+    AuthMiddleware::requireAdmin();
+    
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+        return;
+    }
+    
+    $input = json_decode(file_get_contents('php://input'), true);
+    
+    if (!$input || !isset($input['page_id'])) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Invalid data']);
+        return;
+    }
+    
+    $data = [
+        'page_id' => $input['page_id'],
+        'section_type' => $input['section_type'] ?? 'custom',
+        'title' => $input['title'] ?? '',
+        'content' => $input['content'] ?? '',
+        'section_html' => $input['section_html'] ?? '',
+        'section_css' => $input['section_css'] ?? '',
+        'section_js' => $input['section_js'] ?? '',
+        'layout_template' => $input['layout_template'] ?? 'custom',
+        'settings' => $input['settings'] ?? [],
+        'is_active' => 1
+    ];
+    
+    $sectionId = $this->pageSection->create($data);
+    
+    header('Content-Type: application/json');
+    if ($sectionId) {
+        echo json_encode(['success' => true, 'section_id' => $sectionId]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to create section']);
+    }
+}
+
+/**
+ * Delete section (AJAX endpoint)
+ */
+public function deleteSectionAjax() 
+{
+    AuthMiddleware::requireAdmin();
+    
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+        return;
+    }
+    
+    $input = json_decode(file_get_contents('php://input'), true);
+    
+    if (!$input || !isset($input['section_id'])) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Invalid data']);
+        return;
+    }
+    
+    $success = $this->pageSection->delete($input['section_id']);
+    
+    header('Content-Type: application/json');
+    echo json_encode(['success' => $success]);
+}
+
+/**
+ * Get section templates (API endpoint)
+ */
+public function getSectionTemplatesApi() 
+{
+    AuthMiddleware::requireAdmin();
+    
+    $templates = $this->pageSection->getSectionLayoutTemplates();
+    
+    header('Content-Type: application/json');
+    echo json_encode($templates);
+}
 }

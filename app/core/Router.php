@@ -65,6 +65,12 @@ class Router {
             return;
         }
         
+        // Handle API routes
+        if ($action === 'api') {
+            $this->handleApiRoutes($pathParts, $language);
+            return;
+        }
+        
         // Handle auth routes
         $controller = new AuthController($language);
         
@@ -158,6 +164,18 @@ class Router {
                 $controller->deleteSection();
                 break;
                 
+            case 'update-section':
+                $controller->updateSection();
+                break;
+                
+            case 'add-section-ajax':
+                $controller->addSectionAjax();
+                break;
+                
+            case 'delete-section-ajax':
+                $controller->deleteSectionAjax();
+                break;
+                
             default:
                 // Check if method exists
                 if (method_exists($controller, $action)) {
@@ -222,6 +240,34 @@ class Router {
                 } else {
                     $this->notFound();
                 }
+                break;
+        }
+    }
+    
+    /**
+     * Handle API routes
+     */
+    private function handleApiRoutes($pathParts, $language) {
+        // Remove 'api' from path parts
+        array_shift($pathParts);
+        
+        if (empty($pathParts) || $pathParts[0] === '') {
+            http_response_code(404);
+            echo json_encode(['error' => 'API endpoint not found']);
+            return;
+        }
+        
+        $endpoint = $pathParts[0];
+        
+        switch ($endpoint) {
+            case 'section-templates':
+                $controller = new PageController($language);
+                $controller->getSectionTemplatesApi();
+                break;
+                
+            default:
+                http_response_code(404);
+                echo json_encode(['error' => 'API endpoint not found']);
                 break;
         }
     }

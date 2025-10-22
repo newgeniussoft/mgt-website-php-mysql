@@ -48,8 +48,8 @@ class PageSection {
         }
         
         $query = "INSERT INTO {$this->table} 
-                  (page_id, section_type, title, content, settings, sort_order, is_active) 
-                  VALUES (:page_id, :section_type, :title, :content, :settings, :sort_order, :is_active)";
+                  (page_id, section_type, title, content, section_html, section_css, section_js, layout_template, settings, sort_order, is_active) 
+                  VALUES (:page_id, :section_type, :title, :content, :section_html, :section_css, :section_js, :layout_template, :settings, :sort_order, :is_active)";
         
         $stmt = $this->db->prepare($query);
         
@@ -60,6 +60,10 @@ class PageSection {
         $stmt->bindParam(':section_type', $data['section_type']);
         $stmt->bindParam(':title', $data['title']);
         $stmt->bindParam(':content', $data['content']);
+        $stmt->bindParam(':section_html', $data['section_html'] ?? '');
+        $stmt->bindParam(':section_css', $data['section_css'] ?? '');
+        $stmt->bindParam(':section_js', $data['section_js'] ?? '');
+        $stmt->bindParam(':layout_template', $data['layout_template'] ?? 'custom');
         $stmt->bindParam(':settings', $settings);
         $stmt->bindParam(':sort_order', $data['sort_order']);
         $stmt->bindParam(':is_active', $isActive);
@@ -77,7 +81,8 @@ class PageSection {
     public function update($id, $data) {
         $query = "UPDATE {$this->table} 
                   SET section_type = :section_type, title = :title, content = :content, 
-                      settings = :settings, sort_order = :sort_order, is_active = :is_active 
+                      section_html = :section_html, section_css = :section_css, section_js = :section_js, 
+                      layout_template = :layout_template, settings = :settings, sort_order = :sort_order, is_active = :is_active 
                   WHERE id = :id";
         
         $stmt = $this->db->prepare($query);
@@ -88,6 +93,10 @@ class PageSection {
         $stmt->bindParam(':section_type', $data['section_type']);
         $stmt->bindParam(':title', $data['title']);
         $stmt->bindParam(':content', $data['content']);
+        $stmt->bindParam(':section_html', $data['section_html'] ?? '');
+        $stmt->bindParam(':section_css', $data['section_css'] ?? '');
+        $stmt->bindParam(':section_js', $data['section_js'] ?? '');
+        $stmt->bindParam(':layout_template', $data['layout_template'] ?? 'custom');
         $stmt->bindParam(':settings', $settings);
         $stmt->bindParam(':sort_order', $data['sort_order']);
         $stmt->bindParam(':is_active', $data['is_active']);
@@ -159,6 +168,10 @@ class PageSection {
             'section_type' => $section['section_type'],
             'title' => $section['title'] . ' (Copy)',
             'content' => $section['content'],
+            'section_html' => $section['section_html'] ?? '',
+            'section_css' => $section['section_css'] ?? '',
+            'section_js' => $section['section_js'] ?? '',
+            'layout_template' => $section['layout_template'] ?? 'custom',
             'settings' => json_decode($section['settings'], true),
             'is_active' => $section['is_active']
         ];
@@ -292,6 +305,84 @@ class PageSection {
             'contact' => 'Contact Form',
             'html' => 'Custom HTML',
             'custom' => 'Custom Section'
+        ];
+    }
+    
+    /**
+     * Get section layout templates
+     */
+    public function getSectionLayoutTemplates($activeOnly = true) {
+        $whereClause = $activeOnly ? 'WHERE is_active = 1' : '';
+        $query = "SELECT * FROM section_layout_templates {$whereClause} ORDER BY category, name";
+        
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    
+    /**
+     * Get section layout template by slug
+     */
+    public function getSectionLayoutTemplate($slug) {
+        $query = "SELECT * FROM section_layout_templates WHERE slug = :slug AND is_active = 1";
+        
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':slug', $slug);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+    
+    /**
+     * Render section with custom HTML/CSS/JS
+     */
+    public function renderCustomSection($section) {
+        if (!$section) {
+            return ['html' => '', 'css' => '', 'js' => ''];
+        }
+        
+        $html = $section['section_html'] ?? '';
+        $css = $section['section_css'] ?? '';
+        $js = $section['section_js'] ?? '';
+        
+        // Process template variables if layout template is used
+        if (!empty($section['layout_template']) && $section['layout_template'] !== 'custom') {
+            $template = $this->getSectionLayoutTemplate($section['layout_template']);
+            if ($template) {
+                $settings = json_decode($section['settings'], true) ?: [];
+                $data = array_merge([
+                    'title' => $section['title'] ?? '',
+                    'content' => $section['content'] ?? ''
+                ], $settings);
+                
+                // Use template HTML/CSS/JS if section doesn't have custom code
+                if (empty($html)) $html = $template['html_template'] ?? '';
+                if (empty($css)) $css = $template['css_template'] ?? '';
+                if (empty($js)) $js = $template['js_template'] ?? '';
+                
+                // Replace variables
+                foreach ($data as $key => $value) {
+                    $html = str_replace('{{ ' . $key . ' }}', $value, $html);
+                    $css = str_replace('{{ ' . $key . ' }}', $value, $css);
+                    $js = str_replace('{{ ' . $key . ' }}', $value, $js);
+                }
+                
+                // Process conditionals
+                $html = $this->processConditionals($html, $data);
+            }
+        }
+        
+        return [
+            'html' => $html,
+            'css' => $css,
+            'js' => $js
         ];
     }
 }
