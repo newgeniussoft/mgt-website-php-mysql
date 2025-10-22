@@ -258,7 +258,7 @@
                                 
                                 <div>
                                     <label for="template" class="block text-sm font-medium text-gray-700 mb-2">
-                                        Template
+                                        Legacy Template
                                     </label>
                                     <select 
                                         id="template" 
@@ -271,6 +271,34 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <p class="mt-1 text-sm text-gray-500">Legacy templates (use Database Template below for better control)</p>
+                                </div>
+                                
+                                <div>
+                                    <label for="template_id" class="block text-sm font-medium text-gray-700 mb-2">
+                                        <i class="fas fa-code mr-1 text-blue-600"></i>
+                                        Database Template (Recommended)
+                                    </label>
+                                    <select 
+                                        id="template_id" 
+                                        name="template_id"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option value="">Use Legacy Template Above</option>
+                                        @if(isset($page_templates))
+                                            @foreach($page_templates as $template)
+                                                <option value="{{ $template['id'] }}" {{ ($_POST['template_id'] ?? '') == $template['id'] ? 'selected' : '' }}>
+                                                    {{ $template['name'] }}{{ $template['is_system'] ? ' (System)' : '' }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <p class="mt-1 text-sm text-gray-500">
+                                        Choose a fully editable database template. 
+                                        <a href="/admin/page-templates" class="text-blue-600 hover:underline" target="_blank">
+                                            <i class="fas fa-external-link-alt mr-1"></i>Manage Templates
+                                        </a>
+                                    </p>
                                 </div>
                                 
                                 <div>
