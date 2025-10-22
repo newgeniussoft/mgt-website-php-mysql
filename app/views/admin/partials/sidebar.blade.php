@@ -1,58 +1,26 @@
-<nav id="sidebar" class="sidebar js-sidebar">
-			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="/admin">
-					<span class="align-middle">MGT - Admin</span>
-				</a>
-				<ul class="sidebar-nav">
-					<li class="sidebar-header">
-						Pages
-					</li>
-					<li class="sidebar-item active">
-						<a class="sidebar-link" href="/admin/dashboard">
-							<i class="align-middle" data-feather="sliders"></i>
-							<span class="align-middle">Dashboard</span>
-						</a>
-					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/admin/profile">
-							<i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-						</a>
-					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="/admin/pages">
-							<i class="align-middle" data-feather="book"></i> <span class="align-middle">
-								Pages
-							</span>
-						</a>
-					</li>
-					<li class="sidebar-header">
-						Tours & Blogs
-					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="">
-							<i class="align-middle" data-feather="square"></i> <span class="align-middle">
-								Tours</span>
-						</a>
-					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="">
-							<i class="align-middle" data-feather="check-square"></i> <span
-								class="align-middle">Blogs</span>
-						</a>
-					</li>
-					
-				</ul>
-
-				<div class="sidebar-cta">
-					<div class="sidebar-cta-content">
-						<strong class="d-inline-block mb-2">Madagascar Green Tours Admin</strong>
-						<div class="mb-3 text-sm">
-							Are you looking for more components? Check out our premium version.
-						</div>
-						<div class="d-grid">
-							<a href="" class="btn btn-primary">Upgrade to Pro</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</nav>
+   <div class="w-64 bg-white shadow-lg min-h-screen">
+            <div class="py-4">
+                <nav class="mt-4">
+                    <a href="/admin/dashboard" class="flex items-center px-4 py-2 {{ page_admin() === 'dashboard' ? 'text-gray-700 bg-blue-50 border-r-4 border-blue-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-700' }}">
+                        <i class="fas fa-tachometer-alt mr-3"></i>
+                        Dashboard
+                    </a>
+                    <a href="/admin/pages" class="flex items-center px-4 py-2 {{ page_admin() === 'pages' ? 'text-gray-700 bg-blue-50 border-r-4 border-blue-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-700' }}">
+                        <i class="fas fa-file-alt mr-3"></i>
+                        Pages
+                    </a>
+                    <a href="/admin/users" class="flex items-center px-4 py-2 {{ page_admin() === 'users' ? 'text-gray-700 bg-blue-50 border-r-4 border-blue-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-700' }}">
+                        <i class="fas fa-users mr-3"></i>
+                        Users
+                    </a>
+                    <a href="/admin/media" class="flex items-center px-4 py-2 {{ page_admin() === 'media' ? 'text-gray-700 bg-blue-50 border-r-4 border-blue-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-700' }}">
+                        <i class="fas fa-images mr-3"></i>
+                        Media
+                    </a>
+                    <a href="/admin/settings" class="flex items-center px-4 py-2 {{ page_admin() === 'settings' ? 'text-gray-700 bg-blue-50 border-r-4 border-blue-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-700' }}">
+                        <i class="fas fa-cog mr-3"></i>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </div>

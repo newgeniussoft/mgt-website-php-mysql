@@ -12,7 +12,23 @@
 				@yield('content')
 			</div>
 		</div>
-	    <script src="@asset('js/app.js')"></script>
+		 <script>
+        // Toggle user menu
+        document.getElementById('user-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('user-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const button = document.getElementById('user-menu-button');
+            const menu = document.getElementById('user-menu');
+            
+            if (!button.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
         @stack('scripts')
     </body>
 </html>

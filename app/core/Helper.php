@@ -38,6 +38,21 @@ function url(string $path = ''): string {
 }
 
 /**
+ * Returns the current page.
+ *
+ * @return string The current page.
+ */
+function page(): string {
+    $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+    return $urlParts[0];
+}
+
+function page_admin(): string {
+    $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+    return $urlParts[1];
+}
+
+/**
  * Returns the fully qualified URL for an asset.
  *
  * @param string $path The path to the asset.

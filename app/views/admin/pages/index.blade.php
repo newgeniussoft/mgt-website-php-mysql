@@ -1,56 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $page_title ?? 'Page Management' }} - Admin Panel</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <h1 class="text-xl font-bold text-gray-900">
-                            <i class="fas fa-tachometer-alt mr-2 text-blue-600"></i>
-                            Admin Panel
-                        </h1>
-                    </div>
-                </div>
-                
-                <div class="flex items-center space-x-4">
-                    <a href="/admin/dashboard" class="text-gray-600 hover:text-gray-900">
-                        <i class="fas fa-arrow-left mr-1"></i>
-                        Back to Dashboard
-                    </a>
-                    <div class="relative">
-                        <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="user-menu-button">
-                            <div class="h-8 w-8 bg-blue-600 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user text-white text-sm"></i>
-                            </div>
-                            <span class="ml-2 text-gray-700">Admin</span>
-                            <i class="fas fa-chevron-down ml-1 text-gray-400"></i>
-                        </button>
-                        
-                        <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50" id="user-menu">
-                            <a href="/admin/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <i class="fas fa-user-cog mr-2"></i>Profile
-                            </a>
-                            <a href="/admin/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+ @extends('admin.layout')
 
-    <div class="max-w-7xl mx-auto py-6 px-4">
-        <!-- Header -->
+ @section('title', 'Dashboard')
+ @section('content')
+  <!-- Header -->
         <div class="mb-6">
             <div class="flex justify-between items-center">
                 <div>
@@ -153,9 +105,7 @@
                     @endif
                 </form>
             </div>
-        </div>
-
-        <!-- Pages Table -->
+            <!-- Pages Table -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
             @php
                 $empty_page = empty($pages)
@@ -347,71 +297,4 @@
                 @endif
             @endif
         </div>
-    </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3 text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-                    <i class="fas fa-exclamation-triangle text-red-600"></i>
-                </div>
-                <h3 class="text-lg font-medium text-gray-900 mt-4">Delete Page</h3>
-                <div class="mt-2 px-7 py-3">
-                    <p class="text-sm text-gray-500">
-                        Are you sure you want to delete "<span id="pageTitle"></span>"? This action cannot be undone.
-                    </p>
-                </div>
-                <div class="items-center px-4 py-3">
-                    <form id="deleteForm" method="POST" action="/admin/pages/delete" class="inline">
-                        <input type="hidden" name="csrf_token" value="{{ $csrf_token }}">
-                        <input type="hidden" name="id" id="deletePageId">
-                        <button type="submit" class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md w-24 mr-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">
-                            Delete
-                        </button>
-                    </form>
-                    <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-24 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Toggle user menu
-        document.getElementById('user-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('user-menu');
-            menu.classList.toggle('hidden');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const button = document.getElementById('user-menu-button');
-            const menu = document.getElementById('user-menu');
-            
-            if (!button.contains(event.target) && !menu.contains(event.target)) {
-                menu.classList.add('hidden');
-            }
-        });
-
-        // Delete page functionality
-        function deletePage(id, title) {
-            document.getElementById('deletePageId').value = id;
-            document.getElementById('pageTitle').textContent = title;
-            document.getElementById('deleteModal').classList.remove('hidden');
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.add('hidden');
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('deleteModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeDeleteModal();
-            }
-        });
-    </script>
-</body>
-</html>
+ @endsection
