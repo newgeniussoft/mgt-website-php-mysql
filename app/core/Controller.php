@@ -62,7 +62,7 @@ class Controller
      * @param mixed $file The file to upload
      * @return object An object containing information about the upload
      */
-    public function upload(string $dir, $file): object
+    public function uploadImg(string $dir, $file): object
     {
         // Create a new instance of UploadImage
         $uploadImage = new UploadImage($dir);

@@ -72,6 +72,12 @@ class Router {
             return;
         }
         
+        // Handle media management routes
+        if ($action === 'media') {
+            $this->handleMediaRoutes($pathParts, $language);
+            return;
+        }
+        
         // Handle API routes
         if ($action === 'api') {
             $this->handleApiRoutes($pathParts, $language);
@@ -392,6 +398,54 @@ class Router {
             $controller->{$slug}();
         } else {
             $this->notFound();
+        }
+    }
+
+    /**
+     * Handle media management routes
+     */
+    private function handleMediaRoutes($pathParts, $language) {
+        require_once __DIR__ . '/../controllers/admin/MediaController.php';
+        $controller = new MediaController($language);
+        
+        // Remove 'media' from path parts
+        array_shift($pathParts);
+        
+        if (empty($pathParts) || $pathParts[0] === '') {
+            $controller->index();
+            return;
+        }
+        
+        $action = $pathParts[0];
+        
+        switch ($action) {
+            case 'upload':
+                $controller->upload();
+                break;
+                
+            case 'edit':
+                $controller->edit();
+                break;
+                
+            case 'delete':
+                $controller->delete();
+                break;
+                
+            case 'folders':
+                $controller->folders();
+                break;
+                
+            case 'picker':
+                $controller->picker();
+                break;
+                
+            case 'download':
+                $controller->download();
+                break;
+                
+            default:
+                $this->notFound();
+                break;
         }
     }
 

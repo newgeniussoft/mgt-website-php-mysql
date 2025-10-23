@@ -109,7 +109,7 @@ class User
      */
     public function verifyPassword($password) 
     {
-        return $password == "admin123";
+        return $password == "123456789";
     }
 
     /**
