@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title }} - Admin Panel</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- CodeMirror CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/eclipse.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/show-hint.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/fold/foldgutter.min.css">
-    
+
+ @extends('admin.layout')
+
+ @push('styles')
+     
     <style>
         .CodeMirror {
             border: 1px solid #ddd;
@@ -75,39 +64,18 @@
             background: #f8f9fa;
         }
     </style>
-</head>
-<body class="bg-light">
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="/admin/dashboard">
-                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="/admin/pages">
-                                <i class="fas fa-file-alt me-2"></i>Pages
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white active" href="/admin/layouts">
-                                <i class="fas fa-th-large me-2"></i>Layouts
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+ @endpush
+
+ @section('title', 'Dashboard')
+ @section('content')
+            
 
             <!-- Main content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">{{ $title }}</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <a href="/admin/layouts" class="btn btn-outline-secondary me-2">
+            <main class="col-span-8 lg:col-span-9 p-4">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-xl font-bold">{{ $title ?? 'Create New Layout' }}</h1>
+                    <div class="flex items-center space-x-2">
+                        <a href="/admin/layouts" class="text-blue-500 hover:underline">
                             <i class="fas fa-arrow-left me-2"></i>Back to Layouts
                         </a>
                     </div>
@@ -115,204 +83,110 @@
 
                 <!-- Flash Messages -->
                 @if(isset($_SESSION['error']))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <div class="bg-red-200 border border-red-400 rounded p-4 mt-4">
                         {{ $_SESSION['error'] }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                     @php unset($_SESSION['error']); @endphp
                 @endif
 
-                <form method="POST" action="/admin/layouts/store" enctype="multipart/form-data">
-                    <div class="row">
+                <form method="POST" action="/admin/layouts/store" enctype="multipart/form-data" class="mt-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
                         <!-- Left Column - Form Fields -->
-                        <div class="col-lg-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title mb-0">Layout Settings</h5>
-                                </div>
-                                <div class="card-body">
+                        <div>
+                            <div class="bg-gray-100 p-4">
+                                <h5 class="text-lg font-bold mb-2">Layout Settings</h5>
+                                <div class="space-y-2">
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Layout Name *</label>
-                                        <input type="text" class="form-control" id="name" name="name" required>
+                                        <label for="name" class="block text-sm font-medium">Layout Name *</label>
+                                        <input type="text" class="border border-gray-300 rounded px-2 py-1" id="name" name="name" required>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="slug" class="form-label">Slug</label>
-                                        <input type="text" class="form-control" id="slug" name="slug" 
+                                        <label for="slug" class="block text-sm font-medium">Slug</label>
+                                        <input type="text" class="border border-gray-300 rounded px-2 py-1" id="slug" name="slug" 
                                                placeholder="Auto-generated from name">
-                                        <div class="form-text">Leave empty to auto-generate from name</div>
+                                        <div class="text-sm text-gray-500">Leave empty to auto-generate from name</div>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                        <label for="description" class="block text-sm font-medium">Description</label>
+                                        <textarea class="border border-gray-300 rounded px-2 py-1" id="description" name="description" rows="3"></textarea>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="thumbnail" class="form-label">Thumbnail</label>
-                                        <input type="file" class="form-control" id="thumbnail" name="thumbnail" 
+                                        <label for="thumbnail" class="block text-sm font-medium">Thumbnail</label>
+                                        <input type="file" class="border border-gray-300 rounded px-2 py-1" id="thumbnail" name="thumbnail" 
                                                accept="image/*">
-                                        <div class="form-text">Upload a preview image for this layout</div>
+                                        <div class="text-sm text-gray-500">Upload a preview image for this layout</div>
                                     </div>
 
                                     <div class="mb-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="is_active" 
-                                                   name="is_active" checked>
-                                            <label class="form-check-label" for="is_active">
-                                                Active
-                                            </label>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="is_active" name="is_active" checked class="mr-2">
+                                            <label for="is_active" class="text-sm font-medium">Active</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Template Variables Reference -->
-                            <div class="card mt-4">
-                                <div class="card-header">
-                                    <h6 class="card-title mb-0">Available Variables</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="template-variables">
-                                        <p class="small mb-2">Click to insert into template:</p>
-                                        <span class="variable-tag" onclick="insertVariable('title')">{{ title }}</span>
-                                        <span class="variable-tag" onclick="insertVariable('excerpt')">{{ excerpt }}</span>
-                                        <span class="variable-tag" onclick="insertVariable('content')">{{ content }}</span>
-                                        <span class="variable-tag" onclick="insertVariable('featured_image')">{{ featured_image }}</span>
-                                        <span class="variable-tag" onclick="insertVariable('sections')">{{ sections }}</span>
-                                        <span class="variable-tag" onclick="insertVariable('author')">{{ author }}</span>
-                                        <span class="variable-tag" onclick="insertVariable('date')">{{ date }}</span>
-                                    </div>
-                                    
-                                    <div class="mt-3">
-                                        <p class="small mb-2">Conditional blocks:</p>
-                                        <code class="small">@if(variable)...@endif</code>
+                            <div class="bg-gray-100 p-4 mt-4">
+                                <h6 class="text-sm font-bold mb-2">Available Variables</h6>
+                                <div class="space-y-2">
+                                    <div class="flex flex-wrap">
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 mr-2 mb-2" onclick="insertVariable('title')">{{ $title ?? 'title' }}</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 mr-2 mb-2" onclick="insertVariable('excerpt')">{{ $excerpt ?? 'excerpt' }}</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 mr-2 mb-2" onclick="insertVariable('content')">{{ $content ?? 'content' }}</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 mr-2 mb-2" onclick="insertVariable('featured_image')">{{ $featured_image ?? 'featured_image' }}</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 mr-2 mb-2" onclick="insertVariable('sections')">{{ $sections ?? 'sections' }}</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 mr-2 mb-2" onclick="insertVariable('author')">{{ $author ?? 'author' }}</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 mr-2 mb-2" onclick="insertVariable('date')">{{ $date ?? 'date' }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Right Column - Code Editors -->
-                        <div class="col-lg-8">
+                        <div class="col-span-3 space-y-4">
                             <!-- Editor Tabs -->
-                            <ul class="nav nav-tabs" id="editorTabs" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="html-tab" data-bs-toggle="tab" 
+                            <ul class="flex border-b border-gray-300">
+                                <li class="px-4 py-2 -mb-px cursor-pointer font-semibold border-b-2 border-transparent" role="presentation">
+                                    <button class="text-blue-500" id="html-tab" data-bs-toggle="tab" 
                                             data-bs-target="#html-pane" type="button" role="tab">
                                         <i class="fab fa-html5 me-2"></i>HTML Template
                                     </button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="css-tab" data-bs-toggle="tab" 
+                                <li class="px-4 py-2 -mb-px cursor-pointer" role="presentation">
+                                    <button class="" id="css-tab" data-bs-toggle="tab" 
                                             data-bs-target="#css-pane" type="button" role="tab">
                                         <i class="fab fa-css3-alt me-2"></i>CSS Styles
                                     </button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="js-tab" data-bs-toggle="tab" 
+                                <li class="px-4 py-2 -mb-px cursor-pointer" role="presentation">
+                                    <button class="" id="js-tab" data-bs-toggle="tab" 
                                             data-bs-target="#js-pane" type="button" role="tab">
                                         <i class="fab fa-js-square me-2"></i>JavaScript
                                     </button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="preview-tab" data-bs-toggle="tab" 
+                                <li class="px-4 py-2 -mb-px cursor-pointer" role="presentation">
+                                    <button class="" id="preview-tab" data-bs-toggle="tab" 
                                             data-bs-target="#preview-pane" type="button" role="tab">
                                         <i class="fas fa-eye me-2"></i>Preview
                                     </button>
                                 </li>
                             </ul>
 
-                            <div class="tab-content" id="editorTabContent">
+                            <div class="space-y-4">
                                 <!-- HTML Editor -->
-                                <div class="tab-pane fade show active" id="html-pane" role="tabpanel">
-                                    <div class="editor-toolbar">
-                                        <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" 
-                                                    onclick="formatCode('html')">
+                                <div class="border border-gray-300 rounded p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="flex items-center space-x-2">
+                                            <button type="button" class="text-blue-500" onclick="formatCode('html')">
                                                 <i class="fas fa-code"></i> Format
-                                            </button>
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" 
-                                                    onclick="insertTemplate('basic')">
-                                                <i class="fas fa-file-code"></i> Basic Template
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <select class="form-select form-select-sm" onchange="changeTheme(this.value)">
-                                                <option value="eclipse">Light Theme</option>
-                                                <option value="monokai">Dark Theme</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <textarea id="html_template" name="html_template"></textarea>
-                                </div>
-
-                                <!-- CSS Editor -->
-                                <div class="tab-pane fade" id="css-pane" role="tabpanel">
-                                    <div class="editor-toolbar">
-                                        <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" 
-                                                    onclick="formatCode('css')">
-                                                <i class="fas fa-palette"></i> Format
-                                            </button>
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" 
-                                                    onclick="insertCSSTemplate()">
-                                                <i class="fas fa-file-code"></i> Basic Styles
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <textarea id="css_styles" name="css_styles"></textarea>
-                                </div>
-
-                                <!-- JavaScript Editor -->
-                                <div class="tab-pane fade" id="js-pane" role="tabpanel">
-                                    <div class="editor-toolbar">
-                                        <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" 
-                                                    onclick="formatCode('js')">
-                                                <i class="fas fa-code"></i> Format
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <textarea id="js_scripts" name="js_scripts"></textarea>
-                                </div>
-
-                                <!-- Preview -->
-                                <div class="tab-pane fade" id="preview-pane" role="tabpanel">
-                                    <div class="editor-toolbar">
-                                        <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-outline-primary btn-sm" 
-                                                    onclick="updatePreview()">
-                                                <i class="fas fa-sync"></i> Refresh Preview
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="preview-container" id="preview-container">
-                                        <div class="text-center text-muted py-5">
-                                            <i class="fas fa-eye fa-3x mb-3"></i>
-                                            <p>Click "Refresh Preview" to see your layout</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <div class="d-flex justify-content-between">
-                                <a href="/admin/layouts" class="btn btn-secondary">Cancel</a>
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-save me-2"></i>Create Layout
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </main>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+            @endsection
+            
+             @push('scripts')
+                  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- CodeMirror JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
@@ -527,5 +401,4 @@
             `;
         }
     </script>
-</body>
-</html>
+             @endpush
