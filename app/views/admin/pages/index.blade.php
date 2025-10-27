@@ -9,7 +9,7 @@
                     <h2 class="text-2xl font-bold text-gray-900">Page Management</h2>
                     <p class="text-gray-600">Create and manage your website pages</p>
                 </div>
-                <a href="/admin/pages/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200">
+                <a href="{{ admin_route('pages/create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200">
                     <i class="fas fa-plus mr-2"></i>
                     Create New Page
                 </a>
@@ -44,7 +44,7 @@
         <!-- Filters -->
         <div class="bg-white rounded-lg shadow mb-6">
             <div class="p-6">
-                <form method="GET" action="/admin/pages" class="flex flex-wrap gap-4">
+                <form method="GET" action="{{ admin_route('pages') }}" class="flex flex-wrap gap-4">
                     <div class="flex-1 min-w-64">
                         <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search</label>
                         <input 
@@ -97,7 +97,7 @@
                     
                     @if($hasFilters)
                         <div class="flex items-end">
-                            <a href="/admin/pages" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">
+                            <a href="{{ admin_route('pages') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">
                                 <i class="fas fa-times mr-2"></i>
                                 Clear
                             </a>
@@ -115,7 +115,7 @@
                     <i class="fas fa-file-alt text-gray-400 text-4xl mb-4"></i>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">No pages found</h3>
                     <p class="text-gray-600 mb-4">Get started by creating your first page.</p>
-                    <a href="/admin/pages/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200">
+                    <a href="{{ admin_route('pages/create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200">
                         <i class="fas fa-plus mr-2"></i>
                         Create New Page
                     </a>

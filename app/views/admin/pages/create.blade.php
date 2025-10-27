@@ -26,7 +26,7 @@
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <a href="/admin/pages" class="text-gray-600 hover:text-gray-900">
+                    <a href="{{ admin_route('pages') }}" class="text-gray-600 hover:text-gray-900">
                         <i class="fas fa-arrow-left mr-1"></i>
                         Back to Pages
                     </a>
@@ -57,7 +57,7 @@
             </div>
         @endif
 
-        <form method="POST" action="/admin/pages/store" enctype="multipart/form-data" class="space-y-6">
+        <form method="POST" action="{{ admin_route('pages/store') }}" enctype="multipart/form-data" class="space-y-6">
             <input type="hidden" name="csrf_token" value="{{ $csrf_token }}">
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -295,7 +295,7 @@
                                     </select>
                                     <p class="mt-1 text-sm text-gray-500">
                                         Choose a fully editable database template. 
-                                        <a href="/admin/page-templates" class="text-blue-600 hover:underline" target="_blank">
+                                        <a href="{{ admin_route('page-templates') }}" class="text-blue-600 hover:underline" target="_blank">
                                             <i class="fas fa-external-link-alt mr-1"></i>Manage Templates
                                         </a>
                                     </p>
@@ -438,7 +438,7 @@
                                     Create Page
                                 </button>
                                 
-                                <a href="/admin/pages" 
+                                <a href="{{ admin_route('pages') }}" 
                                    class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200 block text-center">
                                     <i class="fas fa-times mr-2"></i>
                                     Cancel

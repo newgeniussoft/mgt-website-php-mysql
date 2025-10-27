@@ -17,6 +17,13 @@ class AuthMiddleware
     public static function loginPath() {
         return '/'.$_ENV['PATH_ADMIN'].'/login';
     }
+
+    /**
+     * Home path
+     */
+    public static function homePath() {
+        return '/'.$_ENV['PATH_ADMIN'].'/dashboard';
+    }
     
     /**
      * Check if user is authenticated

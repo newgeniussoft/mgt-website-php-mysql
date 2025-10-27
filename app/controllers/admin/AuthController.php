@@ -26,7 +26,7 @@ class AuthController extends Controller
     {
         // If already authenticated, redirect to dashboard
         if (AuthMiddleware::isAuthenticated()) {
-            $this->redirect('/admin/dashboard');
+            $this->redirect(AuthMiddleware::homePath());
             return;
         }
 

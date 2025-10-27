@@ -10,7 +10,7 @@
                 <h1 class="h3 mb-0 text-gray-800">
                     <i class="fas fa-code me-2"></i>Page Templates
                 </h1>
-                <a href="/admin/page-templates/create" class="btn btn-primary">
+                <a href="{{ admin_route('page-templates/create') }}" class="btn btn-primary">
                     <i class="fas fa-plus me-2"></i>Create New Template
                 </a>
             </div>
@@ -43,7 +43,7 @@
                             <i class="fas fa-code fa-3x text-muted mb-3"></i>
                             <h5 class="text-muted">No templates found</h5>
                             <p class="text-muted">Create your first page template to get started.</p>
-                            <a href="/admin/page-templates/create" class="btn btn-primary">
+                            <a href="{{ admin_route('page-templates/create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus me-2"></i>Create Template
                             </a>
                         </div>
@@ -68,7 +68,7 @@
                                         <tr>
                                             <td class="text-center">
                                                 @if($template['thumbnail'])
-                                                    <img src="/uploads/page-templates/{{ $template['thumbnail'] }}" 
+                                                    <img src="{{ asset('uploads/page-templates/' . $template['thumbnail']) }}" 
                                                          alt="{{ $template['name'] }}" 
                                                          class="img-thumbnail" 
                                                          style="width: 40px; height: 40px; object-fit: cover;">
@@ -113,21 +113,21 @@
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group">
-                                                    <a href="/admin/page-templates/preview?id={{ $template['id'] }}" 
+                                                    <a href="{{ admin_route('page-templates/preview?id=' . $template['id']) }}" 
                                                        class="btn btn-sm btn-outline-info" 
                                                        title="Preview">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                     
                                                     @if(!$template['is_system'])
-                                                        <a href="/admin/page-templates/edit?id={{ $template['id'] }}" 
+                                                        <a href="{{ admin_route('page-templates/edit?id=' . $template['id']) }}" 
                                                            class="btn btn-sm btn-outline-primary" 
                                                            title="Edit">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                     @endif
                                                     
-                                                    <form method="POST" action="/admin/page-templates/duplicate" class="d-inline">
+                                                    <form method="POST" action="{{ admin_route('page-templates/duplicate') }}" class="d-inline">
                                                         <input type="hidden" name="id" value="{{ $template['id'] }}">
                                                         <button type="submit" 
                                                                 class="btn btn-sm btn-outline-secondary" 
@@ -172,7 +172,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <form method="POST" action="/admin/page-templates/delete" id="deleteForm" class="d-inline">
+                <form method="POST" action="{{ admin_route('page-templates/delete') }}" id="deleteForm" class="d-inline">
                     <input type="hidden" name="id" id="deleteId">
                     <button type="submit" class="btn btn-danger">
                         <i class="fas fa-trash me-2"></i>Delete Template
