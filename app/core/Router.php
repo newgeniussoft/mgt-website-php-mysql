@@ -29,7 +29,7 @@ class Router {
         }
         
         // Check if this is an admin route
-        if (isset($pathParts[0]) && ($pathParts[0] === 'admin' || $pathParts[0] === $this->adminPath)) {
+        if (isset($pathParts[0]) && ($pathParts[0] === $this->adminPath || $pathParts[0] === $this->adminPath)) {
             $this->handleAdminRoutes($pathParts, $language);
             return;
         }

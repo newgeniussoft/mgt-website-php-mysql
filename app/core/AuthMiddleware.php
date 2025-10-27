@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../../config/env.php';
 
 /**
  * Authentication Middleware
@@ -9,6 +10,14 @@ require_once __DIR__ . '/../models/User.php';
  */
 class AuthMiddleware 
 {
+    
+    /**
+     * Login path
+     */
+    public static function loginPath() {
+        return '/'.$_ENV['PATH_ADMIN'].'/login';
+    }
+    
     /**
      * Check if user is authenticated
      */
@@ -36,8 +45,10 @@ class AuthMiddleware
     /**
      * Require authentication - redirect to login if not authenticated
      */
-    public static function requireAuth($redirectUrl = '/admin/login') 
+    public static function requireAuth($redirectUrl = null) 
     {
+
+        $redirectUrl = $redirectUrl ?? self::loginPath();
         if (!self::isAuthenticated()) {
             self::redirectToLogin($redirectUrl);
         }
@@ -46,8 +57,9 @@ class AuthMiddleware
     /**
      * Require admin role - redirect to login if not admin
      */
-    public static function requireAdmin($redirectUrl = '/admin/login') 
+    public static function requireAdmin($redirectUrl = null) 
     {
+        $redirectUrl = $redirectUrl ?? self::loginPath();
         if (!self::isAdmin()) {
             self::redirectToLogin($redirectUrl);
         }
