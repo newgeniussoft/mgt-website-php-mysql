@@ -298,3 +298,25 @@
             @endif
         </div>
  @endsection
+
+ @push('scripts')
+    <script>
+        // Delete page functionality
+        function deletePage(id, title) {
+            document.getElementById('deletePageId').value = id;
+            document.getElementById('pageTitle').textContent = title;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeDeleteModal();
+            }
+        });
+    </script>
+ @endpush
