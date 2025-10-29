@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../models/Page.php';
 require_once __DIR__ . '/../../models/Layout.php';
 require_once __DIR__ . '/../../models/PageSection.php';
 require_once __DIR__ . '/../../models/PageTemplate.php';
+require_once __DIR__ . '/../../core/Helper.php';
+
 
 /**
  * Page Controller for CMS functionality
@@ -95,22 +97,22 @@ class PageController extends Controller
         AuthMiddleware::requireAdmin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/admin/pages');
+            $this->redirect(admin_route('pages'));
             return;
         }
 
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || !AuthMiddleware::verifyCSRFToken($_POST['csrf_token'])) {
-            $this->redirectWithError('/admin/pages/create', 'Invalid security token.');
+            $this->redirectWithError(admin_route('pages/create'), 'Invalid security token.');
             return;
         }
 
         $result = $this->validateAndSavePage();
         
         if ($result['success']) {
-            $this->redirectWithSuccess('/admin/pages', 'Page created successfully.');
+            $this->redirectWithSuccess(admin_route('pages'), 'Page created successfully.');
         } else {
-            $this->redirectWithError('/admin/pages/create', $result['message']);
+            $this->redirectWithError(admin_route('pages/create'), $result['message']);
         }
     }
 
@@ -123,7 +125,7 @@ class PageController extends Controller
 
         $id = $_GET['id'] ?? null;
         if (!$id || !$this->page->findById($id)) {
-            $this->redirectWithError('/admin/pages', 'Page not found.');
+            $this->redirectWithError(admin_route('pages'), 'Page not found.');
             return;
         }
 
@@ -148,28 +150,28 @@ class PageController extends Controller
         AuthMiddleware::requireAdmin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/admin/pages');
+            $this->redirect(admin_route('pages'));
             return;
         }
 
         $id = $_POST['id'] ?? null;
         if (!$id || !$this->page->findById($id)) {
-            $this->redirectWithError('/admin/pages', 'Page not found.');
+            $this->redirectWithError(admin_route('pages'), 'Page not found.');
             return;
         }
 
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || !AuthMiddleware::verifyCSRFToken($_POST['csrf_token'])) {
-            $this->redirectWithError('/admin/pages/edit?id=' . $id, 'Invalid security token.');
+            $this->redirectWithError(admin_route('pages/edit?id=' . $id), 'Invalid security token.');
             return;
         }
 
         $result = $this->validateAndSavePage($id);
         
         if ($result['success']) {
-            $this->redirectWithSuccess('/admin/pages', 'Page updated successfully.');
+            $this->redirectWithSuccess(admin_route('pages'), 'Page updated successfully.');
         } else {
-            $this->redirectWithError('/admin/pages/edit?id=' . $id, $result['message']);
+            $this->redirectWithError(admin_route('pages/edit?id=' . $id), $result['message']);
         }
     }
 
@@ -181,26 +183,26 @@ class PageController extends Controller
         AuthMiddleware::requireAdmin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/admin/pages');
+            $this->redirect(admin_route('pages'));
             return;
         }
 
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || !AuthMiddleware::verifyCSRFToken($_POST['csrf_token'])) {
-            $this->redirectWithError('/admin/pages', 'Invalid security token.');
+            $this->redirectWithError(admin_route('pages'), 'Invalid security token.');
             return;
         }
 
         $id = $_POST['id'] ?? null;
         if (!$id) {
-            $this->redirectWithError('/admin/pages', 'Invalid page ID.');
+            $this->redirectWithError(admin_route('pages'), 'Invalid page ID.');
             return;
         }
 
         if ($this->page->delete($id)) {
-            $this->redirectWithSuccess('/admin/pages', 'Page deleted successfully.');
+            $this->redirectWithSuccess(admin_route('pages'), 'Page deleted successfully.');
         } else {
-            $this->redirectWithError('/admin/pages', 'Failed to delete page.');
+            $this->redirectWithError(admin_route('pages'), 'Failed to delete page.');
         }
     }
 
@@ -213,7 +215,7 @@ class PageController extends Controller
 
         $id = $_GET['id'] ?? null;
         if (!$id || !$this->page->findById($id)) {
-            $this->redirectWithError('/admin/pages', 'Page not found.');
+            $this->redirectWithError(admin_route('pages'), 'Page not found.');
             return;
         }
 
