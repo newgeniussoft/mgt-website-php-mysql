@@ -58,9 +58,15 @@ function page_admin(): string {
  *
  * @return string The path admin.
  */
-function admin_route($path = ''): string {
+function admin_route($path = '', $params = []): string {
     $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-    return '/' . $_ENV['PATH_ADMIN'] . '/' . $path;
+    if (empty($params)) {
+        return '/' . $_ENV['PATH_ADMIN'] . '/' . $path;
+    } else {
+        $key = array_key_first($params);
+        $value = $params[$key];
+        return '/' . $_ENV['PATH_ADMIN'] . '/' . $path . '?'. $key . '=' . $value;
+    }
 }
 
 /**

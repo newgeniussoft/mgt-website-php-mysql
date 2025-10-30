@@ -214,17 +214,17 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="/admin/pages/preview?id={{ $page['id'] }}" 
+                                            <a href="{{ admin_route('pages/preview', ['id' => $page['id']]) }}" 
                                                class="text-blue-600 hover:text-blue-900" 
                                                title="Preview">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="/admin/pages/edit?id={{ $page['id'] }}" 
+                                            <a href="{{ admin_route('pages/edit', ['id' => $page['id']]) }}" 
                                                class="text-indigo-600 hover:text-indigo-900" 
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="/admin/pages/sections?page_id={{ $page['id'] }}" 
+                                            <a href="{{ admin_route('pages/sections', ['page_id' => $page['id']]) }}" 
                                                class="text-green-600 hover:text-green-900" 
                                                title="Manage Sections">
                                                 <i class="fas fa-puzzle-piece"></i>
@@ -247,13 +247,13 @@
                     <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                         <div class="flex-1 flex justify-between sm:hidden">
                             @if($currentPage > 1)
-                                <a href="/admin/pages?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                <a href="{{ admin_route('pages') }}?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                     Previous
                                 </a>
                             @endif
                             @if($currentPage < $totalPages)
-                                <a href="/admin/pages?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                <a href="{{ admin_route('pages') }}?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                     Next
                                 </a>
@@ -268,7 +268,7 @@
                             <div>
                                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
                                     @if($currentPage > 1)
-                                        <a href="/admin/pages?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                        <a href="{{ admin_route('pages') }}?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
@@ -278,14 +278,14 @@
                                      $minPages = max(1, $currentPage - 2);
                                     @endphp
                                     @for($i = $minPages; $i <= $maxPages; $i++)
-                                        <a href="/admin/pages?page={{ $i }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                        <a href="{{ admin_route('pages') }}?page={{ $i }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-4 py-2 border text-sm font-medium {{ $i === $currentPage ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50' }}">
                                             {{ $i }}
                                         </a>
                                     @endfor
                                     
                                     @if($currentPage < $totalPages)
-                                        <a href="/admin/pages?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                        <a href="{{ admin_route('pages') }}?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
