@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../../models/PageTemplate.php';
 require_once __DIR__ . '/../../core/AuthMiddleware.php';
 require_once __DIR__ . '/../../core/Controller.php';
+require_once __DIR__ . '/../../core/Helper.php';
 
 class PageTemplateController extends Controller {
     private $pageTemplate;
@@ -19,7 +20,7 @@ class PageTemplateController extends Controller {
      */
     public function index() {
         if (!$this->auth->isAuthenticated()) {
-            header('Location: /admin/login');
+            header('Location: ' . admin_route('login'));
             exit;
         }
         
@@ -42,7 +43,7 @@ class PageTemplateController extends Controller {
      */
     public function create() {
         if (!$this->auth->isAuthenticated()) {
-            header('Location: /admin/login');
+            header('Location: ' . admin_route('login'));
             exit;
         }
         
@@ -56,26 +57,26 @@ class PageTemplateController extends Controller {
      */
     public function edit() {
         if (!$this->auth->isAuthenticated()) {
-            header('Location: /admin/login');
+            header('Location: ' . admin_route('login'));
             exit;
         }
         
         $id = $_GET['id'] ?? null;
         if (!$id) {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
         $template = $this->pageTemplate->getById($id);
         if (!$template) {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
         // Don't allow editing system templates
         if ($template['is_system']) {
             $_SESSION['error'] = 'System templates cannot be edited.';
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
@@ -98,12 +99,12 @@ class PageTemplateController extends Controller {
      */
     public function store() {
         if (!$this->auth->isAuthenticated()) {
-            header('Location: /admin/login');
+            header('Location: ' . admin_route('login'));
             exit;
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
@@ -111,10 +112,10 @@ class PageTemplateController extends Controller {
         
         if ($result['success']) {
             $_SESSION['success'] = 'Page template created successfully!';
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
         } else {
             $_SESSION['error'] = $result['message'];
-            header('Location: /admin/page-templates/create');
+            header('Location: ' . admin_route('page-templates/create'));
         }
         exit;
     }
@@ -124,18 +125,18 @@ class PageTemplateController extends Controller {
      */
     public function update() {
         if (!$this->auth->isAuthenticated()) {
-            header('Location: /admin/login');
+            header('Location: ' . admin_route('login'));
             exit;
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
         $id = $_POST['id'] ?? null;
         if (!$id) {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
@@ -143,10 +144,10 @@ class PageTemplateController extends Controller {
         
         if ($result['success']) {
             $_SESSION['success'] = 'Page template updated successfully!';
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
         } else {
             $_SESSION['error'] = $result['message'];
-            header('Location: /admin/page-templates/edit?id=' . $id);
+            header('Location: ' . admin_route('page-templates/edit?id=' . $id));
         }
         exit;
     }
@@ -156,31 +157,31 @@ class PageTemplateController extends Controller {
      */
     public function delete() {
         if (!$this->auth->isAuthenticated()) {
-            header('Location: /admin/login');
+            header('Location: ' . admin_route('login'));
             exit;
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
         $id = $_POST['id'] ?? null;
         if (!$id) {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
         $template = $this->pageTemplate->getById($id);
         if (!$template) {
             $_SESSION['error'] = 'Template not found.';
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
         if ($template['is_system']) {
             $_SESSION['error'] = 'System templates cannot be deleted.';
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
@@ -190,7 +191,7 @@ class PageTemplateController extends Controller {
             $_SESSION['error'] = 'Cannot delete template. It may be in use by existing pages.';
         }
         
-        header('Location: /admin/page-templates');
+        header('Location: ' . admin_route('page-templates'));
         exit;
     }
     
@@ -199,18 +200,18 @@ class PageTemplateController extends Controller {
      */
     public function duplicate() {
         if (!$this->auth->isAuthenticated()) {
-            header('Location: /admin/login');
+            header('Location: ' . admin_route('login'));
             exit;
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
         $id = $_POST['id'] ?? null;
         if (!$id) {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
@@ -218,10 +219,10 @@ class PageTemplateController extends Controller {
         
         if ($newId) {
             $_SESSION['success'] = 'Template duplicated successfully!';
-            header('Location: /admin/page-templates/edit?id=' . $newId);
+            header('Location: ' . admin_route('page-templates/edit?id=' . $newId));
         } else {
             $_SESSION['error'] = 'Failed to duplicate template.';
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
         }
         exit;
     }
@@ -231,19 +232,19 @@ class PageTemplateController extends Controller {
      */
     public function preview() {
         if (!$this->auth->isAuthenticated()) {
-            header('Location: /admin/login');
+            header('Location: ' . admin_route('login'));
             exit;
         }
         
         $id = $_GET['id'] ?? null;
         if (!$id) {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         
         $template = $this->pageTemplate->getById($id);
         if (!$template) {
-            header('Location: /admin/page-templates');
+            header('Location: ' . admin_route('page-templates'));
             exit;
         }
         

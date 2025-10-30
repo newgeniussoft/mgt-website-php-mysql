@@ -434,7 +434,7 @@ class PageController extends Controller
         $settings = $_POST['settings'] ?? [];
         
         if (!$pageId || !$sectionType) {
-            $this->redirectWithError("/admin/pages/sections?page_id={$pageId}", 'Page ID and section type are required.');
+            $this->redirectWithError(admin_route('pages/sections?page_id={$pageId}'), 'Page ID and section type are required.');
         }
         
         $data = [
@@ -454,7 +454,7 @@ class PageController extends Controller
             $_SESSION['error_message'] = 'Failed to add section.';
         }
         
-        $this->redirect("/admin/pages/sections?page_id={$pageId}");
+        $this->redirect(admin_route("pages/sections?page_id={$pageId}"));
     }
 
     /**

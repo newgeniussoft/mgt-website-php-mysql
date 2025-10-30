@@ -235,13 +235,13 @@
                 <small class="text-muted">Page: {{ $page['title'] }}</small>
             </div>
             <div class="btn-toolbar">
-                <a href="/admin/pages" class="btn btn-outline-secondary me-2">
+                <a href="{{ admin_route('pages') }}" class="btn btn-outline-secondary me-2">
                     <i class="fas fa-arrow-left me-1"></i>Back to Pages
                 </a>
                 <button class="btn btn-success me-2" onclick="savePage()">
                     <i class="fas fa-save me-1"></i>Save Changes
                 </button>
-                <a href="/admin/pages/preview?id={{ $page['id'] }}" class="btn btn-outline-info" target="_blank">
+                <a href="{{ admin_route('pages/preview', ['id' => $page['id']]) }}" class="btn btn-outline-info" target="_blank">
                     <i class="fas fa-eye me-1"></i>Preview
                 </a>
             </div>
