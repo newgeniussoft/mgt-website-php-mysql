@@ -88,17 +88,17 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/admin/dashboard">
+                            <a class="nav-link text-white" href="{{ admin_route('dashboard') }}">
                                 <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white active" href="/admin/pages">
+                            <a class="nav-link text-white active" href="{{ admin_route('pages') }}">
                                 <i class="fas fa-file-alt me-2"></i>Pages
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/admin/layouts">
+                            <a class="nav-link text-white" href="{{ admin_route('layouts') }}">
                                 <i class="fas fa-th-large me-2"></i>Layouts
                             </a>
                         </li>
@@ -111,13 +111,13 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">{{ $page_title }}</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <a href="/admin/pages" class="btn btn-outline-secondary me-2">
+                        <a href="{{ admin_route('pages') }}" class="btn btn-outline-secondary me-2">
                             <i class="fas fa-arrow-left me-2"></i>Back to Pages
                         </a>
-                        <a href="/admin/pages/edit?id={{ $page->id }}" class="btn btn-outline-primary me-2">
+                        <a href="{{ admin_route('pages/edit', ['id' => $page->id]) }}" class="btn btn-outline-primary me-2">
                             <i class="fas fa-edit me-2"></i>Edit Page
                         </a>
-                        <a href="/admin/pages/preview?id={{ $page->id }}" class="btn btn-outline-info" target="_blank">
+                        <a href="{{ admin_route('pages/preview', ['id' => $page->id]) }}" class="btn btn-outline-info" target="_blank">
                             <i class="fas fa-eye me-2"></i>Preview
                         </a>
                     </div>
@@ -257,7 +257,7 @@
     <div class="modal fade" id="addSectionModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form method="POST" action="/admin/pages/add-section">
+                <form method="POST" action="{{ admin_route('pages/add-section') }}">
                     <div class="modal-header">
                         <h5 class="modal-title">Add New Section</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -314,7 +314,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form id="deleteForm" method="POST" action="/admin/pages/delete-section" style="display: inline;">
+                    <form id="deleteForm" method="POST" action="{{ admin_route('pages/delete-section') }}" style="display: inline;">
                         <input type="hidden" name="section_id" id="deleteSectionId">
                         <input type="hidden" name="page_id" value="{{ $page->id }}">
                         <button type="submit" class="btn btn-danger">Delete Section</button>
@@ -460,7 +460,7 @@
                 });
             });
 
-            fetch('/admin/pages/update-section-order', {
+            fetch('{{ admin_route('pages/update-section-order') }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -489,7 +489,7 @@
 
         function editSection(sectionId) {
             // Fetch section data and populate edit modal
-            fetch(`/admin/pages/get-section?id=${sectionId}`)
+            fetch(`{{ admin_route('pages/get-section') }}?id=${sectionId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -542,7 +542,7 @@
             // Debug: Log the data being sent
             console.log('Sending data:', data);
             
-            fetch('/admin/pages/update-section', {
+            fetch(`{{ admin_route('pages/update-section') }}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

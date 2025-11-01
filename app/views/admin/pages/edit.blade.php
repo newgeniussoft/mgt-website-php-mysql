@@ -26,13 +26,13 @@
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <a href="/admin/pages/preview?id={{ $page->id }}" 
+                    <a href="{{ admin_route('pages/preview', ['id' => $page->id]) }}" 
                        class="text-blue-600 hover:text-blue-900" 
                        target="_blank">
                         <i class="fas fa-eye mr-1"></i>
                         Preview
                     </a>
-                    <a href="/admin/pages" class="text-gray-600 hover:text-gray-900">
+                    <a href="{{ admin_route('pages') }}" class="text-gray-600 hover:text-gray-900">
                         <i class="fas fa-arrow-left mr-1"></i>
                         Back to Pages
                     </a>
@@ -63,7 +63,7 @@
             </div>
         @endif
 
-        <form method="POST" action="/admin/pages/update" enctype="multipart/form-data" class="space-y-6">
+        <form method="POST" action="{{ admin_route('pages/update') }}" enctype="multipart/form-data" class="space-y-6">
             <input type="hidden" name="csrf_token" value="{{ $csrf_token }}">
             <input type="hidden" name="id" value="{{ $page->id }}">
             
@@ -448,20 +448,20 @@
                                 </button>
                                 
                                 @if($page->use_sections)
-                                    <a href="/admin/pages/sections?page_id={{ $page->id }}" 
+                                    <a href="{{ admin_route('pages/sections', ['page_id' => $page->id]) }}" 
                                        class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition duration-200 block text-center">
                                         <i class="fas fa-puzzle-piece mr-2"></i>
                                         Manage Sections
                                     </a>
                                     
-                                    <a href="/admin/pages/section-builder?page_id={{ $page->id }}" 
+                                    <a href="{{ admin_route('pages/section-builder', ['page_id' => $page->id]) }}" 
                                        class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md transition duration-200 block text-center">
                                         <i class="fas fa-code mr-2"></i>
                                         Section Builder (CodeMirror)
                                     </a>
                                 @endif
                                 
-                                <a href="/admin/pages" 
+                                <a href="{{ admin_route('pages') }}" 
                                    class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200 block text-center">
                                     <i class="fas fa-times mr-2"></i>
                                     Cancel

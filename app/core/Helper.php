@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__ . '/../../config/env.php';
 /**
  * Helper Functions
  *
@@ -50,6 +51,22 @@ function page(): string {
 function page_admin(): string {
     $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
     return $urlParts[1];
+}
+
+/**
+ * Returns the path admin.
+ *
+ * @return string The path admin.
+ */
+function admin_route($path = '', $params = []): string {
+    $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+    if (empty($params)) {
+        return '/' . $_ENV['PATH_ADMIN'] . '/' . $path;
+    } else {
+        $key = array_key_first($params);
+        $value = $params[$key];
+        return '/' . $_ENV['PATH_ADMIN'] . '/' . $path . '?'. $key . '=' . $value;
+    }
 }
 
 /**

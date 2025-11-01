@@ -45,7 +45,7 @@
 									<div class="text-center">
 										<img src="@asset('img/avatars/avatar.jpg')" alt="Charles Hall" class="img-fluid rounded-circle" width="132" height="132" />
 									</div>
-									<form method="POST" action="/admin/login">
+									<form method="POST" action="/cpanel/login">
             <input type="hidden" name="csrf_token" value="{{ $csrf_token }}">
 										<div class="mb-3">
 											<label class="form-label">Email</label>

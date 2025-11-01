@@ -9,7 +9,7 @@
                     <h2 class="text-2xl font-bold text-gray-900">Page Management</h2>
                     <p class="text-gray-600">Create and manage your website pages</p>
                 </div>
-                <a href="/admin/pages/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200">
+                <a href="{{ admin_route('pages/create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200">
                     <i class="fas fa-plus mr-2"></i>
                     Create New Page
                 </a>
@@ -44,7 +44,7 @@
         <!-- Filters -->
         <div class="bg-white rounded-lg shadow mb-6">
             <div class="p-6">
-                <form method="GET" action="/admin/pages" class="flex flex-wrap gap-4">
+                <form method="GET" action="{{ admin_route('pages') }}" class="flex flex-wrap gap-4">
                     <div class="flex-1 min-w-64">
                         <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search</label>
                         <input 
@@ -97,7 +97,7 @@
                     
                     @if($hasFilters)
                         <div class="flex items-end">
-                            <a href="/admin/pages" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">
+                            <a href="{{ admin_route('pages') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md transition duration-200">
                                 <i class="fas fa-times mr-2"></i>
                                 Clear
                             </a>
@@ -115,7 +115,7 @@
                     <i class="fas fa-file-alt text-gray-400 text-4xl mb-4"></i>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">No pages found</h3>
                     <p class="text-gray-600 mb-4">Get started by creating your first page.</p>
-                    <a href="/admin/pages/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200">
+                    <a href="{{ admin_route('pages/create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200">
                         <i class="fas fa-plus mr-2"></i>
                         Create New Page
                     </a>
@@ -214,17 +214,17 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="/admin/pages/preview?id={{ $page['id'] }}" 
+                                            <a href="{{ admin_route('pages/preview', ['id' => $page['id']]) }}" 
                                                class="text-blue-600 hover:text-blue-900" 
                                                title="Preview">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="/admin/pages/edit?id={{ $page['id'] }}" 
+                                            <a href="{{ admin_route('pages/edit', ['id' => $page['id']]) }}" 
                                                class="text-indigo-600 hover:text-indigo-900" 
                                                title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="/admin/pages/sections?page_id={{ $page['id'] }}" 
+                                            <a href="{{ admin_route('pages/sections', ['page_id' => $page['id']]) }}" 
                                                class="text-green-600 hover:text-green-900" 
                                                title="Manage Sections">
                                                 <i class="fas fa-puzzle-piece"></i>
@@ -247,13 +247,13 @@
                     <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                         <div class="flex-1 flex justify-between sm:hidden">
                             @if($currentPage > 1)
-                                <a href="/admin/pages?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                <a href="{{ admin_route('pages') }}?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                     Previous
                                 </a>
                             @endif
                             @if($currentPage < $totalPages)
-                                <a href="/admin/pages?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                <a href="{{ admin_route('pages') }}?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                     Next
                                 </a>
@@ -268,7 +268,7 @@
                             <div>
                                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
                                     @if($currentPage > 1)
-                                        <a href="/admin/pages?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                        <a href="{{ admin_route('pages') }}?page={{ $currentPage - 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
@@ -278,14 +278,14 @@
                                      $minPages = max(1, $currentPage - 2);
                                     @endphp
                                     @for($i = $minPages; $i <= $maxPages; $i++)
-                                        <a href="/admin/pages?page={{ $i }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                        <a href="{{ admin_route('pages') }}?page={{ $i }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-4 py-2 border text-sm font-medium {{ $i === $currentPage ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50' }}">
                                             {{ $i }}
                                         </a>
                                     @endfor
                                     
                                     @if($currentPage < $totalPages)
-                                        <a href="/admin/pages?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
+                                        <a href="{{ admin_route('pages') }}?page={{ $currentPage + 1 }}&search={{ $search }}&status={{ $status }}&language={{ $language }}" 
                                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
@@ -297,4 +297,54 @@
                 @endif
             @endif
         </div>
+         <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                    <i class="fas fa-exclamation-triangle text-red-600"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mt-4">Delete Page</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">
+                        Are you sure you want to delete "<span id="pageTitle"></span>"? This action cannot be undone.
+                    </p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <form id="deleteForm" method="POST" action="{{ admin_route('pages/delete') }}" class="inline">
+                        <input type="hidden" name="csrf_token" value="{{ $csrf_token }}">
+                        <input type="hidden" name="id" id="deletePageId">
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md w-24 mr-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">
+                            Delete
+                        </button>
+                    </form>
+                    <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-24 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
  @endsection
+
+ @push('scripts')
+    <script>
+        // Delete page functionality
+        function deletePage(id, title) {
+            document.getElementById('deletePageId').value = id;
+            document.getElementById('pageTitle').textContent = title;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeDeleteModal();
+            }
+        });
+    </script>
+ @endpush

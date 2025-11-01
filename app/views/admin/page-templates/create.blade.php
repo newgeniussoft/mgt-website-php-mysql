@@ -61,7 +61,7 @@
                 <h1 class="h3 mb-0 text-gray-800">
                     <i class="fas fa-plus-circle me-2"></i>Create Page Template
                 </h1>
-                <a href="/admin/page-templates" class="btn btn-secondary">
+                <a href="{{ admin_route('page-templates') }}" class="btn btn-secondary">
                     <i class="fas fa-arrow-left me-2"></i>Back to Templates
                 </a>
             </div>
@@ -74,7 +74,7 @@
                 @php unset($_SESSION['error']); @endphp
             @endif
 
-            <form method="POST" action="/admin/page-templates/store" enctype="multipart/form-data">
+            <form method="POST" action="{{ admin_route('page-templates/store') }}" enctype="multipart/form-data">
                 <div class="row">
                     <!-- Template Settings -->
                     <div class="col-lg-4">
@@ -218,7 +218,7 @@
                         <div class="card shadow">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <a href="/admin/page-templates" class="btn btn-secondary">
+                                    <a href="{{ admin_route('page-templates') }}" class="btn btn-secondary">
                                         <i class="fas fa-times me-2"></i>Cancel
                                     </a>
                                     <div>
@@ -473,7 +473,7 @@ function previewTemplate() {
     // Create a form with template data and submit to preview
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = '/admin/page-templates/preview-temp';
+    form.action = '{{ admin_route('page-templates/preview-template') }}';
     form.target = 'previewFrame';
     
     const fields = ['name', 'html_template', 'css_styles', 'js_scripts', 'variables'];

@@ -64,17 +64,13 @@
                     <div class="p-6">
                         <h3 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
                         <div class="space-y-3">
-                            <a href="/admin/pages/create" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition duration-200">
+                            <a href="{{ admin_route('pages/create') }}" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition duration-200">
                                 <i class="fas fa-plus-circle text-blue-600 mr-3"></i>
                                 <span class="text-blue-700 font-medium">Create New Page</span>
                             </a>
-                            <a href="/admin/media/upload" class="flex items-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition duration-200">
+                            <a href="{{ admin_route('media/upload') }}" class="flex items-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition duration-200">
                                 <i class="fas fa-upload text-green-600 mr-3"></i>
                                 <span class="text-green-700 font-medium">Upload Media</span>
-                            </a>
-                            <a href="/admin/users/create" class="flex items-center p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition duration-200">
-                                <i class="fas fa-user-plus text-purple-600 mr-3"></i>
-                                <span class="text-purple-700 font-medium">Add New User</span>
                             </a>
                         </div>
                     </div>

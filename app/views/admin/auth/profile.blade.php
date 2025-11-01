@@ -33,7 +33,7 @@
                             Profile Information
                         </h3>
                         
-                        <form method="POST" action="/admin/profile">
+                        <form method="POST" action="{{ admin_route('profile') }}">
                             <input type="hidden" name="csrf_token" value="{{ $csrf_token }}">
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">

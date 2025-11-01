@@ -79,7 +79,7 @@
                 @php unset($_SESSION['error']); @endphp
             @endif
 
-            <form method="POST" action="/admin/page-templates/update" enctype="multipart/form-data">
+            <form method="POST" action="{{ admin_route('page-templates/update') }}" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="{{ $template['id'] }}">
                 
                 <div class="row">
