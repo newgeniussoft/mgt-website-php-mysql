@@ -49,7 +49,7 @@ function dd(...$vars) {
 }
 
 function asset($path) {
-    return config('app.url') . '/public/' . ltrim($path, '/');
+    return config('app.url') . '/' . ltrim($path, '/');
 }
 
 function url($path = '') {
