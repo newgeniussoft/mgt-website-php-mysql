@@ -1,5 +1,8 @@
-/old
-/public/assets
+/vendor
+/uploads
 /template
+/template_v2
+/assets/img/uploads
+/old
 
 *.zip

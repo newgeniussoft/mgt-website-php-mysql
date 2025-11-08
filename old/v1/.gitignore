@@ -1,0 +1,7 @@
+/vendor
+/uploads
+/template
+/template_v2
+/assets/img/uploads
+
+*.zip
