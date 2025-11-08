@@ -137,7 +137,7 @@
                     <h6 class="sidebar-heading">Settings</h6>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ admin_url('settings') }}">
                                 <i class="fas fa-cog"></i>
                                 General Settings
                             </a>

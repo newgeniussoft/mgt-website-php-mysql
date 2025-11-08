@@ -312,3 +312,14 @@ function admin_user() {
         'email' => $_SESSION['admin_email'] ?? ''
     ];
 }
+
+function setting($key, $default = null) {
+    return \App\Models\Setting::get($key, $default);
+}
+
+function settings($group = null) {
+    if ($group) {
+        return \App\Models\Setting::getByGroup($group);
+    }
+    return \App\Models\Setting::getAllAsArray();
+}

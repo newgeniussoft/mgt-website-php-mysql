@@ -31,7 +31,7 @@ abstract class Model {
     
     public static function find($id) {
         $instance = new static();
-        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE {$instance->primaryKey} = ?");
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `{$instance->primaryKey}` = ?");
         $stmt->execute([$id]);
         $stmt->setFetchMode(\PDO::FETCH_CLASS, static::class);
         return $stmt->fetch();
@@ -44,7 +44,7 @@ abstract class Model {
         }
         
         $instance = new static();
-        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE $column $operator ?");
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `$column` $operator ?");
         $stmt->execute([$value]);
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
@@ -80,7 +80,8 @@ abstract class Model {
     }
     
     protected function insert() {
-        $columns = implode(', ', array_keys($this->attributes));
+        // Escape column names with backticks
+        $columns = implode(', ', array_map(function($col) { return "`$col`"; }, array_keys($this->attributes)));
         $placeholders = implode(', ', array_fill(0, count($this->attributes), '?'));
         
         $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placeholders)";
@@ -97,13 +98,14 @@ abstract class Model {
         
         foreach ($this->attributes as $key => $value) {
             if ($key !== $this->primaryKey) {
-                $sets[] = "$key = ?";
+                // Escape column names with backticks
+                $sets[] = "`$key` = ?";
                 $values[] = $value;
             }
         }
         
         $values[] = $this->attributes[$this->primaryKey];
-        $sql = "UPDATE {$this->table} SET " . implode(', ', $sets) . " WHERE {$this->primaryKey} = ?";
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $sets) . " WHERE `{$this->primaryKey}` = ?";
         $stmt = $this->getConnection()->prepare($sql);
         return $stmt->execute($values);
     }
@@ -113,7 +115,7 @@ abstract class Model {
             return false;
         }
         
-        $sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = ?";
+        $sql = "DELETE FROM {$this->table} WHERE `{$this->primaryKey}` = ?";
         $stmt = $this->getConnection()->prepare($sql);
         return $stmt->execute([$this->attributes[$this->primaryKey]]);
     }

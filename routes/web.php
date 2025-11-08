@@ -26,7 +26,15 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX']], function($router) {
 
 // Admin protected routes (with auth middleware)
 $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], function($router) {
+    $router->get('/', 'App\Http\Controllers\AdminAuthController@dashboard');
     $router->get('/dashboard', 'App\Http\Controllers\AdminAuthController@dashboard');
+    
+    // Settings routes
+    $router->get('/settings', 'App\Http\Controllers\SettingsController@index');
+    $router->post('/settings/update', 'App\Http\Controllers\SettingsController@update');
+    $router->post('/settings/reset', 'App\Http\Controllers\SettingsController@reset');
+    
+    // User management routes
     $router->get('/users', 'App\Http\Controllers\AdminController@index');
     $router->get('/users/{id}', 'App\Http\Controllers\AdminController@show');
     $router->post('/users', 'App\Http\Controllers\AdminController@store');
