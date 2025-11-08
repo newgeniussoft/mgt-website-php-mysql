@@ -1,7 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.client')
 
 @section('content')
     <h1>{{ $title }}</h1>
+    <h2>{{ $greeting }}</h2>
     
     @if(count($users) > 0)
         <ul>

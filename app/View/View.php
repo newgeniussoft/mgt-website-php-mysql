@@ -18,6 +18,7 @@ class View {
         $data = array_merge(self::$shared, $data);
         
         echo self::$engine->render($view, $data);
+        self::$engine->clearCache();
     }
     
     public static function share($key, $value = null) {

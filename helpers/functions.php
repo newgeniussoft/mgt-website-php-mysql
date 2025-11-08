@@ -53,7 +53,29 @@ function asset($path) {
 }
 
 function url($path = '') {
-    return config('app.url') . '/' . ltrim($path, '/');
+    $baseUrl = rtrim(config('app.url'), '/');
+    $locale = \App\Localization\Lang::getLocale();
+    $defaultLocale = 'en';
+    
+    // Only add locale prefix if it's not the default locale
+    $localePath = ($locale && $locale !== $defaultLocale) ? '/' . $locale : '';
+    
+    // Clean and build the path
+    $path = '/' . ltrim($path, '/');
+    
+    return $baseUrl . $localePath . $path;
+}
+
+function page() {
+    
+    $segments = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+    
+    if (isset($segments[0]) && in_array($segments[0], ['es', 'en'])) {
+        array_shift($segments);
+    }
+    
+    return implode('/', $segments);
+    
 }
 
 function redirect($url) {

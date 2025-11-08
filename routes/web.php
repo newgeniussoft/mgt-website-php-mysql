@@ -2,6 +2,8 @@
 
 
 $router->get('/', 'App\Http\Controllers\HomeController@index');
+$router->get('/about', 'App\Http\Controllers\HomeController@about');
+$router->get('/contact', 'App\Http\Controllers\HomeController@contact');
 
 $router->get('/test', function() {
     return response()->json(['message' => 'API is working!']);
