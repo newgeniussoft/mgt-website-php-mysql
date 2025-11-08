@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
-class UserController extends Controller {
+class AdminController extends Controller {
     
     public function index() {
         try {

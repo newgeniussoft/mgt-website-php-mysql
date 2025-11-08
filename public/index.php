@@ -32,9 +32,14 @@ class Router {
     
     protected function addRoute($method, $uri, $action) {
         $prefix = '';
+        $middleware = [];
+        
         foreach ($this->groupStack as $group) {
             if (isset($group['prefix'])) {
                 $prefix .= '/' . trim($group['prefix'], '/');
+            }
+            if (isset($group['middleware'])) {
+                $middleware[] = $group['middleware'];
             }
         }
         
@@ -42,6 +47,7 @@ class Router {
             'method' => $method,
             'uri' => $prefix . $uri,
             'action' => $action,
+            'middleware' => $middleware,
         ];
         
         return $this;
@@ -65,6 +71,12 @@ class Router {
     // Continue with normal routing...
     foreach ($this->routes as $route) {
         if ($route['method'] === $method && $this->matchUri($route['uri'], $uri, $params)) {
+            // Execute middleware
+            if (!empty($route['middleware'])) {
+                foreach ($route['middleware'] as $middlewareName) {
+                    $this->executeMiddleware($middlewareName);
+                }
+            }
             return $this->callAction($route, $params);
         }
     }
@@ -82,6 +94,23 @@ class Router {
         }
         
         return false;
+    }
+    
+    protected function executeMiddleware($middlewareName) {
+        $middlewareMap = [
+            'auth' => 'App\\Http\\Middleware\\AuthMiddleware',
+            'cors' => 'App\\Http\\Middleware\\CorsMiddleware',
+            'locale' => 'App\\Http\\Middleware\\LocaleMiddleware',
+        ];
+        
+        if (isset($middlewareMap[$middlewareName])) {
+            $middlewareClass = $middlewareMap[$middlewareName];
+            $middleware = new $middlewareClass();
+            
+            $middleware->handle($_REQUEST, function($request) {
+                return true;
+            });
+        }
     }
     
     protected function callAction($route, $params) {

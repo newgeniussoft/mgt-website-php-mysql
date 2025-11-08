@@ -179,8 +179,8 @@ function view($template, $data = []) {
 }
 
 function abort($code = 404, $message = '') {
-    http_response_code($code);
-    include __DIR__ . "/../resources/views/errors/$code.php";
+   // http_response_code($code);
+    view("errors.$code", ['message' => '404 Not Found']);
     exit;
 }
 
@@ -287,4 +287,28 @@ function locale_url($locale, $path = '') {
 
 function current_locale() {
     return \App\Localization\Lang::getLocale();
+}
+
+function admin_prefix() {
+    return $_ENV['APP_ADMIN_PREFIX'] ?? 'cpanel';
+}
+
+function admin_url($path = '') {
+    return url(admin_prefix() . '/' . ltrim($path, '/'));
+}
+
+function is_admin_logged_in() {
+    return isset($_SESSION['admin_id']);
+}
+
+function admin_user() {
+    if (!is_admin_logged_in()) {
+        return null;
+    }
+    
+    return (object) [
+        'id' => $_SESSION['admin_id'] ?? null,
+        'name' => $_SESSION['admin_name'] ?? 'Admin',
+        'email' => $_SESSION['admin_email'] ?? ''
+    ];
 }

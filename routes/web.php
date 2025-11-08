@@ -15,3 +15,21 @@ $router->group(['prefix' => 'api'], function($router) {
     $router->get('/users/{id}', 'App\Http\Controllers\UserController@show');
     $router->post('/users', 'App\Http\Controllers\UserController@store');
 });
+
+
+// Admin authentication routes (no middleware)
+$router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX']], function($router) {
+    $router->get('/login', 'App\Http\Controllers\AdminAuthController@showLoginForm');
+    $router->post('/login', 'App\Http\Controllers\AdminAuthController@login');
+    $router->get('/logout', 'App\Http\Controllers\AdminAuthController@logout');
+});
+
+// Admin protected routes (with auth middleware)
+$router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], function($router) {
+    $router->get('/dashboard', 'App\Http\Controllers\AdminAuthController@dashboard');
+    $router->get('/users', 'App\Http\Controllers\AdminController@index');
+    $router->get('/users/{id}', 'App\Http\Controllers\AdminController@show');
+    $router->post('/users', 'App\Http\Controllers\AdminController@store');
+    $router->put('/users/{id}', 'App\Http\Controllers\AdminController@update');
+    $router->delete('/users/{id}', 'App\Http\Controllers\AdminController@destroy');
+});
