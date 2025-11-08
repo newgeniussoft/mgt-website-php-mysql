@@ -34,6 +34,15 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/settings/update', 'App\Http\Controllers\SettingsController@update');
     $router->post('/settings/reset', 'App\Http\Controllers\SettingsController@reset');
     
+    // Media routes
+    $router->get('/media', 'App\Http\Controllers\MediaController@index');
+    $router->get('/media/upload', 'App\Http\Controllers\MediaController@create');
+    $router->post('/media/store', 'App\Http\Controllers\MediaController@store');
+    $router->get('/media/edit', 'App\Http\Controllers\MediaController@edit');
+    $router->post('/media/update', 'App\Http\Controllers\MediaController@update');
+    $router->post('/media/delete', 'App\Http\Controllers\MediaController@destroy');
+    $router->get('/media/download', 'App\Http\Controllers\MediaController@download');
+    
     // User management routes
     $router->get('/users', 'App\Http\Controllers\AdminController@index');
     $router->get('/users/{id}', 'App\Http\Controllers\AdminController@show');
