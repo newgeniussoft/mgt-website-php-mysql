@@ -1,9 +1,7 @@
 <?php
 
-$router->get('/', function() {
-    echo "<h1>Welcome to My App!</h1>";
-    echo "<p>Your Laravel-like PHP framework is running!</p>";
-});
+
+$router->get('/', 'App\Http\Controllers\HomeController@index');
 
 $router->get('/test', function() {
     return response()->json(['message' => 'API is working!']);

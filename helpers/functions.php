@@ -151,17 +151,9 @@ function response() {
     };
 }
 
+// Helper function to add to helpers/functions.php
 function view($template, $data = []) {
-    extract($data);
-    $viewPath = __DIR__ . "/../resources/views/$template.php";
-    
-    if (!file_exists($viewPath)) {
-        abort(500, "View not found: $template");
-    }
-    
-    ob_start();
-    include $viewPath;
-    return ob_get_clean();
+    return \App\View\View::make($template, $data);
 }
 
 function abort($code = 404, $message = '') {
@@ -224,3 +216,4 @@ function array_pluck($array, $value, $key = null) {
     
     return $results;
 }
+

@@ -35,3 +35,7 @@ try {
     logger('Database connection failed: ' . $e->getMessage(), 'error');
     die('Database connection failed');
 }
+
+$viewProvider = new \App\View\ViewServiceProvider();
+$viewProvider->register();
+$viewProvider->boot();
