@@ -2,24 +2,31 @@
 
 // Simple PSR-4 autoloader
 spl_autoload_register(function ($class) {
-    // Convert namespace to file path
-    $prefix = 'App\\';
-    $baseDir = __DIR__ . '/../app/';
+    // Handle App namespace
+    $appPrefix = 'App\\';
+    $appBaseDir = __DIR__ . '/../app/';
     
-    // Check if the class uses the namespace prefix
-    $len = strlen($prefix);
-    if (strncmp($prefix, $class, $len) !== 0) {
+    $len = strlen($appPrefix);
+    if (strncmp($appPrefix, $class, $len) === 0) {
+        $relativeClass = substr($class, $len);
+        $file = $appBaseDir . str_replace('\\', '/', $relativeClass) . '.php';
+        if (file_exists($file)) {
+            require $file;
+        }
         return;
     }
     
-    // Get the relative class name
-    $relativeClass = substr($class, $len);
+    // Handle Database namespace
+    $dbPrefix = 'Database\\';
+    $dbBaseDir = __DIR__ . '/../database/';
     
-    // Replace namespace separators with directory separators
-    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
-    
-    // If the file exists, require it
-    if (file_exists($file)) {
-        require $file;
+    $len = strlen($dbPrefix);
+    if (strncmp($dbPrefix, $class, $len) === 0) {
+        $relativeClass = substr($class, $len);
+        $file = $dbBaseDir . str_replace('\\', '/', $relativeClass) . '.php';
+        if (file_exists($file)) {
+            require $file;
+        }
+        return;
     }
 });
