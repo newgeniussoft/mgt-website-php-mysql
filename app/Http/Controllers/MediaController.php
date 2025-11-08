@@ -332,4 +332,309 @@ class MediaController extends Controller {
             return $this->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
+    
+    /**
+     * Show folder management page
+     */
+    public function folders() {
+        $folders = MediaFolder::all();
+        $rootFolders = MediaFolder::getRootFolders();
+        
+        return View::make('admin.media.folders', [
+            'title' => 'Manage Folders',
+            'folders' => $folders,
+            'rootFolders' => $rootFolders,
+            'success' => $_SESSION['media_success'] ?? null,
+            'error' => $_SESSION['media_error'] ?? null
+        ]);
+    }
+    
+    /**
+     * Create new folder
+     */
+    public function createFolder() {
+        try {
+            $name = $_POST['name'] ?? '';
+            $parentId = $_POST['parent_id'] ?? null;
+            $description = $_POST['description'] ?? '';
+            
+            if (empty($name)) {
+                throw new \Exception('Folder name is required');
+            }
+            
+            // Generate slug
+            $slug = MediaFolder::generateSlug($name);
+            
+            // Create folder
+            MediaFolder::create([
+                'name' => $name,
+                'slug' => $slug,
+                'parent_id' => $parentId ?: null,
+                'description' => $description,
+                'order' => 0
+            ]);
+            
+            $_SESSION['media_success'] = "Folder '{$name}' created successfully!";
+            unset($_SESSION['media_error']);
+            
+        } catch (\Exception $e) {
+            $_SESSION['media_error'] = $e->getMessage();
+            unset($_SESSION['media_success']);
+        }
+        
+        return $this->back();
+    }
+    
+    /**
+     * Update folder
+     */
+    public function updateFolder() {
+        try {
+            $id = $_POST['id'] ?? null;
+            $name = $_POST['name'] ?? '';
+            $parentId = $_POST['parent_id'] ?? null;
+            $description = $_POST['description'] ?? '';
+            
+            if (!$id) {
+                throw new \Exception('Folder ID is required');
+            }
+            
+            if (empty($name)) {
+                throw new \Exception('Folder name is required');
+            }
+            
+            $folder = MediaFolder::find($id);
+            
+            if (!$folder) {
+                throw new \Exception('Folder not found');
+            }
+            
+            // Update slug if name changed
+            if ($folder->name !== $name) {
+                $folder->slug = MediaFolder::generateSlug($name, $id);
+            }
+            
+            $folder->name = $name;
+            $folder->parent_id = $parentId ?: null;
+            $folder->description = $description;
+            $folder->save();
+            
+            $_SESSION['media_success'] = "Folder '{$name}' updated successfully!";
+            unset($_SESSION['media_error']);
+            
+        } catch (\Exception $e) {
+            $_SESSION['media_error'] = $e->getMessage();
+            unset($_SESSION['media_success']);
+        }
+        
+        return $this->back();
+    }
+    
+    /**
+     * Delete folder
+     */
+    public function deleteFolder() {
+        try {
+            $id = $_POST['id'] ?? null;
+            
+            if (!$id) {
+                throw new \Exception('Folder ID is required');
+            }
+            
+            $folder = MediaFolder::find($id);
+            
+            if (!$folder) {
+                throw new \Exception('Folder not found');
+            }
+            
+            // Check if folder has media
+            $mediaCount = $folder->getMediaCount();
+            if ($mediaCount > 0) {
+                throw new \Exception("Cannot delete folder with {$mediaCount} file(s). Move or delete files first.");
+            }
+            
+            // Check if folder has children
+            $children = $folder->getChildren();
+            if (count($children) > 0) {
+                throw new \Exception("Cannot delete folder with subfolders. Delete subfolders first.");
+            }
+            
+            $folder->delete();
+            
+            $_SESSION['media_success'] = 'Folder deleted successfully!';
+            unset($_SESSION['media_error']);
+            
+        } catch (\Exception $e) {
+            $_SESSION['media_error'] = $e->getMessage();
+            unset($_SESSION['media_success']);
+        }
+        
+        return $this->back();
+    }
+    
+    /**
+     * Move file to folder
+     */
+    public function moveFile() {
+        try {
+            $id = $_POST['id'] ?? null;
+            $folderId = $_POST['folder_id'] ?? null;
+            
+            if (!$id) {
+                throw new \Exception('Media ID is required');
+            }
+            
+            $media = Media::find($id);
+            
+            if (!$media) {
+                throw new \Exception('Media not found');
+            }
+            
+            // Validate folder exists if provided
+            if ($folderId) {
+                $folder = MediaFolder::find($folderId);
+                if (!$folder) {
+                    throw new \Exception('Folder not found');
+                }
+            }
+            
+            $media->folder_id = $folderId ?: null;
+            $media->save();
+            
+            $folderName = $folderId ? MediaFolder::find($folderId)->name : 'Root';
+            $_SESSION['media_success'] = "File moved to '{$folderName}' successfully!";
+            unset($_SESSION['media_error']);
+            
+        } catch (\Exception $e) {
+            $_SESSION['media_error'] = $e->getMessage();
+            unset($_SESSION['media_success']);
+        }
+        
+        return $this->back();
+    }
+    
+    /**
+     * Rename file
+     */
+    public function renameFile() {
+        try {
+            $id = $_POST['id'] ?? null;
+            $newName = $_POST['new_name'] ?? '';
+            
+            if (!$id) {
+                throw new \Exception('Media ID is required');
+            }
+            
+            if (empty($newName)) {
+                throw new \Exception('New filename is required');
+            }
+            
+            $media = Media::find($id);
+            
+            if (!$media) {
+                throw new \Exception('Media not found');
+            }
+            
+            // Get file extension
+            $extension = pathinfo($media->filename, PATHINFO_EXTENSION);
+            $newNameWithExt = $newName;
+            
+            // Add extension if not provided
+            if (!preg_match('/\.' . preg_quote($extension, '/') . '$/i', $newName)) {
+                $newNameWithExt .= '.' . $extension;
+            }
+            
+            // Sanitize filename
+            $newNameWithExt = preg_replace('/[^a-zA-Z0-9._-]/', '_', $newNameWithExt);
+            
+            // Rename physical file
+            $oldPath = __DIR__ . '/../../../public' . $media->path;
+            $newPath = dirname($oldPath) . '/' . $newNameWithExt;
+            
+            if (file_exists($newPath)) {
+                throw new \Exception('A file with this name already exists');
+            }
+            
+            if (file_exists($oldPath)) {
+                if (!rename($oldPath, $newPath)) {
+                    throw new \Exception('Failed to rename file on disk');
+                }
+            }
+            
+            // Update database
+            $media->filename = $newNameWithExt;
+            $media->original_filename = $newNameWithExt;
+            $media->path = dirname($media->path) . '/' . $newNameWithExt;
+            $media->url = dirname($media->url) . '/' . $newNameWithExt;
+            $media->save();
+            
+            $_SESSION['media_success'] = "File renamed to '{$newNameWithExt}' successfully!";
+            unset($_SESSION['media_error']);
+            
+        } catch (\Exception $e) {
+            $_SESSION['media_error'] = $e->getMessage();
+            unset($_SESSION['media_success']);
+        }
+        
+        return $this->back();
+    }
+    
+    /**
+     * Bulk operations
+     */
+    public function bulkAction() {
+        try {
+            $action = $_POST['action'] ?? '';
+            $ids = $_POST['ids'] ?? [];
+            
+            if (empty($action)) {
+                throw new \Exception('Action is required');
+            }
+            
+            if (empty($ids) || !is_array($ids)) {
+                throw new \Exception('No files selected');
+            }
+            
+            $count = 0;
+            
+            switch ($action) {
+                case 'delete':
+                    foreach ($ids as $id) {
+                        $media = Media::find($id);
+                        if ($media) {
+                            $media->deleteFile();
+                            $media->delete();
+                            $count++;
+                        }
+                    }
+                    $_SESSION['media_success'] = "{$count} file(s) deleted successfully!";
+                    break;
+                    
+                case 'move':
+                    $folderId = $_POST['folder_id'] ?? null;
+                    foreach ($ids as $id) {
+                        $media = Media::find($id);
+                        if ($media) {
+                            $media->folder_id = $folderId ?: null;
+                            $media->save();
+                            $count++;
+                        }
+                    }
+                    $folderName = $folderId ? MediaFolder::find($folderId)->name : 'Root';
+                    $_SESSION['media_success'] = "{$count} file(s) moved to '{$folderName}' successfully!";
+                    break;
+                    
+                default:
+                    throw new \Exception('Invalid action');
+            }
+            
+            unset($_SESSION['media_error']);
+            
+        } catch (\Exception $e) {
+            $_SESSION['media_error'] = $e->getMessage();
+            unset($_SESSION['media_success']);
+        }
+        
+        return $this->back();
+    }
 }

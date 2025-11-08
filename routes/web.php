@@ -42,6 +42,15 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/media/update', 'App\Http\Controllers\MediaController@update');
     $router->post('/media/delete', 'App\Http\Controllers\MediaController@destroy');
     $router->get('/media/download', 'App\Http\Controllers\MediaController@download');
+    $router->post('/media/rename', 'App\Http\Controllers\MediaController@renameFile');
+    $router->post('/media/move', 'App\Http\Controllers\MediaController@moveFile');
+    $router->post('/media/bulk-action', 'App\Http\Controllers\MediaController@bulkAction');
+    
+    // Media folder routes
+    $router->get('/media/folders', 'App\Http\Controllers\MediaController@folders');
+    $router->post('/media/folder/create', 'App\Http\Controllers\MediaController@createFolder');
+    $router->post('/media/folder/update', 'App\Http\Controllers\MediaController@updateFolder');
+    $router->post('/media/folder/delete', 'App\Http\Controllers\MediaController@deleteFolder');
     
     // User management routes
     $router->get('/users', 'App\Http\Controllers\AdminController@index');

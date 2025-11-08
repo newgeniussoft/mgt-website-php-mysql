@@ -123,7 +123,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ admin_url('media') }}">
                                 <i class="fas fa-images"></i>
-                                Media
+                                Media Library
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ admin_url('media/folders') }}">
+                                <i class="fas fa-folder"></i>
+                                Folders
                             </a>
                         </li>
                         <li class="nav-item">
