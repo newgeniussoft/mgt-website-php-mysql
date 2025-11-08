@@ -217,3 +217,52 @@ function array_pluck($array, $value, $key = null) {
     return $results;
 }
 
+
+function __($key, $replace = []) {
+    return \App\Localization\Lang::get($key, $replace);
+}
+
+function trans($key, $replace = []) {
+    return \App\Localization\Lang::get($key, $replace);
+}
+
+function trans_choice($key, $number, $replace = []) {
+    return \App\Localization\Lang::choice($key, $number, $replace);
+}
+
+function app_locale() {
+    return \App\Localization\Lang::getLocale();
+}
+
+function set_locale($locale) {
+    \App\Localization\Lang::setLocale($locale);
+}
+
+function locale_url($locale, $path = '') {
+    $currentUri = $_SERVER['REQUEST_URI'];
+    $segments = explode('/', trim(parse_url($currentUri, PHP_URL_PATH), '/'));
+    
+    // Remove current locale if exists
+    $supportedLocales = ['en', 'es'];
+    if (!empty($segments[0]) && in_array($segments[0], $supportedLocales)) {
+        array_shift($segments);
+    }
+    
+    // Build new URL
+    $baseUrl = rtrim(config('app.url'), '/');
+    $newPath = '/' . $locale;
+    
+    if (!empty($segments)) {
+        $newPath .= '/' . implode('/', $segments);
+    }
+    
+    if ($path) {
+        $newPath .= '/' . ltrim($path, '/');
+    }
+    
+    return $baseUrl . $newPath;
+}
+
+function current_locale() {
+    return \App\Localization\Lang::getLocale();
+}

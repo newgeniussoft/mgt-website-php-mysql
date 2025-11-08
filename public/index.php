@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../bootstrap/app.php';
 
+use App\Localization\Lang;
 // Create Router instance
 class Router {
     protected $routes = [];
@@ -47,18 +48,29 @@ class Router {
     }
     
     public function dispatch() {
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+    
+    // Extract locale from URI
+    $segments = explode('/', trim($uri, '/'));
+    $supportedLocales = ['en', 'es'];
+    
+    if (!empty($segments[0]) && in_array($segments[0], $supportedLocales)) {
+        $locale = array_shift($segments);
+        $uri = '/' . implode('/', $segments);
         
-        foreach ($this->routes as $route) {
-            if ($route['method'] === $method && $this->matchUri($route['uri'], $uri, $params)) {
-                return $this->callAction($route, $params);
-            }
-        }
-        
-        http_response_code(404);
-        echo "404 - Page Not Found";
+        Lang::setLocale($locale);
     }
+    
+    // Continue with normal routing...
+    foreach ($this->routes as $route) {
+        if ($route['method'] === $method && $this->matchUri($route['uri'], $uri, $params)) {
+            return $this->callAction($route, $params);
+        }
+    }
+    
+    abort(404);
+}
     
     protected function matchUri($routeUri, $requestUri, &$params = []) {
         $pattern = preg_replace('/\{(\w+)\}/', '(?P<$1>[^/]+)', $routeUri);

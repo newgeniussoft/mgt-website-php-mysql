@@ -36,6 +36,16 @@ try {
     die('Database connection failed');
 }
 
+use App\Localization\Lang;
+
+// Initialize localization
+Lang::init(__DIR__ . '/../resources/lang');
+Lang::setFallbackLocale('en');
+
+// Set default locale from session or browser
+$defaultLocale = $_SESSION['locale'] ?? 'en';
+Lang::setLocale($defaultLocale);
+
 $viewProvider = new \App\View\ViewServiceProvider();
 $viewProvider->register();
 $viewProvider->boot();

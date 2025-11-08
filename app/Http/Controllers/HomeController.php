@@ -7,8 +7,9 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller {
     public function index() {
-        return View::make('welcome', [
-            'title' => 'Welcome',
+         return View::make('welcome', [
+            'title' => __('messages.welcome'),
+            'greeting' => __('messages.hello', ['name' => 'John']),
             'users' => User::all()
         ]);
     }
