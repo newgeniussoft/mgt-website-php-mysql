@@ -1,4 +1,4 @@
-# Admin Authentication System
+Admin Authentication System
 
 ## Overview
 A complete admin authentication system with login, logout, middleware protection, and a beautiful admin dashboard.

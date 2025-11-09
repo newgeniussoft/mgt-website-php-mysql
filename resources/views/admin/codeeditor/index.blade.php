@@ -141,6 +141,44 @@
             padding: 5px 15px;
             font-size: 13px;
         }
+        
+        /* Context Menu */
+        .context-menu {
+            position: fixed;
+            background: #2d2d2d;
+            border: 1px solid #1e1e1e;
+            border-radius: 4px;
+            padding: 5px 0;
+            z-index: 10000;
+            display: none;
+            min-width: 180px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        
+        .context-menu-item {
+            padding: 8px 15px;
+            cursor: pointer;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+        
+        .context-menu-item:hover {
+            background: #37373d;
+            color: #fff;
+        }
+        
+        .context-menu-item i {
+            margin-right: 10px;
+            width: 16px;
+        }
+        
+        .context-menu-separator {
+            height: 1px;
+            background: #1e1e1e;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -149,6 +187,12 @@
         <div>
             <button class="btn btn-success btn-sm" onclick="saveFile()">
                 <i class="fas fa-save"></i> Save (Ctrl+S)
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="showCreateFileModal()">
+                <i class="fas fa-file-plus"></i> New File
+            </button>
+            <button class="btn btn-info btn-sm" onclick="showCreateFolderModal()">
+                <i class="fas fa-folder-plus"></i> New Folder
             </button>
             <a href="{{ admin_url('dashboard') }}" class="btn btn-secondary btn-sm">
                 <i class="fas fa-arrow-left"></i> Back to Admin
@@ -173,7 +217,7 @@
         
         <div class="editor-area">
             @if($filePath)
-                <textarea id="codeEditor">{{ $fileContent }}</textarea>
+                <textarea id="codeEditor"></textarea>
             @else
                 <div class="text-center text-white p-5" style="margin-top: 100px;">
                     <i class="fas fa-code fa-5x mb-4" style="opacity: 0.3;"></i>
@@ -190,6 +234,129 @@
                 </div>
                 <textarea id="codeEditor" style="display: none;"></textarea>
             @endif
+        </div>
+    </div>
+    
+    <!-- Context Menu -->
+    <div id="contextMenu" class="context-menu">
+        <div class="context-menu-item" onclick="contextMenuAction('open')">
+            <i class="fas fa-folder-open"></i> Open
+        </div>
+        <div class="context-menu-item" onclick="contextMenuAction('rename')">
+            <i class="fas fa-edit"></i> Rename
+        </div>
+        <div class="context-menu-item" onclick="contextMenuAction('copy')">
+            <i class="fas fa-copy"></i> Copy
+        </div>
+        <div class="context-menu-item" onclick="contextMenuAction('move')">
+            <i class="fas fa-arrows-alt"></i> Move
+        </div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" onclick="contextMenuAction('delete')" style="color: #f44336;">
+            <i class="fas fa-trash"></i> Delete
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <!-- Create File Modal -->
+    <div class="modal fade" id="createFileModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New File</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>File Name</label>
+                        <input type="text" class="form-control" id="newFileName" placeholder="example.php">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" class="form-control" id="newFilePath" placeholder="app/Models" value="">
+                        <small class="text-muted">Leave empty for root directory</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="createFile()">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Folder Modal -->
+    <div class="modal fade" id="createFolderModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Folder</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Folder Name</label>
+                        <input type="text" class="form-control" id="newFolderName" placeholder="NewFolder">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" class="form-control" id="newFolderPath" placeholder="app" value="">
+                        <small class="text-muted">Leave empty for root directory</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="createFolder()">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Rename Modal -->
+    <div class="modal fade" id="renameModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Rename</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>New Name</label>
+                        <input type="text" class="form-control" id="renameInput" placeholder="new-name.php">
+                    </div>
+                    <input type="hidden" id="renameOldPath">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="renameItem()">Rename</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Move/Copy Modal -->
+    <div class="modal fade" id="moveModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="moveModalTitle">Move</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Target Path</label>
+                        <input type="text" class="form-control" id="moveTargetPath" placeholder="app/Models">
+                        <small class="text-muted">Enter destination folder path</small>
+                    </div>
+                    <input type="hidden" id="moveSourcePath">
+                    <input type="hidden" id="moveAction">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="moveOrCopyItem()">Confirm</button>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -226,6 +393,20 @@ editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
     lineWrapping: true,
     extraKeys: {"Ctrl-S": saveFile}
 });
+//editor.setValue('{{$filePath}}');
+$.get('{{ admin_url("/readfile") }}?file={{ $filePath }}', function(data, status) {
+    const val = data.toString();
+    editor.setValue(val);
+});
+/*$.post('{{ admin_url("/readfile") }}', {file: '{{ $filePath }}'})
+    
+    .then(data => {
+        editor.setValue(data);
+    })
+    .catch(err => {
+        console.error(err);
+    });*/
+    
 @else
 // Initialize empty editor
 editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
@@ -284,6 +465,18 @@ function renderFileTree(items, container = null, level = 0) {
                     itemDiv.classList.toggle('expanded');
                 };
             }
+            
+            // Right-click context menu for folders
+            itemDiv.oncontextmenu = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                contextMenuPath = item.path;
+                contextMenuIsDir = true;
+                const menu = document.getElementById('contextMenu');
+                menu.style.display = 'block';
+                menu.style.left = e.pageX + 'px';
+                menu.style.top = e.pageY + 'px';
+            };
         } else if (item.editable) {
             // File
             itemDiv.innerHTML = `
@@ -300,6 +493,19 @@ function renderFileTree(items, container = null, level = 0) {
                 e.stopPropagation();
                 openFile(item.path);
             };
+            
+            // Right-click context menu for files
+            itemDiv.oncontextmenu = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                contextMenuPath = item.path;
+                contextMenuIsDir = false;
+                const menu = document.getElementById('contextMenu');
+                menu.style.display = 'block';
+                menu.style.left = e.pageX + 'px';
+                menu.style.top = e.pageY + 'px';
+            };
+            
             tree.appendChild(itemDiv);
         }
     });
@@ -326,6 +532,224 @@ function saveFile() {
 
 function refreshTree() {
     loadFileTree();
+}
+
+// Context menu variables
+let contextMenuTarget = null;
+let contextMenuPath = null;
+let contextMenuIsDir = false;
+
+// Show context menu on right-click
+document.addEventListener('click', function() {
+    document.getElementById('contextMenu').style.display = 'none';
+});
+
+// Context menu action handler
+function contextMenuAction(action) {
+    document.getElementById('contextMenu').style.display = 'none';
+    
+    if (!contextMenuPath) return;
+    
+    switch(action) {
+        case 'open':
+            if (!contextMenuIsDir) {
+                openFile(contextMenuPath);
+            }
+            break;
+        case 'rename':
+            showRenameModal(contextMenuPath);
+            break;
+        case 'copy':
+            showMoveModal(contextMenuPath, 'copy');
+            break;
+        case 'move':
+            showMoveModal(contextMenuPath, 'move');
+            break;
+        case 'delete':
+            deleteItem(contextMenuPath, contextMenuIsDir);
+            break;
+    }
+}
+
+// Show create file modal
+function showCreateFileModal() {
+    $('#newFileName').val('');
+    $('#newFilePath').val('');
+    $('#createFileModal').modal('show');
+}
+
+// Show create folder modal
+function showCreateFolderModal() {
+    $('#newFolderName').val('');
+    $('#newFolderPath').val('');
+    $('#createFolderModal').modal('show');
+}
+
+// Create file
+function createFile() {
+    const fileName = $('#newFileName').val().trim();
+    const filePath = $('#newFilePath').val().trim();
+    
+    if (!fileName) {
+        alert('Please enter a file name');
+        return;
+    }
+    
+    fetch('{{ admin_url("codeeditor/create-file") }}', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `file_name=${encodeURIComponent(fileName)}&file_path=${encodeURIComponent(filePath)}`
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            $('#createFileModal').modal('hide');
+            alert('File created successfully!');
+            refreshTree();
+            // Open the new file
+            if (data.path) {
+                openFile(data.path);
+            }
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+}
+
+// Create folder
+function createFolder() {
+    const folderName = $('#newFolderName').val().trim();
+    const folderPath = $('#newFolderPath').val().trim();
+    
+    if (!folderName) {
+        alert('Please enter a folder name');
+        return;
+    }
+    
+    fetch('{{ admin_url("codeeditor/create-folder") }}', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `folder_name=${encodeURIComponent(folderName)}&folder_path=${encodeURIComponent(folderPath)}`
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            $('#createFolderModal').modal('hide');
+            alert('Folder created successfully!');
+            refreshTree();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+}
+
+// Show rename modal
+function showRenameModal(path) {
+    const fileName = path.split('/').pop();
+    $('#renameInput').val(fileName);
+    $('#renameOldPath').val(path);
+    $('#renameModal').modal('show');
+}
+
+// Rename item
+function renameItem() {
+    const oldPath = $('#renameOldPath').val();
+    const newName = $('#renameInput').val().trim();
+    
+    if (!newName) {
+        alert('Please enter a new name');
+        return;
+    }
+    
+    fetch('{{ admin_url("codeeditor/rename") }}', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `old_path=${encodeURIComponent(oldPath)}&new_name=${encodeURIComponent(newName)}`
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            $('#renameModal').modal('hide');
+            alert('Renamed successfully!');
+            refreshTree();
+            // If current file was renamed, open the new path
+            if (currentFile === oldPath && data.path) {
+                openFile(data.path);
+            }
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+}
+
+// Show move/copy modal
+function showMoveModal(path, action) {
+    $('#moveSourcePath').val(path);
+    $('#moveAction').val(action);
+    $('#moveTargetPath').val('');
+    $('#moveModalTitle').text(action === 'move' ? 'Move' : 'Copy');
+    $('#moveModal').modal('show');
+}
+
+// Move or copy item
+function moveOrCopyItem() {
+    const sourcePath = $('#moveSourcePath').val();
+    const targetPath = $('#moveTargetPath').val().trim();
+    const action = $('#moveAction').val();
+    
+    if (!targetPath) {
+        alert('Please enter a target path');
+        return;
+    }
+    
+    const endpoint = action === 'move' ? 'move' : 'copy';
+    
+    fetch(`{{ admin_url("codeeditor") }}/${endpoint}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `source_path=${encodeURIComponent(sourcePath)}&target_path=${encodeURIComponent(targetPath)}`
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            $('#moveModal').modal('hide');
+            alert(`${action === 'move' ? 'Moved' : 'Copied'} successfully!`);
+            refreshTree();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+}
+
+// Delete item
+function deleteItem(path, isDir) {
+    const itemType = isDir ? 'folder' : 'file';
+    
+    if (!confirm(`Are you sure you want to delete this ${itemType}?\n\n${path}\n\nA backup will be created.`)) {
+        return;
+    }
+    
+    const endpoint = isDir ? 'delete-folder' : 'delete-file';
+    const param = isDir ? 'folder_path' : 'file_path';
+    
+    fetch(`{{ admin_url("codeeditor") }}/${endpoint}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `${param}=${encodeURIComponent(path)}`
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            alert(`${itemType.charAt(0).toUpperCase() + itemType.slice(1)} deleted successfully!`);
+            refreshTree();
+            // If current file was deleted, redirect to editor home
+            if (!isDir && currentFile === path) {
+                window.location.href = '{{ admin_url("codeeditor") }}';
+            }
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
 }
 </script>
 </body>

@@ -68,9 +68,13 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/codeeditor/save', 'App\Http\Controllers\CodeEditorController@save');
     $router->post('/codeeditor/create-file', 'App\Http\Controllers\CodeEditorController@createFile');
     $router->post('/codeeditor/create-folder', 'App\Http\Controllers\CodeEditorController@createFolder');
-    $router->post('/codeeditor/delete', 'App\Http\Controllers\CodeEditorController@deleteFile');
+    $router->post('/codeeditor/delete-file', 'App\Http\Controllers\CodeEditorController@deleteFile');
+    $router->post('/codeeditor/delete-folder', 'App\Http\Controllers\CodeEditorController@deleteFolder');
     $router->post('/codeeditor/rename', 'App\Http\Controllers\CodeEditorController@renameFile');
+    $router->post('/codeeditor/move', 'App\Http\Controllers\CodeEditorController@moveFile');
+    $router->post('/codeeditor/copy', 'App\Http\Controllers\CodeEditorController@copyFile');
     $router->get('/codeeditor/search', 'App\Http\Controllers\CodeEditorController@search');
+    $router->get('/readfile', 'App\Http\Controllers\CodeEditorController@readFile');
     
     // User management routes
     $router->get('/users', 'App\Http\Controllers\AdminController@index');
