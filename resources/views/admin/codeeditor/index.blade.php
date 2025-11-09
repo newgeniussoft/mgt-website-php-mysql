@@ -11,10 +11,13 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     
-    <!-- CodeMirror CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/dialog/dialog.min.css">
+    <!-- Monaco Editor CSS -->
+    <style>
+        #monaco-container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 
     <style>
         * {
@@ -129,12 +132,12 @@
             display: flex;
             flex-direction: column;
             background: #1e1e1e;
+            position: relative;
         }
         
-        .CodeMirror {
-            height: 100% !important;
-            font-size: 14px;
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        #monaco-container {
+            width: 100%;
+            height: 100%;
         }
         
         .btn-sm {
@@ -217,7 +220,7 @@
         
         <div class="editor-area">
             @if($filePath)
-                <textarea id="codeEditor"></textarea>
+                <div id="monaco-container"></div>
             @else
                 <div class="text-center text-white p-5" style="margin-top: 100px;">
                     <i class="fas fa-code fa-5x mb-4" style="opacity: 0.3;"></i>
@@ -232,7 +235,7 @@
                         <p class="text-muted">Ctrl+S: Save | Ctrl+F: Find | Ctrl+H: Replace</p>
                     </div>
                 </div>
-                <textarea id="codeEditor" style="display: none;"></textarea>
+                <div id="monaco-container" style="display: none;"></div>
             @endif
         </div>
     </div>
@@ -366,60 +369,109 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- CodeMirror JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/php/php.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/css/css.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/htmlmixed/htmlmixed.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/matchbrackets.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/search/search.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/dialog/dialog.min.js"></script>
+<!-- Monaco Editor -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
 
 <script>
 let editor;
 let currentFile = '{{ $filePath }}';
 
-// Initialize CodeMirror
-@if($filePath)
-editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
-    mode: '{{ $mode }}',
-    theme: 'monokai',
-    lineNumbers: true,
-    autoCloseBrackets: true,
-    matchBrackets: true,
-    indentUnit: 4,
-    lineWrapping: true,
-    extraKeys: {"Ctrl-S": saveFile}
-});
-//editor.setValue('{{$filePath}}');
-$.get('{{ admin_url("/readfile") }}?file={{ $filePath }}', function(data, status) {
-    const val = data.toString();
-    editor.setValue(val);
-});
-/*$.post('{{ admin_url("/readfile") }}', {file: '{{ $filePath }}'})
+// Initialize Monaco Editor
+require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
+
+require(['vs/editor/editor.main'], function() {
+    @if($filePath)
+    // Get language from file extension
+    const language = getMonacoLanguage('{{ $filePath }}');
     
-    .then(data => {
+    // Create Monaco Editor
+    editor = monaco.editor.create(document.getElementById('monaco-container'), {
+        value: '',
+        language: language,
+        theme: 'vs-dark',
+        automaticLayout: true,
+        fontSize: 14,
+        fontFamily: "'Cascadia Code', 'Fira Code', 'Consolas', 'Monaco', monospace",
+        fontLigatures: true,
+        lineNumbers: 'on',
+        minimap: { enabled: true },
+        scrollBeyondLastLine: false,
+        wordWrap: 'on',
+        formatOnPaste: true,
+        formatOnType: true,
+        autoClosingBrackets: 'always',
+        autoClosingQuotes: 'always',
+        autoIndent: 'full',
+        tabSize: 4,
+        insertSpaces: true,
+        renderWhitespace: 'selection',
+        bracketPairColorization: { enabled: true }
+    });
+    
+    // Load file content
+    $.get('{{ admin_url("/readfile") }}?file={{ $filePath }}', function(data) {
         editor.setValue(data);
-    })
-    .catch(err => {
-        console.error(err);
-    });*/
+    });
     
-@else
-// Initialize empty editor
-editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
-    mode: 'text/plain',
-    theme: 'monokai',
-    lineNumbers: true,
-    autoCloseBrackets: true,
-    matchBrackets: true,
-    indentUnit: 4,
-    lineWrapping: true,
-    extraKeys: {"Ctrl-S": saveFile}
+    // Ctrl+S to save
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, function() {
+        saveFile();
+    });
+    @else
+    // Create empty editor
+    editor = monaco.editor.create(document.getElementById('monaco-container'), {
+        value: '// Select a file from the explorer to start editing',
+        language: 'plaintext',
+        theme: 'vs-dark',
+        automaticLayout: true,
+        fontSize: 14,
+        readOnly: true
+    });
+    @endif
 });
-@endif
+
+// Get Monaco language from file path
+function getMonacoLanguage(filePath) {
+    const ext = filePath.split('.').pop().toLowerCase();
+    const langMap = {
+        'php': 'php',
+        'js': 'javascript',
+        'jsx': 'javascript',
+        'ts': 'typescript',
+        'tsx': 'typescript',
+        'json': 'json',
+        'html': 'html',
+        'htm': 'html',
+        'css': 'css',
+        'scss': 'scss',
+        'sass': 'sass',
+        'less': 'less',
+        'xml': 'xml',
+        'sql': 'sql',
+        'md': 'markdown',
+        'markdown': 'markdown',
+        'yml': 'yaml',
+        'yaml': 'yaml',
+        'py': 'python',
+        'rb': 'ruby',
+        'java': 'java',
+        'c': 'c',
+        'cpp': 'cpp',
+        'cs': 'csharp',
+        'go': 'go',
+        'rs': 'rust',
+        'sh': 'shell',
+        'bash': 'shell',
+        'ps1': 'powershell',
+        'bat': 'bat',
+        'ini': 'ini',
+        'conf': 'ini',
+        'env': 'ini',
+        'dockerfile': 'dockerfile',
+        'txt': 'plaintext'
+    };
+    return langMap[ext] || 'plaintext';
+}
 
 loadFileTree();
 

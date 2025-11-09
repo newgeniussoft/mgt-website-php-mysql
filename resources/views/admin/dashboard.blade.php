@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="h3 mb-0">Dashboard</h1>
+                <h1 class="h3 mb-0">Tableau de bord</h1>
                 <div>
                     <span class="text-muted">Welcome, <strong>{{ $admin_name }}</strong></span>
                 </div>
