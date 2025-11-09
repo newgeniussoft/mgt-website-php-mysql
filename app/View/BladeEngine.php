@@ -82,8 +82,10 @@ class BladeEngine
         $content = $this->compileMethod($content);
         $content = $this->compileTranslations($content);
         $content = $this->compileHelpers($content);
+        $content = $this->compileVerbatimBlocks($content);
         $content = $this->compileRawEchos($content);
         $content = $this->compileEchos($content);
+        $content = $this->restoreVerbatimBlocks($content);
         
         return $content;
     }
@@ -492,6 +494,41 @@ class BladeEngine
         
         // @choice directive - for pluralization
         $content = preg_replace('/\@choice\s*\((.+?)\)/', '<?php echo trans_choice($1); ?>', $content);
+        
+        return $content;
+    }
+    
+    /**
+     * Store for verbatim blocks
+     */
+    protected $verbatimBlocks = [];
+    
+    /**
+     * Compile @verbatim blocks to preserve content from compilation
+     */
+    protected function compileVerbatimBlocks($content)
+    {
+        // Reset verbatim blocks
+        $this->verbatimBlocks = [];
+        
+        // Replace @verbatim blocks with placeholders
+        $content = preg_replace_callback('/\@verbatim(.*?)\@endverbatim/s', function($matches) {
+            $placeholder = '___VERBATIM_' . count($this->verbatimBlocks) . '___';
+            $this->verbatimBlocks[$placeholder] = $matches[1];
+            return $placeholder;
+        }, $content);
+        
+        return $content;
+    }
+    
+    /**
+     * Restore verbatim blocks after compilation
+     */
+    protected function restoreVerbatimBlocks($content)
+    {
+        foreach ($this->verbatimBlocks as $placeholder => $original) {
+            $content = str_replace($placeholder, $original, $content);
+        }
         
         return $content;
     }

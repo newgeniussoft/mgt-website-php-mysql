@@ -115,9 +115,15 @@
                     <h6 class="sidebar-heading">Content Management</h6>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ admin_url('pages') }}">
                                 <i class="fas fa-file-alt"></i>
                                 Pages
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ admin_url('templates') }}">
+                                <i class="fas fa-file-code"></i>
+                                Templates
                             </a>
                         </li>
                         <li class="nav-item">
@@ -142,12 +148,6 @@
                             <a class="nav-link" href="{{ admin_url('codeeditor') }}">
                                 <i class="fas fa-code"></i>
                                 Code Editor
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-blog"></i>
-                                Blog Posts
                             </a>
                         </li>
                     </ul>

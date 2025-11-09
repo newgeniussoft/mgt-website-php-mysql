@@ -1,9 +1,8 @@
 <?php
 
 
-$router->get('/', 'App\Http\Controllers\HomeController@index');
-$router->get('/about', 'App\Http\Controllers\HomeController@about');
-$router->get('/contact', 'App\Http\Controllers\HomeController@contact');
+// Frontend routes - Dynamic pages from database
+$router->get('/', 'App\Http\Controllers\FrontendController@index');
 
 $router->get('/test', function() {
     return response()->json(['message' => 'API is working!']);
@@ -101,4 +100,42 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->get('/database/edit-column', 'App\Http\Controllers\DatabaseController@editColumn');
     $router->post('/database/update-column', 'App\Http\Controllers\DatabaseController@updateColumn');
     $router->post('/database/delete-column', 'App\Http\Controllers\DatabaseController@deleteColumn');
+    
+    // CMS Page Management routes
+    $router->get('/pages', 'App\Http\Controllers\PageController@index');
+    $router->get('/pages/create', 'App\Http\Controllers\PageController@create');
+    $router->post('/pages/store', 'App\Http\Controllers\PageController@store');
+    $router->get('/pages/edit', 'App\Http\Controllers\PageController@edit');
+    $router->post('/pages/update', 'App\Http\Controllers\PageController@update');
+    $router->post('/pages/delete', 'App\Http\Controllers\PageController@destroy');
+    $router->get('/pages/preview', 'App\Http\Controllers\PageController@preview');
+    
+    // Template Management routes
+    $router->get('/templates', 'App\Http\Controllers\TemplateController@index');
+    $router->get('/templates/create', 'App\Http\Controllers\TemplateController@create');
+    $router->post('/templates/store', 'App\Http\Controllers\TemplateController@store');
+    $router->get('/templates/edit', 'App\Http\Controllers\TemplateController@edit');
+    $router->post('/templates/update', 'App\Http\Controllers\TemplateController@update');
+    $router->post('/templates/delete', 'App\Http\Controllers\TemplateController@destroy');
+    $router->get('/templates/preview', 'App\Http\Controllers\TemplateController@preview');
+    $router->post('/templates/duplicate', 'App\Http\Controllers\TemplateController@duplicate');
+    
+    // Section Management routes
+    $router->get('/sections', 'App\Http\Controllers\SectionController@index');
+    $router->get('/sections/create', 'App\Http\Controllers\SectionController@create');
+    $router->post('/sections/store', 'App\Http\Controllers\SectionController@store');
+    $router->get('/sections/edit', 'App\Http\Controllers\SectionController@edit');
+    $router->post('/sections/update', 'App\Http\Controllers\SectionController@update');
+    $router->post('/sections/delete', 'App\Http\Controllers\SectionController@destroy');
+    $router->post('/sections/reorder', 'App\Http\Controllers\SectionController@reorder');
+    
+    // Content Management routes
+    $router->get('/sections/add-content', 'App\Http\Controllers\SectionController@addContent');
+    $router->post('/sections/store-content', 'App\Http\Controllers\SectionController@storeContent');
+    $router->get('/sections/edit-content', 'App\Http\Controllers\SectionController@editContent');
+    $router->post('/sections/update-content', 'App\Http\Controllers\SectionController@updateContent');
+    $router->post('/sections/delete-content', 'App\Http\Controllers\SectionController@destroyContent');
 });
+
+// Catch-all route for dynamic pages (must be last)
+$router->get('/{slug}', 'App\Http\Controllers\FrontendController@showPage');

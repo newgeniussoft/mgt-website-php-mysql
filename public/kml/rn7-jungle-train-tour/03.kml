@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Carte sans titre</name>
+    <description/>
+    <Style id="line-000000-1200-nodesc-normal">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.2</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-000000-1200-nodesc-highlight">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.8</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-000000-1200-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-000000-1200-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-000000-1200-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>Calque sans titre</name>
+      <Placemark>
+        <name>Train</name>
+        <styleUrl>#line-000000-1200-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            47.0884341,-21.4514098,0
+            47.1557254,-21.4450189,0
+            47.2518558,-21.4117814,0
+            47.352106,-21.4181738,0
+            47.4331302,-21.4296794,0
+            47.65423,-21.4948608,0
+            47.7586001,-21.6021546,0
+            47.7586001,-21.73616,0
+            47.6844424,-21.85857,0
+            47.7146548,-21.9528562,0
+            47.7544803,-22.1030751,0
+            47.8698367,-22.1336086,0
+            47.9604739,-22.0954407,0
+            47.9989261,-22.1412409,0
+            48.0236453,-22.1310644,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
