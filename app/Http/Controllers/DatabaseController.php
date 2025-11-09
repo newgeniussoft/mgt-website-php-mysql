@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Database;
 use App\View\View;
@@ -52,11 +52,23 @@ class DatabaseController
         
         $totalRows = Database::getTableRowCount($tableName);
         $totalPages = ceil($totalRows / $perPage);
-        
+
+        $dataParsed = [];
+        foreach($data as $row){
+            if(is_array($row)){
+                $item  = [];
+                foreach($row as $key => $value){
+                    $item[$key] = $value;
+                }
+                $dataParsed[] = $item;
+            }
+        }
+
+       
         return View::make('admin.database.view-table', [
             'tableName' => $tableName,
             'structure' => $structure,
-            'data' => $data,
+            'data' => $dataParsed,
             'primaryKeys' => $primaryKeys,
             'currentPage' => $page,
             'totalPages' => $totalPages,

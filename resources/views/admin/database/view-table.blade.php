@@ -150,7 +150,7 @@
                                 </td>
                             </tr>
                         <?php else: ?>
-                            <?php foreach ($data as $row): ?>
+                            <?php foreach ($data['data'] as $row): ?>
                                 <?php if (!is_array($row) || empty($row)) continue; ?>
                                 <tr>
                                     <?php foreach ($structure as $column): ?>
@@ -158,7 +158,7 @@
                                             <?php 
                                             $fieldName = $column['Field'];
                                             $value = isset($row[$fieldName]) ? $row[$fieldName] : null;
-                                            
+                                        
                                             if ($value === null || $value === '') {
                                                 echo '<em class="text-muted">NULL</em>';
                                             } elseif (is_string($value) && strlen($value) > 100) {
