@@ -18,6 +18,9 @@
             <a href="{{ admin_url('database/add-row?table=' . urlencode($tableName)) }}" class="btn btn-success">
                 <i class="fas fa-plus"></i> Add Row
             </a>
+            <a href="{{ admin_url('database/add-column?table=' . urlencode($tableName)) }}" class="btn btn-primary">
+                <i class="fas fa-columns"></i> Add Column
+            </a>
             <a href="{{ admin_url('database/export-table?table=' . urlencode($tableName)) }}" class="btn btn-info">
                 <i class="fas fa-download"></i> Export
             </a>
@@ -93,6 +96,7 @@
                             <th>Key</th>
                             <th>Default</th>
                             <th>Extra</th>
+                            <th class="text-end">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -112,6 +116,28 @@
                                 </td>
                                 <td><?= $column['Default'] !== null ? htmlspecialchars($column['Default']) : '<em class="text-muted">NULL</em>' ?></td>
                                 <td><?= htmlspecialchars($column['Extra']) ?></td>
+                                <td class="text-end text-nowrap">
+                                    <a href="{{ admin_url('database/edit-column?table=' . urlencode($tableName) . '&column=' . urlencode($column['Field'])) }}" 
+                                       class="btn btn-sm btn-outline-primary" 
+                                       title="Edit Column">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <?php if ($column['Key'] !== 'PRI'): ?>
+                                        <button type="button" 
+                                                class="btn btn-sm btn-outline-danger" 
+                                                onclick="deleteColumn('<?= htmlspecialchars($column['Field']) ?>')"
+                                                title="Delete Column">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    <?php else: ?>
+                                        <button type="button" 
+                                                class="btn btn-sm btn-outline-secondary" 
+                                                disabled
+                                                title="Cannot delete primary key">
+                                            <i class="fas fa-lock"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -231,12 +257,19 @@
     </div>
 </div>
 
-<!-- Hidden Form for Delete -->
+<!-- Hidden Form for Delete Row -->
 <form id="deleteForm" method="POST" action="{{ admin_url('database/delete-row') }}" style="display: none;">
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
     <input type="hidden" name="table" value="<?= htmlspecialchars($tableName) ?>">
     <input type="hidden" name="primary_key" id="deletePrimaryKey">
     <input type="hidden" name="value" id="deleteValue">
+</form>
+
+<!-- Hidden Form for Delete Column -->
+<form id="deleteColumnForm" method="POST" action="{{ admin_url('database/delete-column') }}" style="display: none;">
+    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
+    <input type="hidden" name="table" value="<?= htmlspecialchars($tableName) ?>">
+    <input type="hidden" name="column" id="deleteColumnName">
 </form>
 
 <script>
@@ -245,6 +278,18 @@ function deleteRow(primaryKey, value) {
         document.getElementById('deletePrimaryKey').value = primaryKey;
         document.getElementById('deleteValue').value = value;
         document.getElementById('deleteForm').submit();
+    }
+}
+
+function deleteColumn(columnName) {
+    if (confirm('⚠️ WARNING: Delete Column\n\nAre you sure you want to delete the column "' + columnName + '"?\n\nThis will:\n- Remove the column from the table\n- Delete ALL data in this column\n- Cannot be undone!\n\nType the column name to confirm deletion.')) {
+        const userInput = prompt('Type the column name "' + columnName + '" to confirm deletion:');
+        if (userInput === columnName) {
+            document.getElementById('deleteColumnName').value = columnName;
+            document.getElementById('deleteColumnForm').submit();
+        } else if (userInput !== null) {
+            alert('Column name does not match. Deletion cancelled.');
+        }
     }
 }
 </script>

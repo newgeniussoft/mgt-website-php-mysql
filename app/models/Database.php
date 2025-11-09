@@ -441,4 +441,178 @@ class Database extends Model
             return false;
         }
     }
+    
+    /**
+     * Add a new column to a table
+     */
+    public static function addColumn($tableName, $columnName, $dataType, $length = null, $nullable = false, $defaultValue = null, $after = null)
+    {
+        try {
+            $instance = new static();
+            $db = $instance->getConnection();
+            
+            // Build column definition
+            $columnDef = "`{$columnName}` {$dataType}";
+            
+            // Add length if provided
+            if ($length !== null && $length !== '') {
+                $columnDef .= "({$length})";
+            }
+            
+            // Add NULL/NOT NULL
+            $columnDef .= $nullable ? ' NULL' : ' NOT NULL';
+            
+            // Add default value if provided
+            if ($defaultValue !== null && $defaultValue !== '') {
+                if (strtoupper($defaultValue) === 'NULL') {
+                    $columnDef .= ' DEFAULT NULL';
+                } elseif (strtoupper($defaultValue) === 'CURRENT_TIMESTAMP') {
+                    $columnDef .= ' DEFAULT CURRENT_TIMESTAMP';
+                } else {
+                    $columnDef .= " DEFAULT " . $db->quote($defaultValue);
+                }
+            }
+            
+            // Build ALTER TABLE query
+            $sql = "ALTER TABLE `{$tableName}` ADD COLUMN {$columnDef}";
+            
+            // Add AFTER clause if specified
+            if ($after !== null && $after !== '') {
+                $sql .= " AFTER `{$after}`";
+            }
+            
+            $db->exec($sql);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error adding column: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Get available MySQL data types
+     */
+    public static function getDataTypes()
+    {
+        return [
+            'Numeric' => [
+                'TINYINT' => 'TINYINT - Very small integer (-128 to 127)',
+                'SMALLINT' => 'SMALLINT - Small integer (-32768 to 32767)',
+                'MEDIUMINT' => 'MEDIUMINT - Medium integer (-8388608 to 8388607)',
+                'INT' => 'INT - Standard integer (-2147483648 to 2147483647)',
+                'BIGINT' => 'BIGINT - Large integer',
+                'DECIMAL' => 'DECIMAL - Fixed-point number (exact)',
+                'FLOAT' => 'FLOAT - Floating-point number',
+                'DOUBLE' => 'DOUBLE - Double-precision floating-point',
+            ],
+            'String' => [
+                'CHAR' => 'CHAR - Fixed-length string (0-255)',
+                'VARCHAR' => 'VARCHAR - Variable-length string (0-65535)',
+                'TINYTEXT' => 'TINYTEXT - Very small text (255 chars)',
+                'TEXT' => 'TEXT - Standard text (65535 chars)',
+                'MEDIUMTEXT' => 'MEDIUMTEXT - Medium text (16MB)',
+                'LONGTEXT' => 'LONGTEXT - Large text (4GB)',
+            ],
+            'Binary' => [
+                'BINARY' => 'BINARY - Fixed-length binary',
+                'VARBINARY' => 'VARBINARY - Variable-length binary',
+                'TINYBLOB' => 'TINYBLOB - Very small BLOB',
+                'BLOB' => 'BLOB - Standard BLOB',
+                'MEDIUMBLOB' => 'MEDIUMBLOB - Medium BLOB',
+                'LONGBLOB' => 'LONGBLOB - Large BLOB',
+            ],
+            'Date/Time' => [
+                'DATE' => 'DATE - Date (YYYY-MM-DD)',
+                'TIME' => 'TIME - Time (HH:MM:SS)',
+                'DATETIME' => 'DATETIME - Date and time',
+                'TIMESTAMP' => 'TIMESTAMP - Timestamp',
+                'YEAR' => 'YEAR - Year (YYYY)',
+            ],
+            'Other' => [
+                'ENUM' => 'ENUM - Enumeration (list of values)',
+                'SET' => 'SET - Set of values',
+                'JSON' => 'JSON - JSON data',
+                'BOOLEAN' => 'BOOLEAN - Boolean (0 or 1)',
+            ],
+        ];
+    }
+    
+    /**
+     * Modify an existing column
+     */
+    public static function modifyColumn($tableName, $oldColumnName, $newColumnName, $dataType, $length = null, $nullable = false, $defaultValue = null)
+    {
+        try {
+            $instance = new static();
+            $db = $instance->getConnection();
+            
+            // Build column definition
+            $columnDef = "`{$newColumnName}` {$dataType}";
+            
+            // Add length if provided
+            if ($length !== null && $length !== '') {
+                $columnDef .= "({$length})";
+            }
+            
+            // Add NULL/NOT NULL
+            $columnDef .= $nullable ? ' NULL' : ' NOT NULL';
+            
+            // Add default value if provided
+            if ($defaultValue !== null && $defaultValue !== '') {
+                if (strtoupper($defaultValue) === 'NULL') {
+                    $columnDef .= ' DEFAULT NULL';
+                } elseif (strtoupper($defaultValue) === 'CURRENT_TIMESTAMP') {
+                    $columnDef .= ' DEFAULT CURRENT_TIMESTAMP';
+                } else {
+                    $columnDef .= " DEFAULT " . $db->quote($defaultValue);
+                }
+            }
+            
+            // Build ALTER TABLE query
+            $sql = "ALTER TABLE `{$tableName}` CHANGE COLUMN `{$oldColumnName}` {$columnDef}";
+            
+            $db->exec($sql);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error modifying column: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Drop a column from a table
+     */
+    public static function dropColumn($tableName, $columnName)
+    {
+        try {
+            $instance = new static();
+            $db = $instance->getConnection();
+            
+            $sql = "ALTER TABLE `{$tableName}` DROP COLUMN `{$columnName}`";
+            $db->exec($sql);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error dropping column: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Get column details
+     */
+    public static function getColumnDetails($tableName, $columnName)
+    {
+        try {
+            $structure = self::getTableStructure($tableName);
+            foreach ($structure as $column) {
+                if ($column['Field'] === $columnName) {
+                    return $column;
+                }
+            }
+            return null;
+        } catch (PDOException $e) {
+            error_log("Error getting column details: " . $e->getMessage());
+            return null;
+        }
+    }
 }

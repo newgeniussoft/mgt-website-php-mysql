@@ -96,4 +96,9 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->get('/database/export-table', 'App\Http\Controllers\DatabaseController@exportTable');
     $router->post('/database/truncate-table', 'App\Http\Controllers\DatabaseController@truncateTable');
     $router->post('/database/drop-table', 'App\Http\Controllers\DatabaseController@dropTable');
+    $router->get('/database/add-column', 'App\Http\Controllers\DatabaseController@addColumn');
+    $router->post('/database/insert-column', 'App\Http\Controllers\DatabaseController@insertColumn');
+    $router->get('/database/edit-column', 'App\Http\Controllers\DatabaseController@editColumn');
+    $router->post('/database/update-column', 'App\Http\Controllers\DatabaseController@updateColumn');
+    $router->post('/database/delete-column', 'App\Http\Controllers\DatabaseController@deleteColumn');
 });

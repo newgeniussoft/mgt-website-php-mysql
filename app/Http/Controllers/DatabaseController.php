@@ -417,4 +417,200 @@ class DatabaseController
         }
         exit;
     }
+    
+    /**
+     * Show add column form
+     */
+    public function addColumn()
+    {
+        $tableName = $_GET['table'] ?? '';
+        
+        if (empty($tableName)) {
+            $_SESSION['error'] = 'Table name is required';
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        $structure = Database::getTableStructure($tableName);
+        $dataTypes = Database::getDataTypes();
+        
+        return View::make('admin.database.add-column', [
+            'tableName' => $tableName,
+            'structure' => $structure,
+            'dataTypes' => $dataTypes,
+            'title' => "Add Column - {$tableName}"
+        ]);
+    }
+    
+    /**
+     * Insert new column
+     */
+    public function insertColumn()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        // CSRF validation
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $_SESSION['error'] = 'Invalid CSRF token';
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        $tableName = $_POST['table'] ?? '';
+        $columnName = $_POST['column_name'] ?? '';
+        $dataType = $_POST['data_type'] ?? '';
+        $length = $_POST['length'] ?? null;
+        $nullable = isset($_POST['nullable']) && $_POST['nullable'] === '1';
+        $defaultValue = $_POST['default_value'] ?? null;
+        $after = $_POST['after'] ?? null;
+        
+        if (empty($tableName) || empty($columnName) || empty($dataType)) {
+            $_SESSION['error'] = 'Table name, column name, and data type are required';
+            header('Location: ' . admin_url('database/add-column?table=' . urlencode($tableName)));
+            exit;
+        }
+        
+        $result = Database::addColumn($tableName, $columnName, $dataType, $length, $nullable, $defaultValue, $after);
+        
+        if ($result) {
+            $_SESSION['success'] = "Column '{$columnName}' added successfully";
+        } else {
+            $_SESSION['error'] = 'Failed to add column';
+        }
+        
+        header("Location: " . admin_url('database/view-table?table=' . urlencode($tableName)));
+        exit;
+    }
+    
+    /**
+     * Show edit column form
+     */
+    public function editColumn()
+    {
+        $tableName = $_GET['table'] ?? '';
+        $columnName = $_GET['column'] ?? '';
+        
+        if (empty($tableName) || empty($columnName)) {
+            $_SESSION['error'] = 'Table name and column name are required';
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        $structure = Database::getTableStructure($tableName);
+        $columnDetails = Database::getColumnDetails($tableName, $columnName);
+        $dataTypes = Database::getDataTypes();
+        
+        if (!$columnDetails) {
+            $_SESSION['error'] = 'Column not found';
+            header('Location: ' . admin_url('database/view-table?table=' . urlencode($tableName)));
+            exit;
+        }
+        
+        // Parse column type to extract base type and length
+        $type = $columnDetails['Type'];
+        $baseType = $type;
+        $length = '';
+        
+        if (preg_match('/^(\w+)\((.+)\)$/', $type, $matches)) {
+            $baseType = strtoupper($matches[1]);
+            $length = $matches[2];
+        } else {
+            $baseType = strtoupper($type);
+        }
+        
+        return View::make('admin.database.edit-column', [
+            'tableName' => $tableName,
+            'structure' => $structure,
+            'columnDetails' => $columnDetails,
+            'columnName' => $columnName,
+            'baseType' => $baseType,
+            'length' => $length,
+            'dataTypes' => $dataTypes,
+            'title' => "Edit Column - {$tableName}.{$columnName}"
+        ]);
+    }
+    
+    /**
+     * Update column
+     */
+    public function updateColumn()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        // CSRF validation
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $_SESSION['error'] = 'Invalid CSRF token';
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        $tableName = $_POST['table'] ?? '';
+        $oldColumnName = $_POST['old_column_name'] ?? '';
+        $newColumnName = $_POST['column_name'] ?? '';
+        $dataType = $_POST['data_type'] ?? '';
+        $length = $_POST['length'] ?? null;
+        $nullable = isset($_POST['nullable']) && $_POST['nullable'] === '1';
+        $defaultValue = $_POST['default_value'] ?? null;
+        
+        if (empty($tableName) || empty($oldColumnName) || empty($newColumnName) || empty($dataType)) {
+            $_SESSION['error'] = 'All required fields must be filled';
+            header('Location: ' . admin_url('database/edit-column?table=' . urlencode($tableName) . '&column=' . urlencode($oldColumnName)));
+            exit;
+        }
+        
+        $result = Database::modifyColumn($tableName, $oldColumnName, $newColumnName, $dataType, $length, $nullable, $defaultValue);
+        
+        if ($result) {
+            $_SESSION['success'] = "Column '{$oldColumnName}' updated successfully";
+        } else {
+            $_SESSION['error'] = 'Failed to update column';
+        }
+        
+        header("Location: " . admin_url('database/view-table?table=' . urlencode($tableName)));
+        exit;
+    }
+    
+    /**
+     * Delete column
+     */
+    public function deleteColumn()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        // CSRF validation
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $_SESSION['error'] = 'Invalid CSRF token';
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        $tableName = $_POST['table'] ?? '';
+        $columnName = $_POST['column'] ?? '';
+        
+        if (empty($tableName) || empty($columnName)) {
+            $_SESSION['error'] = 'Table name and column name are required';
+            header('Location: ' . admin_url('database'));
+            exit;
+        }
+        
+        $result = Database::dropColumn($tableName, $columnName);
+        
+        if ($result) {
+            $_SESSION['success'] = "Column '{$columnName}' deleted successfully";
+        } else {
+            $_SESSION['error'] = 'Failed to delete column';
+        }
+        
+        header("Location: " . admin_url('database/view-table?table=' . urlencode($tableName)));
+        exit;
+    }
 }
