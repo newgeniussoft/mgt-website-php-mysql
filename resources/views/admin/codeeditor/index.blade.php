@@ -75,10 +75,20 @@
             display: flex;
             align-items: center;
             user-select: none;
+            white-space: nowrap;
         }
         
         .tree-item:hover {
             background: #2a2d2e;
+        }
+        
+        .tree-item.active {
+            background: #37373d;
+            color: #fff;
+        }
+        
+        .tree-item span {
+            margin-left: 5px;
         }
         
         .tree-item i {
@@ -92,6 +102,26 @@
         
         .tree-item.file > i {
             color: #519aba;
+        }
+        
+        .tree-item .expand-icon {
+            margin-right: 5px;
+            font-size: 10px;
+            transition: transform 0.2s;
+            display: inline-block;
+            width: 12px;
+        }
+        
+        .tree-item.expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+        
+        .tree-children {
+            display: none;
+        }
+        
+        .tree-item.expanded + .tree-children {
+            display: block;
         }
         
         .editor-area {
@@ -142,7 +172,24 @@
         </div>
         
         <div class="editor-area">
-            <textarea id="codeEditor">{{ $fileContent }}</textarea>
+            @if($filePath)
+                <textarea id="codeEditor">{{ $fileContent }}</textarea>
+            @else
+                <div class="text-center text-white p-5" style="margin-top: 100px;">
+                    <i class="fas fa-code fa-5x mb-4" style="opacity: 0.3;"></i>
+                    <h3>Welcome to Code Editor</h3>
+                    <p class="text-muted">Select a file from the explorer to start editing</p>
+                    <div class="mt-4">
+                        <h6>Supported Files:</h6>
+                        <p class="text-muted">PHP, JavaScript, CSS, HTML, JSON, SQL, Markdown, YAML, and more</p>
+                    </div>
+                    <div class="mt-4">
+                        <h6>Keyboard Shortcuts:</h6>
+                        <p class="text-muted">Ctrl+S: Save | Ctrl+F: Find | Ctrl+H: Replace</p>
+                    </div>
+                </div>
+                <textarea id="codeEditor" style="display: none;"></textarea>
+            @endif
         </div>
     </div>
     
@@ -167,6 +214,8 @@
 let editor;
 let currentFile = '{{ $filePath }}';
 
+// Initialize CodeMirror
+@if($filePath)
 editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
     mode: '{{ $mode }}',
     theme: 'monokai',
@@ -177,6 +226,19 @@ editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
     lineWrapping: true,
     extraKeys: {"Ctrl-S": saveFile}
 });
+@else
+// Initialize empty editor
+editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+    mode: 'text/plain',
+    theme: 'monokai',
+    lineNumbers: true,
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    indentUnit: 4,
+    lineWrapping: true,
+    extraKeys: {"Ctrl-S": saveFile}
+});
+@endif
 
 loadFileTree();
 
@@ -193,24 +255,52 @@ function renderFileTree(items, container = null, level = 0) {
     if (!container) tree.innerHTML = '';
     
     items.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'tree-item ' + (item.is_dir ? 'folder' : 'file');
-        div.style.paddingLeft = (level * 20 + 10) + 'px';
-        div.innerHTML = `<i class="fas fa-${item.is_dir ? 'folder' : 'file-code'}"></i> ${item.name}`;
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'tree-item ' + (item.is_dir ? 'folder' : 'file');
+        itemDiv.style.paddingLeft = (level * 20 + 10) + 'px';
         
         if (item.is_dir) {
-            div.onclick = () => div.classList.toggle('expanded');
-            tree.appendChild(div);
-            if (item.children) {
-                const childDiv = document.createElement('div');
-                childDiv.style.display = 'none';
-                tree.appendChild(childDiv);
-                renderFileTree(item.children, childDiv, level + 1);
-                div.onclick = () => childDiv.style.display = childDiv.style.display === 'none' ? 'block' : 'none';
+            // Folder with expand icon
+            itemDiv.innerHTML = `
+                <i class="fas fa-caret-right expand-icon"></i>
+                <i class="fas fa-folder"></i>
+                <span>${item.name}</span>
+            `;
+            
+            tree.appendChild(itemDiv);
+            
+            // Create children container
+            if (item.children && item.children.length > 0) {
+                const childrenDiv = document.createElement('div');
+                childrenDiv.className = 'tree-children';
+                tree.appendChild(childrenDiv);
+                
+                // Render children
+                renderFileTree(item.children, childrenDiv, level + 1);
+                
+                // Toggle expand/collapse
+                itemDiv.onclick = function(e) {
+                    e.stopPropagation();
+                    itemDiv.classList.toggle('expanded');
+                };
             }
         } else if (item.editable) {
-            div.onclick = () => openFile(item.path);
-            tree.appendChild(div);
+            // File
+            itemDiv.innerHTML = `
+                <i class="fas fa-file-code"></i>
+                <span>${item.name}</span>
+            `;
+            
+            // Highlight active file
+            if (currentFile && item.path === currentFile) {
+                itemDiv.classList.add('active');
+            }
+            
+            itemDiv.onclick = function(e) {
+                e.stopPropagation();
+                openFile(item.path);
+            };
+            tree.appendChild(itemDiv);
         }
     });
 }
