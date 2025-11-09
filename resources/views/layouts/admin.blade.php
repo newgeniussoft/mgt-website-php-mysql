@@ -133,6 +133,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ admin_url('filemanager') }}">
+                                <i class="fas fa-folder-open"></i>
+                                File Manager
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-blog"></i>
                                 Blog Posts

@@ -52,6 +52,16 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/media/folder/update', 'App\Http\Controllers\MediaController@updateFolder');
     $router->post('/media/folder/delete', 'App\Http\Controllers\MediaController@deleteFolder');
     
+    // File Manager routes (real file system)
+    $router->get('/filemanager', 'App\Http\Controllers\FileManagerController@index');
+    $router->post('/filemanager/create-folder', 'App\Http\Controllers\FileManagerController@createFolder');
+    $router->post('/filemanager/upload', 'App\Http\Controllers\FileManagerController@upload');
+    $router->post('/filemanager/rename', 'App\Http\Controllers\FileManagerController@rename');
+    $router->post('/filemanager/delete', 'App\Http\Controllers\FileManagerController@delete');
+    $router->post('/filemanager/move', 'App\Http\Controllers\FileManagerController@move');
+    $router->get('/filemanager/download', 'App\Http\Controllers\FileManagerController@download');
+    $router->get('/filemanager/folder-tree', 'App\Http\Controllers\FileManagerController@getFolderTree');
+    
     // User management routes
     $router->get('/users', 'App\Http\Controllers\AdminController@index');
     $router->get('/users/{id}', 'App\Http\Controllers\AdminController@show');
