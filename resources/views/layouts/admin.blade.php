@@ -152,8 +152,14 @@
                         </li>
                     </ul>
                     
-                    <h6 class="sidebar-heading">Settings</h6>
+                    <h6 class="sidebar-heading">System</h6>
                     <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ admin_url('database') }}">
+                                <i class="fas fa-database"></i>
+                                Database Manager
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ admin_url('settings') }}">
                                 <i class="fas fa-cog"></i>

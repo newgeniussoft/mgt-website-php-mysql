@@ -82,4 +82,18 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/users', 'App\Http\Controllers\AdminController@store');
     $router->put('/users/{id}', 'App\Http\Controllers\AdminController@update');
     $router->delete('/users/{id}', 'App\Http\Controllers\AdminController@destroy');
+    
+    // Database management routes
+    $router->get('/database', 'App\Http\Controllers\Admin\DatabaseController@index');
+    $router->get('/database/view-table', 'App\Http\Controllers\Admin\DatabaseController@viewTable');
+    $router->get('/database/edit-row', 'App\Http\Controllers\Admin\DatabaseController@editRow');
+    $router->post('/database/update-row', 'App\Http\Controllers\Admin\DatabaseController@updateRow');
+    $router->get('/database/add-row', 'App\Http\Controllers\Admin\DatabaseController@addRow');
+    $router->post('/database/insert-row', 'App\Http\Controllers\Admin\DatabaseController@insertRow');
+    $router->post('/database/delete-row', 'App\Http\Controllers\Admin\DatabaseController@deleteRow');
+    $router->get('/database/sql-query', 'App\Http\Controllers\Admin\DatabaseController@sqlQuery');
+    $router->post('/database/sql-query', 'App\Http\Controllers\Admin\DatabaseController@sqlQuery');
+    $router->get('/database/export-table', 'App\Http\Controllers\Admin\DatabaseController@exportTable');
+    $router->post('/database/truncate-table', 'App\Http\Controllers\Admin\DatabaseController@truncateTable');
+    $router->post('/database/drop-table', 'App\Http\Controllers\Admin\DatabaseController@dropTable');
 });
