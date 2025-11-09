@@ -62,6 +62,16 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->get('/filemanager/download', 'App\Http\Controllers\FileManagerController@download');
     $router->get('/filemanager/folder-tree', 'App\Http\Controllers\FileManagerController@getFolderTree');
     
+    // Code Editor routes
+    $router->get('/codeeditor', 'App\Http\Controllers\CodeEditorController@index');
+    $router->get('/codeeditor/file-tree', 'App\Http\Controllers\CodeEditorController@getFileTree');
+    $router->post('/codeeditor/save', 'App\Http\Controllers\CodeEditorController@save');
+    $router->post('/codeeditor/create-file', 'App\Http\Controllers\CodeEditorController@createFile');
+    $router->post('/codeeditor/create-folder', 'App\Http\Controllers\CodeEditorController@createFolder');
+    $router->post('/codeeditor/delete', 'App\Http\Controllers\CodeEditorController@deleteFile');
+    $router->post('/codeeditor/rename', 'App\Http\Controllers\CodeEditorController@renameFile');
+    $router->get('/codeeditor/search', 'App\Http\Controllers\CodeEditorController@search');
+    
     // User management routes
     $router->get('/users', 'App\Http\Controllers\AdminController@index');
     $router->get('/users/{id}', 'App\Http\Controllers\AdminController@show');

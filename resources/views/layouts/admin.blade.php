@@ -139,6 +139,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ admin_url('codeeditor') }}">
+                                <i class="fas fa-code"></i>
+                                Code Editor
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-blog"></i>
                                 Blog Posts
