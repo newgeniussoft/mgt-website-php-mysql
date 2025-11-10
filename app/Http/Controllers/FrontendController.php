@@ -18,7 +18,7 @@ class FrontendController extends Controller
         $page = Page::getHomepage();
         
         if ($page) {
-            return $this->showPage($page);
+            return $this->showPage($page->slug);
         }
         
         // Fallback: show a simple welcome page
@@ -26,10 +26,7 @@ class FrontendController extends Controller
         echo '<p><a href="/' . ($_ENV['APP_ADMIN_PREFIX'] ?? 'admin') . '/pages">Go to Admin Panel</a></p>';
         exit;
     }
-    
-    /**
-     * Show a page by slug
-     */
+
     public function showPage($slug)
     {
         // If $slug is already a Page object (from index method)
@@ -147,11 +144,11 @@ class FrontendController extends Controller
      */
     protected function buildMenuHtml($menuPages)
     {
-        $html = '<ul class="menu">';
+        $html = '<ul class="navbar-nav header-styled gradient-border">';
         foreach ($menuPages as $menuPage) {
             $active = (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/' . $menuPage->slug) ? ' class="active"' : '';
             $url = $menuPage->is_homepage ? '/' : '/' . $menuPage->slug;
-            $html .= '<li' . $active . '><a href="' . $url . '">' . htmlspecialchars($menuPage->title) . '</a></li>';
+            $html .= '<li' . $active . ' class="nav-item"><a href="' . $url . '" class="nav-link">' . htmlspecialchars($menuPage->title) . '</a></li>';
         }
         $html .= '</ul>';
         return $html;

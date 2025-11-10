@@ -4,9 +4,11 @@
 // Frontend routes - Dynamic pages from database
 $router->get('/', 'App\Http\Controllers\FrontendController@index');
 
-$router->get('/test', function() {
+$router->get('/test-api', function() {
     return response()->json(['message' => 'API is working!']);
 });
+
+$router->get('/test', 'App\Http\Controllers\FrontendController@testPage');
 
 // User routes example
 $router->group(['prefix' => 'api'], function($router) {

@@ -49,20 +49,23 @@
         <input type="hidden" name="js_content" id="js_content">
         
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="mb-0">Template Information</h5>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
+                        <div class="row">
+                        <div class="form-group col-md-6">
                             <label for="name">Template Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ $template->name }}" required>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label for="slug">Slug</label>
                             <input type="text" class="form-control" id="slug" name="slug" value="{{ $template->slug }}">
+                        </div>
+
                         </div>
 
                         <div class="form-group">
@@ -93,23 +96,128 @@
                         </ul>
                     </div>
                     <div class="card-body p-0">
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="htmlTab" role="tabpanel">
-                                <div class="editor-container">
-                                    <div id="htmlEditor"></div>
+                         <div class="container container-editor">
+                            <div class="editors-panel">
+                                <div class="editor-section" id="html-section">
+                                    <div class="editor-header html-header">
+                                        <span class="icon">●</span> HTML
+                                    </div>
+                                    <div class="editor-wrapper" id="htmlEditor"></div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="cssTab" role="tabpanel">
-                                <div class="editor-container">
-                                    <div id="cssEditor"></div>
+
+                                <div class="resizer" data-resize="html"></div>
+
+                                <div class="editor-section" id="css-section">
+                                    <div class="editor-header css-header">
+                                        <span class="icon">●</span> CSS
+                                    </div>
+                                    <div class="editor-wrapper" id="cssEditor"></div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="jsTab" role="tabpanel">
-                                <div class="editor-container">
-                                    <div id="jsEditor"></div>
+
+                                <div class="resizer" data-resize="css"></div>
+
+                                <div class="editor-section" id="js-section">
+                                    <div class="editor-header js-header">
+                                        <span class="icon">●</span> JavaScript
+                                    </div>
+                                    <div class="editor-wrapper" id="jsEditor"></div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+                <script>
+                   /* let htmlEditor, cssEditor, jsEditor;
+
+                    require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
+
+                    require(['vs/editor/editor.main'], function () {
+                        // HTML Editor
+                        htmlEditor = monaco.editor.create(document.getElementById('html-editor'), {
+                            value: '<div class="container">\n  <h1>Hello World!</h1>\n  <p>Start coding...</p>\n</div>',
+                            language: 'html',
+                            theme: 'vs-dark',
+                            automaticLayout: true,
+                            minimap: { enabled: false },
+                            fontSize: 14
+                        });
+
+                        // CSS Editor
+                        cssEditor = monaco.editor.create(document.getElementById('css-editor'), {
+                            value: '.container {\n  padding: 20px;\n  text-align: center;\n}\n\nh1 {\n  color: #007acc;\n}',
+                            language: 'css',
+                            theme: 'vs-dark',
+                            automaticLayout: true,
+                            minimap: { enabled: false },
+                            fontSize: 14
+                        });
+
+                        // JavaScript Editor
+                        jsEditor = monaco.editor.create(document.getElementById('js-editor'), {
+                            value: '// Write your JavaScript here\nconsole.log("Ready to code!");',
+                            language: 'javascript',
+                            theme: 'vs-dark',
+                            automaticLayout: true,
+                            minimap: { enabled: false },
+                            fontSize: 14
+                        });
+                    });
+*/
+                    // Resizing functionality
+                    let isResizing = false;
+                    let currentResizer = null;
+                    let startX = 0;
+                    let startWidths = [];
+
+                    document.querySelectorAll('.resizer').forEach(resizer => {
+                        resizer.addEventListener('mousedown', (e) => {
+                            isResizing = true;
+                            currentResizer = e.target;
+                            startX = e.clientX;
+                            
+                            // Store all section widths
+                            startWidths = [];
+                            document.querySelectorAll('.editor-section').forEach(section => {
+                                startWidths.push(section.offsetWidth);
+                            });
+                            
+                            currentResizer.classList.add('dragging');
+                            document.body.style.cursor = 'col-resize';
+                            e.preventDefault();
+                        });
+                    });
+
+                    document.addEventListener('mousemove', (e) => {
+                        if (!isResizing) return;
+
+                        const delta = e.clientX - startX;
+                        const sections = document.querySelectorAll('.editor-section');
+                        const resizerIndex = Array.from(document.querySelectorAll('.resizer')).indexOf(currentResizer);
+                        
+                        const leftSection = sections[resizerIndex];
+                        const rightSection = sections[resizerIndex + 1];
+                        
+                        const newLeftWidth = startWidths[resizerIndex] + delta;
+                        const newRightWidth = startWidths[resizerIndex + 1] - delta;
+                        
+                        if (newLeftWidth > 100 && newRightWidth > 100) {
+                            leftSection.style.flex = `0 0 ${newLeftWidth}px`;
+                            rightSection.style.flex = `0 0 ${newRightWidth}px`;
+                        }
+                    });
+
+                    document.addEventListener('mouseup', () => {
+                        if (isResizing) {
+                            isResizing = false;
+                            if (currentResizer) {
+                                currentResizer.classList.remove('dragging');
+                            }
+                            document.body.style.cursor = 'default';
+                            currentResizer = null;
+                        }
+                    });
+                </script>
                     </div>
                 </div>
             </div>
@@ -218,5 +326,7 @@ document.getElementById('templateForm').addEventListener('submit', function(e) {
     document.getElementById('css_content').value = cssEditor.getValue();
     document.getElementById('js_content').value = jsEditor.getValue();
 });
+
+console.log("Hello world");
 </script>
 @endsection

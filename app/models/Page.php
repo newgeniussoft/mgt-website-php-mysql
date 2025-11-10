@@ -9,6 +9,10 @@ class Page extends Model {
         'meta_keywords', 'featured_image', 'status', 'is_homepage', 
         'show_in_menu', 'menu_order', 'parent_id', 'author_id', 'published_at'
     ];
+
+    public function getConnection() {
+        return self::$connection;
+    }
     
     /**
      * Get all published pages

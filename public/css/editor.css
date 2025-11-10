@@ -1,0 +1,68 @@
+ .container-editor {
+            display: flex;
+            height: calc(100vh - 49px);
+        }
+
+.editors-panel {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .editor-section {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .editor-header {
+            background: #2d2d30;
+            color: #cccccc;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 500;
+            border-right: 1px solid #3e3e42;
+            display: flex;
+            align-items: center;
+        }
+
+        .editor-header .icon {
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .html-header .icon { color: #e44d26; }
+        .css-header .icon { color: #264de4; }
+        .js-header .icon { color: #f7df1e; }
+
+        .editor-wrapper {
+            flex: 1;
+            position: relative;
+            border-right: 1px solid #3e3e42;
+        }
+
+        .resizer {
+            width: 5px;
+            background: #3e3e42;
+            cursor: col-resize;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .resizer:hover {
+            background: #007acc;
+        }
+
+        .resizer.dragging {
+            background: #007acc;
+        }
+
+        .preview-panel {
+            display: none;
+        }
+
+        .preview-header {
+            display: none;
+        }
