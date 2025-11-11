@@ -153,6 +153,53 @@ class FrontendController extends Controller
         $html .= '</ul>';
         return $html;
     }
+
+    /**
+     * Get attributes from dom
+     */
+
+    public function attrFromTag($tag, $attr) {
+        // example tag : <items name="tours" />
+
+        preg_match('/' . $attr . '="([^"]+)"/i', $tag, $matches);
+        return $matches[1] ?? '';
+        
+
+    }
+
+    /**
+     *  Get if tag in varibale {{ variables }}
+     */
+
+    public function tagVariables($content) {
+        preg_match_all('/{{\s*([^}]+)\s*}}/', $content, $matches);
+        return $matches[1] ?? [];
+    }
+
+    /**
+     * Get Model by name
+     */
+    public function getModelByName($name) {
+        $modelName = '\\App\\Models\\' . $name;
+        $model = new $modelName();
+        return $model;
+    }
+
+    public function createListHtml($items, $keys) {
+        $html = '<ul>';
+        foreach ($items as $item) {
+            $key = $keys[0].'';
+            $html .= '<li>';
+            for ($i = 0; $i < count($keys); $i++) {
+                $key = str_replace(' ', '', $keys[$i])."";
+                $value = $item->$key;
+                $html .= $value." ";
+            }
+           $html .= '</li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
     
     /**
      * Render sections
@@ -181,7 +228,17 @@ class FrontendController extends Controller
             
             // Replace {{ content }} with actual content
             $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
-            
+            foreach ($this->tagVariables($sectionHtml) as $variable) {
+                $value = $this->attrFromTag($variable, 'name');
+                $keys = $this->attrFromTag($variable, 'keys');
+                $keys = explode(',', $keys);
+                $model = $this->getModelByName(ucfirst($value));
+                $items = $model->all();
+                
+                $sectionHtml = str_replace('{{ '.$variable.'}}', $this->createListHtml($items, $keys), $sectionHtml);
+            }
+
+
             $html .= $sectionHtml;
             
             // Collect CSS and JS
