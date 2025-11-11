@@ -6,6 +6,7 @@ use App\Models\Page;
 use App\Models\Template;
 use App\Models\Section;
 use App\View\View;
+use App\Localization\Lang;
 
 class FrontendController extends Controller
 {
@@ -210,12 +211,15 @@ class FrontendController extends Controller
         $css = '';
         $js = '';
         
+        // Get current language from locale system
+        $currentLanguage = Lang::getLocale();
+        
         foreach ($sections as $section) {
             // Render section HTML
             $sectionHtml = $section->html_template ?? '';
             
-            // Get section contents
-            $contents = \App\Models\Content::getBySection($section->id, true);
+            // Get section contents with current language
+            $contents = \App\Models\Content::getBySection($section->id, true, $currentLanguage);
             $contentHtml = '';
             
             foreach ($contents as $content) {
