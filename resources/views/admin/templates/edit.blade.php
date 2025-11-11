@@ -20,24 +20,35 @@
                 <!-- Sidebar -->
                 <div class="sidebar">
                     <div class="sidebar-icon active" onclick="togglePanel('explorer')" title="Explorer (Ctrl+Shift+E)">
-                        <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M14.5 2H7.71l-.85-.85L6.51 1h-5l-.5.5v11l.5.5h13l.5-.5v-10zm-.51 8.49V13h-12V7h4.49l.35-.35.86-.86H14v4.7z"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-folder">
+  <path d="M4 4h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+</svg>
+
                     </div>
                     <div class="sidebar-icon" onclick="togglePanel('infos')" title="Information">
-                        <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M192,0 L-1.42108547e-14,0 L-1.42108547e-14,384 L298.666667,384 L298.666667,106.666667 L192,0 Z M256,341.333333 L42.6666667,341.333333 L42.6666667,42.6666667 L128,42.6666667 L128,170.666667 L256,170.666667 L256,341.333333 Z M256,128 L170.666667,128 L170.666667,42.6666667 L174.293333,42.6666667 L256,124.373333 L256,128 Z"/>
-                        </svg>
-                    </div>
-                    <div class="sidebar-icon" onclick="togglePanel('search')" title="Search (Ctrl+Shift+F)">
-                        <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M11.5 7a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0zm-.82 4.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04z"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-file">
+  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+  <polyline points="14 2 14 8 20 8"/>
+</svg>
+
+                        
                     </div>
                     <div class="sidebar-icon" onclick="togglePanel('extensions')" title="Extensions (Ctrl+Shift+X)">
-                        <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M11.5 1h-7l-.5.5v6l.5.5h7l.5-.5v-6l-.5-.5zM11 7H5V2h6v5zm-8.5-.5l-.5.5v7l.5.5h7l.5-.5v-7l-.5-.5H8v6l-3-2-3 2V6.5z"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-list">
+  <line x1="8" y1="6" x2="21" y2="6"/>
+  <line x1="8" y1="12" x2="21" y2="12"/>
+  <line x1="8" y1="18" x2="21" y2="18"/>
+  <line x1="3" y1="6" x2="3" y2="6"/>
+  <line x1="3" y1="12" x2="3" y2="12"/>
+  <line x1="3" y1="18" x2="3" y2="18"/>
+</svg>
+
                     </div>
                 </div>
                 <!-- Side Panel -->
@@ -153,21 +164,17 @@
                         <div class="menu-item">
                             File
                             <div class="dropdown">
-                                <div class="dropdown-item">
-                                    <span>New File</span>
+                                <div class="dropdown-item" onclick="window.location.href = '{{ admin_url('templates/create') }}'">
+                                    <span>New Template</span>
                                     <span class="shortcut">Ctrl+N</span>
                                 </div>
-                                <div class="dropdown-item">
-                                    <span>Open File...</span>
+                                <div class="dropdown-item" onclick="togglePanel('extensions')">
+                                    <span>Open Template</span>
                                     <span class="shortcut">Ctrl+O</span>
-                                </div>
-                                <div class="dropdown-item">
-                                    <span>Open Folder...</span>
-                                    <span class="shortcut">Ctrl+K Ctrl+O</span>
                                 </div>
                                 <div class="dropdown-separator"></div>
                                 <button type="submit" class="dropdown-item">
-                                    <span>Save</span>
+                                    <span>Save Template</span>
                                     <span class="shortcut">Ctrl+S</span>
                                 </button>
                                 <div class="dropdown-separator"></div>
@@ -180,69 +187,13 @@
                         <div class="menu-item">
                             Edit
                             <div class="dropdown">
-                                <div class="dropdown-item">
+                                <div class="dropdown-item" onclick="undo()">
                                     <span>Undo</span>
                                     <span class="shortcut">Ctrl+Z</span>
                                 </div>
-                                <div class="dropdown-item">
+                                <div class="dropdown-item" onclick="redo()">
                                     <span>Redo</span>
                                     <span class="shortcut">Ctrl+Y</span>
-                                </div>
-                                <div class="dropdown-separator"></div>
-                                <div class="dropdown-item">
-                                    <span>Cut</span>
-                                    <span class="shortcut">Ctrl+X</span>
-                                </div>
-                                <div class="dropdown-item">
-                                    <span>Copy</span>
-                                    <span class="shortcut">Ctrl+C</span>
-                                </div>
-                                <div class="dropdown-item">
-                                    <span>Paste</span>
-                                    <span class="shortcut">Ctrl+V</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            Selection
-                            <div class="dropdown">
-                                <div class="dropdown-item">
-                            <span>Select All</span>
-                                    <span class="shortcut">Ctrl+A</span>
-                                </div>
-                                <div class="dropdown-item">
-                                    <span>Expand Selection</span>
-                                    <span class="shortcut">Shift+Alt+→</span>
-                                </div>
-                                <div class="dropdown-item">
-                                    <span>Shrink Selection</span>
-                                    <span class="shortcut">Shift+Alt+←</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            View
-                            <div class="dropdown">
-                                <div class="dropdown-item">
-                                    <span>Command Palette...</span>
-                                    <span class="shortcut">Ctrl+Shift+P</span>
-                                </div>
-                                <div class="dropdown-item">
-                                    <span>Open View...</span>
-                                    <span class="shortcut">Ctrl+Q</span>
-                                </div>
-                                <div class="dropdown-separator"></div>
-                                <div class="dropdown-item">
-                                    <span>Explorer</span>
-                                    <span class="shortcut">Ctrl+Shift+E</span>
-                                </div>
-                                <div class="dropdown-item">
-                                    <span>Search</span>
-                                    <span class="shortcut">Ctrl+Shift+F</span>
-                                </div>
-                                <div class="dropdown-item">
-                                    <span>Extensions</span>
-                                    <span class="shortcut">Ctrl+Shift+X</span>
                                 </div>
                             </div>
                         </div>
@@ -284,6 +235,7 @@
             let editors = {};
             let openTabs = [];
             let activeTab = null;
+            var currentEditor = null;
        
             const fileInput = document.getElementById('fileInput');
             const fileName = document.getElementById('thumbnail');
@@ -381,6 +333,18 @@
                     fontSize: 14,
                     lineNumbers: 'on',
                     scrollBeyondLastLine: false
+                });
+
+                currentEditor = editor;
+
+                
+
+                editor.onKeyDown((event) => {
+                    if (event.key === 'z' && event.metaKey) {
+                        editor.undo();
+                    } else if (event.key === 'y' && event.metaKey) {
+                        editor.redo();
+                    }
                 });
                 // Detect content change
                 editor.onDidChangeModelContent((event) => {
@@ -577,6 +541,19 @@
                 document.getElementById('thumbnail_removed').value = '1';
                 document.getElementById('thumbnail-preview').style.display = 'none';
             }
+
+            function redo() {
+                if (currentEditor) {
+                     currentEditor.trigger('keyboard', 'redo', null);
+                }
+            }
+
+            function undo() {
+                if (currentEditor) {
+                    currentEditor.trigger('keyboard', 'undo', null);
+                }
+            }
+
 
             document.getElementById('templateForm').addEventListener('submit', function (e) {
                 e.preventDefault();
