@@ -18,7 +18,7 @@ abstract class Model {
         self::$connection = $pdo;
     }
     
-    protected function getConnection() {
+    public function getConnection() {
         return self::$connection;
     }
     

@@ -22,8 +22,11 @@ class TemplateController extends Controller {
      * Show create template form
      */
     public function create() {
-        return view('admin.templates.create', [
-            'title' => 'Create Template'
+        
+        $templates = Template::all();
+        return view('admin.templates.edit', [
+            'title' => 'Create Template',
+            'templates' => $templates
         ]);
     }
     
@@ -102,6 +105,7 @@ class TemplateController extends Controller {
         }
         
         $template = Template::find($id);
+        $templates = Template::all();
         
         if (!$template) {
             $_SESSION['error'] = 'Template not found';
@@ -110,7 +114,8 @@ class TemplateController extends Controller {
         
         return view('admin.templates.edit', [
             'title' => 'Edit Template',
-            'template' => $template
+            'template' => $template,
+            'templates' => $templates
         ]);
     }
     
@@ -177,6 +182,9 @@ class TemplateController extends Controller {
                 }
                 $template->thumbnail = '/uploads/templates/' . $fileName;
             }
+        }
+        if (isset($_POST['thumbnail_removed']) && $_POST['thumbnail_removed'] === '1') {
+            $template->thumbnail = null;
         }
         
         // If set as default, unset other defaults
