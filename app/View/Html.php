@@ -55,16 +55,10 @@ class Html {
             
             // Replace {{ content }} with actual content
             $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
-            
-            // Process <items> tags with template items
-            $itemsTags = self::findItemsTags($sectionHtml);
-            
-            foreach ($itemsTags as $itemsTag) {
-                echo var_dump($itemsTag);
-               // $itemsTagHtml = self::processItemsTag($itemsTag);
-               // $sectionHtml = str_replace($itemsTag['tag'], $itemsTagHtml, "test item");
-            }
-            
+            // Define your data sources
+
+            $sectionHtml = self::renderItemsWithData($sectionHtml);
+           
             $html .= $sectionHtml;
             
             // Collect CSS and JS
@@ -88,134 +82,157 @@ class Html {
     }
 
    /**
- * Extract items tag attributes as an object/array
- * 
- * @param string $html The HTML content containing the items tag
- * @return array|null Array of attributes or null if not found
- */
-function extractItemsTag($html) {
-    $pattern = '/<items\s+([^>]+)\/>/i';
+    * Extract items tag attributes as an object/array
+    * 
+    * @param string $html The HTML content containing the items tag
+    * @return array|null Array of attributes or null if not not found
+    */
+    public static function extractItemsTag($html) {
+        $pattern = '/<items\s+([^>]+)\/>/i';
     
-    if (preg_match($pattern, $html, $matches)) {
-        $attributesString = $matches[1];
-        $attributes = [];
+        if (preg_match($pattern, $html, $matches)) {
+            $attributesString = $matches[1];
+            $attributes = [];
         
-        $attrPattern = '/(\w+)="([^"]*)"/';
+            $attrPattern = '/(\w+)="([^"]*)"/';
         
-        if (preg_match_all($attrPattern, $attributesString, $attrMatches, PREG_SET_ORDER)) {
-            foreach ($attrMatches as $match) {
-                $attributes[$match[1]] = $match[2];
+            if (preg_match_all($attrPattern, $attributesString, $attrMatches, PREG_SET_ORDER)) {
+                foreach ($attrMatches as $match) {
+                    $attributes[$match[1]] = $match[2];
+                }
+            }
+        
+            return $attributes;
+        }
+    
+        return null;
+    }
+
+    /**
+     * Find all items tags in HTML content
+     * 
+     * @param string $html The HTML content to search in
+     * @return array Array of items, each containing 'tag' and 'attributes'
+     */
+    public static function findItemsTags($html) {
+        $pattern = '/<items\s+[^>]+\/>/i';
+        $results = [];
+    
+        if (preg_match_all($pattern, $html, $matches)) {
+            foreach ($matches[0] as $tag) {
+                $attributes = [];
+            
+                $attrPattern = '/(\w+)="([^"]*)"/';
+                if (preg_match_all($attrPattern, $tag, $attrMatches, PREG_SET_ORDER)) {
+                    foreach ($attrMatches as $match) {
+                        $attributes[$match[1]] = $match[2];
+                    }
+                }
+            
+                $results[] = [
+                    'tag' => $tag,
+                    'attributes' => $attributes
+                ];
             }
         }
-        
-        return $attributes;
+    
+        return $results;
     }
-    
-    return null;
-}
 
-/**
- * Find all items tags in HTML content
- * 
- * @param string $html The HTML content to search in
- * @return array Array of items, each containing 'tag' and 'attributes'
- */
-function findItemsTags($html) {
-    $pattern = '/<items\s+[^>]+\/>/i';
-    $results = [];
+    /**
+     * Render a single item using a template
+     * 
+     * @param string $template Template string with {{ $item.attribute }} placeholders
+     * @param array $item Data array for the item
+     * @return string Rendered HTML
+     */
+    public static function renderItemTemplate($template, $item) {
+        $rendered = $template;
     
-    if (preg_match_all($pattern, $html, $matches)) {
-        foreach ($matches[0] as $tag) {
+        // Replace {{ $item.attribute }} with actual values
+        foreach ($item as $key => $value) {
+            $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
+        }
+    
+        return $rendered;
+    }
+
+
+    /**
+     * Advanced render function with data source and templates
+     * 
+     * @param string $html HTML content with <items> tags
+     * @param array $dataSources Associative array of data sources (e.g., ['media' => $mediaArray])
+     * @param array $templates Associative array of templates (e.g., ['media-grid' => $templateString])
+     * @return string Rendered HTML
+     */
+    public static function renderItemsWithData($html) {
+        $pattern = '/<items\s+[^>]+\/>/i';
+
+        foreach(self::findItemsTags($html) as $item){
+            $name = $item['attributes']['name'];
+            $modelName = '\\App\\Models\\' . $name;
+            $list = $modelName::all();
+
+            $listArray = [];
+            foreach($list as $media){
+                $item = [];
+                foreach($media->toArray() as $key => $value){
+                    $item[$key] = $value;
+                }
+                $listArray[] = $item;
+            }
+            $dataSources[$name] = $listArray;
+        }
+
+        $templateItem = \App\Models\TemplateItem::all();
+        $templates = [];
+        foreach ($templateItem as $item) {
+            $templates[$item->slug] = $item->html_template;
+        }
+    
+        return preg_replace_callback($pattern, function($matches) use ($dataSources, $templates) {
+            $tag = $matches[0];
             $attributes = [];
-            
+        
+            // Extract attributes
             $attrPattern = '/(\w+)="([^"]*)"/';
             if (preg_match_all($attrPattern, $tag, $attrMatches, PREG_SET_ORDER)) {
                 foreach ($attrMatches as $match) {
                     $attributes[$match[1]] = $match[2];
                 }
             }
-            
-            $results[] = [
-                'tag' => $tag,
-                'attributes' => $attributes
-            ];
-        }
-    }
-    
-    return $results;
-}
-
-/**
- * Render a single item using a template
- * 
- * @param string $template Template string with {{ $item.attribute }} placeholders
- * @param array $item Data array for the item
- * @return string Rendered HTML
- */
-function renderItemTemplate($template, $item) {
-    $rendered = $template;
-    
-    // Replace {{ $item.attribute }} with actual values
-    foreach ($item as $key => $value) {
-        $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
-    }
-    
-    return $rendered;
-}
-
-/**
- * Advanced render function with data source and templates
- * 
- * @param string $html HTML content with <items> tags
- * @param array $dataSources Associative array of data sources (e.g., ['media' => $mediaArray])
- * @param array $templates Associative array of templates (e.g., ['media-grid' => $templateString])
- * @return string Rendered HTML
- */
-function renderItemsWithData($html, $dataSources, $templates) {
-    $pattern = '/<items\s+[^>]+\/>/i';
-    
-    return preg_replace_callback($pattern, function($matches) use ($dataSources, $templates) {
-        $tag = $matches[0];
-        $attributes = [];
         
-        // Extract attributes
-        $attrPattern = '/(\w+)="([^"]*)"/';
-        if (preg_match_all($attrPattern, $tag, $attrMatches, PREG_SET_ORDER)) {
-            foreach ($attrMatches as $match) {
-                $attributes[$match[1]] = $match[2];
+            // Get the data source name
+            $dataName = $attributes['name'] ?? null;
+            $templateName = $attributes['template'] ?? null;
+            $limit = isset($attributes['limit']) ? (int)$attributes['limit'] : null;
+        
+            // Check if data source and template exist
+            if (!$dataName || !isset($dataSources[$dataName])) {
+                return '<!-- Data source "' . htmlspecialchars($dataName) . '" not found -->';
             }
-        }
         
-        // Get the data source name
-        $dataName = $attributes['name'] ?? null;
-        $templateName = $attributes['template'] ?? null;
-        $limit = isset($attributes['limit']) ? (int)$attributes['limit'] : null;
+            if (!$templateName || !isset($templates[$templateName])) {
+                return '<!-- Template "' . htmlspecialchars($templateName) . '" not found -->';
+            }
         
-        // Check if data source and template exist
-        if (!$dataName || !isset($dataSources[$dataName])) {
-            return '<!-- Data source "' . htmlspecialchars($dataName) . '" not found -->';
-        }
+            $data = $dataSources[$dataName];
+            $template = $templates[$templateName];
         
-        if (!$templateName || !isset($templates[$templateName])) {
-            return '<!-- Template "' . htmlspecialchars($templateName) . '" not found -->';
-        }
+            // Apply limit if specified
+            if ($limit !== null && $limit > 0) {
+                $data = array_slice($data, 0, $limit);
+            }
         
-        $data = $dataSources[$dataName];
-        $template = $templates[$templateName];
+            // Render each item
+            $output = '';
+            foreach ($data as $item) {
+                $output .= self::renderItemTemplate($template, $item);
+            }
         
-        // Apply limit if specified
-        if ($limit !== null && $limit > 0) {
-            $data = array_slice($data, 0, $limit);
-        }
+            return $output;
         
-        // Render each item
-        $output = '';
-        foreach ($data as $item) {
-            $output .= renderItemTemplate($template, $item);
-        }
-        
-        return $output;
-        
-    }, $html);
-}
+        }, $html);
+    }
 }

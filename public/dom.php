@@ -163,6 +163,7 @@ $templates = [
         <span class="filename">{{ $item.original_filename }}</span>
         <span class="type">{{ $item.file_type }}</span>
     </li>'
+    
 ];
 
 // Your HTML with items tag
@@ -179,14 +180,15 @@ $html = '<html>
 <body>
     <h1>Media Gallery</h1>
     <div class="row">
-        <items name="media" template="media-grid" limit="2" />
+        <items name="media" template="media-grid" limit="3" />
     </div>
+    <items name="media" template="media-list" limit="3" />
 </body>
 </html>';
 
 // Render the HTML
 $dataSources = [
-    'media' => $media
+    'media' => $media,
 ];
 
 $renderedHtml = renderItemsWithData($html, $dataSources, $templates);
