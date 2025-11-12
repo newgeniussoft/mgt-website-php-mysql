@@ -7,6 +7,7 @@ use App\Models\Template;
 use App\Models\Section;
 use App\Models\TemplateItem;
 use App\View\View;
+use App\View\Html;
 use App\Localization\Lang;
 use Exception;
 
@@ -77,10 +78,11 @@ class FrontendController extends Controller
     protected function renderWithTemplate($page, $template, $sections, $menuPages)
     {
         // Build menu HTML
-        $menuHtml = $this->buildMenuHtml($menuPages);
+        $menuHtml = Html::buildMenuHtml($menuPages);
         
         // Render sections
-        $sectionsHtml = $this->renderSections($sections);
+        
+        $sectionsHtml = Html::renderSections($sections);
         
         // Prepare template variables
         $variables = [
@@ -204,89 +206,6 @@ class FrontendController extends Controller
         return $html;
     }
     
-    
-    /**
-     * Render sections
-     */
-    protected function renderSections($sections)
-    {
-        $html = '';
-        $css = '';
-        $js = '';
-        
-        // Get current language from locale system
-        $currentLanguage = Lang::getLocale();
-        
-        foreach ($sections as $section) {
-            // Render section HTML
-            $sectionHtml = $section->html_template ?? '';
-            
-            // Get section contents with current language
-            $contents = \App\Models\Content::getBySection($section->id, true, $currentLanguage);
-            $contentHtml = '';
-            
-            foreach ($contents as $content) {
-                if ($content->content_type === 'html') {
-                    $contentHtml .= $content->content;
-                } else {
-                    $contentHtml .= '<div>' . nl2br(htmlspecialchars($content->content)) . '</div>';
-                }
-            }
-            
-            // Replace {{ content }} with actual content
-            $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
-            
-            // Process <items> tags with template items
-            $sectionHtml = $this->processItemsTags($sectionHtml);
-            
-            // Legacy support: Process {{ variable }} tags (old method)
-            foreach ($this->tagVariables($sectionHtml) as $variable) {
-                // Skip if this looks like an <items> tag (already processed above)
-                if (strpos($variable, '<items') !== false) {
-                    continue;
-                }
-                
-                // Only process if it contains name attribute
-                $value = $this->attrFromTag($variable, 'name');
-                if (empty($value)) {
-                    continue; // Skip if no name found
-                }
-                
-                $keys = $this->attrFromTag($variable, 'keys');
-                $keys = !empty($keys) ? explode(',', $keys) : ['name']; // Default to 'name' if no keys
-                
-                try {
-                    $model = $this->getModelByName(ucfirst($value));
-                    $items = $model->all();
-                    $sectionHtml = str_replace('{{ '.$variable.'}}', $this->createListHtml($items, $keys), $sectionHtml);
-                } catch (Exception $e) {
-                    // Skip if model not found
-                    continue;
-                }
-            }
-
-
-            $html .= $sectionHtml;
-            
-            // Collect CSS and JS
-            if ($section->css_styles) {
-                $css .= $section->css_styles . "\n";
-            }
-            if ($section->js_scripts) {
-                $js .= $section->js_scripts . "\n";
-            }
-        }
-        
-        // Wrap CSS and JS
-        if ($css) {
-            $html = '<style>' . $css . '</style>' . $html;
-        }
-        if ($js) {
-            $html .= '<script>' . $js . '</script>';
-        }
-        
-        return $html;
-    }
     
     /**
      * Process <items> tags with template items

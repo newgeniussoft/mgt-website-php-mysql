@@ -1,6 +1,93 @@
-<?php
+<?php 
 
-/**
+namespace App\View;
+use App\Localization\Lang;
+
+class Html {
+
+    /**
+     * Build menu html
+     * 
+     * @param string $menuPages The menu pages
+     * @return string The menu html
+     */
+    
+    public static function buildMenuHtml($menuPages)
+    {
+        $html = '<ul class="navbar-nav header-styled gradient-border">';
+        foreach ($menuPages as $menuPage) {
+            $active = (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/' . $menuPage->slug) ? ' class="active"' : '';
+            $url = $menuPage->is_homepage ? '/' : '/' . $menuPage->slug;
+            $html .= '<li' . $active . ' class="nav-item"><a href="' . $url . '" class="nav-link">' . htmlspecialchars($menuPage->title) . '</a></li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+
+    /**
+     * Render sections
+     * 
+     * @param string $sections The sections
+     * @return string The sections html
+     */
+    public static function renderSections($sections)
+    {
+        $html = '';
+        $css = '';
+        $js = '';
+        
+        foreach ($sections as $section) {
+            // Render section HTML
+            $sectionHtml = $section->html_template ?? '';
+            
+            // Get section contents with current language
+            $contentHtml = '';
+            $currentLanguage = Lang::getLocale();
+            $contents = \App\Models\Content::getBySection($section->id, true, $currentLanguage);
+            
+            foreach ($contents as $content) {
+                if ($content->content_type === 'html') {
+                    $contentHtml .= $content->content;
+                } else {
+                    $contentHtml .= '<div>' . nl2br(htmlspecialchars($content->content)) . '</div>';
+                }
+            }
+            
+            // Replace {{ content }} with actual content
+            $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
+            
+            // Process <items> tags with template items
+            $itemsTags = self::findItemsTags($sectionHtml);
+            
+            foreach ($itemsTags as $itemsTag) {
+                echo var_dump($itemsTag);
+               // $itemsTagHtml = self::processItemsTag($itemsTag);
+               // $sectionHtml = str_replace($itemsTag['tag'], $itemsTagHtml, "test item");
+            }
+            
+            $html .= $sectionHtml;
+            
+            // Collect CSS and JS
+            if ($section->css_styles) {
+                $css .= $section->css_styles . "\n";
+            }
+            if ($section->js_scripts) {
+                $js .= $section->js_scripts . "\n";
+            }
+        }
+        
+        // Wrap CSS and JS
+        if ($css) {
+            $html = '<style>' . $css . '</style>' . $html;
+        }
+        if ($js) {
+            $html .= '<script>' . $js . '</script>';
+        }
+        
+        return $html;
+    }
+
+   /**
  * Extract items tag attributes as an object/array
  * 
  * @param string $html The HTML content containing the items tag
@@ -131,101 +218,4 @@ function renderItemsWithData($html, $dataSources, $templates) {
         
     }, $html);
 }
-
-// ========================================
-// EXAMPLE USAGE
-// ========================================
-
-// Define your data sources
-$media = [
-    ["original_filename" => "DSC_1000.jpg", "file_type" => "JPG", "url" => "./photos/DSC_1000.jpg"],
-    ["original_filename" => "DSC_1080.png", "file_type" => "PNG", "url" => "./photos/DSC_1080.png"],
-    ["original_filename" => "DSC_1070.png", "file_type" => "PNG", "url" => "./photos/DSC_1070.png"],
-    ["original_filename" => "DSC_1180.png", "file_type" => "PNG", "url" => "./photos/DSC_1180.png"],
-];
-
-// Define your templates
-$templates = [
-    'media-grid' => '
-    <div class="media-item col-md-4">
-        <div class="media-thumbnail">
-            <img src="{{ $item.url }}" alt="{{ $item.original_filename }}" />
-        </div>
-        <div class="media-info">
-            <h4>{{ $item.original_filename }}</h4>
-            <p class="media-type">{{ $item.file_type }}</p>
-            <a href="{{ $item.url }}" class="btn-download" download>Download</a>
-        </div>
-    </div>',
-    
-    'media-list' => '
-    <li class="media-list-item">
-        <span class="filename">{{ $item.original_filename }}</span>
-        <span class="type">{{ $item.file_type }}</span>
-    </li>'
-];
-
-// Your HTML with items tag
-$html = '<html>
-<head>
-    <title>Preview</title>
-    <style>
-        .media-item { display: inline-block; margin: 10px; padding: 15px; border: 1px solid #ddd; }
-        .media-thumbnail img { max-width: 200px; height: auto; }
-        .media-info h4 { margin: 10px 0 5px 0; }
-        .btn-download { display: inline-block; margin-top: 10px; padding: 5px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; }
-    </style>
-</head>
-<body>
-    <h1>Media Gallery</h1>
-    <div class="row">
-        <items name="media" template="media-grid" limit="2" />
-    </div>
-</body>
-</html>';
-
-// Render the HTML
-$dataSources = [
-    'media' => $media
-];
-
-$renderedHtml = renderItemsWithData($html, $dataSources, $templates);
-
-echo $renderedHtml;
-
-/* 
-OUTPUT will be:
-<html>
-<head>
-    <title>Preview</title>
-    <style>...</style>
-</head>
-<body>
-    <h1>Media Gallery</h1>
-    <div class="row">
-        <div class="media-item col-md-4">
-            <div class="media-thumbnail">
-                <img src="./photos/DSC_1000.jpg" alt="DSC_1000.jpg" />
-            </div>
-            <div class="media-info">
-                <h4>DSC_1000.jpg</h4>
-                <p class="media-type">JPG</p>
-                <a href="./photos/DSC_1000.jpg" class="btn-download" download>Download</a>
-            </div>
-        </div>
-        <div class="media-item col-md-4">
-            <div class="media-thumbnail">
-                <img src="./photos/DSC_1080.png" alt="DSC_1080.png" />
-            </div>
-            <div class="media-info">
-                <h4>DSC_1080.png</h4>
-                <p class="media-type">PNG</p>
-                <a href="./photos/DSC_1080.png" class="btn-download" download>Download</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-*/
-
-?>
+}
