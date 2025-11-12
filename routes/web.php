@@ -122,6 +122,17 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->get('/templates/preview', 'App\Http\Controllers\TemplateController@preview');
     $router->post('/templates/duplicate', 'App\Http\Controllers\TemplateController@duplicate');
     
+    // Template Item Management routes
+    $router->get('/template-items', 'App\Http\Controllers\Admin\TemplateItemController@index');
+    $router->get('/template-items/create', 'App\Http\Controllers\Admin\TemplateItemController@create');
+    $router->post('/template-items/store', 'App\Http\Controllers\Admin\TemplateItemController@store');
+    $router->get('/template-items/edit', 'App\Http\Controllers\Admin\TemplateItemController@edit');
+    $router->post('/template-items/update', 'App\Http\Controllers\Admin\TemplateItemController@update');
+    $router->post('/template-items/delete', 'App\Http\Controllers\Admin\TemplateItemController@delete');
+    $router->get('/template-items/duplicate', 'App\Http\Controllers\Admin\TemplateItemController@duplicate');
+    $router->get('/template-items/preview', 'App\Http\Controllers\Admin\TemplateItemController@preview');
+    $router->post('/template-items/extract-variables', 'App\Http\Controllers\Admin\TemplateItemController@extractVariables');
+    
     // Section Management routes
     $router->get('/sections', 'App\Http\Controllers\SectionController@index');
     $router->get('/sections/create', 'App\Http\Controllers\SectionController@create');

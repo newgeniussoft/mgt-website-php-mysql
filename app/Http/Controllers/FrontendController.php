@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Template;
 use App\Models\Section;
+use App\Models\TemplateItem;
 use App\View\View;
 use App\Localization\Lang;
+use Exception;
 
 class FrontendController extends Controller
 {
@@ -202,6 +204,7 @@ class FrontendController extends Controller
         return $html;
     }
     
+    
     /**
      * Render sections
      */
@@ -232,14 +235,34 @@ class FrontendController extends Controller
             
             // Replace {{ content }} with actual content
             $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
+            
+            // Process <items> tags with template items
+            $sectionHtml = $this->processItemsTags($sectionHtml);
+            
+            // Legacy support: Process {{ variable }} tags (old method)
             foreach ($this->tagVariables($sectionHtml) as $variable) {
-                $value = $this->attrFromTag($variable, 'name');
-                $keys = $this->attrFromTag($variable, 'keys');
-                $keys = explode(',', $keys);
-                $model = $this->getModelByName(ucfirst($value));
-                $items = $model->all();
+                // Skip if this looks like an <items> tag (already processed above)
+                if (strpos($variable, '<items') !== false) {
+                    continue;
+                }
                 
-                $sectionHtml = str_replace('{{ '.$variable.'}}', $this->createListHtml($items, $keys), $sectionHtml);
+                // Only process if it contains name attribute
+                $value = $this->attrFromTag($variable, 'name');
+                if (empty($value)) {
+                    continue; // Skip if no name found
+                }
+                
+                $keys = $this->attrFromTag($variable, 'keys');
+                $keys = !empty($keys) ? explode(',', $keys) : ['name']; // Default to 'name' if no keys
+                
+                try {
+                    $model = $this->getModelByName(ucfirst($value));
+                    $items = $model->all();
+                    $sectionHtml = str_replace('{{ '.$variable.'}}', $this->createListHtml($items, $keys), $sectionHtml);
+                } catch (Exception $e) {
+                    // Skip if model not found
+                    continue;
+                }
             }
 
 
@@ -261,6 +284,136 @@ class FrontendController extends Controller
         if ($js) {
             $html .= '<script>' . $js . '</script>';
         }
+        
+        return $html;
+    }
+    
+    /**
+     * Process <items> tags with template items
+     */
+    protected function processItemsTags($html)
+    {
+        // Find all <items> tags
+        preg_match_all('/<items\s+([^>]+)\s*\/?>/', $html, $matches, PREG_SET_ORDER);
+        
+        foreach ($matches as $match) {
+            $fullTag = $match[0];
+            $attributes = $match[1];
+            
+            // Parse attributes
+            $name = $this->getAttributeValue($attributes, 'name');
+            $template = $this->getAttributeValue($attributes, 'template');
+            $keys = $this->getAttributeValue($attributes, 'keys');
+            $limit = (int)($this->getAttributeValue($attributes, 'limit') ?: 10);
+            
+            if (!$name) {
+                continue; // Skip if no model name
+            }
+            
+            // Get items from model
+            $items = $this->getItemsFromModel($name, $limit);
+            
+            if (empty($items)) {
+                $html = str_replace($fullTag, '<!-- No items found for model: ' . $name . ' -->', $html);
+                continue;
+            }
+            
+            // Get template item
+            $templateItem = null;
+            if ($template) {
+                // Get specific template by slug
+                $templateItem = TemplateItem::getBySlug($template);
+            } else {
+                // Get default template for model
+                $templateItem = TemplateItem::getDefaultForModel($name);
+            }
+            
+            if (!$templateItem) {
+                // Fallback: create simple list
+                $renderedItems = $this->renderItemsSimple($items, $keys);
+            } else {
+                // Render with template item
+                $renderedItems = $this->renderItemsWithTemplate($items, $templateItem);
+            }
+            
+            // Replace the <items> tag with rendered content
+            $html = str_replace($fullTag, $renderedItems, $html);
+        }
+        
+        return $html;
+    }
+    
+    /**
+     * Get attribute value from attribute string
+     */
+    protected function getAttributeValue($attributes, $name)
+    {
+        preg_match('/' . $name . '=["\']([^"\']*)["\']/', $attributes, $matches);
+        return $matches[1] ?? '';
+    }
+    
+    /**
+     * Get items from model
+     */
+    protected function getItemsFromModel($modelName, $limit = 10)
+    {
+        try {
+            $model = $this->getModelByName(ucfirst($modelName));
+            
+            // Try to get published items if method exists
+            if (method_exists($model, 'getPublished')) {
+                return $model->getPublished($limit);
+            } elseif (method_exists($model, 'limit')) {
+                return $model->limit($limit)->get();
+            } else {
+                // Fallback: get all and slice
+                $all = $model->all();
+                return array_slice($all, 0, $limit);
+            }
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    
+    /**
+     * Render items with template item
+     */
+    protected function renderItemsWithTemplate($items, $templateItem)
+    {
+        $html = '';
+        
+        foreach ($items as $item) {
+            $html .= $templateItem->render($item);
+        }
+        
+        return '<div class="items-container">' . $html . '</div>';
+    }
+    
+    /**
+     * Render items simple (fallback)
+     */
+    protected function renderItemsSimple($items, $keys = '')
+    {
+        if ($keys) {
+            $keyArray = array_map('trim', explode(',', $keys));
+            return $this->createListHtml($items, $keyArray);
+        }
+        
+        // Default simple rendering
+        $html = '<div class="items-simple">';
+        foreach ($items as $item) {
+            $html .= '<div class="item">';
+            if (isset($item->title)) {
+                $html .= '<h4>' . htmlspecialchars($item->title) . '</h4>';
+            } elseif (isset($item->name)) {
+                $html .= '<h4>' . htmlspecialchars($item->name) . '</h4>';
+            }
+            if (isset($item->description)) {
+                $html .= '<p>' . htmlspecialchars($item->description) . '</p>';
+            }
+            $html .= '</div>';
+        }
+        $html .= '</div>';
         
         return $html;
     }
