@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Template;
 use App\Models\Section;
+use App\Models\TemplateItem;
 use App\View\View;
+use App\View\Html;
 use App\Localization\Lang;
+use Exception;
 
 class FrontendController extends Controller
 {
@@ -75,10 +78,11 @@ class FrontendController extends Controller
     protected function renderWithTemplate($page, $template, $sections, $menuPages)
     {
         // Build menu HTML
-        $menuHtml = $this->buildMenuHtml($menuPages);
+        $menuHtml = Html::buildMenuHtml($menuPages);
         
         // Render sections
-        $sectionsHtml = $this->renderSections($sections);
+        
+        $sectionsHtml = Html::renderSections($sections);
         
         // Prepare template variables
         $variables = [
@@ -139,34 +143,6 @@ class FrontendController extends Controller
             'menuPages' => $menuPages
         ]);
     }
-    
-    /**
-     * Build menu HTML
-     */
-    protected function buildMenuHtml($menuPages)
-    {
-        $html = '<ul class="navbar-nav header-styled gradient-border">';
-        foreach ($menuPages as $menuPage) {
-            $active = (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/' . $menuPage->slug) ? ' class="active"' : '';
-            $url = $menuPage->is_homepage ? '/' : '/' . $menuPage->slug;
-            $html .= '<li' . $active . ' class="nav-item"><a href="' . $url . '" class="nav-link">' . htmlspecialchars($menuPage->title) . '</a></li>';
-        }
-        $html .= '</ul>';
-        return $html;
-    }
-
-    /**
-     * Get attributes from dom
-     */
-
-    public function attrFromTag($tag, $attr) {
-        // example tag : <items name="tours" />
-
-        preg_match('/' . $attr . '="([^"]+)"/i', $tag, $matches);
-        return $matches[1] ?? '';
-        
-
-    }
 
     /**
      *  Get if tag in varibale {{ variables }}
@@ -199,69 +175,6 @@ class FrontendController extends Controller
            $html .= '</li>';
         }
         $html .= '</ul>';
-        return $html;
-    }
-    
-    /**
-     * Render sections
-     */
-    protected function renderSections($sections)
-    {
-        $html = '';
-        $css = '';
-        $js = '';
-        
-        // Get current language from locale system
-        $currentLanguage = Lang::getLocale();
-        
-        foreach ($sections as $section) {
-            // Render section HTML
-            $sectionHtml = $section->html_template ?? '';
-            
-            // Get section contents with current language
-            $contents = \App\Models\Content::getBySection($section->id, true, $currentLanguage);
-            $contentHtml = '';
-            
-            foreach ($contents as $content) {
-                if ($content->content_type === 'html') {
-                    $contentHtml .= $content->content;
-                } else {
-                    $contentHtml .= '<div>' . nl2br(htmlspecialchars($content->content)) . '</div>';
-                }
-            }
-            
-            // Replace {{ content }} with actual content
-            $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
-            foreach ($this->tagVariables($sectionHtml) as $variable) {
-                $value = $this->attrFromTag($variable, 'name');
-                $keys = $this->attrFromTag($variable, 'keys');
-                $keys = explode(',', $keys);
-                $model = $this->getModelByName(ucfirst($value));
-                $items = $model->all();
-                
-                $sectionHtml = str_replace('{{ '.$variable.'}}', $this->createListHtml($items, $keys), $sectionHtml);
-            }
-
-
-            $html .= $sectionHtml;
-            
-            // Collect CSS and JS
-            if ($section->css_styles) {
-                $css .= $section->css_styles . "\n";
-            }
-            if ($section->js_scripts) {
-                $js .= $section->js_scripts . "\n";
-            }
-        }
-        
-        // Wrap CSS and JS
-        if ($css) {
-            $html = '<style>' . $css . '</style>' . $html;
-        }
-        if ($js) {
-            $html .= '<script>' . $js . '</script>';
-        }
-        
         return $html;
     }
     

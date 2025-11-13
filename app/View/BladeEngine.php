@@ -2,6 +2,8 @@
 
 namespace App\View;
 
+use App\View\ViewException;
+
 class BladeEngine
 {
     protected $viewPath;
@@ -43,7 +45,7 @@ class BladeEngine
         $viewFile = $this->viewPath . '/' . str_replace('.', '/', $view) . '.blade.php';
         
         if (!file_exists($viewFile)) {
-            throw new Exception("View [$view] not found at: $viewFile");
+            throw ViewException::viewNotFound($view);
         }
         
         $cacheFile = $this->getCacheFile($viewFile);
@@ -569,11 +571,11 @@ class BladeEngine
                 ]));
             }
             
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             while (ob_get_level() > $obLevel) {
                 ob_end_clean();
             }
-            throw $e;
+            throw ViewException::compilationError($view ?? 'unknown', $e->getMessage());
         }
         
         return ob_get_clean();
@@ -590,5 +592,19 @@ class BladeEngine
                 unlink($file);
             }
         }
+    }
+    
+    /**
+     * Find a view file
+     */
+    public function findView($view)
+    {
+        $viewFile = $this->viewPath . '/' . str_replace('.', '/', $view) . '.blade.php';
+        
+        if (!file_exists($viewFile)) {
+            throw ViewException::viewNotFound($view);
+        }
+        
+        return $viewFile;
     }
 }

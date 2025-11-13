@@ -55,6 +55,11 @@ abstract class Model {
         $instance->save();
         return $instance;
     }
+
+    public function query() {
+        $instance = new static();
+        return $instance;
+    }
     
     public function fill(array $data) {
         foreach ($data as $key => $value) {
