@@ -126,6 +126,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ admin_url('template-items') }}">
+                                <i class="fas fa-file-code"></i>
+                                Templates items
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ admin_url('media') }}">
                                 <i class="fas fa-images"></i>
                                 Media Library

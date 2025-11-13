@@ -6,7 +6,7 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Template Items</h2>
-        <a href="/admin/template-items/create" class="btn btn-primary">
+        <a href="{{ admin_url('template-items/create') }}" class="btn btn-primary">
             <i class="fas fa-plus"></i> Create New Template
         </a>
     </div>
@@ -30,7 +30,7 @@
     <!-- Filters -->
     <div class="card mb-4">
         <div class="card-body">
-            <form method="GET" action="/admin/template-items" class="row g-3">
+            <form method="GET" action="{{ admin_url('template-items') }}" class="row g-3">
                 <div class="col-md-4">
                     <input type="text" name="search" class="form-control" placeholder="Search templates..." value="{{ $search }}">
                 </div>
@@ -97,13 +97,13 @@
                                 </span>
                                 
                                 <div class="btn-group btn-group-sm">
-                                    <a href="/admin/template-items/preview?id={{ $template->id }}" class="btn btn-outline-info" title="Preview" target="_blank">
+                                    <a href="{{ admin_url('template-items/preview?id='. $template->id) }}" class="btn btn-outline-info" title="Preview" target="_blank">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="/admin/template-items/edit?id={{ $template->id }}" class="btn btn-outline-primary" title="Edit">
+                                    <a href="{{ admin_url('template-items/edit?id='. $template->id) }}" class="btn btn-outline-primary" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="/admin/template-items/duplicate?id={{ $template->id }}" class="btn btn-outline-secondary" title="Duplicate">
+                                    <a href="{{ admin_url('template-items/duplicate?id='. $template->id) }}" class="btn btn-outline-secondary" title="Duplicate">
                                         <i class="fas fa-copy"></i>
                                     </a>
                                     <button type="button" class="btn btn-outline-danger" title="Delete" onclick="deleteTemplate({{ $template->id }}, '{{ $template->name }}')">
@@ -118,7 +118,7 @@
         @else
             <div class="col-12">
                 <div class="alert alert-info">
-                    <i class="fas fa-info-circle"></i> No template items found. <a href="/admin/template-items/create">Create your first template</a>
+                    <i class="fas fa-info-circle"></i> No template items found. <a href="{{ admin_url('template-items/create') }}">Create your first template</a>
                 </div>
             </div>
         @endif
@@ -138,7 +138,7 @@
                 <p class="text-danger">This action cannot be undone.</p>
             </div>
             <div class="modal-footer">
-                <form id="deleteForm" method="POST" action="/admin/template-items/delete">
+                <form id="deleteForm" method="POST" action="{{ admin_url('template-items/delete') }}">
                     <input type="hidden" name="csrf_token" value="{{ $_SESSION['csrf_token'] }}">
                     <input type="hidden" name="id" id="deleteId">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

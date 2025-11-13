@@ -2,6 +2,8 @@
 
 namespace App\View;
 
+use App\View\ViewException;
+
 class View {
     protected static $engine;
     protected static $shared = [];
@@ -12,13 +14,17 @@ class View {
     
     public static function make($view, $data = []) {
         if (!self::$engine) {
-            throw new \Exception("Blade engine not initialized");
+            throw ViewException::engineError("Blade engine not initialized");
         }
         
-        $data = array_merge(self::$shared, $data);
-        
-        echo self::$engine->render($view, $data);
-        self::$engine->clearCache();
+        try {
+            $data = array_merge(self::$shared, $data);
+            
+            echo self::$engine->render($view, $data);
+            self::$engine->clearCache();
+        } catch (\Exception $e) {
+            throw ViewException::compilationError($view, $e->getMessage());
+        }
     }
     
     public static function share($key, $value = null) {
@@ -36,6 +42,9 @@ class View {
     
     public static function exists($view) {
         try {
+            if (!self::$engine) {
+                throw ViewException::engineError("Blade engine not initialized");
+            }
             self::$engine->findView($view);
             return true;
         } catch (\Exception $e) {

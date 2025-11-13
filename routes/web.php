@@ -148,6 +148,27 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->get('/sections/edit-content', 'App\Http\Controllers\SectionController@editContent');
     $router->post('/sections/update-content', 'App\Http\Controllers\SectionController@updateContent');
     $router->post('/sections/delete-content', 'App\Http\Controllers\SectionController@destroyContent');
+    
+    // Tour Management routes
+    $router->get('/tours', 'App\Http\Controllers\Admin\TourController@index');
+    $router->get('/tours/create', 'App\Http\Controllers\Admin\TourController@create');
+    $router->post('/tours/store', 'App\Http\Controllers\Admin\TourController@store');
+    $router->get('/tours/edit', 'App\Http\Controllers\Admin\TourController@edit');
+    $router->post('/tours/update', 'App\Http\Controllers\Admin\TourController@update');
+    $router->post('/tours/delete', 'App\Http\Controllers\Admin\TourController@delete');
+    $router->get('/tours/duplicate', 'App\Http\Controllers\Admin\TourController@duplicate');
+    
+    // Tour Details Management routes
+    $router->get('/tours/details', 'App\Http\Controllers\Admin\TourController@details');
+    $router->post('/tours/save-detail', 'App\Http\Controllers\Admin\TourController@saveDetail');
+    $router->post('/tours/delete-detail', 'App\Http\Controllers\Admin\TourController@deleteDetail');
+    
+    // Tour Photos Management routes
+    $router->get('/tours/photos', 'App\Http\Controllers\Admin\TourController@photos');
+    $router->post('/tours/upload-photo', 'App\Http\Controllers\Admin\TourController@uploadPhoto');
+    $router->post('/tours/update-photo', 'App\Http\Controllers\Admin\TourController@updatePhoto');
+    $router->post('/tours/delete-photo', 'App\Http\Controllers\Admin\TourController@deletePhoto');
+    $router->post('/tours/set-featured-photo', 'App\Http\Controllers\Admin\TourController@setFeaturedPhoto');
 });
 
 // Catch-all route for dynamic pages (must be last)

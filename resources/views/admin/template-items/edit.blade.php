@@ -176,10 +176,10 @@
                         <button type="submit" class="btn btn-primary w-100 mb-2">
                             <i class="fas fa-save"></i> Update Template
                         </button>
-                        <a href="/admin/template-items/preview?id={{ $template->id }}" class="btn btn-info w-100 mb-2" target="_blank">
+                        <a href="{{ admin_url('template-items/preview?id='. $template->id) }}" class="btn btn-info w-100 mb-2" target="_blank">
                             <i class="fas fa-eye"></i> Preview
                         </a>
-                        <a href="/admin/template-items" class="btn btn-secondary w-100">
+                        <a href="{{ admin_url('template-items') }}" class="btn btn-secondary w-100">
                             Cancel
                         </a>
                     </div>
@@ -231,7 +231,7 @@ function addVariable(key = '', label = '', type = 'text', defaultValue = '') {
 function extractVariables() {
     const html = document.getElementById('htmlTemplate').value;
     
-    fetch('/admin/template-items/extract-variables', {
+    fetch('{{ admin_url('template-items/extract-variables') }}', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

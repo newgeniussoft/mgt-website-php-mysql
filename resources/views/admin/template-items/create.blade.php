@@ -6,7 +6,7 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Create Template Item</h2>
-        <a href="/admin/template-items" class="btn btn-secondary">
+        <a href="{{ admin_url('template-items') }}" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Back to Templates
         </a>
     </div>
@@ -19,7 +19,7 @@
         <?php unset($_SESSION['error']); ?>
     @endif
 
-    <form method="POST" action="/admin/template-items/store" enctype="multipart/form-data">
+    <form method="POST" action="{{ admin_url('template-items/store') }}" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ $_SESSION['csrf_token'] }}">
         
         <div class="row">
@@ -150,7 +150,7 @@
                         <button type="submit" class="btn btn-primary w-100 mb-2">
                             <i class="fas fa-save"></i> Create Template
                         </button>
-                        <a href="/admin/template-items" class="btn btn-secondary w-100">
+                        <a href="{{ admin_url('template-items') }}" class="btn btn-secondary w-100">
                             Cancel
                         </a>
                     </div>
@@ -211,7 +211,7 @@ function extractVariables() {
         return;
     }
     
-    fetch('/admin/template-items/extract-variables', {
+    fetch('{{ admin_url('template-items/extract-variables') }}', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
