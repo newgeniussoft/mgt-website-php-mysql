@@ -18,7 +18,7 @@ abstract class Model {
         self::$connection = $pdo;
     }
     
-    protected function getConnection() {
+    public function getConnection() {
         return self::$connection;
     }
     
@@ -53,6 +53,11 @@ abstract class Model {
         $instance = new static();
         $instance->fill($data);
         $instance->save();
+        return $instance;
+    }
+
+    public function query() {
+        $instance = new static();
         return $instance;
     }
     

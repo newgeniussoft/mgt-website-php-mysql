@@ -2,6 +2,8 @@
 
 namespace App\View;
 
+use App\View\ViewException;
+
 class BladeEngine
 {
     protected $viewPath;
@@ -43,7 +45,7 @@ class BladeEngine
         $viewFile = $this->viewPath . '/' . str_replace('.', '/', $view) . '.blade.php';
         
         if (!file_exists($viewFile)) {
-            throw new Exception("View [$view] not found at: $viewFile");
+            throw ViewException::viewNotFound($view);
         }
         
         $cacheFile = $this->getCacheFile($viewFile);
@@ -82,8 +84,10 @@ class BladeEngine
         $content = $this->compileMethod($content);
         $content = $this->compileTranslations($content);
         $content = $this->compileHelpers($content);
+        $content = $this->compileVerbatimBlocks($content);
         $content = $this->compileRawEchos($content);
         $content = $this->compileEchos($content);
+        $content = $this->restoreVerbatimBlocks($content);
         
         return $content;
     }
@@ -497,6 +501,41 @@ class BladeEngine
     }
     
     /**
+     * Store for verbatim blocks
+     */
+    protected $verbatimBlocks = [];
+    
+    /**
+     * Compile @verbatim blocks to preserve content from compilation
+     */
+    protected function compileVerbatimBlocks($content)
+    {
+        // Reset verbatim blocks
+        $this->verbatimBlocks = [];
+        
+        // Replace @verbatim blocks with placeholders
+        $content = preg_replace_callback('/\@verbatim(.*?)\@endverbatim/s', function($matches) {
+            $placeholder = '___VERBATIM_' . count($this->verbatimBlocks) . '___';
+            $this->verbatimBlocks[$placeholder] = $matches[1];
+            return $placeholder;
+        }, $content);
+        
+        return $content;
+    }
+    
+    /**
+     * Restore verbatim blocks after compilation
+     */
+    protected function restoreVerbatimBlocks($content)
+    {
+        foreach ($this->verbatimBlocks as $placeholder => $original) {
+            $content = str_replace($placeholder, $original, $content);
+        }
+        
+        return $content;
+    }
+    
+    /**
      * Get cache file path
      */
     protected function getCacheFile($viewFile)
@@ -532,11 +571,11 @@ class BladeEngine
                 ]));
             }
             
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             while (ob_get_level() > $obLevel) {
                 ob_end_clean();
             }
-            throw $e;
+            throw ViewException::compilationError($view ?? 'unknown', $e->getMessage());
         }
         
         return ob_get_clean();
@@ -553,5 +592,19 @@ class BladeEngine
                 unlink($file);
             }
         }
+    }
+    
+    /**
+     * Find a view file
+     */
+    public function findView($view)
+    {
+        $viewFile = $this->viewPath . '/' . str_replace('.', '/', $view) . '.blade.php';
+        
+        if (!file_exists($viewFile)) {
+            throw ViewException::viewNotFound($view);
+        }
+        
+        return $viewFile;
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
 
-$router->get('/', 'App\Http\Controllers\HomeController@index');
-$router->get('/about', 'App\Http\Controllers\HomeController@about');
-$router->get('/contact', 'App\Http\Controllers\HomeController@contact');
+// Frontend routes - Dynamic pages from database
+$router->get('/', 'App\Http\Controllers\FrontendController@index');
 
-$router->get('/test', function() {
+$router->get('/test-api', function() {
     return response()->json(['message' => 'API is working!']);
 });
+
+$router->get('/test', 'App\Http\Controllers\FrontendController@testPage');
 
 // User routes example
 $router->group(['prefix' => 'api'], function($router) {
@@ -101,4 +102,74 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->get('/database/edit-column', 'App\Http\Controllers\DatabaseController@editColumn');
     $router->post('/database/update-column', 'App\Http\Controllers\DatabaseController@updateColumn');
     $router->post('/database/delete-column', 'App\Http\Controllers\DatabaseController@deleteColumn');
+    
+    // CMS Page Management routes
+    $router->get('/pages', 'App\Http\Controllers\PageController@index');
+    $router->get('/pages/create', 'App\Http\Controllers\PageController@create');
+    $router->post('/pages/store', 'App\Http\Controllers\PageController@store');
+    $router->get('/pages/edit', 'App\Http\Controllers\PageController@edit');
+    $router->post('/pages/update', 'App\Http\Controllers\PageController@update');
+    $router->post('/pages/delete', 'App\Http\Controllers\PageController@destroy');
+    $router->get('/pages/preview', 'App\Http\Controllers\PageController@preview');
+    
+    // Template Management routes
+    $router->get('/templates', 'App\Http\Controllers\TemplateController@index');
+    $router->get('/templates/create', 'App\Http\Controllers\TemplateController@create');
+    $router->post('/templates/store', 'App\Http\Controllers\TemplateController@store');
+    $router->get('/templates/edit', 'App\Http\Controllers\TemplateController@edit');
+    $router->post('/templates/update', 'App\Http\Controllers\TemplateController@update');
+    $router->post('/templates/delete', 'App\Http\Controllers\TemplateController@destroy');
+    $router->get('/templates/preview', 'App\Http\Controllers\TemplateController@preview');
+    $router->post('/templates/duplicate', 'App\Http\Controllers\TemplateController@duplicate');
+    
+    // Template Item Management routes
+    $router->get('/template-items', 'App\Http\Controllers\Admin\TemplateItemController@index');
+    $router->get('/template-items/create', 'App\Http\Controllers\Admin\TemplateItemController@create');
+    $router->post('/template-items/store', 'App\Http\Controllers\Admin\TemplateItemController@store');
+    $router->get('/template-items/edit', 'App\Http\Controllers\Admin\TemplateItemController@edit');
+    $router->post('/template-items/update', 'App\Http\Controllers\Admin\TemplateItemController@update');
+    $router->post('/template-items/delete', 'App\Http\Controllers\Admin\TemplateItemController@delete');
+    $router->get('/template-items/duplicate', 'App\Http\Controllers\Admin\TemplateItemController@duplicate');
+    $router->get('/template-items/preview', 'App\Http\Controllers\Admin\TemplateItemController@preview');
+    $router->post('/template-items/extract-variables', 'App\Http\Controllers\Admin\TemplateItemController@extractVariables');
+    
+    // Section Management routes
+    $router->get('/sections', 'App\Http\Controllers\SectionController@index');
+    $router->get('/sections/create', 'App\Http\Controllers\SectionController@create');
+    $router->post('/sections/store', 'App\Http\Controllers\SectionController@store');
+    $router->get('/sections/edit', 'App\Http\Controllers\SectionController@edit');
+    $router->post('/sections/update', 'App\Http\Controllers\SectionController@update');
+    $router->post('/sections/delete', 'App\Http\Controllers\SectionController@destroy');
+    $router->post('/sections/reorder', 'App\Http\Controllers\SectionController@reorder');
+    
+    // Content Management routes
+    $router->get('/sections/add-content', 'App\Http\Controllers\SectionController@addContent');
+    $router->post('/sections/store-content', 'App\Http\Controllers\SectionController@storeContent');
+    $router->get('/sections/edit-content', 'App\Http\Controllers\SectionController@editContent');
+    $router->post('/sections/update-content', 'App\Http\Controllers\SectionController@updateContent');
+    $router->post('/sections/delete-content', 'App\Http\Controllers\SectionController@destroyContent');
+    
+    // Tour Management routes
+    $router->get('/tours', 'App\Http\Controllers\Admin\TourController@index');
+    $router->get('/tours/create', 'App\Http\Controllers\Admin\TourController@create');
+    $router->post('/tours/store', 'App\Http\Controllers\Admin\TourController@store');
+    $router->get('/tours/edit', 'App\Http\Controllers\Admin\TourController@edit');
+    $router->post('/tours/update', 'App\Http\Controllers\Admin\TourController@update');
+    $router->post('/tours/delete', 'App\Http\Controllers\Admin\TourController@delete');
+    $router->get('/tours/duplicate', 'App\Http\Controllers\Admin\TourController@duplicate');
+    
+    // Tour Details Management routes
+    $router->get('/tours/details', 'App\Http\Controllers\Admin\TourController@details');
+    $router->post('/tours/save-detail', 'App\Http\Controllers\Admin\TourController@saveDetail');
+    $router->post('/tours/delete-detail', 'App\Http\Controllers\Admin\TourController@deleteDetail');
+    
+    // Tour Photos Management routes
+    $router->get('/tours/photos', 'App\Http\Controllers\Admin\TourController@photos');
+    $router->post('/tours/upload-photo', 'App\Http\Controllers\Admin\TourController@uploadPhoto');
+    $router->post('/tours/update-photo', 'App\Http\Controllers\Admin\TourController@updatePhoto');
+    $router->post('/tours/delete-photo', 'App\Http\Controllers\Admin\TourController@deletePhoto');
+    $router->post('/tours/set-featured-photo', 'App\Http\Controllers\Admin\TourController@setFeaturedPhoto');
 });
+
+// Catch-all route for dynamic pages (must be last)
+$router->get('/{slug}', 'App\Http\Controllers\FrontendController@showPage');
