@@ -174,7 +174,7 @@ class Html {
             $name = $item['attributes']['name'];
             $modelName = '\\App\\Models\\' . ucfirst($name);
             $list = $modelName::all();
-            //print_r($list);
+            
             $lang = Lang::getLocale();
             if ($name == 'tour') {
                 $list = $modelName::where('language', $lang);
