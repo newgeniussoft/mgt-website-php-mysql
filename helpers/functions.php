@@ -78,6 +78,20 @@ function page() {
     
 }
 
+function page_admin() {
+    
+    $segments = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+    
+    if (isset($segments[0]) && in_array($segments[0], ['es', 'en'])) {
+        array_shift($segments);
+    }
+    $page = implode('/', $segments);
+    $page = str_replace($_ENV['APP_ADMIN_PREFIX'] . '/', '', $page);
+    
+    return $page;
+    
+}
+
 function redirect($url) {
     header("Location: $url");
     exit;

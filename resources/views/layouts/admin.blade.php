@@ -6,6 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Admin Panel' }} - Madagascar Green Tours</title>
     
+    <link rel="icon" href="{{ asset('images/logos/vs-logo.png') }}">
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -93,20 +95,15 @@
             <nav class="col-md-2 d-none d-md-block sidebar">
                 <div class="sidebar-sticky">
                     <a class="navbar-brand col-sm-3 col-md-12 mr-0" href="{{ url($_ENV['APP_ADMIN_PREFIX'] . '/dashboard') }}">
-                        🌴 Admin Panel
+                        <img src="{{ asset('images/logos/vs-logo.png') }}" alt="Logo" width="30">
+                        Admin Panel
                     </a>
                     
                     <ul class="nav flex-column mt-3">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ url($_ENV['APP_ADMIN_PREFIX'] . '/dashboard') }}">
+                            <a class="nav-link {{ page_admin() == 'dashboard' ? 'active' : '' }}" href="{{ url($_ENV['APP_ADMIN_PREFIX'] . '/dashboard') }}">
                                 <i class="fas fa-tachometer-alt"></i>
                                 Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url($_ENV['APP_ADMIN_PREFIX'] . '/users') }}">
-                                <i class="fas fa-users"></i>
-                                Users
                             </a>
                         </li>
                     </ul>
@@ -114,43 +111,43 @@
                     <h6 class="sidebar-heading">Content Management</h6>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('pages') }}">
+                            <a class="nav-link {{ page_admin() == 'pages' ? 'active' : '' }}" href="{{ admin_url('pages') }}">
                                 <i class="fas fa-file-alt"></i>
                                 Pages
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('templates') }}">
+                            <a class="nav-link {{ page_admin() == 'templates' ? 'active' : '' }}" href="{{ admin_url('templates') }}">
                                 <i class="fas fa-file-code"></i>
                                 Templates
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('template-items') }}">
+                            <a class="nav-link {{ page_admin() == 'template-items' ? 'active' : '' }}" href="{{ admin_url('template-items') }}">
                                 <i class="fas fa-file-code"></i>
                                 Templates items
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('media') }}">
+                            <a class="nav-link {{ page_admin() == 'media' ? 'active' : '' }}" href="{{ admin_url('media') }}">
                                 <i class="fas fa-images"></i>
                                 Media Library
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('media/folders') }}">
+                            <a class="nav-link {{ page_admin() == 'media/folders' ? 'active' : '' }}" href="{{ admin_url('media/folders') }}">
                                 <i class="fas fa-folder"></i>
                                 Folders
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('filemanager') }}">
+                            <a class="nav-link {{ page_admin() == 'filemanager' ? 'active' : '' }}" href="{{ admin_url('filemanager') }}">
                                 <i class="fas fa-folder-open"></i>
                                 File Manager
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('codeeditor') }}">
+                            <a class="nav-link {{ page_admin() == 'codeeditor' ? 'active' : '' }}" href="{{ admin_url('codeeditor') }}">
                                 <i class="fas fa-code"></i>
                                 Code Editor
                             </a>
@@ -160,19 +157,19 @@
                     <h6 class="sidebar-heading">System</h6>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('database') }}">
+                            <a class="nav-link {{ page_admin() == 'database' ? 'active' : '' }}" href="{{ admin_url('database') }}">
                                 <i class="fas fa-database"></i>
                                 Database Manager
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ admin_url('settings') }}">
+                            <a class="nav-link {{ page_admin() == 'settings' ? 'active' : '' }}" href="{{ admin_url('settings') }}">
                                 <i class="fas fa-cog"></i>
                                 General Settings
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url($_ENV['APP_ADMIN_PREFIX'] . '/logout') }}">
+                            <a class="nav-link {{ page_admin() == 'logout' ? 'active' : '' }}" href="{{ url($_ENV['APP_ADMIN_PREFIX'] . '/logout') }}">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Logout
                             </a>
