@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Tour;
 use App\Models\TourDetail;
@@ -76,7 +76,6 @@ class TourController
             $tour['price_excludes_array'] = json_decode($tour['price_excludes'] ?? '[]', true);
         }
         
-      //  require_once 'app/views/admin/tours/index.blade.php';
       return View::make('admin.tours.index', compact('tours', 'stats', 'categories', 'languages', 'totalPages', 'page'));
         
     }
@@ -99,14 +98,14 @@ class TourController
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours/create');
+            header('Location: '.admin_url('tours/create'));
             exit;
         }
         
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours/create');
+            header('Location: '.admin_url('tours/create'));
             exit;
         }
         
@@ -166,10 +165,10 @@ class TourController
         
         if ($tourId) {
             $_SESSION['success'] = 'Tour created successfully!';
-            header('Location: /admin/tours/edit?id=' . $tourId);
+            header('Location: '.admin_url('tours/edit?id=' . $tourId));
         } else {
             $_SESSION['error'] = 'Failed to create tour. Please try again.';
-            header('Location: /admin/tours/create');
+            header('Location: '.admin_url('tours/create'));
         }
         exit;
     }
@@ -184,7 +183,7 @@ class TourController
         
         if (!$tour) {
             $_SESSION['error'] = 'Tour not found';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -211,7 +210,7 @@ class TourController
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -220,14 +219,14 @@ class TourController
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours/edit?id=' . $id);
+            header('Location: '.admin_url('tours/edit?id=' . $id));
             exit;
         }
         
         $tour = $this->tourModel->getById($id);
         if (!$tour) {
             $_SESSION['error'] = 'Tour not found';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -281,13 +280,13 @@ class TourController
         }
         
         // Update tour
-        if ($this->tourModel->update($id, $data)) {
+        if ($this->tourModel->update_tour($id, $data)) {
             $_SESSION['success'] = 'Tour updated successfully!';
         } else {
             $_SESSION['error'] = 'Failed to update tour. Please try again.';
         }
         
-        header('Location: /admin/tours/edit?id=' . $id);
+        header('Location: '.admin_url('tours/edit?id=' . $id));
         exit;
     }
     
@@ -297,7 +296,7 @@ class TourController
     public function delete()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -306,7 +305,7 @@ class TourController
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -316,7 +315,7 @@ class TourController
             $_SESSION['error'] = 'Failed to delete tour. Please try again.';
         }
         
-        header('Location: /admin/tours');
+        header('Location: '.admin_url('tours'));
         exit;
     }
     
@@ -338,10 +337,10 @@ class TourController
             $this->tourPhotoModel->duplicateForTour($id, $newTourId);
             
             $_SESSION['success'] = 'Tour duplicated successfully!';
-            header('Location: /admin/tours/edit?id=' . $newTourId);
+            header('Location: '.admin_url('tours/edit?id=' . $newTourId));
         } else {
             $_SESSION['error'] = 'Failed to duplicate tour. Please try again.';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
         }
         exit;
     }
@@ -356,13 +355,13 @@ class TourController
         
         if (!$tour) {
             $_SESSION['error'] = 'Tour not found';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
         $details = $this->tourDetailModel->getByTourId($tourId);
         
-        require_once 'app/views/admin/tours/details.blade.php';
+        return View::make('admin.tours.details', compact('tour', 'details'));
     }
     
     /**
@@ -371,14 +370,14 @@ class TourController
     public function saveDetail()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -415,7 +414,7 @@ class TourController
         }
         
         $_SESSION[$success ? 'success' : 'error'] = $message;
-        header('Location: /admin/tours/details?tour_id=' . $tourId);
+        header('Location: '.admin_url('tours/details?tour_id=' . $tourId));
         exit;
     }
     
@@ -425,14 +424,14 @@ class TourController
     public function deleteDetail()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -445,7 +444,7 @@ class TourController
             $_SESSION['error'] = 'Failed to delete tour detail.';
         }
         
-        header('Location: /admin/tours/details?tour_id=' . $tourId);
+        header('Location: '.admin_url('tours/details?tour_id=' . $tourId));
         exit;
     }
     
@@ -459,14 +458,14 @@ class TourController
         
         if (!$tour) {
             $_SESSION['error'] = 'Tour not found';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
         $photos = $this->tourPhotoModel->getByTourId($tourId);
         $photoTypes = $this->tourPhotoModel->getAvailableTypes();
         
-        require_once 'app/views/admin/tours/photos.blade.php';
+        return View::make('admin.tours.photos', compact('tour', 'photos', 'photoTypes'));
     }
     
     /**
@@ -475,14 +474,14 @@ class TourController
     public function uploadPhoto()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -509,7 +508,7 @@ class TourController
             $_SESSION['error'] = 'Please select a valid image file.';
         }
         
-        header('Location: /admin/tours/photos?tour_id=' . $tourId);
+        header('Location: '.admin_url('tours/photos?tour_id=' . $tourId));
         exit;
     }
     
@@ -519,14 +518,14 @@ class TourController
     public function deletePhoto()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -539,7 +538,7 @@ class TourController
             $_SESSION['error'] = 'Failed to delete photo.';
         }
         
-        header('Location: /admin/tours/photos?tour_id=' . $tourId);
+        header('Location: '.admin_url('tours/photos?tour_id=' . $tourId));
         exit;
     }
     
@@ -549,14 +548,14 @@ class TourController
     public function updatePhoto()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -578,7 +577,7 @@ class TourController
             $_SESSION['error'] = 'Failed to update photo.';
         }
         
-        header('Location: /admin/tours/photos?tour_id=' . $tourId);
+        header('Location: '.admin_url('tours/photos?tour_id=' . $tourId));
         exit;
     }
     
@@ -588,14 +587,14 @@ class TourController
     public function setFeaturedPhoto()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
         // Validate CSRF token
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            header('Location: /admin/tours');
+            header('Location: '.admin_url('tours'));
             exit;
         }
         
@@ -608,7 +607,7 @@ class TourController
             $_SESSION['error'] = 'Failed to set featured photo.';
         }
         
-        header('Location: /admin/tours/photos?tour_id=' . $tourId);
+        header('Location: '.admin_url('tours/photos?tour_id=' . $tourId));
         exit;
     }
     
@@ -625,7 +624,7 @@ class TourController
         
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $filename = uniqid() . '.' . $extension;
-        $uploadPath = "storage/uploads/$folder/";
+        $uploadPath = "uploads/$folder/";
         
         if (!is_dir($uploadPath)) {
             mkdir($uploadPath, 0755, true);

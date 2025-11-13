@@ -129,6 +129,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ page_admin() == 'tours' ? 'active' : '' }}" href="{{ admin_url('tours') }}">
+                                <i class="fas fa-map-marked-alt"></i>
+                                Tours
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ page_admin() == 'media' ? 'active' : '' }}" href="{{ admin_url('media') }}">
                                 <i class="fas fa-images"></i>
                                 Media Library

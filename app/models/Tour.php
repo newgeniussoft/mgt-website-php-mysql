@@ -312,7 +312,7 @@ class Tour extends Model
     /**
      * Update tour
      */
-    /*public function update($id, $data)
+    public function update_tour($id, $data)
     {
         try {
             // Encode JSON fields
@@ -345,13 +345,13 @@ class Tour extends Model
             $values[] = $id;
             $sql = "UPDATE tours SET " . implode(', ', $fields) . " WHERE id = ?";
             
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getConnection()->prepare($sql);
             return $stmt->execute($values);
         } catch (PDOException $e) {
             error_log("Error updating tour: " . $e->getMessage());
             return false;
         }
-    }*/
+    }
     
     /**
      * Delete tour
