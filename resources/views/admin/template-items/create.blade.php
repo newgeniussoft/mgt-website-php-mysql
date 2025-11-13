@@ -69,7 +69,7 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted small mb-3">
-                            Use <code>{{ "{{ \$item.fieldname }}" }}</code> syntax to display item data.
+                            Use <code>{{ " item.fieldname " }}</code> syntax to display item data.
                         </p>
                         <textarea name="html_template" id="htmlTemplate" class="form-control font-monospace" rows="12" required></textarea>
                     </div>

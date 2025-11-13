@@ -5,22 +5,46 @@ namespace App\Models;
 use PDO;
 use PDOException;
 
-class Tour
+class Tour extends Model
 {
-    private $db;
-    
-    public function __construct()
-    {
-        global $pdo;
-        $this->db = $pdo;
-    }
+    protected $table = 'tours';
+    protected $fillable = [
+        'name',
+        'slug', 
+        'language',
+        'translation_group',
+        'title',
+        'subtitle',
+        'short_description',
+        'description',
+        'itinerary',
+        'image',
+        'cover_image',
+        'highlights',
+        'price',
+        'price_includes',
+        'price_excludes',
+        'duration_days',
+        'max_participants',
+        'difficulty_level',
+        'category',
+        'location',
+        'status',
+        'featured',
+        'sort_order',
+        'meta_title',
+        'meta_description',
+        'meta_keywords'
+    ];
+    protected $timestamps = true;
     
     /**
      * Get all tours with optional filters
      */
-    public function getAll($filters = [])
+    public static function getAll($filters = [])
     {
         try {
+            $instance = new static();
             $sql = "SELECT * FROM tours WHERE 1=1";
             $params = [];
             
@@ -61,7 +85,7 @@ class Tour
                 }
             }
             
-            $stmt = $this->db->prepare($sql);
+            $stmt = $instance->getConnection()->prepare($sql);
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -73,10 +97,11 @@ class Tour
     /**
      * Get tour by ID
      */
-    public function getById($id)
+    public static function getById($id)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tours WHERE id = ?");
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare("SELECT * FROM tours WHERE id = ?");
             $stmt->execute([$id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -88,10 +113,11 @@ class Tour
     /**
      * Get tour by slug and language
      */
-    public function getBySlug($slug, $language = 'en')
+    public static function getBySlug($slug, $language = 'en')
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tours WHERE slug = ? AND language = ? AND status = 'active'");
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare("SELECT * FROM tours WHERE slug = ? AND language = ? AND status = 'active'");
             $stmt->execute([$slug, $language]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -103,10 +129,11 @@ class Tour
     /**
      * Get featured tours
      */
-    public function getFeatured($language = 'en', $limit = 6)
+    public static function getFeatured($language = 'en', $limit = 6)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tours WHERE featured = 1 AND status = 'active' AND language = ? ORDER BY sort_order ASC, created_at DESC LIMIT ?");
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare("SELECT * FROM tours WHERE featured = 1 AND status = 'active' AND language = ? ORDER BY sort_order ASC, created_at DESC LIMIT ?");
             $stmt->execute([$language, $limit]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -118,9 +145,10 @@ class Tour
     /**
      * Get tours by category
      */
-    public function getByCategory($category, $language = 'en', $limit = null)
+    public static function getByCategory($category, $language = 'en', $limit = null)
     {
         try {
+            $instance = new static();
             $sql = "SELECT * FROM tours WHERE category = ? AND status = 'active' AND language = ? ORDER BY sort_order ASC, created_at DESC";
             $params = [$category, $language];
             
@@ -129,7 +157,7 @@ class Tour
                 $params[] = $limit;
             }
             
-            $stmt = $this->db->prepare($sql);
+            $stmt = $instance->getConnection()->prepare($sql);
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -141,10 +169,11 @@ class Tour
     /**
      * Get tour translations
      */
-    public function getTranslations($translationGroup)
+    public static function getTranslations($translationGroup)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tours WHERE translation_group = ? ORDER BY language");
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare("SELECT * FROM tours WHERE translation_group = ? ORDER BY language");
             $stmt->execute([$translationGroup]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -156,10 +185,11 @@ class Tour
     /**
      * Get tour details (daily itinerary)
      */
-    public function getDetails($tourId)
+    public static function getDetails($tourId)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tour_details WHERE tour_id = ? ORDER BY day ASC");
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare("SELECT * FROM tour_details WHERE tour_id = ? ORDER BY day ASC");
             $stmt->execute([$tourId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -171,9 +201,10 @@ class Tour
     /**
      * Get tour photos
      */
-    public function getPhotos($tourId, $type = null)
+    public static function getPhotos($tourId, $type = null)
     {
         try {
+            $instance = new static();
             $sql = "SELECT * FROM tour_photos WHERE tour_id = ?";
             $params = [$tourId];
             
@@ -184,7 +215,7 @@ class Tour
             
             $sql .= " ORDER BY sort_order ASC, created_at DESC";
             
-            $stmt = $this->db->prepare($sql);
+            $stmt = $instance->getConnection()->prepare($sql);
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -196,13 +227,13 @@ class Tour
     /**
      * Get tour with full details (tour + details + photos)
      */
-    public function getFullTour($id)
+    public static function getFullTour($id)
     {
-        $tour = $this->getById($id);
+        $tour = static::getById($id);
         if ($tour) {
-            $tour['details'] = $this->getDetails($id);
-            $tour['photos'] = $this->getPhotos($id);
-            $tour['gallery_photos'] = $this->getPhotos($id, 'gallery');
+            $tour['details'] = static::getDetails($id);
+            $tour['photos'] = static::getPhotos($id);
+            $tour['gallery_photos'] = static::getPhotos($id, 'gallery');
             
             // Parse JSON fields
             $tour['highlights'] = json_decode($tour['highlights'] ?? '[]', true);
@@ -215,7 +246,7 @@ class Tour
     /**
      * Create new tour
      */
-    public function create($data)
+    /*public function create($data)
     {
         try {
             // Generate slug if not provided
@@ -276,12 +307,12 @@ class Tour
             error_log("Error creating tour: " . $e->getMessage());
             return false;
         }
-    }
+    }*/
     
     /**
      * Update tour
      */
-    public function update($id, $data)
+    /*public function update($id, $data)
     {
         try {
             // Encode JSON fields
@@ -320,12 +351,12 @@ class Tour
             error_log("Error updating tour: " . $e->getMessage());
             return false;
         }
-    }
+    }*/
     
     /**
      * Delete tour
      */
-    public function delete($id)
+    /*public function delete($id)
     {
         try {
             // Delete related records first (cascade should handle this, but being explicit)
@@ -338,18 +369,18 @@ class Tour
             error_log("Error deleting tour: " . $e->getMessage());
             return false;
         }
-    }
+    }*/
     
     /**
      * Generate unique slug
      */
-    public function generateSlug($title, $language = 'en')
+    public static function generateSlug($title, $language = 'en')
     {
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
         $originalSlug = $slug;
         $counter = 1;
         
-        while ($this->slugExists($slug, $language)) {
+        while (static::slugExists($slug, $language)) {
             $slug = $originalSlug . '-' . $counter;
             $counter++;
         }
@@ -360,10 +391,11 @@ class Tour
     /**
      * Check if slug exists
      */
-    private function slugExists($slug, $language)
+    private static function slugExists($slug, $language)
     {
         try {
-            $stmt = $this->db->prepare("SELECT id FROM tours WHERE slug = ? AND language = ?");
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare("SELECT id FROM tours WHERE slug = ? AND language = ?");
             $stmt->execute([$slug, $language]);
             return $stmt->fetch() !== false;
         } catch (PDOException $e) {
@@ -374,10 +406,11 @@ class Tour
     /**
      * Get available categories
      */
-    public function getCategories($language = 'en')
+    public static function getCategories($language = 'en')
     {
         try {
-            $stmt = $this->db->prepare("SELECT DISTINCT category FROM tours WHERE category IS NOT NULL AND category != '' AND language = ? ORDER BY category");
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare("SELECT DISTINCT category FROM tours WHERE category IS NOT NULL AND category != '' AND language = ? ORDER BY category");
             $stmt->execute([$language]);
             return $stmt->fetchAll(PDO::FETCH_COLUMN);
         } catch (PDOException $e) {
@@ -389,10 +422,11 @@ class Tour
     /**
      * Get available locations
      */
-    public function getLocations($language = 'en')
+    public static function getLocations($language = 'en')
     {
         try {
-            $stmt = $this->db->prepare("SELECT DISTINCT location FROM tours WHERE location IS NOT NULL AND location != '' AND language = ? ORDER BY location");
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare("SELECT DISTINCT location FROM tours WHERE location IS NOT NULL AND location != '' AND language = ? ORDER BY location");
             $stmt->execute([$language]);
             return $stmt->fetchAll(PDO::FETCH_COLUMN);
         } catch (PDOException $e) {
@@ -404,7 +438,7 @@ class Tour
     /**
      * Get available languages
      */
-    public function getAvailableLanguages()
+    public static function getAvailableLanguages()
     {
         return [
             'en' => 'English',
@@ -415,9 +449,10 @@ class Tour
     /**
      * Search tours
      */
-    public function search($query, $language = 'en', $filters = [])
+    public static function search($query, $language = 'en', $filters = [])
     {
         try {
+            $instance = new static();
             $sql = "SELECT * FROM tours WHERE language = ? AND status = 'active' AND (title LIKE ? OR description LIKE ? OR short_description LIKE ? OR location LIKE ? OR category LIKE ?)";
             $params = [$language];
             
@@ -455,7 +490,7 @@ class Tour
                 $sql .= " LIMIT " . (int)$filters['limit'];
             }
             
-            $stmt = $this->db->prepare($sql);
+            $stmt = $instance->getConnection()->prepare($sql);
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -467,29 +502,30 @@ class Tour
     /**
      * Get tour statistics
      */
-    public function getStats()
+    public static function getStats()
     {
         try {
+            $instance = new static();
             $stats = [];
             
             // Total tours
-            $stmt = $this->db->query("SELECT COUNT(*) FROM tours");
+            $stmt = $instance->getConnection()->query("SELECT COUNT(*) FROM tours");
             $stats['total_tours'] = $stmt->fetchColumn();
             
             // Active tours
-            $stmt = $this->db->query("SELECT COUNT(*) FROM tours WHERE status = 'active'");
+            $stmt = $instance->getConnection()->query("SELECT COUNT(*) FROM tours WHERE status = 'active'");
             $stats['active_tours'] = $stmt->fetchColumn();
             
             // Featured tours
-            $stmt = $this->db->query("SELECT COUNT(*) FROM tours WHERE featured = 1");
+            $stmt = $instance->getConnection()->query("SELECT COUNT(*) FROM tours WHERE featured = 1");
             $stats['featured_tours'] = $stmt->fetchColumn();
             
             // Tours by language
-            $stmt = $this->db->query("SELECT language, COUNT(*) as count FROM tours GROUP BY language");
+            $stmt = $instance->getConnection()->query("SELECT language, COUNT(*) as count FROM tours GROUP BY language");
             $stats['by_language'] = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
             
             // Tours by category
-            $stmt = $this->db->query("SELECT category, COUNT(*) as count FROM tours WHERE category IS NOT NULL GROUP BY category ORDER BY count DESC");
+            $stmt = $instance->getConnection()->query("SELECT category, COUNT(*) as count FROM tours WHERE category IS NOT NULL GROUP BY category ORDER BY count DESC");
             $stats['by_category'] = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
             
             return $stats;
@@ -502,10 +538,10 @@ class Tour
     /**
      * Duplicate tour
      */
-    public function duplicate($id, $newLanguage = null)
+    public static function duplicate($id, $newLanguage = null)
     {
         try {
-            $tour = $this->getById($id);
+            $tour = static::getById($id);
             if (!$tour) {
                 return false;
             }
@@ -517,15 +553,15 @@ class Tour
             
             if ($newLanguage) {
                 $tour['language'] = $newLanguage;
-                $tour['slug'] = $this->generateSlug($tour['title'], $newLanguage);
+                $tour['slug'] = static::generateSlug($tour['title'], $newLanguage);
             } else {
                 $tour['name'] = $tour['name'] . ' (Copy)';
                 $tour['title'] = $tour['title'] . ' (Copy)';
-                $tour['slug'] = $this->generateSlug($tour['title'], $tour['language']);
+                $tour['slug'] = static::generateSlug($tour['title'], $tour['language']);
                 $tour['translation_group'] = 'tour_' . uniqid();
             }
             
-            return $this->create($tour);
+            return static::create($tour);
         } catch (PDOException $e) {
             error_log("Error duplicating tour: " . $e->getMessage());
             return false;

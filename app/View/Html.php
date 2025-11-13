@@ -168,14 +168,21 @@ class Html {
      */
     public static function renderItemsWithData($html) {
         $pattern = '/<items\s+[^>]+\/>/i';
+        $dataSources = [];
 
         foreach(self::findItemsTags($html) as $item){
             $name = $item['attributes']['name'];
-            $modelName = '\\App\\Models\\' . $name;
+            $modelName = '\\App\\Models\\' . ucfirst($name);
             $list = $modelName::all();
+            //print_r($list);
+            $lang = Lang::getLocale();
+            if ($name == 'tour') {
+                $list = $modelName::where('language', $lang);
+            }
 
             $listArray = [];
             foreach($list as $media){
+            
                 $item = [];
                 foreach($media->toArray() as $key => $value){
                     $item[$key] = $value;
