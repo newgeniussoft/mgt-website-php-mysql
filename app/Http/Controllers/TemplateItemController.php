@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\TemplateItem;
 use App\Http\Controllers\Controller;
@@ -78,13 +78,13 @@ class TemplateItemController extends Controller {
     public function store() {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            redirect('/admin/template-items/create');
+            redirect(admin_url('template-items/create'));
             return;
         }
         
         if (empty($_POST['name']) || empty($_POST['model_name']) || empty($_POST['html_template'])) {
             $_SESSION['error'] = 'Name, Model, and HTML Template are required';
-            redirect('/admin/template-items/create');
+            redirect(admin_url('template-items/create'));
             return;
         }
         
@@ -115,10 +115,10 @@ class TemplateItemController extends Controller {
         
         if ($template->save()) {
             $_SESSION['success'] = 'Template item created successfully';
-            redirect('/admin/template-items');
+            redirect(admin_url('template-items'));
         } else {
             $_SESSION['error'] = 'Failed to create template item';
-            redirect('/admin/template-items/create');
+            redirect(admin_url('template-items/create'));
         }
     }
     
@@ -131,7 +131,7 @@ class TemplateItemController extends Controller {
         
         if (!$template) {
             $_SESSION['error'] = 'Template item not found';
-            redirect('/admin/template-items');
+            redirect(admin_url('template-items'));
             return;
         }
         
@@ -157,7 +157,7 @@ class TemplateItemController extends Controller {
     public function update() {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            redirect('/admin/template-items');
+            redirect(admin_url('template-items'));
             return;
         }
         
@@ -166,7 +166,7 @@ class TemplateItemController extends Controller {
         
         if (!$template) {
             $_SESSION['error'] = 'Template item not found';
-            redirect('/admin/template-items');
+            redirect(admin_url('template-items'));
             return;
         }
         
@@ -193,10 +193,10 @@ class TemplateItemController extends Controller {
         
         if ($template->save()) {
             $_SESSION['success'] = 'Template item updated successfully';
-            redirect('/admin/template-items');
+            redirect(admin_url('template-items'));
         } else {
             $_SESSION['error'] = 'Failed to update template item';
-            redirect('/admin/template-items/edit?id=' . $id);
+            redirect(admin_url('template-items/edit?id=' . $id));
         }
     }
     
@@ -206,7 +206,7 @@ class TemplateItemController extends Controller {
     public function delete() {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             $_SESSION['error'] = 'Invalid CSRF token';
-            redirect('/admin/template-items');
+            redirect(admin_url('template-items'));
             return;
         }
         
@@ -219,7 +219,7 @@ class TemplateItemController extends Controller {
             $_SESSION['error'] = 'Failed to delete template item';
         }
         
-        redirect('/admin/template-items');
+        redirect(admin_url('template-items'));
     }
     
     /**
@@ -232,10 +232,10 @@ class TemplateItemController extends Controller {
         if ($template) {
             $newTemplate = $template->duplicate();
             $_SESSION['success'] = 'Template item duplicated successfully';
-            redirect('/admin/template-items/edit?id=' . $newTemplate->id);
+            redirect(admin_url('template-items/edit?id=' . $newTemplate->id));
         } else {
             $_SESSION['error'] = 'Template item not found';
-            redirect('/admin/template-items');
+            redirect(admin_url('template-items'));
         }
     }
     

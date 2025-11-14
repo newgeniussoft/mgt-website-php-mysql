@@ -289,7 +289,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Current Main Image</label>
                                 <div>
-                                    <img src="/storage/uploads/{{ $tour['image'] }}" 
+                                    <img src="/uploads/{{ $tour['image'] }}" 
                                          class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
                                 </div>
                             </div>
@@ -299,7 +299,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Current Cover Image</label>
                                 <div>
-                                    <img src="/storage/uploads/{{ $tour['cover_image'] }}" 
+                                    <img src="/uploads/{{ $tour['cover_image'] }}" 
                                          class="img-thumbnail" style="max-width: 200px; max-height: 100px;">
                                 </div>
                             </div>
