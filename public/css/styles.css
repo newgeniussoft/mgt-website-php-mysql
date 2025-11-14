@@ -2425,7 +2425,7 @@ input[name="nav"]:checked + .page .page-contents > * {
   background: url("../img/images/baobab.jpg");
 }
 .bird_back {
-  background: url("../img/images/bird.png");
+  background: url("../images/bird.png");
 }
 .nosy_back {
   background: url("../img/images/cover-nosy-be.jpg");
