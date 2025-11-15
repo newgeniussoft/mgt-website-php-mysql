@@ -160,9 +160,10 @@ class TourController
             $data['cover_image'] = $this->handleImageUpload($_FILES['cover_image'], 'tours');
         }
         
-        // Create tour
-        $tourId = $this->tourModel->create($data);
-        
+        // Create tour (uses automatic slug generation in Tour::create)
+        $tour = Tour::create($data);
+        $tourId = $tour ? $tour->id : null;
+
         if ($tourId) {
             $_SESSION['success'] = 'Tour created successfully!';
             header('Location: '.admin_url('tours/edit?id=' . $tourId));
@@ -309,7 +310,24 @@ class TourController
             exit;
         }
         
-        if ($this->tourModel->delete($id)) {
+        if ($id <= 0) {
+            $_SESSION['error'] = 'Invalid tour ID';
+            header('Location: '.admin_url('tours'));
+            exit;
+        }
+
+        $tour = Tour::find($id);
+        if (!$tour) {
+            $_SESSION['error'] = 'Tour not found';
+            header('Location: '.admin_url('tours'));
+            exit;
+        }
+
+        // Delete related details and photos first
+        $this->tourDetailModel->deleteByTourId($id);
+        $this->tourPhotoModel->deleteByTourId($id);
+
+        if ($tour->delete()) {
             $_SESSION['success'] = 'Tour deleted successfully!';
         } else {
             $_SESSION['error'] = 'Failed to delete tour. Please try again.';
@@ -340,7 +358,7 @@ class TourController
             header('Location: '.admin_url('tours/edit?id=' . $newTourId));
         } else {
             $_SESSION['error'] = 'Failed to duplicate tour. Please try again.';
-            header('Location: '.admin_url('tours'));
+          //  header('Location: '.admin_url('tours'));
         }
         exit;
     }

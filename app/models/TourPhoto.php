@@ -125,16 +125,17 @@ class TourPhoto
             $sql = "INSERT INTO tour_photos (tour_id, image, title, description, alt_text, type, day, sort_order, is_featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             $stmt = $this->db->prepare($sql);
+            $tour = $data['tour_id'];
             $result = $stmt->execute([
-                $data['tour_id'],
-                $data['image'],
-                $data['title'] ?? null,
-                $data['description'] ?? null,
-                $data['alt_text'] ?? null,
-                $data['type'] ?? 'gallery',
-                $data['day'] ?? null,
-                $data['sort_order'] ?? 0,
-                $data['is_featured'] ?? 0
+                $tour->tour_id,
+                $tour->image,
+                $tour->title ?? null,
+                $tour->description ?? null,
+                $tour->alt_text ?? null,
+                $tour->type ?? 'gallery',
+                $tour->day ?? null,
+                $tour->sort_order ?? 0,
+                $tour->is_featured ?? 0
             ]);
             
             return $result ? $this->db->lastInsertId() : false;
