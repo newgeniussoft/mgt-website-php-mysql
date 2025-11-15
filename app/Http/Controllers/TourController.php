@@ -340,7 +340,7 @@ class TourController
             header('Location: '.admin_url('tours/edit?id=' . $newTourId));
         } else {
             $_SESSION['error'] = 'Failed to duplicate tour. Please try again.';
-            header('Location: '.admin_url('tours'));
+          //  header('Location: '.admin_url('tours'));
         }
         exit;
     }

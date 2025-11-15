@@ -10,7 +10,7 @@
             <i class="fas fa-images me-2"></i>Tour Photos: {{ $tour['title'] }}
         </h1>
         <div class="d-flex gap-2">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+            <button type="button" onclick="uploadPhotoDialog()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
                 <i class="fas fa-upload me-1"></i>Upload Photos
             </button>
             <a href="{{ admin_url('tours/edit?id=' . $tour['id']) }}" class="btn btn-secondary">
@@ -163,6 +163,7 @@
     @endif
 </div>
 
+
 <!-- Upload Photo Modal -->
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -236,7 +237,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" onclick="hideDialog('uploadModal')" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-upload me-1"></i>Upload Photo
                     </button>
@@ -421,6 +422,10 @@ function deletePhoto(photoId, title) {
     document.getElementById('deletePhotoId').value = photoId;
     document.getElementById('deletePhotoTitle').textContent = title;
     new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+
+function uploadPhotoDialog() {
+    new bootstrap.Modal(document.getElementById('uploadModal')).show();
 }
 
 function setFeatured(photoId) {

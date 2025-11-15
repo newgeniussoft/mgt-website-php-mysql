@@ -93,17 +93,18 @@ class TourDetail
             $sql = "INSERT INTO tour_details (tour_id, day, title, description, activities, meals, accommodation, transport, notes, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             $stmt = $this->db->prepare($sql);
+        
+            $tour = $data['tour_id'];
             $result = $stmt->execute([
-                $data['tour_id'],
-                $data['day'],
-                $data['title'],
-                $data['description'] ?? null,
-                $data['activities'] ?? null,
-                $data['meals'] ?? null,
-                $data['accommodation'] ?? null,
-                $data['transport'] ?? null,
-                $data['notes'] ?? null,
-                $data['sort_order'] ?? 0
+                $tour->id,
+                $tour->day,
+                $tour->title,
+                $tour->description ?? null,
+                $tour->activities ?? null,
+                $tour->meals ?? null,
+                $tour->accommodation ?? null,
+                $tour->transport ?? null,
+                $tour->notes ?? null,
             ]);
             
             return $result ? $this->db->lastInsertId() : false;

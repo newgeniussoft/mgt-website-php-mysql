@@ -10,7 +10,7 @@
             <i class="fas fa-list me-2"></i>Tour Details: {{ $tour['title'] }}
         </h1>
         <div class="d-flex gap-2">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDetailModal">
+            <button type="button" onclick="uploadDetailDialog()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDetailModal">
                 <i class="fas fa-plus me-1"></i>Add Day
             </button>
             <a href="{{ admin_url('tours/edit?id=' . $tour['id']) }}" class="btn btn-secondary">
@@ -304,6 +304,10 @@ function editDetail(detail) {
     document.getElementById('addDetailModalLabel').innerHTML = '<i class="fas fa-edit me-2"></i>Edit Day ' + detail.day;
     
     // Show modal
+    new bootstrap.Modal(document.getElementById('addDetailModal')).show();
+}
+
+function uploadDetailDialog() {
     new bootstrap.Modal(document.getElementById('addDetailModal')).show();
 }
 
