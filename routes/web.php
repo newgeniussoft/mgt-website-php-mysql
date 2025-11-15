@@ -129,6 +129,14 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->get('/slides/edit', 'App\Http\Controllers\SlideController@edit');
     $router->post('/slides/update', 'App\Http\Controllers\SlideController@update');
     $router->post('/slides/delete', 'App\Http\Controllers\SlideController@destroy');
+
+    // Gallery Management routes
+    $router->get('/galleries', 'App\Http\Controllers\GalleryController@index');
+    $router->get('/galleries/create', 'App\Http\Controllers\GalleryController@create');
+    $router->post('/galleries/store', 'App\Http\Controllers\GalleryController@store');
+    $router->get('/galleries/edit', 'App\Http\Controllers\GalleryController@edit');
+    $router->post('/galleries/update', 'App\Http\Controllers\GalleryController@update');
+    $router->post('/galleries/delete', 'App\Http\Controllers\GalleryController@destroy');
     
     // Template Item Management routes
     $router->get('/template-items', 'App\Http\Controllers\TemplateItemController@index');
