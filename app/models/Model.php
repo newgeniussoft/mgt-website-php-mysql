@@ -116,13 +116,16 @@ abstract class Model {
     }
     
     public function delete() {
-        if (!isset($this->attributes[$this->primaryKey])) {
+        // Support both models created via create()/fill() (ID in $attributes)
+        // and models loaded via find()/all()/where() (ID as a public property)
+        $id = $this->{$this->primaryKey} ?? null;
+        if ($id === null) {
             return false;
         }
-        
+
         $sql = "DELETE FROM {$this->table} WHERE `{$this->primaryKey}` = ?";
         $stmt = $this->getConnection()->prepare($sql);
-        return $stmt->execute([$this->attributes[$this->primaryKey]]);
+        return $stmt->execute([$id]);
     }
     
     public function __get($key) {

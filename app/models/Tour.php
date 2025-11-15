@@ -244,6 +244,39 @@ class Tour extends Model
     }
     
     /**
+     * Create new tour with automatic slug generation
+     */
+    public static function create(array $data)
+    {
+        // Generate slug from name (preferred) or title if not provided
+        if (empty($data['slug'])) {
+            $baseForSlug = $data['name'] ?? ($data['title'] ?? '');
+            if ($baseForSlug !== '') {
+                $data['slug'] = static::generateSlug($baseForSlug, $data['language'] ?? 'en');
+            }
+        }
+
+        // Generate translation group if not provided
+        if (empty($data['translation_group'])) {
+            $data['translation_group'] = 'tour_' . uniqid();
+        }
+
+        // Encode JSON fields
+        if (isset($data['highlights']) && is_array($data['highlights'])) {
+            $data['highlights'] = json_encode($data['highlights']);
+        }
+        if (isset($data['price_includes']) && is_array($data['price_includes'])) {
+            $data['price_includes'] = json_encode($data['price_includes']);
+        }
+        if (isset($data['price_excludes']) && is_array($data['price_excludes'])) {
+            $data['price_excludes'] = json_encode($data['price_excludes']);
+        }
+
+        // Delegate to base Model::create, which returns a Tour instance with ID set
+        return parent::create($data);
+    }
+
+    /**
      * Create new tour
      */
     /*public function create($data)
@@ -561,7 +594,8 @@ class Tour extends Model
                 $tour['translation_group'] = 'tour_' . uniqid();
             }
             
-            return static::create($tour);
+            $newTour = static::create($tour);
+            return $newTour ? $newTour->id : false;
         } catch (PDOException $e) {
             error_log("Error duplicating tour: " . $e->getMessage());
             return false;
