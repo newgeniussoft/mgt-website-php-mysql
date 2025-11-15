@@ -34,6 +34,7 @@ abstract class Controller {
     
     protected function abort($code = 404, $message = '') {
         http_response_code($code);
+
         $this->view("errors/$code", ['message' => $message]);
         exit;
     }

@@ -193,8 +193,8 @@ function view($template, $data = []) {
 }
 
 function abort($code = 404, $message = '') {
-   // http_response_code($code);
-    view("errors.$code", ['message' => '404 Not Found']);
+    http_response_code($code);
+    view("errors.404", ['message' => '404 Not Found']);
     exit;
 }
 
