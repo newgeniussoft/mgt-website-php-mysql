@@ -121,6 +121,14 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/templates/delete', 'App\Http\Controllers\TemplateController@destroy');
     $router->get('/templates/preview', 'App\Http\Controllers\TemplateController@preview');
     $router->post('/templates/duplicate', 'App\Http\Controllers\TemplateController@duplicate');
+
+    // Slide Management routes
+    $router->get('/slides', 'App\Http\Controllers\SlideController@index');
+    $router->get('/slides/create', 'App\Http\Controllers\SlideController@create');
+    $router->post('/slides/store', 'App\Http\Controllers\SlideController@store');
+    $router->get('/slides/edit', 'App\Http\Controllers\SlideController@edit');
+    $router->post('/slides/update', 'App\Http\Controllers\SlideController@update');
+    $router->post('/slides/delete', 'App\Http\Controllers\SlideController@destroy');
     
     // Template Item Management routes
     $router->get('/template-items', 'App\Http\Controllers\TemplateItemController@index');
