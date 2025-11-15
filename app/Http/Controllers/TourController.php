@@ -309,7 +309,24 @@ class TourController
             exit;
         }
         
-        if ($this->tourModel->delete($id)) {
+        if ($id <= 0) {
+            $_SESSION['error'] = 'Invalid tour ID';
+            header('Location: '.admin_url('tours'));
+            exit;
+        }
+
+        $tour = Tour::find($id);
+        if (!$tour) {
+            $_SESSION['error'] = 'Tour not found';
+            header('Location: '.admin_url('tours'));
+            exit;
+        }
+
+        // Delete related details and photos first
+        $this->tourDetailModel->deleteByTourId($id);
+        $this->tourPhotoModel->deleteByTourId($id);
+
+        if ($tour->delete()) {
             $_SESSION['success'] = 'Tour deleted successfully!';
         } else {
             $_SESSION['error'] = 'Failed to delete tour. Please try again.';
