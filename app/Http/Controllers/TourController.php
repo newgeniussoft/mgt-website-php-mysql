@@ -160,9 +160,10 @@ class TourController
             $data['cover_image'] = $this->handleImageUpload($_FILES['cover_image'], 'tours');
         }
         
-        // Create tour
-        $tourId = $this->tourModel->create($data);
-        
+        // Create tour (uses automatic slug generation in Tour::create)
+        $tour = Tour::create($data);
+        $tourId = $tour ? $tour->id : null;
+
         if ($tourId) {
             $_SESSION['success'] = 'Tour created successfully!';
             header('Location: '.admin_url('tours/edit?id=' . $tourId));
