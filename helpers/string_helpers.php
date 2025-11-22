@@ -12,22 +12,6 @@ function str_limit($string, $limit = 100, $end = '...') {
     return substr($string, 0, $limit) . $end;
 }
 
-function str_contains($haystack, $needle) {
-    return strpos($haystack, $needle) !== false;
-}
-
-function str_starts_with($haystack, $needle) {
-    return strpos($haystack, $needle) === 0;
-}
-
-function str_ends_with($haystack, $needle) {
-    return substr($haystack, -strlen($needle)) === $needle;
-}
-
-function str_random($length = 16) {
-    return bin2hex(random_bytes($length / 2));
-}
-
 function encrypt($value) {
     $key = config('app.key');
     $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));

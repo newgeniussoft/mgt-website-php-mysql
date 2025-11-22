@@ -253,6 +253,23 @@ function array_pluck($array, $value, $key = null) {
     return $results;
 }
 
+function currentUrlToEs() {
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host   = $_SERVER['HTTP_HOST'];
+    $uri    = $_SERVER['REQUEST_URI'];
+
+    // Remove leading slash
+    $uri = ltrim($uri, '/');
+
+    // Convert
+    if ($uri === '') {
+        return "$scheme://$host/es";
+    }
+
+    return "$scheme://$host/es/$uri";
+}
+
+
 
 function __($key, $replace = []) {
     return \App\Localization\Lang::get($key, $replace);

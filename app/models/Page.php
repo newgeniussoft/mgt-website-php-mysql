@@ -167,9 +167,7 @@ class Page extends Model {
             $params[] = $status;
         }
         
-        //$sql .= " ORDER BY created_at DESC LIMIT ? OFFSET ?";
-        $params[] = $perPage;
-        $params[] = $offset;
+        $sql .= " ORDER BY created_at DESC LIMIT " . (int)$perPage . " OFFSET " . (int)$offset;
         
         $stmt = $instance->getConnection()->prepare($sql);
         $stmt->execute($params);

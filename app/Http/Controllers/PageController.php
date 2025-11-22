@@ -95,7 +95,7 @@ class PageController extends Controller {
                 mkdir($uploadDir, 0755, true);
             }
             
-            $fileName = time() . '_' . basename($_FILES['featured_image']['name']);
+            $fileName = $_FILES['featured_image']['name'];
             $uploadPath = $uploadDir . $fileName;
             
             if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $uploadPath)) {
@@ -208,7 +208,7 @@ class PageController extends Controller {
                 mkdir($uploadDir, 0755, true);
             }
             
-            $fileName = time() . '_' . basename($_FILES['featured_image']['name']);
+            $fileName = $_FILES['featured_image']['name'];
             $uploadPath = $uploadDir . $fileName;
             
             if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $uploadPath)) {

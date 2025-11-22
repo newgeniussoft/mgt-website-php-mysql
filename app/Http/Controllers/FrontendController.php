@@ -83,13 +83,24 @@ class FrontendController extends Controller
         // Render sections
         
         $sectionsHtml = Html::renderSections($sections);
+
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = $_SERVER['REQUEST_URI'];
+
+        $currentUrl = $protocol . "://" . $host . $uri;
         
         // Prepare template variables
         $variables = [
-            'page_title' => $page->title,
+            'page_title' => $page->page_title,
+            'meta_title' => $page->meta_title,
             'meta_description' => $page->meta_description ?? '',
             'meta_keywords' => $page->meta_keywords ?? '',
+            'featured_image' => $page->featured_image ?? '',
             'site_name' => $_ENV['APP_NAME'] ?? 'My Website',
+            'app_url' => $_ENV['APP_URL'] ?? 'http://localhost',
+            'current_path' => $currentUrl,
+            'current_path_es' => currentUrlToEs(),
             'menu_items' => $menuHtml,
             'page_sections' => $sectionsHtml,
             'custom_css' => '',

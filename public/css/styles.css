@@ -102,6 +102,50 @@ body::before {
   z-index: -999;
 }
 
+.container {
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 0.80rem); /* Default 1.5rem gutter divided by 2 */
+  padding-left: var(--bs-gutter-x, 0.80rem);  /* Default 1.5rem gutter divided by 2 */
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Small devices (≥576px) */
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+/* Medium devices (≥768px) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+/* Large devices (≥992px) */
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+/* Extra large devices (≥1200px) */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+/* XX-Large devices (≥1400px) */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+
 .mt-2 {
   margin-top: 2vw !important;
 }
@@ -2425,7 +2469,7 @@ input[name="nav"]:checked + .page .page-contents > * {
   background: url("../img/images/baobab.jpg");
 }
 .bird_back {
-  background: url("../images/bird.png");
+  background: url("../img/images/bird.png");
 }
 .nosy_back {
   background: url("../img/images/cover-nosy-be.jpg");
