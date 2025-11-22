@@ -398,7 +398,7 @@ class SectionController extends Controller {
         try {
             $content->save();
             $_SESSION['success'] = 'Content updated successfully';
-            return redirect(admin_url('sections/edit?id=' . $content->section_id));
+            return redirect(admin_url('sections/edit-content?id=' . $id));
         } catch (\Exception $e) {
             $_SESSION['error'] = 'Error updating content: ' . $e->getMessage();
             return redirect(admin_url('sections/edit-content?id=' . $id));

@@ -15,10 +15,31 @@ class Html {
     public static function buildMenuHtml($menuPages)
     {
         $html = '<ul class="navbar-nav header-styled gradient-border">';
+        $idHasChild = [];
+        $idHasParent = [];
+        foreach ($menuPages as $menuPage) {
+            if ($menuPage->parent_id != NULL) {
+                $idHasChild[] = $menuPage->parent_id;
+                $idHasParent[] = $menuPage->id;
+            }
+        }
         foreach ($menuPages as $menuPage) {
             $active = (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/' . $menuPage->slug) ? ' class="active"' : '';
             $url = $menuPage->is_homepage ? '/' : '/' . $menuPage->slug;
-            $html .= '<li' . $active . ' class="nav-item"><a href="' . $url . '" class="nav-link">' . htmlspecialchars($menuPage->title) . '</a></li>';
+            if (!in_array($menuPage->id, $idHasChild) && !in_array($menuPage->id, $idHasParent)) {
+                $html .= '<li' . $active . ' class="nav-item"><a href="' . $url . '" class="nav-link ">' . htmlspecialchars($menuPage->title) . '</a></li>';
+            } else {
+                if (in_array($menuPage->id, $idHasChild)) {
+                    $html .= '<li' . $active . ' class="nav-item dropdown"><a href="' . $url . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($menuPage->title) . '</a>';
+                    $html .= '<div class="dropdown-menu" aria-labelledby="dropdown-' . $menuPage->id . '">';
+                    foreach($menuPages as $child) {
+                        if ($child->parent_id  === $menuPage->id) {
+                            $html .= '<a class="dropdown-item" href="/'.$child->slug.'">'.$child->title.'</a>';
+                        }
+                    }
+                    $html .= '</div></li>';
+                }
+            }
         }
         $html .= '</ul>';
         return $html;
