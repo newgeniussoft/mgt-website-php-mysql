@@ -357,7 +357,7 @@ class SectionController extends Controller {
         
         $section = $content->getSection();
         
-        return view('admin.sections.edit-content', [
+        return view('admin.sections.add-content', [
             'title' => 'Edit Content',
             'content' => $content,
             'section' => $section
