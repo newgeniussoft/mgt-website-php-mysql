@@ -143,15 +143,42 @@ class PageController extends Controller {
         }
         
         $templates = Template::getActive();
-        $pages = Page::all();
+        $pages = Page::all(); // For parent selection
         $sections = Section::getByPage($id, false);
+
+        // Load existing translations (if table exists)
+        $locales = ['en','es'];
+        $translations = [];
+        foreach ($locales as $lc) {
+            $translations[$lc] = [
+                'title' => $page->title,
+                'meta_title' => $page->meta_title,
+                'meta_description' => $page->meta_description,
+            ];
+        }
+        try {
+            $conn = $page->getConnection();
+            $stmt = $conn->prepare("SELECT locale, title, meta_title, meta_description FROM page_translations WHERE page_id = ?");
+            $stmt->execute([$id]);
+            foreach ($stmt->fetchAll(\PDO::FETCH_ASSOC) as $row) {
+                $lc = $row['locale'];
+                if (!isset($translations[$lc])) { $translations[$lc] = []; }
+                if (!empty($row['title'])) $translations[$lc]['title'] = $row['title'];
+                if (!empty($row['meta_title'])) $translations[$lc]['meta_title'] = $row['meta_title'];
+                if (!empty($row['meta_description'])) $translations[$lc]['meta_description'] = $row['meta_description'];
+            }
+        } catch (\Throwable $e) {
+            // ignore if table doesn't exist yet
+        }
         
         return view('admin.pages.edit', [
             'title' => 'Edit Page',
             'page' => $page,
             'templates' => $templates,
             'pages' => $pages,
-            'sections' => $sections
+            'sections' => $sections,
+            'locales' => $locales,
+            'translations' => $translations,
         ]);
     }
     
@@ -236,6 +263,22 @@ class PageController extends Controller {
         
         try {
             $page->save();
+
+            // Save translations if provided
+            if (isset($_POST['translations']) && is_array($_POST['translations'])) {
+                foreach ($_POST['translations'] as $lc => $data) {
+                    $tTitle = $data['title'] ?? null;
+                    $tMetaTitle = $data['meta_title'] ?? null;
+                    $tMetaDesc = $data['meta_description'] ?? null;
+                    if ($tTitle !== null || $tMetaTitle !== null || $tMetaDesc !== null) {
+                        try {
+                            Page::upsertTranslation($id, $lc, $tTitle, $tMetaTitle, $tMetaDesc);
+                        } catch (\Throwable $e) {
+                            // ignore failure silently; table may not exist
+                        }
+                    }
+                }
+            }
             $_SESSION['success'] = 'Page updated successfully';
             return redirect(admin_url('pages/edit?id=' . $id));
         } catch (\Exception $e) {

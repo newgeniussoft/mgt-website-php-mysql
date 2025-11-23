@@ -68,6 +68,39 @@
                     </div>
                 </div>
 
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Translations</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            @foreach($locales as $index => $lc)
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $index === 0 ? 'active' : '' }}" data-toggle="tab" href="#tab-{{ $lc }}" role="tab">{{ strtoupper($lc) }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="tab-content border-left border-right border-bottom p-3">
+                            @foreach($locales as $index => $lc)
+                                <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="tab-{{ $lc }}" role="tabpanel">
+                                    <div class="form-group">
+                                        <label>Title ({{ strtoupper($lc) }})</label>
+                                        <input type="text" class="form-control" name="translations[{{ $lc }}][title]" value="{{ $translations[$lc]['title'] ?? '' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Meta Title ({{ strtoupper($lc) }})</label>
+                                        <input type="text" class="form-control" name="translations[{{ $lc }}][meta_title]" value="{{ $translations[$lc]['meta_title'] ?? '' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Meta Description ({{ strtoupper($lc) }})</label>
+                                        <textarea class="form-control" name="translations[{{ $lc }}][meta_description]" rows="3">{{ $translations[$lc]['meta_description'] ?? '' }}</textarea>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
                 @if(!empty($sections))
                     <div class="card mb-4">
                         <div class="card-header">

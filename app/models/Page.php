@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Localization\Lang;
 
 class Page extends Model {
     protected $table = 'pages';
@@ -36,7 +37,11 @@ class Page extends Model {
         );
         $stmt->execute([$slug]);
         $stmt->setFetchMode(\PDO::FETCH_CLASS, static::class);
-        return $stmt->fetch();
+        $page = $stmt->fetch();
+        if ($page) {
+            $page = self::applyTranslations($page, Lang::getLocale());
+        }
+        return $page;
     }
     
     /**
@@ -49,7 +54,11 @@ class Page extends Model {
         );
         $stmt->execute();
         $stmt->setFetchMode(\PDO::FETCH_CLASS, static::class);
-        return $stmt->fetch();
+        $page = $stmt->fetch();
+        if ($page) {
+            $page = self::applyTranslations($page, Lang::getLocale());
+        }
+        return $page;
     }
     
     /**
@@ -61,7 +70,12 @@ class Page extends Model {
             "SELECT * FROM {$instance->table} WHERE show_in_menu = 1 AND status = 'published' ORDER BY menu_order ASC, title ASC"
         );
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+        $pages = $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+        $locale = Lang::getLocale();
+        foreach ($pages as $p) {
+            self::applyTranslations($p, $locale);
+        }
+        return $pages;
     }
     
     /**
@@ -191,5 +205,51 @@ class Page extends Model {
         $stmt->execute($params);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result['count'];
+    }
+
+    protected static function applyTranslations($page, $locale)
+    {
+        if (!$page || !$locale) {
+            if ($page) {
+                $page->page_title = $page->title ?? null;
+            }
+            return $page;
+        }
+        try {
+            $instance = new static();
+            $stmt = $instance->getConnection()->prepare(
+                "SELECT title, meta_title, meta_description FROM page_translations WHERE page_id = ? AND locale = ? LIMIT 1"
+            );
+            $stmt->execute([$page->id, $locale]);
+            $t = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if ($t) {
+                if (!empty($t['title'])) {
+                    $page->title = $t['title'];
+                }
+                if (!empty($t['meta_title'])) {
+                    $page->meta_title = $t['meta_title'];
+                }
+                if (!empty($t['meta_description'])) {
+                    $page->meta_description = $t['meta_description'];
+                }
+            }
+        } catch (\Throwable $e) {
+            // Ignore if translations table doesn't exist yet
+        }
+        $page->page_title = $page->title ?? null;
+        return $page;
+    }
+
+    public static function upsertTranslation($pageId, $locale, $title = null, $metaTitle = null, $metaDescription = null)
+    {
+        $instance = new static();
+        $sql = "INSERT INTO page_translations (page_id, locale, title, meta_title, meta_description)
+                VALUES (?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    title = VALUES(title),
+                    meta_title = VALUES(meta_title),
+                    meta_description = VALUES(meta_description)";
+        $stmt = $instance->getConnection()->prepare($sql);
+        $stmt->execute([$pageId, $locale, $title, $metaTitle, $metaDescription]);
     }
 }
