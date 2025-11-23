@@ -5,11 +5,11 @@
 $router->get('/', 'App\Http\Controllers\FrontendController@index');
 
 // Model-driven detail pages (Option A)
-$router->get('/tour/{slug}', 'App\Http\Controllers\FrontendController@showTour');
+/*$router->get('/tour/{slug}', 'App\Http\Controllers\FrontendController@showTour');
 $router->get('/tours/{slug}', 'App\Http\Controllers\FrontendController@showTour');
 // Blog/Post detail pages
 $router->get('/post/{key}', 'App\Http\Controllers\FrontendController@showPost');
-$router->get('/blog/{key}', 'App\Http\Controllers\FrontendController@showPost');
+$router->get('/blog/{key}', 'App\Http\Controllers\FrontendController@showPost');*/
 
 $router->get('/test-api', function() {
     return response()->json(['message' => 'API is working!']);
@@ -197,3 +197,5 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
 
 // Catch-all route for dynamic pages (must be last)
 $router->get('/{slug}', 'App\Http\Controllers\FrontendController@showPage');
+$router->get('/{slug}/{item}', 'App\Http\Controllers\FrontendController@showPageItem');
+

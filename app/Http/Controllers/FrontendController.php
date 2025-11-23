@@ -7,6 +7,7 @@ use App\Models\Template;
 use App\Models\Section;
 use App\Models\TemplateItem;
 use App\Models\Tour;
+use App\Models\Model;
 use App\Models\Post;
 use App\View\View;
 use App\View\Html;
@@ -67,17 +68,72 @@ class FrontendController extends Controller
         
         // Render page with template
         if ($template && $template->html_content) {
-            return $this->renderWithTemplate($page, $template, $sections, $menuPages);
+            return Html::renderWithTemplate($page, $template, $sections, $menuPages);
         }
         
         // Fallback: render without template
         return $this->renderBasic($page, $sections, $menuPages);
     }
 
+    public function renderPageItem($item) {
+        
+    }
+
+    /**
+     * Show model object if slug is found
+     */
+    public function showPageItem($slug, $item)
+    {
+        // If $slug is already a Page object (from index method)
+        $model = Model::fromSlug($slug); 
+        // Get menu pages for navigation
+        $menuPages = Page::getMenuPages();
+        if (!is_array($menuPages)) {
+            $menuPages = [];
+        }
+        
+        if ($model) {
+            $item = $model::where('slug', '=', $item);
+            if (is_array($item) && count($item) > 0) {
+                $item = $item[0];
+            }
+            return Html::renderItemWithTemplate($item, $menuPages);
+
+        } else {
+            return $this->notFound();
+        }
+        
+        // Get template
+       /* $template = null;
+        if ($page->template_id) {
+            $template = Template::find($page->template_id);
+        }
+        
+        // Get sections
+        $sections = Section::getByPage($page->id, true);
+        if (!is_array($sections)) {
+            $sections = [];
+        }
+        
+        // Get menu pages for navigation
+        $menuPages = Page::getMenuPages();
+        if (!is_array($menuPages)) {
+            $menuPages = [];
+        }
+        
+        // Render page with template
+        if ($template && $template->html_content) {
+            return Html::renderWithTemplate($page, $template, $sections, $menuPages);
+        }
+        
+        // Fallback: render without template
+        return $this->renderBasic($page, $sections, $menuPages);*/
+    }
+
     /**
      * Show Tour detail by slug and current locale
      */
-    public function showTour($slug)
+    /*public function showTour($slug)
     {
         $language = Lang::getLocale();
         $tour = Tour::getBySlug($slug, $language);
@@ -86,8 +142,8 @@ class FrontendController extends Controller
             return $this->notFound();
         }
 
-        // Choose a Template Item for the tour detail
-        $templateSlug = $_GET['template'] ?? null;
+        // Choose a Template Item for the tour detail (allow override via ?template=)
+        $templateSlug = $_GET['template'] ?? ($tour['template_slug'] ?? null);
         $templateItem = null;
         if (!empty($templateSlug)) {
             $templateItem = TemplateItem::getBySlug($templateSlug);
@@ -110,6 +166,13 @@ class FrontendController extends Controller
         }
         if (!isset($item['duration']) && isset($item['duration_days'])) {
             $item['duration'] = $item['duration_days'];
+        }
+        // Merge custom template variables saved on the tour
+        if (!empty($tour['template_variables'])) {
+            $customVars = json_decode($tour['template_variables'], true);
+            if (is_array($customVars)) {
+                $item = array_merge($item, $customVars);
+            }
         }
 
         // Render detail HTML
@@ -157,7 +220,7 @@ class FrontendController extends Controller
         // Fallback basic render if no template configured
         echo '<nav>' . $menuHtml . '</nav>' . $detailHtml;
         exit;
-    }
+    }*/
     
     /**
      * Show Blog Post detail by slug or ID (Option A)
@@ -228,77 +291,6 @@ class FrontendController extends Controller
         }
 
         echo '<nav>' . $menuHtml . '</nav>' . $detailHtml;
-        exit;
-    }
-    
-    /**
-     * Render page with template
-     */
-    protected function renderWithTemplate($page, $template, $sections, $menuPages)
-    {
-        // Build menu HTML
-        $menuHtml = Html::buildMenuHtml($menuPages);
-        
-        // Render sections
-        
-        $sectionsHtml = Html::renderSections($sections);
-
-        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
-        $host = $_SERVER['HTTP_HOST'];
-        $uri = $_SERVER['REQUEST_URI'];
-
-        $currentUrl = $protocol . "://" . $host . $uri;
-        
-        // Prepare template variables
-        $variables = [
-            'page_title' => $page->page_title,
-            'meta_title' => $page->meta_title,
-            'meta_description' => $page->meta_description ?? '',
-            'meta_keywords' => $page->meta_keywords ?? '',
-            'featured_image' => $page->featured_image ?? '',
-            'site_name' => $_ENV['APP_NAME'] ?? 'My Website',
-            'app_url' => $_ENV['APP_URL'] ?? 'http://localhost',
-            'current_path' => $currentUrl,
-            'current_path_es' => currentUrlToEs(),
-            'menu_items' => $menuHtml,
-            'page_sections' => $sectionsHtml,
-            'custom_css' => '',
-            'custom_js' => ''
-        ];
-        
-        // Render template HTML
-        $html = $template->html_content ?? '';
-        
-        // Replace variables in template
-        foreach ($variables as $key => $value) {
-            $html = str_replace('{{ ' . $key . ' }}', $value, $html);
-            $html = str_replace('{{' . $key . '}}', $value, $html);
-        }
-        
-        // Inject CSS if template has it
-        if ($template->css_content) {
-            $cssTag = '<style>' . $template->css_content . '</style>';
-            // Try to inject before </head> or at the beginning
-            if (strpos($html, '</head>') !== false) {
-                $html = str_replace('</head>', $cssTag . '</head>', $html);
-            } else {
-                $html = $cssTag . $html;
-            }
-        }
-        
-        // Inject JS if template has it
-        if ($template->js_content) {
-            $jsTag = '<script>' . $template->js_content . '</script>';
-            // Try to inject before </body> or at the end
-            if (strpos($html, '</body>') !== false) {
-                $html = str_replace('</body>', $jsTag . '</body>', $html);
-            } else {
-                $html .= $jsTag;
-            }
-        }
-        
-        // Return raw HTML
-        echo $html;
         exit;
     }
     

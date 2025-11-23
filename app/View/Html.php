@@ -3,6 +3,7 @@
 namespace App\View;
 use App\Localization\Lang;
 use App\Models\Model;
+use App\Models\Template;
 
 class Html {
 
@@ -292,5 +293,154 @@ class Html {
             return $output;
         
         }, $html);
+    }
+
+    
+    /**
+     * Render page with template
+     */
+    public static function renderWithTemplate($page, $template, $sections, $menuPages)
+    {
+        // Build menu HTML
+        $menuHtml = Html::buildMenuHtml($menuPages);
+        
+        // Render sections
+        
+        $sectionsHtml = Html::renderSections($sections);
+
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = $_SERVER['REQUEST_URI'];
+
+        $currentUrl = $protocol . "://" . $host . $uri;
+        
+        // Prepare template variables
+        $variables = [
+            'page_title' => $page->page_title,
+            'meta_title' => $page->meta_title,
+            'meta_description' => $page->meta_description ?? '',
+            'meta_keywords' => $page->meta_keywords ?? '',
+            'featured_image' => $page->featured_image ?? '',
+            'site_name' => $_ENV['APP_NAME'] ?? 'My Website',
+            'app_url' => $_ENV['APP_URL'] ?? 'http://localhost',
+            'current_path' => $currentUrl,
+            'current_path_es' => currentUrlToEs(),
+            'menu_items' => $menuHtml,
+            'page_sections' => $sectionsHtml,
+            'custom_css' => '',
+            'custom_js' => ''
+        ];
+        
+        // Render template HTML
+        $html = $template->html_content ?? '';
+        
+        // Replace variables in template
+        foreach ($variables as $key => $value) {
+            $html = str_replace('{{ ' . $key . ' }}', $value, $html);
+            $html = str_replace('{{' . $key . '}}', $value, $html);
+        }
+        
+        // Inject CSS if template has it
+        if ($template->css_content) {
+            $cssTag = '<style>' . $template->css_content . '</style>';
+            // Try to inject before </head> or at the beginning
+            if (strpos($html, '</head>') !== false) {
+                $html = str_replace('</head>', $cssTag . '</head>', $html);
+            } else {
+                $html = $cssTag . $html;
+            }
+        }
+        
+        // Inject JS if template has it
+        if ($template->js_content) {
+            $jsTag = '<script>' . $template->js_content . '</script>';
+            // Try to inject before </body> or at the end
+            if (strpos($html, '</body>') !== false) {
+                $html = str_replace('</body>', $jsTag . '</body>', $html);
+            } else {
+                $html .= $jsTag;
+            }
+        }
+        
+        // Return raw HTML
+        echo $html;
+        exit;
+    }
+
+    /**
+     * Render page with template
+     */
+    public static function renderItemWithTemplate($item, $menuPages)
+    {
+        // Build menu HTML
+        $menuHtml = Html::buildMenuHtml($menuPages);
+        
+        $template = Template::where("slug", "=", $item->template_slug);
+        if (count($template) > 0) {
+            $template = $template[0];
+        }
+
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = $_SERVER['REQUEST_URI'];
+
+        $currentUrl = $protocol . "://" . $host . $uri;
+        
+        
+        // Prepare template variables
+        $variables = [
+            'meta_title' => $item->meta_title,
+            'meta_description' => $item->meta_description ?? '',
+            'meta_keywords' => $item->meta_keywords ?? '',
+            'featured_image' => $item->featured_image ?? '',
+            'site_name' => $_ENV['APP_NAME'] ?? 'My Website',
+            'app_url' => $_ENV['APP_URL'] ?? 'http://localhost',
+            'current_path' => $currentUrl,
+            'current_path_es' => currentUrlToEs(),
+            'menu_items' => $menuHtml,
+            'custom_css' => '',
+            'custom_js' => ''
+        ];
+        
+        // Render template HTML
+        $html = $template->html_content ?? '';
+        
+        // Replace variables in template
+        foreach ($variables as $key => $value) {
+            $html = str_replace('{{ ' . $key . ' }}', $value, $html);
+            $html = str_replace('{{' . $key . '}}', $value, $html);
+        }
+        $item = $item->toArray();
+        $keys = [];
+        foreach ($item as $key => $value) {
+            $html = str_replace('{{ $item.' . $key . ' }}', $value, $html);
+            $html = str_replace('{{$item.' . $key . '}}', $value, $html);
+        }
+        
+        // Inject CSS if template has it
+        if ($template->css_content) {
+            $cssTag = '<style>' . $template->css_content . '</style>';
+            // Try to inject before </head> or at the beginning
+            if (strpos($html, '</head>') !== false) {
+                $html = str_replace('</head>', $cssTag . '</head>', $html);
+            } else {
+                $html = $cssTag . $html;
+            }
+        }
+        
+        // Inject JS if template has it
+        if ($template->js_content) {
+            $jsTag = '<script>' . $template->js_content . '</script>';
+            // Try to inject before </body> or at the end
+            if (strpos($html, '</body>') !== false) {
+                $html = str_replace('</body>', $jsTag . '</body>', $html);
+            } else {
+                $html .= $jsTag;
+            }
+        }
+        
+        // Return raw HTML
+        echo $html;
+        exit;
     }
 }

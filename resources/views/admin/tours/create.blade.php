@@ -284,6 +284,27 @@
                     </div>
                 </div>
 
+                <!-- Page Template -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            <i class="fas fa-layer-group me-1"></i>Page Template
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="template_slug" class="form-label">Select Template</label>
+                            <select class="form-select" id="template_slug" name="template_slug">
+                                @foreach(($pageTemplates ?? []) as $tpl)
+                                    <option value="{{ $tpl->slug }}" {{ (!empty($defaultTemplateSlug) && $tpl->slug === $defaultTemplateSlug) ? 'selected' : '' }}>
+                                        {{ $tpl->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Action Buttons -->
                 <div class="card shadow mb-4">
                     <div class="card-body">
@@ -305,6 +326,8 @@
 <!-- Include Summernote CSS and JS -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
+<!-- No dynamic template variables when using page templates -->
 
 <script>
 $(document).ready(function() {

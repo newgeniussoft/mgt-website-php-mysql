@@ -34,7 +34,9 @@ class Tour extends Model
         'sort_order',
         'meta_title',
         'meta_description',
-        'meta_keywords'
+        'meta_keywords',
+        'template_slug',
+        'template_variables'
     ];
     protected $timestamps = true;
     
@@ -271,6 +273,9 @@ class Tour extends Model
         if (isset($data['price_excludes']) && is_array($data['price_excludes'])) {
             $data['price_excludes'] = json_encode($data['price_excludes']);
         }
+        if (isset($data['template_variables']) && is_array($data['template_variables'])) {
+            $data['template_variables'] = json_encode($data['template_variables']);
+        }
 
         // Delegate to base Model::create, which returns a Tour instance with ID set
         return parent::create($data);
@@ -362,12 +367,17 @@ class Tour extends Model
             $fields = [];
             $values = [];
             
-            $allowedFields = ['name', 'slug', 'language', 'translation_group', 'title', 'subtitle', 'short_description', 'description', 'itinerary', 'image', 'cover_image', 'highlights', 'price', 'price_includes', 'price_excludes', 'duration_days', 'max_participants', 'difficulty_level', 'category', 'location', 'status', 'featured', 'sort_order', 'meta_title', 'meta_description', 'meta_keywords'];
+            $allowedFields = ['name', 'slug', 'language', 'translation_group', 'title', 'subtitle', 'short_description', 'description', 'itinerary', 'image', 'cover_image', 'highlights', 'price', 'price_includes', 'price_excludes', 'duration_days', 'max_participants', 'difficulty_level', 'category', 'location', 'status', 'featured', 'sort_order', 'meta_title', 'meta_description', 'meta_keywords', 'template_slug', 'template_variables'];
             
             foreach ($data as $field => $value) {
                 if (in_array($field, $allowedFields)) {
                     $fields[] = "$field = ?";
-                    $values[] = $value;
+                    // Ensure JSON for template_variables when array passed in
+                    if ($field === 'template_variables' && is_array($value)) {
+                        $values[] = json_encode($value);
+                    } else {
+                        $values[] = $value;
+                    }
                 }
             }
             

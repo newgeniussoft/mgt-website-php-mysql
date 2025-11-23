@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tour;
 use App\Models\TourDetail;
 use App\Models\TourPhoto;
+use App\Models\Template;
 use App\View\View;
 
 class TourController
@@ -88,8 +89,11 @@ class TourController
         $categories = $this->tourModel->getCategories();
         $languages = $this->tourModel->getAvailableLanguages();
         $difficultyLevels = ['easy' => 'Easy', 'moderate' => 'Moderate', 'challenging' => 'Challenging', 'extreme' => 'Extreme'];
+        $pageTemplates = Template::getActive();
+        $defaultTemplate = Template::getDefault();
+        $defaultTemplateSlug = $defaultTemplate ? $defaultTemplate->slug : '';
         
-        return View::make('admin.tours.create', compact('categories', 'languages', 'difficultyLevels'));
+        return View::make('admin.tours.create', compact('categories', 'languages', 'difficultyLevels', 'pageTemplates', 'defaultTemplateSlug'));
     }
     
     /**
@@ -131,7 +135,8 @@ class TourController
             'sort_order' => !empty($_POST['sort_order']) ? (int)$_POST['sort_order'] : 0,
             'meta_title' => $_POST['meta_title'] ?? '',
             'meta_description' => $_POST['meta_description'] ?? '',
-            'meta_keywords' => $_POST['meta_keywords'] ?? ''
+            'meta_keywords' => $_POST['meta_keywords'] ?? '',
+            'template_slug' => $_POST['template_slug'] ?? ''
         ];
         
         // Process highlights
@@ -152,6 +157,10 @@ class TourController
             $data['price_excludes'] = $excludes;
         }
         
+        if (!empty($_POST['template_variables']) && is_array($_POST['template_variables'])) {
+            $data['template_variables'] = $_POST['template_variables'];
+        }
+
         // Handle file uploads
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $data['image'] = $this->handleImageUpload($_FILES['image'], 'tours');
@@ -202,8 +211,11 @@ class TourController
         $categories = $this->tourModel->getCategories();
         $languages = $this->tourModel->getAvailableLanguages();
         $difficultyLevels = ['easy' => 'Easy', 'moderate' => 'Moderate', 'challenging' => 'Challenging', 'extreme' => 'Extreme'];
+        $pageTemplates = Template::getActive();
+        $defaultTemplate = Template::getDefault();
+        $selectedTemplateSlug = $tour['template_slug'] ?? ($defaultTemplate ? $defaultTemplate->slug : '');
         
-        return View::make('admin.tours.edit', compact('tour', 'categories', 'languages', 'difficultyLevels'));
+        return View::make('admin.tours.edit', compact('tour', 'categories', 'languages', 'difficultyLevels', 'pageTemplates', 'selectedTemplateSlug'));
     }
     
     /**
@@ -254,7 +266,8 @@ class TourController
             'sort_order' => !empty($_POST['sort_order']) ? (int)$_POST['sort_order'] : 0,
             'meta_title' => $_POST['meta_title'] ?? '',
             'meta_description' => $_POST['meta_description'] ?? '',
-            'meta_keywords' => $_POST['meta_keywords'] ?? ''
+            'meta_keywords' => $_POST['meta_keywords'] ?? '',
+            'template_slug' => $_POST['template_slug'] ?? ''
         ];
 
         // Auto-generate slug if not provided
@@ -278,6 +291,10 @@ class TourController
             $data['price_excludes'] = $excludes;
         }
         
+        if (!empty($_POST['template_variables']) && is_array($_POST['template_variables'])) {
+            $data['template_variables'] = $_POST['template_variables'];
+        }
+
         // Handle file uploads
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $data['image'] = $this->handleImageUpload($_FILES['image'], 'tours');
