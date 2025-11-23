@@ -4,6 +4,13 @@
 // Frontend routes - Dynamic pages from database
 $router->get('/', 'App\Http\Controllers\FrontendController@index');
 
+// Model-driven detail pages (Option A)
+$router->get('/tour/{slug}', 'App\Http\Controllers\FrontendController@showTour');
+$router->get('/tours/{slug}', 'App\Http\Controllers\FrontendController@showTour');
+// Blog/Post detail pages
+$router->get('/post/{key}', 'App\Http\Controllers\FrontendController@showPost');
+$router->get('/blog/{key}', 'App\Http\Controllers\FrontendController@showPost');
+
 $router->get('/test-api', function() {
     return response()->json(['message' => 'API is working!']);
 });

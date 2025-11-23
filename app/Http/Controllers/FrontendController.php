@@ -6,6 +6,8 @@ use App\Models\Page;
 use App\Models\Template;
 use App\Models\Section;
 use App\Models\TemplateItem;
+use App\Models\Tour;
+use App\Models\Post;
 use App\View\View;
 use App\View\Html;
 use App\Localization\Lang;
@@ -70,6 +72,163 @@ class FrontendController extends Controller
         
         // Fallback: render without template
         return $this->renderBasic($page, $sections, $menuPages);
+    }
+
+    /**
+     * Show Tour detail by slug and current locale
+     */
+    public function showTour($slug)
+    {
+        $language = Lang::getLocale();
+        $tour = Tour::getBySlug($slug, $language);
+
+        if (!$tour) {
+            return $this->notFound();
+        }
+
+        // Choose a Template Item for the tour detail
+        $templateSlug = $_GET['template'] ?? null;
+        $templateItem = null;
+        if (!empty($templateSlug)) {
+            $templateItem = TemplateItem::getBySlug($templateSlug);
+        }
+        if (!$templateItem) {
+            $templateItem = TemplateItem::getDefaultForModel('tour');
+        }
+
+        // Build the item payload and map fields
+        $item = $tour;
+        // Ensure array-like access
+        if (is_array($tour)) {
+            $item = $tour;
+        } else {
+            $item = (array)$tour;
+        }
+        // Normalize fields for templates
+        if (!empty($item['image']) && strpos($item['image'], '/uploads/') !== 0) {
+            $item['image'] = '/uploads/' . ltrim($item['image'], '/');
+        }
+        if (!isset($item['duration']) && isset($item['duration_days'])) {
+            $item['duration'] = $item['duration_days'];
+        }
+
+        // Render detail HTML
+        $detailHtml = '';
+        if ($templateItem) {
+            $detailHtml = $templateItem->render($item);
+        } else {
+            // Fallback simple rendering
+            $safeTitle = htmlspecialchars($item['title'] ?? $item['name'] ?? 'Tour');
+            $safeDesc = htmlspecialchars($item['short_description'] ?? '');
+            $imgTag = !empty($item['image']) ? '<img src="' . htmlspecialchars($item['image']) . '" alt="' . $safeTitle . '" style="max-width:100%;height:auto;" />' : '';
+            $detailHtml = '<article class="tour-detail"><h1>' . $safeTitle . '</h1>' . $imgTag . '<p>' . $safeDesc . '</p></article>';
+        }
+
+        // Prepare wrapper template and variables
+        $template = Template::getDefault();
+        $menuPages = Page::getMenuPages();
+        $menuHtml = Html::buildMenuHtml($menuPages);
+
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $uri = $_SERVER['REQUEST_URI'] ?? '';
+        $currentUrl = $protocol . '://' . $host . $uri;
+
+        $variables = [
+            'page_title' => $tour['title'] ?? $tour['name'] ?? 'Tour',
+            'meta_title' => $tour['meta_title'] ?? ($tour['title'] ?? $tour['name'] ?? 'Tour'),
+            'meta_description' => $tour['meta_description'] ?? ($tour['short_description'] ?? ''),
+            'meta_keywords' => $tour['meta_keywords'] ?? '',
+            'featured_image' => !empty($tour['image']) ? '/uploads/' . ltrim($tour['image'], '/') : '',
+            'site_name' => $_ENV['APP_NAME'] ?? 'My Website',
+            'app_url' => $_ENV['APP_URL'] ?? 'http://localhost',
+            'current_path' => $currentUrl,
+            'current_path_es' => function_exists('currentUrlToEs') ? currentUrlToEs() : $currentUrl,
+            'menu_items' => $menuHtml,
+            'page_sections' => $detailHtml
+        ];
+
+        if ($template && $template->html_content) {
+            $html = $template->render($variables);
+            echo $html;
+            exit;
+        }
+
+        // Fallback basic render if no template configured
+        echo '<nav>' . $menuHtml . '</nav>' . $detailHtml;
+        exit;
+    }
+    
+    /**
+     * Show Blog Post detail by slug or ID (Option A)
+     */
+    public function showPost($key)
+    {
+        $post = null;
+        // Try slug first
+        if (!ctype_digit((string)$key) && method_exists(Post::class, 'getBySlug')) {
+            $post = Post::getBySlug($key);
+        }
+        // Fallback to numeric ID
+        if (!$post && ctype_digit((string)$key)) {
+            $post = Post::find((int)$key);
+        }
+
+        // If not found or not published (when status exists), 404
+        if (!$post || (isset($post->status) && $post->status !== 'published')) {
+            return $this->notFound();
+        }
+
+        // Choose a Template Item for the post detail
+        $templateSlug = $_GET['template'] ?? null;
+        $templateItem = null;
+        if (!empty($templateSlug)) {
+            $templateItem = TemplateItem::getBySlug($templateSlug);
+        }
+        if (!$templateItem) {
+            $templateItem = TemplateItem::getDefaultForModel('post');
+        }
+
+        // Normalize to array for rendering
+        $item = is_array($post) ? $post : (array)$post;
+
+        // Render detail HTML
+        $detailHtml = $templateItem
+            ? $templateItem->render($item)
+            : ('<article class="post-detail"><h1>' . htmlspecialchars($item['title'] ?? 'Post') . '</h1>' . ($item['content'] ?? '') . '</article>');
+
+        // Wrap inside default Template
+        $template = Template::getDefault();
+        $menuPages = Page::getMenuPages();
+        $menuHtml = Html::buildMenuHtml($menuPages);
+
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $uri = $_SERVER['REQUEST_URI'] ?? '';
+        $currentUrl = $protocol . '://' . $host . $uri;
+
+        $variables = [
+            'page_title' => $item['title'] ?? 'Post',
+            'meta_title' => $item['title'] ?? 'Post',
+            'meta_description' => substr(strip_tags($item['content'] ?? ''), 0, 150),
+            'meta_keywords' => '',
+            'featured_image' => '',
+            'site_name' => $_ENV['APP_NAME'] ?? 'My Website',
+            'app_url' => $_ENV['APP_URL'] ?? 'http://localhost',
+            'current_path' => $currentUrl,
+            'current_path_es' => function_exists('currentUrlToEs') ? currentUrlToEs() : $currentUrl,
+            'menu_items' => $menuHtml,
+            'page_sections' => $detailHtml
+        ];
+
+        if ($template && $template->html_content) {
+            $html = $template->render($variables);
+            echo $html;
+            exit;
+        }
+
+        echo '<nav>' . $menuHtml . '</nav>' . $detailHtml;
+        exit;
     }
     
     /**
@@ -154,7 +313,6 @@ class FrontendController extends Controller
             'menuPages' => $menuPages
         ]);
     }
-
     /**
      *  Get if tag in varibale {{ variables }}
      */
