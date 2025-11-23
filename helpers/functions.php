@@ -53,18 +53,34 @@ function asset($path) {
 }
 
 function url($path = '') {
-    $baseUrl = rtrim(config('app.url'), '/');
-    $locale = \App\Localization\Lang::getLocale();
-    $defaultLocale = 'en';
-    
-    // Only add locale prefix if it's not the default locale
-    $localePath = ($locale && $locale !== $defaultLocale) ? '/' . $locale : '';
-    
-    // Clean and build the path
-    $path = '/' . ltrim($path, '/');
-    
-    return $baseUrl . $localePath . $path;
+    // Detect English or Spanish from current URL
+    $uri = $_SERVER['REQUEST_URI'];
+
+    // Clean double slashes
+    $uri = preg_replace('#/+#', '/', $uri);
+
+    // Remove leading slash
+    $clean = ltrim($uri, '/');
+
+    // Check if URL is Spanish (homepage or any Spanish page)
+    $isSpanish = (
+        $clean === 'es' ||
+        $clean === 'es/' ||
+        strpos($clean, 'es/') === 0
+    );
+
+    // Always remove leading slash from $path
+    $path = ltrim($path, '/');
+
+    // If Spanish: add `es/` prefix
+    if ($isSpanish) {
+        return "/es/" . $path;
+    }
+
+    // English (default): normal path
+    return "/" . $path;
 }
+
 
 function page() {
     

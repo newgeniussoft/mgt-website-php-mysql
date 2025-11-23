@@ -30,28 +30,28 @@ class Html {
         }
         
         foreach ($menuPages as $menuPage) {
-            $active = (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/' . $menuPage->slug) ? ' class="active"' : '';
+            $active = (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/' . $menuPage->slug) ? 'active' : '';
             $url = $menuPage->is_homepage ? '/' : '/' . $menuPage->slug;
 
             if (!in_array($menuPage->id, $idHasChild) && !in_array($menuPage->id, $idHasParent) && !in_array($menuPage->id, $idHasItems)) {
-                $html .= '<li' . $active . ' class="nav-item"><a href="' . $url . '" class="nav-link ">' . htmlspecialchars($menuPage->title) . '</a></li>';
+                $html .= '<li class="nav-item '.$active.'"><a href="' . url($url) . '" class="nav-link ">' . htmlspecialchars($menuPage->title) . '</a></li>';
             } else {
                 if (in_array($menuPage->id, $idHasChild)) {
-                    $html .= '<li' . $active . ' class="nav-item dropdown"><a href="' . $url . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($menuPage->title) . '</a>';
+                    $html .= '<li class="nav-item '.$active.' dropdown"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($menuPage->title) . '</a>';
                     $html .= '<div class="dropdown-menu" aria-labelledby="dropdown-' . $menuPage->id . '">';
                     foreach($menuPages as $child) {
                         if ($child->parent_id  === $menuPage->id) {
-                            $html .= '<a class="dropdown-item" href="/'.$child->slug.'">'.$child->title.'</a>';
+                            $html .= '<a class="dropdown-item" href="'.url($child->slug).'">'.$child->title.'</a>';
                         }
                     }
                     $html .= '</div></li>';
                 } 
                 if (in_array($menuPage->id, $idHasItems)) {
-                    $html .= '<li' . $active . ' class="nav-item dropdown"><a href="' . $url . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($menuPage->title) . '</a>';
+                    $html .= '<li class="nav-item dropdown '.$active.'"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($menuPage->title) . '</a>';
                     $html .= '<div class="dropdown-menu" aria-labelledby="dropdown-' . $menuPage->id . '">';
                     $model = Model::fromSlug($menuPage->slug);
                     foreach($model::where('language', '=', Lang::getLocale()) as $child) {
-                        $html .= '<a class="dropdown-item" href="/'.$menuPage->slug.'/'.$child->slug.'">'.$child->name.'</a>';
+                        $html .= '<a class="dropdown-item" href="'.url($menuPage->slug.'/'.$child->slug).'">'.$child->name.'</a>';
                     }
                     $html .= '</div></li>';
                 } 
