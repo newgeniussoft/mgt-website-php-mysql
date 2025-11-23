@@ -12,53 +12,14 @@ class MediaController extends Controller {
      * Display media library
      */
     public function index() {
-        $folderId = $_GET['folder'] ?? null;
-        $search = $_GET['search'] ?? '';
-        $type = $_GET['type'] ?? '';
-        
-        // Get media
-        if ($search) {
-            $mediaItems = Media::search($search);
-        } elseif ($type) {
-            $mediaItems = Media::getByType($type);
-        } elseif ($folderId) {
-            $mediaItems = Media::getByFolder($folderId);
-        } else {
-            $mediaItems = Media::all();
-        }
-        
-        // Get folders
-        $folders = MediaFolder::getRootFolders();
-        $currentFolder = $folderId ? MediaFolder::find($folderId) : null;
-        
-        // Get statistics
-        $stats = Media::getStats();
-        
-        return View::make('admin.media.index', [
-            'title' => 'Media Library',
-            'mediaItems' => $mediaItems,
-            'folders' => $folders,
-            'currentFolder' => $currentFolder,
-            'stats' => $stats,
-            'search' => $search,
-            'type' => $type,
-            'success' => $_SESSION['media_success'] ?? null,
-            'error' => $_SESSION['media_error'] ?? null
-        ]);
+        return $this->redirect(admin_url('filemanager?path=media'));
     }
     
     /**
      * Show upload form
      */
     public function create() {
-        $folders = MediaFolder::getRootFolders();
-        $folderId = $_GET['folder'] ?? null;
-        
-        return View::make('admin.media.upload', [
-            'title' => 'Upload Media',
-            'folders' => $folders,
-            'selectedFolder' => $folderId
-        ]);
+        return $this->redirect(admin_url('filemanager?path=media'));
     }
     
     /**
@@ -103,7 +64,8 @@ class MediaController extends Controller {
                 
                 // Generate unique filename
                 $filename = time() . '_' . uniqid() . '.' . $extension;
-                $uploadDir = __DIR__ . '/../../../public/uploads/media/';
+                $relativeFolderPath = $this->getFolderRelativePath($folderId);
+                $uploadDir = __DIR__ . '/../../../public' . $relativeFolderPath . '/';
                 
                 // Create directory if it doesn't exist
                 if (!is_dir($uploadDir)) {
@@ -111,7 +73,7 @@ class MediaController extends Controller {
                 }
                 
                 $uploadPath = $uploadDir . $filename;
-                $urlPath = '/uploads/media/' . $filename;
+                $urlPath = $relativeFolderPath . '/' . $filename;
                 
                 // Move uploaded file
                 if (!move_uploaded_file($file['tmp_name'], $uploadPath)) {
@@ -337,16 +299,7 @@ class MediaController extends Controller {
      * Show folder management page
      */
     public function folders() {
-        $folders = MediaFolder::all();
-        $rootFolders = MediaFolder::getRootFolders();
-        
-        return View::make('admin.media.folders', [
-            'title' => 'Manage Folders',
-            'folders' => $folders,
-            'rootFolders' => $rootFolders,
-            'success' => $_SESSION['media_success'] ?? null,
-            'error' => $_SESSION['media_error'] ?? null
-        ]);
+        return $this->redirect(admin_url('filemanager?path=media'));
     }
     
     /**
@@ -365,14 +318,30 @@ class MediaController extends Controller {
             // Generate slug
             $slug = MediaFolder::generateSlug($name);
             
+            $parentPath = '';
+            if ($parentId) {
+                $parent = MediaFolder::find($parentId);
+                if (!$parent) {
+                    throw new \Exception('Parent folder not found');
+                }
+                $parentPath = $parent->path ?? '';
+            }
+            $folderPath = trim(($parentPath ? $parentPath . '/' : '') . $slug, '/');
+            
             // Create folder
             MediaFolder::create([
                 'name' => $name,
                 'slug' => $slug,
                 'parent_id' => $parentId ?: null,
                 'description' => $description,
-                'order' => 0
+                'order' => 0,
+                'path' => $folderPath
             ]);
+            
+            $diskDir = __DIR__ . '/../../../public/uploads/media' . ($folderPath ? '/' . $folderPath : '');
+            if (!is_dir($diskDir)) {
+                mkdir($diskDir, 0755, true);
+            }
             
             $_SESSION['media_success'] = "Folder '{$name}' created successfully!";
             unset($_SESSION['media_error']);
@@ -498,7 +467,39 @@ class MediaController extends Controller {
                 }
             }
             
+            // Compute destination directory
+            $relativeFolderPath = $this->getFolderRelativePath($folderId);
+            $destDir = __DIR__ . '/../../../public' . $relativeFolderPath;
+            if (!is_dir($destDir)) {
+                mkdir($destDir, 0755, true);
+            }
+            
+            // Move physical file
+            $oldPath = __DIR__ . '/../../../public' . $media->path;
+            $newFilename = $media->filename;
+            $nameWithoutExt = pathinfo($newFilename, PATHINFO_FILENAME);
+            $extension = pathinfo($newFilename, PATHINFO_EXTENSION);
+            $destPath = $destDir . '/' . $newFilename;
+            $counter = 1;
+            while (file_exists($destPath)) {
+                $newFilename = $nameWithoutExt . '_' . $counter . ($extension ? ('.' . $extension) : '');
+                $destPath = $destDir . '/' . $newFilename;
+                $counter++;
+            }
+            
+            if (!file_exists($oldPath)) {
+                throw new \Exception('Source file not found on disk');
+            }
+            
+            if (!rename($oldPath, $destPath)) {
+                throw new \Exception('Failed to move file on disk');
+            }
+            
+            // Update database
             $media->folder_id = $folderId ?: null;
+            $media->filename = $newFilename;
+            $media->path = $relativeFolderPath . '/' . $newFilename;
+            $media->url = $relativeFolderPath . '/' . $newFilename;
             $media->save();
             
             $folderName = $folderId ? MediaFolder::find($folderId)->name : 'Root';
@@ -614,11 +615,31 @@ class MediaController extends Controller {
                     $folderId = $_POST['folder_id'] ?? null;
                     foreach ($ids as $id) {
                         $media = Media::find($id);
-                        if ($media) {
-                            $media->folder_id = $folderId ?: null;
-                            $media->save();
-                            $count++;
+                        if (!$media) { continue; }
+                        $relativeFolderPath = $this->getFolderRelativePath($folderId);
+                        $destDir = __DIR__ . '/../../../public' . $relativeFolderPath;
+                        if (!is_dir($destDir)) {
+                            mkdir($destDir, 0755, true);
                         }
+                        $oldPath = __DIR__ . '/../../../public' . $media->path;
+                        if (!file_exists($oldPath)) { continue; }
+                        $newFilename = $media->filename;
+                        $nameWithoutExt = pathinfo($newFilename, PATHINFO_FILENAME);
+                        $extension = pathinfo($newFilename, PATHINFO_EXTENSION);
+                        $destPath = $destDir . '/' . $newFilename;
+                        $n = 1;
+                        while (file_exists($destPath)) {
+                            $newFilename = $nameWithoutExt . '_' . $n . ($extension ? ('.' . $extension) : '');
+                            $destPath = $destDir . '/' . $newFilename;
+                            $n++;
+                        }
+                        if (!rename($oldPath, $destPath)) { continue; }
+                        $media->folder_id = $folderId ?: null;
+                        $media->filename = $newFilename;
+                        $media->path = $relativeFolderPath . '/' . $newFilename;
+                        $media->url = $relativeFolderPath . '/' . $newFilename;
+                        $media->save();
+                        $count++;
                     }
                     $folderName = $folderId ? MediaFolder::find($folderId)->name : 'Root';
                     $_SESSION['media_success'] = "{$count} file(s) moved to '{$folderName}' successfully!";
@@ -637,4 +658,30 @@ class MediaController extends Controller {
         
         return $this->back();
     }
+
+private function getFolderRelativePath($folderId) {
+    $base = '/uploads/media';
+    if (!$folderId) {
+        return $base;
+    }
+    $folder = MediaFolder::find($folderId);
+    if (!$folder) {
+        return $base;
+    }
+    $path = $folder->path ?? '';
+    if (!$path || trim($path) === '') {
+        $segments = [];
+        $current = $folder;
+        while ($current) {
+            $segments[] = $current->slug;
+            $current = $current->getParent();
+        }
+        $segments = array_reverse($segments);
+        $path = implode('/', $segments);
+        $folder->path = $path;
+        $folder->save();
+    }
+    return $base . '/' . $path;
+}
+
 }
