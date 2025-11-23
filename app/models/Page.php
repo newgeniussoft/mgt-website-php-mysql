@@ -8,7 +8,7 @@ class Page extends Model {
     protected $fillable = [
         'template_id', 'title', 'slug', 'meta_title', 'meta_description', 
         'meta_keywords', 'featured_image', 'status', 'is_homepage', 
-        'show_in_menu', 'menu_order', 'parent_id', 'author_id', 'published_at'
+        'show_in_menu', 'has_items', 'menu_order', 'parent_id', 'author_id', 'published_at'
     ];
 
     public function getConnection() {

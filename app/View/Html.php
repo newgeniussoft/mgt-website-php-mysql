@@ -2,6 +2,7 @@
 
 namespace App\View;
 use App\Localization\Lang;
+use App\Models\Model;
 
 class Html {
 
@@ -17,16 +18,22 @@ class Html {
         $html = '<ul class="navbar-nav header-styled gradient-border">';
         $idHasChild = [];
         $idHasParent = [];
+        $idHasItems = [];
         foreach ($menuPages as $menuPage) {
-            if ($menuPage->parent_id != NULL) {
+            if ($menuPage->parent_id != NULL && !$menuPage->has_items) {
                 $idHasChild[] = $menuPage->parent_id;
                 $idHasParent[] = $menuPage->id;
             }
+            if ($menuPage->has_items) {
+                $idHasItems[] = $menuPage->id;
+            }
         }
+        
         foreach ($menuPages as $menuPage) {
             $active = (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/' . $menuPage->slug) ? ' class="active"' : '';
             $url = $menuPage->is_homepage ? '/' : '/' . $menuPage->slug;
-            if (!in_array($menuPage->id, $idHasChild) && !in_array($menuPage->id, $idHasParent)) {
+
+            if (!in_array($menuPage->id, $idHasChild) && !in_array($menuPage->id, $idHasParent) && !in_array($menuPage->id, $idHasItems)) {
                 $html .= '<li' . $active . ' class="nav-item"><a href="' . $url . '" class="nav-link ">' . htmlspecialchars($menuPage->title) . '</a></li>';
             } else {
                 if (in_array($menuPage->id, $idHasChild)) {
@@ -38,10 +45,33 @@ class Html {
                         }
                     }
                     $html .= '</div></li>';
-                }
+                } 
+                if (in_array($menuPage->id, $idHasItems)) {
+                    $html .= '<li' . $active . ' class="nav-item dropdown"><a href="' . $url . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($menuPage->title) . '</a>';
+                    $html .= '<div class="dropdown-menu" aria-labelledby="dropdown-' . $menuPage->id . '">';
+                    $model = Model::fromSlug($menuPage->slug);
+                    foreach($model::where('language', '=', Lang::getLocale()) as $child) {
+                        $html .= '<a class="dropdown-item" href="/'.$menuPage->slug.'/'.$child->slug.'">'.$child->name.'</a>';
+                    }
+                    $html .= '</div></li>';
+                } 
+                
             }
         }
         $html .= '</ul>';
+        $html .= '<ul class="navbar-nav navbar-right">
+                    
+                <li class="nav-item">
+                        <a class="nav-link flag" href="'.switchLanguage('en').'"><img src="https://madagascar-green-tours.com/assets/img/logos/uk_rounded.png" alt="United Kingdom flag" width="28" height="28">
+                            <span>English</span>
+                            </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link flag" href="'.switchLanguage('es').'"><img src="https://madagascar-green-tours.com/assets/img/logos/sp_rounded.png" alt="Spain flag" width="28" height="28">
+                            <span>Spanish</span>
+                            </a>
+                    </li>
+                </ul>';
         return $html;
     }
 

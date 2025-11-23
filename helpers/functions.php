@@ -316,6 +316,77 @@ function locale_url($locale, $path = '') {
     return $baseUrl . $newPath;
 }
 
+function switchLanguage($lang = 'es') {
+    // Detect current full URL
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host   = $_SERVER['HTTP_HOST'];
+    $uri    = $_SERVER['REQUEST_URI'];
+
+    // Clean multiple slashes
+    $uri = preg_replace('#/+#', '/', $uri);
+
+    // Remove leading slash
+    $clean = ltrim($uri, '/');
+
+    // Detect Spanish (with or without slash)
+    $isSpanish = ($clean === 'es' || $clean === 'es/' || strpos($clean, 'es/') === 0);
+
+    // ============================================
+    // SWITCH TO SPANISH (Always end with /)
+    // ============================================
+    if ($lang === 'es') {
+
+        // If homepage in EN → return /es/
+        if ($clean === '') {
+            return "$scheme://$host/es/";
+        }
+
+        // If already Spanish homepage → normalize to /es/
+        if ($clean === 'es') {
+            return "$scheme://$host/es/";
+        }
+
+        if ($clean === 'es/') {
+            return "$scheme://$host/es/";
+        }
+
+        // If already inside Spanish section
+        if (strpos($clean, 'es/') === 0) {
+            return "$scheme://$host/$clean";
+        }
+
+        // For pages like /tours → /es/tours
+        return "$scheme://$host/es/$clean";
+    }
+
+    // ============================================
+    // SWITCH TO ENGLISH (Always end with / for home)
+    // ============================================
+    if ($lang === 'en') {
+
+        // If Spanish homepage
+        if ($clean === 'es' || $clean === 'es/') {
+            return "$scheme://$host/";
+        }
+
+        // If Spanish subpage: /es/tours → /tours
+        if (strpos($clean, 'es/') === 0) {
+            $clean = substr($clean, 3); // remove "es/"
+        }
+
+        // English homepage
+        if ($clean === '') {
+            return "$scheme://$host/";
+        }
+
+        return "$scheme://$host/$clean";
+    }
+
+    return "$scheme://$host/$clean";
+}
+
+
+
 function current_locale() {
     return \App\Localization\Lang::getLocale();
 }

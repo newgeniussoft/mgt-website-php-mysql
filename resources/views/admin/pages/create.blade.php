@@ -110,6 +110,11 @@
                             <input type="checkbox" class="custom-control-input" id="show_in_menu" name="show_in_menu" checked>
                             <label class="custom-control-label" for="show_in_menu">Show in Menu</label>
                         </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="has_items" name="has_items">
+                            <label class="custom-control-label" for="has_items">Has items</label>
+                        </div>
                     </div>
                 </div>
 

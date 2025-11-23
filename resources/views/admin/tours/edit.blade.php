@@ -79,6 +79,13 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="slug" class="form-label">Slug</label>
+                            <input type="text" class="form-control" id="slug" name="slug"
+                                   value="{{ $tour['slug'] ?? '' }}" placeholder="e.g., machu-picchu-adventure">
+                            <div class="form-text">URL-friendly identifier. Leave blank to auto-generate.</div>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="subtitle" class="form-label">Subtitle</label>
                             <input type="text" class="form-control" id="subtitle" name="subtitle"
                                    value="{{ $tour['subtitle'] ?? '' }}">

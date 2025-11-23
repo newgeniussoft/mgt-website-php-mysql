@@ -143,4 +143,27 @@ abstract class Model {
         }
         return $array;
     }
+
+    public static function fromSlug($slug) {
+        // singularize simple cases: remove trailing s
+        $base = rtrim($slug, 's');
+
+        // Model names to try
+        $models = [
+            ucfirst($base),          // Tour
+            ucfirst($base) . 's',    // Tours
+        ];
+
+        // Namespace of your models
+        $namespace = "App\\Models\\";
+
+        foreach ($models as $model) {
+            $fullClass = $namespace . $model;
+
+            if (class_exists($fullClass)) {
+                return $fullClass;   // returns a valid model class name
+            }
+        }
+        return null; // No model matched
+    }
 }

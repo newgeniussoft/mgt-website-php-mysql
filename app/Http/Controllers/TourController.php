@@ -112,6 +112,7 @@ class TourController
         // Prepare data
         $data = [
             'name' => $_POST['name'] ?? '',
+            'slug' => $_POST['slug'] ?? '',
             'title' => $_POST['title'] ?? '',
             'subtitle' => $_POST['subtitle'] ?? '',
             'language' => $_POST['language'] ?? 'en',
@@ -234,6 +235,7 @@ class TourController
         // Prepare data (same as store method)
         $data = [
             'name' => $_POST['name'] ?? '',
+            'slug' => $_POST['slug'] ?? '',
             'title' => $_POST['title'] ?? '',
             'subtitle' => $_POST['subtitle'] ?? '',
             'language' => $_POST['language'] ?? 'en',
@@ -254,6 +256,11 @@ class TourController
             'meta_description' => $_POST['meta_description'] ?? '',
             'meta_keywords' => $_POST['meta_keywords'] ?? ''
         ];
+
+        // Auto-generate slug if not provided
+        if (empty($data['slug']) && !empty($data['title'])) {
+            $data['slug'] = \App\Models\Tour::generateSlug($data['title'], $data['language'] ?? 'en');
+        }
         
         // Process arrays (same as store method)
         if (!empty($_POST['highlights'])) {

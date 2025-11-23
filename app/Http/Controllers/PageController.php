@@ -83,6 +83,7 @@ class PageController extends Controller {
             'status' => $_POST['status'] ?? 'draft',
             'is_homepage' => isset($_POST['is_homepage']) ? 1 : 0,
             'show_in_menu' => isset($_POST['show_in_menu']) ? 1 : 0,
+            'has_items' => isset($_POST['has_items']) ? 1 : 0,
             'menu_order' => $_POST['menu_order'] ?? 0,
             'parent_id' => !empty($_POST['parent_id']) ? $_POST['parent_id'] : null,
             'author_id' => $_SESSION['user_id'] ?? 1
@@ -225,6 +226,7 @@ class PageController extends Controller {
         $page->status = $_POST['status'] ?? 'draft';
         $page->is_homepage = isset($_POST['is_homepage']) ? 1 : 0;
         $page->show_in_menu = isset($_POST['show_in_menu']) ? 1 : 0;
+        $page->has_items = isset($_POST['has_items']) ? 1 : 0;
         $page->menu_order = $_POST['menu_order'] ?? 0;
         $page->parent_id = !empty($_POST['parent_id']) ? $_POST['parent_id'] : null;
         
