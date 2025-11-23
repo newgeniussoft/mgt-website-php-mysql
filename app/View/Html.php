@@ -62,12 +62,12 @@ class Html {
         $html .= '<ul class="navbar-nav navbar-right">
                     
                 <li class="nav-item">
-                        <a class="nav-link flag" href="'.switchLanguage('en').'"><img src="https://madagascar-green-tours.com/assets/img/logos/uk_rounded.png" alt="United Kingdom flag" width="28" height="28">
+                        <a class="nav-link flag" href="'.switchLanguage('en').'"><img src="/uploads/media/images/logos/flag-uk.png" alt="United Kingdom flag" width="28" height="28">
                             <span>English</span>
                             </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link flag" href="'.switchLanguage('es').'"><img src="https://madagascar-green-tours.com/assets/img/logos/sp_rounded.png" alt="Spain flag" width="28" height="28">
+                        <a class="nav-link flag" href="'.switchLanguage('es').'"><img src="/uploads/media/images/logos/flag-spain.png" alt="Spain flag" width="28" height="28">
                             <span>Spanish</span>
                             </a>
                     </li>
