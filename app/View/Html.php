@@ -202,8 +202,12 @@ class Html {
         $rendered = $template;
     
         // Replace {{ $item.attribute }} with actual values
-        foreach ($item as $key => $value) {
-            $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
+        if (!is_string($item)) {
+            foreach ($item as $key => $value) {
+                $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
+            }
+        } else {
+                $rendered = str_replace('{{ $item.value }}', htmlspecialchars($item), $rendered);
         }
     
         return $rendered;
@@ -223,23 +227,39 @@ class Html {
         $dataSources = [];
 
         foreach(self::findItemsTags($html) as $item){
-            $name = $item['attributes']['name'];
-            $modelName = '\\App\\Models\\' . ucfirst($name);
-            $list = $modelName::all();
             
-            $lang = Lang::getLocale();
-            if ($name == 'tour') {
-                $list = $modelName::where('language', $lang);
+                $name = $item['attributes']['name'];
+            if (isset($item['attributes']['data'])) {
+            $data = str_replace("'", "\"", $item['attributes']['data']);
+            $array = json_decode($data, true);
+            $list = $array;
+
+            } else {
+                
+
+
+                $modelName = '\\App\\Models\\' . ucfirst($name);
+                $list = $modelName::all();
+            
+                $lang = Lang::getLocale();
+                if ($name == 'tour') {
+                    $list = $modelName::where('language', $lang);
+                }
+
             }
 
             $listArray = [];
-            foreach($list as $media){
             
-                $item = [];
-                foreach($media->toArray() as $key => $value){
-                    $item[$key] = $value;
+            foreach($list as $item){
+                $items = [];
+                if (!is_string($item)) {
+                    foreach($item->toArray() as $key => $value){
+                        $items[$key] = $value;
+                    }
+                    $listArray[] = $items;
+                } else {
+                    $listArray[] = $item;
                 }
-                $listArray[] = $item;
             }
             $dataSources[$name] = $listArray;
         }
@@ -413,9 +433,12 @@ class Html {
         $item = $item->toArray();
         $keys = [];
         foreach ($item as $key => $value) {
-            $html = str_replace('{{ $item.' . $key . ' }}', $value, $html);
-            $html = str_replace('{{$item.' . $key . '}}', $value, $html);
+            $html = str_replace('{{ $item.' . $key . ' }}', str_replace('"', "'", $value), $html);
+            $html = str_replace('{{$item.' . $key . '}}', str_replace('"', "'", $value), $html);
         }
+
+        
+        $html = self::renderItemsWithData($html);
         
         // Inject CSS if template has it
         if ($template->css_content) {

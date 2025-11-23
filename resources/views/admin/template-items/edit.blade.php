@@ -36,7 +36,8 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Model Name *</label>
-                                <select name="model_name" class="form-select" required>
+                                <select name="model_name" class="form-select">
+                                    <option value="">Select Model</option>
                                     @foreach($availableModels as $key => $label)
                                         <option value="{{ $key }}" {{ $template->model_name == $key ? 'selected' : '' }}>
                                             {{ $label }}
