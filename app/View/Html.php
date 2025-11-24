@@ -418,6 +418,7 @@ class Html {
             'current_path' => $currentUrl,
             'current_path_es' => currentUrlToEs(),
             'menu_items' => $menuHtml,
+            'kml' => getKmlFiles('adventure_tour'),
             'custom_css' => '',
             'custom_js' => ''
         ];

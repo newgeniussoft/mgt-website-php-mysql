@@ -441,3 +441,13 @@ function settings($group = null) {
     }
     return \App\Models\Setting::getAllAsArray();
 }
+
+function getKmlFiles($folder) {
+    $index = 0;
+    $results = '[';
+    $dir = scandir(__DIR__."/../public/uploads/kml/".$folder);
+    $dir = array_slice($dir, 2);
+    $results .= implode(', ', array_map(fn($name) => '"/uploads/kml/'.$folder."/".$name.'"', $dir));
+    $results .= "]";
+    return $results;
+}
