@@ -38,7 +38,8 @@ class Html {
             $label = Lang::has($menuKey) ? Lang::get($menuKey) : $menuPage->title;
 
             if (!in_array($menuPage->id, $idHasChild) && !in_array($menuPage->id, $idHasParent) && !in_array($menuPage->id, $idHasItems)) {
-                $html .= '<li class="nav-item '.$active.'"><a href="' . url($url) . '" class="nav-link ">' . htmlspecialchars($label) . '</a></li>';
+                $icon_home = $menuPage->is_homepage ? '<i class="fa fa-home"></i> ' : '';
+                $html .= '<li class="nav-item '.$active.'"><a href="' . url($url) . '" class="nav-link ">'. $icon_home . htmlspecialchars($label) . '</a></li>';
             } else {
                 if (in_array($menuPage->id, $idHasChild)) {
                     $html .= '<li class="nav-item '.$active.' dropdown"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($label) . '</a>';
