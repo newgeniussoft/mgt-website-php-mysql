@@ -85,7 +85,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4 photo-item" data-type="{{ $photo['type'] }}">
                     <div class="card shadow h-100">
                         <div class="position-relative">
-                            <img src="/storage/uploads/{{ $photo['image'] }}" 
+                            <img src="/uploads/{{ $photo['image'] }}" 
                                  class="card-img-top" style="height: 200px; object-fit: cover;" 
                                  alt="{{ $photo['alt_text'] ?? $photo['title'] ?? 'Tour photo' }}">
                             
@@ -180,11 +180,11 @@
                     <input type="hidden" name="tour_id" value="{{ $tour['id'] }}">
 
                     <div class="mb-3">
-                        <label for="photo" class="form-label">Select Photo <span class="text-danger">*</span></label>
-                        <input type="file" class="form-control" id="photo" name="photo" required 
+                        <label for="photos" class="form-label">Select Photos <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" id="photos" name="photos[]" required multiple
                                accept="image/*" onchange="previewUploadImage(this)">
-                        <div class="form-text">Supported formats: JPG, PNG, GIF, WebP. Max size: 5MB</div>
-                        <div id="uploadPreview" class="mt-2"></div>
+                        <div class="form-text">Supported formats: JPG, PNG, GIF, WebP. You can select multiple files.</div>
+                        <div id="uploadPreview" class="mt-2 d-flex flex-wrap gap-2"></div>
                     </div>
 
                     <div class="row">
@@ -385,18 +385,19 @@ document.querySelectorAll('input[name="photoFilter"]').forEach(radio => {
 function previewUploadImage(input) {
     const preview = document.getElementById('uploadPreview');
     preview.innerHTML = '';
-    
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.className = 'img-thumbnail';
-            img.style.maxWidth = '200px';
-            img.style.maxHeight = '150px';
-            preview.appendChild(img);
-        };
-        reader.readAsDataURL(input.files[0]);
+    if (input.files && input.files.length > 0) {
+        Array.from(input.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'img-thumbnail';
+                img.style.maxWidth = '160px';
+                img.style.maxHeight = '120px';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
     }
 }
 

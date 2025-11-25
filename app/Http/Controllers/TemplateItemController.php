@@ -320,7 +320,8 @@ class TemplateItemController extends Controller {
      */
     private function handleThumbnailUpload($template, $isUpdate = false) {
         if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/../../../../storage/uploads/template-items/';
+            // Upload to public/uploads/template-items/
+            $uploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') . '/uploads/template-items/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
             }
@@ -330,12 +331,13 @@ class TemplateItemController extends Controller {
             
             if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $uploadPath)) {
                 if ($isUpdate && $template->thumbnail) {
-                    $oldFile = __DIR__ . '/../../../../public' . $template->thumbnail;
+                    $oldFile = rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') . $template->thumbnail;
                     if (file_exists($oldFile)) {
                         unlink($oldFile);
                     }
                 }
-                $template->thumbnail = '/storage/uploads/template-items/' . $filename;
+                // Store web path relative to public root
+                $template->thumbnail = '/uploads/template-items/' . $filename;
             }
         }
     }

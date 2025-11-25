@@ -240,7 +240,11 @@ class Html {
                 $lang = Lang::getLocale();
                 if ($name == 'tour') {
                     $list = $modelName::where('language', $lang);
-                }  elseif  ($name == 'tour_detail') {
+                }  /*elseif  ($name == 'tour_detail') {
+                    $exp = parseExpression($item['attributes']['sql']);
+                    $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
+                }*/
+                if (isset($item['attributes']['sql'])) {
                     $exp = parseExpression($item['attributes']['sql']);
                     $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
                 }

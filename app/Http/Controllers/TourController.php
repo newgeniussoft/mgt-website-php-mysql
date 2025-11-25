@@ -139,6 +139,10 @@ class TourController
             'template_slug' => $_POST['template_slug'] ?? ''
         ];
         
+        if (empty($data['translation_group'])) {
+            $data['translation_group'] = 'tour_' . uniqid();
+        }
+        
         // Process highlights
         if (!empty($_POST['highlights'])) {
             $highlights = array_filter(array_map('trim', explode("\n", $_POST['highlights'])));
@@ -357,7 +361,7 @@ class TourController
 
         // Delete related details and photos first
         $this->tourDetailModel->deleteByTourId($id);
-        $this->tourPhotoModel->deleteByTourId($id);
+        $this->tourPhotoModel->deletePhotosByTourId($id);
 
         if ($tour->delete()) {
             $_SESSION['success'] = 'Tour deleted successfully!';
@@ -536,26 +540,48 @@ class TourController
         }
         
         $tourId = (int)($_POST['tour_id'] ?? 0);
-        
-        if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-            $photoData = [
-                'title' => $_POST['title'] ?? '',
-                'description' => $_POST['description'] ?? '',
-                'alt_text' => $_POST['alt_text'] ?? '',
-                'type' => $_POST['type'] ?? 'gallery',
-                'day' => !empty($_POST['day']) ? (int)$_POST['day'] : null,
-                'is_featured' => isset($_POST['is_featured']) ? 1 : 0
-            ];
-            
-            $photoId = $this->tourPhotoModel->uploadAndCreate($tourId, $_FILES['photo'], $photoData);
-            
-            if ($photoId) {
-                $_SESSION['success'] = 'Photo uploaded successfully!';
-            } else {
-                $_SESSION['error'] = 'Failed to upload photo. Please try again.';
+        $photoData = [
+            'title' => $_POST['title'] ?? '',
+            'description' => $_POST['description'] ?? '',
+            'alt_text' => $_POST['alt_text'] ?? '',
+            'type' => $_POST['type'] ?? 'gallery',
+            'day' => !empty($_POST['day']) ? (int)$_POST['day'] : null,
+            'is_featured' => isset($_POST['is_featured']) ? 1 : 0
+        ];
+
+        $filesToProcess = [];
+        if (isset($_FILES['photos']) && isset($_FILES['photos']['name']) && is_array($_FILES['photos']['name'])) {
+            $count = count($_FILES['photos']['name']);
+            for ($i = 0; $i < $count; $i++) {
+                if (!empty($_FILES['photos']['name'][$i]) && $_FILES['photos']['error'][$i] === UPLOAD_ERR_OK) {
+                    $filesToProcess[] = [
+                        'name' => $_FILES['photos']['name'][$i],
+                        'type' => $_FILES['photos']['type'][$i],
+                        'tmp_name' => $_FILES['photos']['tmp_name'][$i],
+                        'error' => $_FILES['photos']['error'][$i],
+                        'size' => $_FILES['photos']['size'][$i],
+                    ];
+                }
             }
+        } elseif (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            $filesToProcess[] = $_FILES['photo'];
+        }
+
+        if (empty($filesToProcess)) {
+            $_SESSION['error'] = 'Please select at least one valid image file.';
         } else {
-            $_SESSION['error'] = 'Please select a valid image file.';
+            $success = 0; $fail = 0;
+            foreach ($filesToProcess as $file) {
+                $result = $this->tourPhotoModel->uploadAndCreate($tourId, $file, $photoData);
+                if ($result) { $success++; } else { $fail++; }
+            }
+            if ($success > 0 && $fail === 0) {
+                $_SESSION['success'] = $success . ' photo' . ($success>1?'s':'') . ' uploaded successfully!';
+            } elseif ($success > 0 && $fail > 0) {
+                $_SESSION['error'] = $success . ' uploaded, ' . $fail . ' failed.';
+            } else {
+                $_SESSION['error'] = 'Failed to upload photos. Please try again.';
+            }
         }
         
         header('Location: '.admin_url('tours/photos?tour_id=' . $tourId));
@@ -582,7 +608,7 @@ class TourController
         $photoId = (int)($_POST['photo_id'] ?? 0);
         $tourId = (int)($_POST['tour_id'] ?? 0);
         
-        if ($this->tourPhotoModel->delete($photoId)) {
+        if ($this->tourPhotoModel->deletePhoto($photoId)) {
             $_SESSION['success'] = 'Photo deleted successfully!';
         } else {
             $_SESSION['error'] = 'Failed to delete photo.';
@@ -621,7 +647,7 @@ class TourController
             'is_featured' => isset($_POST['is_featured']) ? 1 : 0
         ];
         
-        if ($this->tourPhotoModel->update($photoId, $data)) {
+        if ($this->tourPhotoModel->updatePhoto($photoId, $data)) {
             $_SESSION['success'] = 'Photo updated successfully!';
         } else {
             $_SESSION['error'] = 'Failed to update photo.';
@@ -675,7 +701,7 @@ class TourController
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $baseName = pathinfo($file['name'], PATHINFO_FILENAME);
         $tourFolder = trim($tourName) !== '' ? strtolower(trim(preg_replace('/[^A-Za-z0-9-_]+/', '-', $tourName))) : 'default';
-        $uploadPath = "uploads/$folder/" . $tourFolder . '/';
+        $uploadPath = rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') . '/uploads/' . $folder . '/' . $tourFolder . '/';
         
         if (!is_dir($uploadPath)) {
             mkdir($uploadPath, 0755, true);
