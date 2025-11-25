@@ -25,4 +25,8 @@ return [
         'view' => 'View',
         'search' => 'Search',
     ],
+    'tour' => [
+        'feel' => 'Feel free to ask if you have any more questions or need additional details!',
+        'depend_price' => 'The price depends on your choice of hotels options'
+    ]
 ];

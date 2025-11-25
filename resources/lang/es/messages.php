@@ -25,4 +25,8 @@ return [
         'view' => 'Ver',
         'search' => 'Buscar',
     ],
+    'tour' => [
+        'feel' => 'No dude en preguntarnos si tiene alguna duda o necesita más información.',
+        'depend_price' => 'El precio depende de las opciones de hoteles que elija'
+    ]
 ];

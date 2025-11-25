@@ -163,11 +163,11 @@ class TourController
 
         // Handle file uploads
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $data['image'] = $this->handleImageUpload($_FILES['image'], 'tours');
+            $data['image'] = $this->handleImageUpload($_FILES['image'], 'tours', $data['name'] ?? '');
         }
         
         if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
-            $data['cover_image'] = $this->handleImageUpload($_FILES['cover_image'], 'tours');
+            $data['cover_image'] = $this->handleImageUpload($_FILES['cover_image'], 'tours', $data['name'] ?? '');
         }
         
         // Create tour (uses automatic slug generation in Tour::create)
@@ -297,11 +297,19 @@ class TourController
 
         // Handle file uploads
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $data['image'] = $this->handleImageUpload($_FILES['image'], 'tours');
+            $data['image'] = $this->handleImageUpload(
+                $_FILES['image'],
+                'tours',
+                !empty($data['name']) ? $data['name'] : ($tour['name'] ?? '')
+            );
         }
         
         if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
-            $data['cover_image'] = $this->handleImageUpload($_FILES['cover_image'], 'tours');
+            $data['cover_image'] = $this->handleImageUpload(
+                $_FILES['cover_image'],
+                'tours',
+                !empty($data['name']) ? $data['name'] : ($tour['name'] ?? '')
+            );
         }
         
         // Update tour
@@ -656,7 +664,7 @@ class TourController
     /**
      * Handle image upload
      */
-    private function handleImageUpload($file, $folder = 'tours')
+    private function handleImageUpload($file, $folder = 'tours', $tourName = '')
     {
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         
@@ -665,15 +673,24 @@ class TourController
         }
         
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $filename = uniqid() . '.' . $extension;
-        $uploadPath = "uploads/$folder/";
+        $baseName = pathinfo($file['name'], PATHINFO_FILENAME);
+        $tourFolder = trim($tourName) !== '' ? strtolower(trim(preg_replace('/[^A-Za-z0-9-_]+/', '-', $tourName))) : 'default';
+        $uploadPath = "uploads/$folder/" . $tourFolder . '/';
         
         if (!is_dir($uploadPath)) {
             mkdir($uploadPath, 0755, true);
         }
         
+        $candidate = $baseName . '.' . $extension;
+        $filename = $candidate;
+        $counter = 1;
+        while (file_exists($uploadPath . $filename)) {
+            $filename = $baseName . '-' . $counter . '.' . $extension;
+            $counter++;
+        }
+        
         if (move_uploaded_file($file['tmp_name'], $uploadPath . $filename)) {
-            return "$folder/$filename";
+            return "$folder/$tourFolder/$filename";
         }
         
         return false;
