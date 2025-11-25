@@ -34,21 +34,26 @@ class Html {
             $active = (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/' . $menuPage->slug) ? 'active' : '';
             $url = $menuPage->is_homepage ? '/' : '/' . $menuPage->slug;
 
+            $menuKey = 'menu.' . trim($menuPage->slug, '/');
+            $label = Lang::has($menuKey) ? Lang::get($menuKey) : $menuPage->title;
+
             if (!in_array($menuPage->id, $idHasChild) && !in_array($menuPage->id, $idHasParent) && !in_array($menuPage->id, $idHasItems)) {
-                $html .= '<li class="nav-item '.$active.'"><a href="' . url($url) . '" class="nav-link ">' . htmlspecialchars($menuPage->title) . '</a></li>';
+                $html .= '<li class="nav-item '.$active.'"><a href="' . url($url) . '" class="nav-link ">' . htmlspecialchars($label) . '</a></li>';
             } else {
                 if (in_array($menuPage->id, $idHasChild)) {
-                    $html .= '<li class="nav-item '.$active.' dropdown"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($menuPage->title) . '</a>';
+                    $html .= '<li class="nav-item '.$active.' dropdown"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($label) . '</a>';
                     $html .= '<div class="dropdown-menu" aria-labelledby="dropdown-' . $menuPage->id . '">';
                     foreach($menuPages as $child) {
                         if ($child->parent_id  === $menuPage->id) {
-                            $html .= '<a class="dropdown-item" href="'.url($child->slug).'">'.$child->title.'</a>';
+                            $childKey = 'menu.' . trim($child->slug, '/');
+                            $childLabel = Lang::has($childKey) ? Lang::get($childKey) : $child->title;
+                            $html .= '<a class="dropdown-item" href="'.url($child->slug).'">'.htmlspecialchars($childLabel).'</a>';
                         }
                     }
                     $html .= '</div></li>';
                 } 
                 if (in_array($menuPage->id, $idHasItems)) {
-                    $html .= '<li class="nav-item dropdown '.$active.'"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($menuPage->title) . '</a>';
+                    $html .= '<li class="nav-item dropdown '.$active.'"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($label) . '</a>';
                     $html .= '<div class="dropdown-menu" aria-labelledby="dropdown-' . $menuPage->id . '">';
                     $model = Model::fromSlug($menuPage->slug);
                     foreach($model::where('language', '=', Lang::getLocale()) as $child) {
@@ -60,19 +65,20 @@ class Html {
             }
         }
         $html .= '</ul>';
-        $html .= '<ul class="navbar-nav navbar-right">
-                    
-                <li class="nav-item">
-                        <a class="nav-link flag" href="'.switchLanguage('en').'"><img src="/uploads/media/images/logos/flag-uk.png" alt="United Kingdom flag" width="28" height="28">
-                            <span>English</span>
-                            </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link flag" href="'.switchLanguage('es').'"><img src="/uploads/media/images/logos/flag-spain.png" alt="Spain flag" width="28" height="28">
-                            <span>Spanish</span>
-                            </a>
-                    </li>
-                </ul>';
+        $enLabel = Lang::has('language.english') ? Lang::get('language.english') : 'English';
+        $esLabel = Lang::has('language.spanish') ? Lang::get('language.spanish') : 'Spanish';
+        $html .= '<ul class="navbar-nav navbar-right">'
+                .    '<li class="nav-item">'
+                .        '<a class="nav-link flag" href="'.switchLanguage('en').'"><img src="/uploads/media/images/logos/flag-uk.png" alt="United Kingdom flag" width="28" height="28">'
+                .            '<span>'.htmlspecialchars($enLabel).'</span>'
+                .            '</a>'
+                .    '</li>'
+                .    '<li class="nav-item">'
+                .        '<a class="nav-link flag" href="'.switchLanguage('es').'"><img src="/uploads/media/images/logos/flag-spain.png" alt="Spain flag" width="28" height="28">'
+                .            '<span>'.htmlspecialchars($esLabel).'</span>'
+                .            '</a>'
+                .    '</li>'
+                .'</ul>';
         return $html;
     }
 
@@ -89,10 +95,8 @@ class Html {
         $js = '';
         
         foreach ($sections as $section) {
-            // Render section HTML
             $sectionHtml = $section->html_template ?? '';
             
-            // Get section contents with current language
             $contentHtml = '';
             $currentLanguage = Lang::getLocale();
             $contents = \App\Models\Content::getBySection($section->id, true, $currentLanguage);
@@ -105,15 +109,11 @@ class Html {
                 }
             }
             
-            // Replace {{ content }} with actual content
             $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
-            // Define your data sources
-
             $sectionHtml = self::renderItemsWithData($sectionHtml);
            
             $html .= $sectionHtml;
             
-            // Collect CSS and JS
             if ($section->css_styles) {
                 $css .= $section->css_styles . "\n";
             }
@@ -122,7 +122,6 @@ class Html {
             }
         }
         
-        // Wrap CSS and JS
         if ($css) {
             $html = '<style>' . $css . '</style>' . $html;
         }
@@ -201,7 +200,6 @@ class Html {
     public static function renderItemTemplate($template, $item) {
         $rendered = $template;
     
-        // Replace {{ $item.attribute }} with actual values
         if (!is_string($item)) {
             foreach ($item as $key => $value) {
                 $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
@@ -250,7 +248,7 @@ class Html {
             }
 
             $listArray = [];
-            
+            if ($list != null) {
             foreach($list as $item){
                 $items = [];
                 if (!is_string($item)) {
@@ -261,6 +259,8 @@ class Html {
                 } else {
                     $listArray[] = $item;
                 }
+            }
+
             }
             $dataSources[$name] = $listArray;
         }
@@ -275,7 +275,6 @@ class Html {
             $tag = $matches[0];
             $attributes = [];
         
-            // Extract attributes
             $attrPattern = '/(\w+)="([^"]*)"/';
             if (preg_match_all($attrPattern, $tag, $attrMatches, PREG_SET_ORDER)) {
                 foreach ($attrMatches as $match) {
@@ -283,12 +282,10 @@ class Html {
                 }
             }
         
-            // Get the data source name
             $dataName = $attributes['name'] ?? null;
             $templateName = $attributes['template'] ?? null;
             $limit = isset($attributes['limit']) ? (int)$attributes['limit'] : null;
         
-            // Check if data source and template exist
             if (!$dataName || !isset($dataSources[$dataName])) {
                 return '<!-- Data source "' . htmlspecialchars($dataName) . '" not found -->';
             }
@@ -300,32 +297,96 @@ class Html {
             $data = $dataSources[$dataName];
             $template = $templates[$templateName];
         
-            // Apply limit if specified
             if ($limit !== null && $limit > 0) {
                 $data = array_slice($data, 0, $limit);
             }
         
-            // Render each item
             $output = '';
             foreach ($data as $item) {
                 $output .= self::renderItemTemplate($template, $item);
             }
-        
             return $output;
-        
+        }, $html);
+    }
+    
+    protected static function processInlineTranslationDefinitions($html) {
+        $pattern = '/\{\s*([^}]*(?:\blang\s*=\s*"[^"]*"[^}]*)+)\s*\}/';
+        return preg_replace_callback($pattern, function($m) {
+            $attrs = [];
+            if (preg_match_all('/(\w+)\s*=\s*"([^"]*)"/', $m[1], $am, PREG_SET_ORDER)) {
+                foreach ($am as $a) { $attrs[$a[1]] = $a[2]; }
+            }
+            if (isset($attrs['lang'], $attrs['key'], $attrs['value'])) {
+                try {
+                    \App\Models\Translation::setValue($attrs['key'], $attrs['lang'], $attrs['value']);
+                    return '';
+                } catch (\Throwable $e) {
+                    return '';
+                }
+            }
+            return $m[0];
         }, $html);
     }
 
-    
+    protected static function renderTranslationTags($html) {
+        $html = preg_replace_callback('/<t\s+([^>]*?)>(.*?)<\/t>/si', function($m) {
+            $attrs = [];
+            if (preg_match_all('/(\w+)\s*=\s*"([^"]*)"/', $m[1], $am, PREG_SET_ORDER)) {
+                foreach ($am as $a) { $attrs[$a[1]] = $a[2]; }
+            }
+            $key = $attrs['key'] ?? null;
+            $default = $attrs['default'] ?? $m[2];
+            if (!$key) { return $m[2]; }
+            $val = Lang::get($key);
+            if ($val === $key && isset($default)) { $val = $default; }
+            return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
+        }, $html);
+        $html = preg_replace_callback('/<t\s+([^>]*?)\/>/i', function($m) {
+            $attrs = [];
+            if (preg_match_all('/(\w+)\s*=\s*"([^"]*)"/', $m[1], $am, PREG_SET_ORDER)) {
+                foreach ($am as $a) { $attrs[$a[1]] = $a[2]; }
+            }
+            $key = $attrs['key'] ?? null;
+            $default = $attrs['default'] ?? '';
+            if (!$key) { return ''; }
+            $val = Lang::get($key);
+            if ($val === $key && isset($default)) { $val = $default; }
+            return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
+        }, $html);
+
+        return $html;
+    }
+
+    protected static function renderTransExpressions($html) {
+        $patterns = [
+            '/\{\{\s*trans\(\'([^\']+)\'\)\s*\}\}/',
+            '/\{\{\s*trans\(\"([^\"]+)\"\)\s*\}\}/',
+            '/\{\{\s*__\(\'([^\']+)\'\)\s*\}\}/',
+            '/\{\{\s*__\(\"([^\"]+)\"\)\s*\}\}/',
+        ];
+        foreach ($patterns as $pattern) {
+            $html = preg_replace_callback($pattern, function($m) {
+                $val = Lang::get($m[1]);
+                return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
+            }, $html);
+        }
+        return $html;
+    }
+
+    protected static function processTranslations($html) {
+        $html = self::processInlineTranslationDefinitions($html);
+        $html = self::renderTranslationTags($html);
+        $html = self::renderTransExpressions($html);
+        return $html;
+    }
+
     /**
      * Render page with template
      */
     public static function renderWithTemplate($page, $template, $sections, $menuPages)
     {
-        // Build menu HTML
+        self::processInlineTranslationDefinitions($template->html_content ?? '');
         $menuHtml = Html::buildMenuHtml($menuPages);
-        
-        // Render sections
         
         $sectionsHtml = Html::renderSections($sections);
 
@@ -335,7 +396,6 @@ class Html {
 
         $currentUrl = $protocol . "://" . $host . $uri;
         
-        // Prepare template variables
         $variables = [
             'page_title' => $page->page_title,
             'meta_title' => $page->meta_title,
@@ -352,19 +412,17 @@ class Html {
             'custom_js' => ''
         ];
         
-        // Render template HTML
         $html = $template->html_content ?? '';
         
-        // Replace variables in template
         foreach ($variables as $key => $value) {
             $html = str_replace('{{ ' . $key . ' }}', $value, $html);
             $html = str_replace('{{' . $key . '}}', $value, $html);
         }
         
-        // Inject CSS if template has it
+        $html = self::processTranslations($html);
+
         if ($template->css_content) {
             $cssTag = '<style>' . $template->css_content . '</style>';
-            // Try to inject before </head> or at the beginning
             if (strpos($html, '</head>') !== false) {
                 $html = str_replace('</head>', $cssTag . '</head>', $html);
             } else {
@@ -372,10 +430,8 @@ class Html {
             }
         }
         
-        // Inject JS if template has it
         if ($template->js_content) {
             $jsTag = '<script>' . $template->js_content . '</script>';
-            // Try to inject before </body> or at the end
             if (strpos($html, '</body>') !== false) {
                 $html = str_replace('</body>', $jsTag . '</body>', $html);
             } else {
@@ -383,7 +439,6 @@ class Html {
             }
         }
         
-        // Return raw HTML
         echo $html;
         exit;
     }
@@ -393,13 +448,13 @@ class Html {
      */
     public static function renderItemWithTemplate($item, $menuPages)
     {
-        // Build menu HTML
-        $menuHtml = Html::buildMenuHtml($menuPages);
-        
         $template = Template::where("slug", "=", $item->template_slug);
         if (count($template) > 0) {
             $template = $template[0];
         }
+
+        self::processInlineTranslationDefinitions($template->html_content ?? '');
+        $menuHtml = Html::buildMenuHtml($menuPages);
 
         $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
         $host = $_SERVER['HTTP_HOST'];
@@ -407,8 +462,6 @@ class Html {
 
         $currentUrl = $protocol . "://" . $host . $uri;
         
-        
-        // Prepare template variables
         $variables = [
             'meta_title' => $item->meta_title,
             'meta_description' => $item->meta_description ?? '',
@@ -424,10 +477,8 @@ class Html {
             'custom_js' => ''
         ];
         
-        // Render template HTML
         $html = $template->html_content ?? '';
         
-        // Replace variables in template
         foreach ($variables as $key => $value) {
             $html = str_replace('{{ ' . $key . ' }}', $value, $html);
             $html = str_replace('{{' . $key . '}}', $value, $html);
@@ -439,14 +490,11 @@ class Html {
             $html = str_replace('{{$item.' . $key . '}}', str_replace('"', "'", $value), $html);
         }
         
-        
-        
         $html = self::renderItemsWithData($html);
-        
-        // Inject CSS if template has it
+        $html = self::processTranslations($html);
+
         if ($template->css_content) {
             $cssTag = '<style>' . $template->css_content . '</style>';
-            // Try to inject before </head> or at the beginning
             if (strpos($html, '</head>') !== false) {
                 $html = str_replace('</head>', $cssTag . '</head>', $html);
             } else {

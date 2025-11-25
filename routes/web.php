@@ -157,6 +157,14 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->get('/template-items/preview', 'App\Http\Controllers\TemplateItemController@preview');
     $router->post('/template-items/extract-variables', 'App\Http\Controllers\TemplateItemController@extractVariables');
     
+    // Translations Management routes
+    $router->get('/translations', 'App\Http\Controllers\TranslationController@index');
+    $router->get('/translations/create', 'App\Http\Controllers\TranslationController@create');
+    $router->post('/translations/store', 'App\Http\Controllers\TranslationController@store');
+    $router->get('/translations/edit', 'App\Http\Controllers\TranslationController@edit');
+    $router->post('/translations/update', 'App\Http\Controllers\TranslationController@update');
+    $router->post('/translations/delete', 'App\Http\Controllers\TranslationController@destroy');
+    
     // Section Management routes
     $router->get('/sections', 'App\Http\Controllers\SectionController@index');
     $router->get('/sections/create', 'App\Http\Controllers\SectionController@create');

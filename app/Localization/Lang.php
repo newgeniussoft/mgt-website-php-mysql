@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Localization;
+use App\Models\Translation;
 
 class Lang {
     protected static $locale = 'en';
@@ -25,14 +26,44 @@ class Lang {
     }
     
     public static function get($key, $replace = []) {
-        $translation = self::getTranslation($key, self::$locale);
+        // 1) Try DB in current locale
+        $translation = self::getDbTranslation($key, self::$locale);
+        $sourceLocale = null;
         
         if ($translation === null) {
+            // 2) Try DB in fallback locale
+            $translation = self::getDbTranslation($key, self::$fallbackLocale);
+            if ($translation !== null) { $sourceLocale = self::$fallbackLocale; }
+        } else {
+            $sourceLocale = self::$locale;
+        }
+
+        if ($translation === null) {
+            // 3) Try file in current locale
+            $translation = self::getTranslation($key, self::$locale);
+            if ($translation !== null) { $sourceLocale = self::$locale; }
+        }
+        
+        if ($translation === null) {
+            // 4) Try file in fallback locale
             $translation = self::getTranslation($key, self::$fallbackLocale);
+            if ($translation !== null) { $sourceLocale = self::$fallbackLocale; }
         }
         
         if ($translation === null) {
             return $key;
+        }
+
+        // Seed DB when value came from files, so DB becomes source of truth next time
+        if ($sourceLocale !== null) {
+            try {
+                // Only seed if not already in DB for that locale
+                if (self::getDbTranslation($key, $sourceLocale) === null) {
+                    Translation::setValue($key, $sourceLocale, $translation);
+                }
+            } catch (\Throwable $e) {
+                // Ignore seeding errors silently
+            }
         }
         
         return self::makeReplacements($translation, $replace);
@@ -66,6 +97,18 @@ class Lang {
         } else {
             self::$translations[$locale][$file] = [];
         }
+    }
+    
+    protected static function getDbTranslation($key, $locale) {
+        try {
+            $row = Translation::findByKeyAndLocale($key, $locale);
+            if ($row && isset($row->value)) {
+                return $row->value;
+            }
+        } catch (\Throwable $e) {
+            // Silently ignore DB errors (e.g., during early bootstrap or missing table)
+        }
+        return null;
     }
     
     protected static function getNestedValue($array, $key) {

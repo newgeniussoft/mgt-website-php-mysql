@@ -93,11 +93,31 @@ class FrontendController extends Controller
         }
         
         if ($model) {
-            $item = $model::where('slug', '=', $item);
-            if (is_array($item) && count($item) > 0) {
-                $item = $item[0];
+            if ($model === Tour::class) {
+                $baseList = Tour::where('slug', '=', $item);
+                if (is_array($baseList) && count($baseList) > 0) {
+                    $resolved = $baseList[0];
+                    $lang = Lang::getLocale();
+                    if ($resolved && $lang && $resolved->language !== $lang) {
+                        $groupList = Tour::where('translation_group', '=', $resolved->translation_group);
+                        if (is_array($groupList) && count($groupList) > 0) {
+                            foreach ($groupList as $candidate) {
+                                if ($candidate->language === $lang) {
+                                    $resolved = $candidate;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    return Html::renderItemWithTemplate($resolved, $menuPages);
+                }
+                return $this->notFound();
             }
-            return Html::renderItemWithTemplate($item, $menuPages);
+            $found = $model::where('slug', '=', $item);
+            if (is_array($found) && count($found) > 0) {
+                $found = $found[0];
+            }
+            return Html::renderItemWithTemplate($found, $menuPages);
 
         } else {
             return $this->notFound();

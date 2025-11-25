@@ -176,6 +176,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ strpos(page_admin(), 'translations') === 0 ? 'active' : '' }}" href="{{ admin_url('translations') }}">
+                                <i class="fas fa-language"></i>
+                                Translations
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ page_admin() == 'logout' ? 'active' : '' }}" href="{{ url($_ENV['APP_ADMIN_PREFIX'] . '/logout') }}">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Logout

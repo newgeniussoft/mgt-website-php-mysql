@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS `translations` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `key` VARCHAR(191) NOT NULL,
+    `locale` VARCHAR(10) NOT NULL,
+    `value` TEXT NOT NULL,
+    `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uniq_key_locale` (`key`, `locale`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
