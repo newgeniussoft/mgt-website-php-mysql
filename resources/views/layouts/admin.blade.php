@@ -142,6 +142,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ page_admin() == 'slides' ? 'active' : '' }}" href="{{ admin_url('slides') }}">
+                                <i class="fas fa-images"></i>
+                                Slide
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ page_admin() == 'media/folders' ? 'active' : '' }}" href="{{ admin_url('media/folders') }}">
                                 <i class="fas fa-folder"></i>
                                 Folders
