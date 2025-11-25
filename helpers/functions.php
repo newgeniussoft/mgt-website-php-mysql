@@ -451,3 +451,30 @@ function getKmlFiles($folder) {
     $results .= "]";
     return $results;
 }
+
+function toPascal($str) {
+    return str_replace(' ', '', ucwords(str_replace('_', ' ', $str)));
+}
+
+function parseExpression($str) {
+    // All supported operators (longest first)
+    $operators = ['>=', '<=', '!=', '<>', '==', '=', '>', '<'];
+
+    foreach ($operators as $op) {
+        if (strpos($str, $op) !== false) {
+            $parts = explode($op, $str, 2);
+            $key   = trim($parts[0]);
+            $value = trim($parts[1], " '\""); // remove spaces + quotes
+
+            return [
+                'key'      => $key,
+                'operator' => $op,
+                'value'    => $value
+            ];
+        }
+    }
+
+    return null; // not matched
+}
+
+

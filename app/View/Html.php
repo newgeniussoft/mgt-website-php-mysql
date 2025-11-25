@@ -205,6 +205,7 @@ class Html {
         if (!is_string($item)) {
             foreach ($item as $key => $value) {
                 $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
+                $rendered = str_replace('{{$item.' . $key . '}}', htmlspecialchars($value), $rendered);
             }
         } else {
                 $rendered = str_replace('{{ $item.value }}', htmlspecialchars($item), $rendered);
@@ -235,15 +236,15 @@ class Html {
             $list = $array;
 
             } else {
-                
-
-
-                $modelName = '\\App\\Models\\' . ucfirst($name);
+                $modelName = '\\App\\Models\\' . toPascal($name);
                 $list = $modelName::all();
             
                 $lang = Lang::getLocale();
                 if ($name == 'tour') {
                     $list = $modelName::where('language', $lang);
+                }  elseif  ($name == 'tour_detail') {
+                    $exp = parseExpression($item['attributes']['sql']);
+                    $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
                 }
 
             }
@@ -437,7 +438,8 @@ class Html {
             $html = str_replace('{{ $item.' . $key . ' }}', str_replace('"', "'", $value), $html);
             $html = str_replace('{{$item.' . $key . '}}', str_replace('"', "'", $value), $html);
         }
-
+        
+        
         
         $html = self::renderItemsWithData($html);
         

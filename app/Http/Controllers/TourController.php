@@ -446,7 +446,7 @@ class TourController
         
         if ($detailId > 0) {
             // Update existing detail
-            $success = $this->tourDetailModel->update($detailId, $data);
+            $success = $this->tourDetailModel->updateDetail($detailId, $data);
             $message = $success ? 'Tour detail updated successfully!' : 'Failed to update tour detail.';
         } else {
             // Create new detail
@@ -480,7 +480,7 @@ class TourController
         $detailId = (int)($_POST['detail_id'] ?? 0);
         $tourId = (int)($_POST['tour_id'] ?? 0);
         
-        if ($this->tourDetailModel->delete($detailId)) {
+        if ($this->tourDetailModel->deleteDetail($detailId)) {
             $_SESSION['success'] = 'Tour detail deleted successfully!';
         } else {
             $_SESSION['error'] = 'Failed to delete tour detail.';

@@ -5,15 +5,11 @@ namespace App\Models;
 use PDO;
 use PDOException;
 
-class TourDetail
+class TourDetail extends Model
 {
-    private $db;
-    
-    public function __construct()
-    {
-        global $pdo;
-        $this->db = $pdo;
-    }
+    protected $table = 'tour_details';
+    protected $fillable = ['tour_id', 'day', 'title', 'description', 'activities', 'meals', 'accommodation', 'transport', 'notes', 'sort_order'];
+    protected $timestamps = true;
     
     /**
      * Get all tour details for a specific tour
@@ -21,7 +17,7 @@ class TourDetail
     public function getByTourId($tourId)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tour_details WHERE tour_id = ? ORDER BY day ASC, sort_order ASC");
+            $stmt = $this->getConnection()->prepare("SELECT * FROM tour_details WHERE tour_id = ? ORDER BY day ASC, sort_order ASC");
             $stmt->execute([$tourId]);
             $details = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
@@ -43,7 +39,7 @@ class TourDetail
     public function getById($id)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tour_details WHERE id = ?");
+            $stmt = $this->getConnection()->prepare("SELECT * FROM tour_details WHERE id = ?");
             $stmt->execute([$id]);
             $detail = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -64,7 +60,7 @@ class TourDetail
     public function getByTourAndDay($tourId, $day)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tour_details WHERE tour_id = ? AND day = ?");
+            $stmt = $this->getConnection()->prepare("SELECT * FROM tour_details WHERE tour_id = ? AND day = ?");
             $stmt->execute([$tourId, $day]);
             $detail = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -82,32 +78,32 @@ class TourDetail
     /**
      * Create new tour detail
      */
-    public function create($data)
+    public static function create(array $data)
     {
         try {
             // Encode activities array to JSON
             if (isset($data['activities']) && is_array($data['activities'])) {
                 $data['activities'] = json_encode($data['activities']);
             }
-            
-            $sql = "INSERT INTO tour_details (tour_id, day, title, description, activities, meals, accommodation, transport, notes, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            
-            $stmt = $this->db->prepare($sql);
-        
-            $tour = $data['tour_id'];
-            $result = $stmt->execute([
-                $tour->id,
-                $tour->day,
-                $tour->title,
-                $tour->description ?? null,
-                $tour->activities ?? null,
-                $tour->meals ?? null,
-                $tour->accommodation ?? null,
-                $tour->transport ?? null,
-                $tour->notes ?? null,
-            ]);
-            
-            return $result ? $this->db->lastInsertId() : false;
+
+            // Normalize nullable text fields
+            foreach (['description', 'meals', 'accommodation', 'transport', 'notes'] as $field) {
+                if (array_key_exists($field, $data) && $data[$field] === '') {
+                    $data[$field] = null;
+                }
+            }
+
+            // Default sort_order
+            if (!isset($data['sort_order'])) {
+                $data['sort_order'] = 0;
+            }
+
+            // Use base Model::create to perform the insert
+            /** @var static $instance */
+            $instance = parent::create($data);
+
+            // Maintain existing behavior: return inserted ID or false
+            return $instance && isset($instance->id) ? $instance->id : false;
         } catch (PDOException $e) {
             error_log("Error creating tour detail: " . $e->getMessage());
             return false;
@@ -115,9 +111,9 @@ class TourDetail
     }
     
     /**
-     * Update tour detail
+     * Update tour detail (custom helper, not overriding base Model::update)
      */
-    public function update($id, $data)
+    public function updateDetail($id, $data)
     {
         try {
             // Encode activities array to JSON
@@ -144,7 +140,7 @@ class TourDetail
             $values[] = $id;
             $sql = "UPDATE tour_details SET " . implode(', ', $fields) . " WHERE id = ?";
             
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getConnection()->prepare($sql);
             return $stmt->execute($values);
         } catch (PDOException $e) {
             error_log("Error updating tour detail: " . $e->getMessage());
@@ -153,12 +149,12 @@ class TourDetail
     }
     
     /**
-     * Delete tour detail
+     * Delete tour detail (custom helper, not overriding base Model::delete)
      */
-    public function delete($id)
+    public function deleteDetail($id)
     {
         try {
-            $stmt = $this->db->prepare("DELETE FROM tour_details WHERE id = ?");
+            $stmt = $this->getConnection()->prepare("DELETE FROM tour_details WHERE id = ?");
             return $stmt->execute([$id]);
         } catch (PDOException $e) {
             error_log("Error deleting tour detail: " . $e->getMessage());
@@ -172,7 +168,7 @@ class TourDetail
     public function deleteByTourId($tourId)
     {
         try {
-            $stmt = $this->db->prepare("DELETE FROM tour_details WHERE tour_id = ?");
+            $stmt = $this->getConnection()->prepare("DELETE FROM tour_details WHERE tour_id = ?");
             return $stmt->execute([$tourId]);
         } catch (PDOException $e) {
             error_log("Error deleting tour details by tour ID: " . $e->getMessage());
@@ -186,7 +182,7 @@ class TourDetail
     public function getMaxDay($tourId)
     {
         try {
-            $stmt = $this->db->prepare("SELECT MAX(day) FROM tour_details WHERE tour_id = ?");
+            $stmt = $this->getConnection()->prepare("SELECT MAX(day) FROM tour_details WHERE tour_id = ?");
             $stmt->execute([$tourId]);
             return (int)$stmt->fetchColumn();
         } catch (PDOException $e) {
@@ -201,7 +197,7 @@ class TourDetail
     public function getCountByTourId($tourId)
     {
         try {
-            $stmt = $this->db->prepare("SELECT COUNT(*) FROM tour_details WHERE tour_id = ?");
+            $stmt = $this->getConnection()->prepare("SELECT COUNT(*) FROM tour_details WHERE tour_id = ?");
             $stmt->execute([$tourId]);
             return (int)$stmt->fetchColumn();
         } catch (PDOException $e) {
@@ -216,17 +212,18 @@ class TourDetail
     public function reorder($tourId, $dayOrders)
     {
         try {
-            $this->db->beginTransaction();
+            $conn = $this->getConnection();
+            $conn->beginTransaction();
             
             foreach ($dayOrders as $day => $sortOrder) {
-                $stmt = $this->db->prepare("UPDATE tour_details SET sort_order = ? WHERE tour_id = ? AND day = ?");
+                $stmt = $conn->prepare("UPDATE tour_details SET sort_order = ? WHERE tour_id = ? AND day = ?");
                 $stmt->execute([$sortOrder, $tourId, $day]);
             }
             
-            $this->db->commit();
+            $conn->commit();
             return true;
         } catch (PDOException $e) {
-            $this->db->rollBack();
+            $this->getConnection()->rollBack();
             error_log("Error reordering tour details: " . $e->getMessage());
             return false;
         }
@@ -266,7 +263,7 @@ class TourDetail
             
             if ($detail) {
                 // Get photos for this specific day
-                $stmt = $this->db->prepare("SELECT * FROM tour_photos WHERE tour_id = ? AND day = ? ORDER BY sort_order ASC");
+                $stmt = $this->getConnection()->prepare("SELECT * FROM tour_photos WHERE tour_id = ? AND day = ? ORDER BY sort_order ASC");
                 $stmt->execute([$tourId, $day]);
                 $detail['photos'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -284,7 +281,7 @@ class TourDetail
     public function getTourSummary($tourId)
     {
         try {
-            $stmt = $this->db->prepare("SELECT day, title, accommodation, meals FROM tour_details WHERE tour_id = ? ORDER BY day ASC");
+            $stmt = $this->getConnection()->prepare("SELECT day, title, accommodation, meals FROM tour_details WHERE tour_id = ? ORDER BY day ASC");
             $stmt->execute([$tourId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -299,7 +296,7 @@ class TourDetail
     public function search($tourId, $query)
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM tour_details WHERE tour_id = ? AND (title LIKE ? OR description LIKE ? OR activities LIKE ?) ORDER BY day ASC");
+            $stmt = $this->getConnection()->prepare("SELECT * FROM tour_details WHERE tour_id = ? AND (title LIKE ? OR description LIKE ? OR activities LIKE ?) ORDER BY day ASC");
             $searchTerm = '%' . $query . '%';
             $stmt->execute([$tourId, $searchTerm, $searchTerm, $searchTerm]);
             
@@ -323,7 +320,7 @@ class TourDetail
     public function getMealsSummary($tourId)
     {
         try {
-            $stmt = $this->db->prepare("SELECT day, meals FROM tour_details WHERE tour_id = ? AND meals IS NOT NULL ORDER BY day ASC");
+            $stmt = $this->getConnection()->prepare("SELECT day, meals FROM tour_details WHERE tour_id = ? AND meals IS NOT NULL ORDER BY day ASC");
             $stmt->execute([$tourId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -338,7 +335,7 @@ class TourDetail
     public function getAccommodationsSummary($tourId)
     {
         try {
-            $stmt = $this->db->prepare("SELECT day, accommodation FROM tour_details WHERE tour_id = ? AND accommodation IS NOT NULL ORDER BY day ASC");
+            $stmt = $this->getConnection()->prepare("SELECT day, accommodation FROM tour_details WHERE tour_id = ? AND accommodation IS NOT NULL ORDER BY day ASC");
             $stmt->execute([$tourId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -376,4 +373,5 @@ class TourDetail
         
         return $errors;
     }
+
 }

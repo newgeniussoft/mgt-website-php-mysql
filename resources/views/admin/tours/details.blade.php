@@ -64,12 +64,9 @@
                             <h6 class="m-0 font-weight-bold text-primary">
                                 <i class="fas fa-calendar-day me-1"></i>Day {{ $detail['day'] }}
                             </h6>
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" 
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-cog"></i>
-                                </button>
-                                <ul class="dropdown-menu">
+                            <div class="">
+                                
+                                <ul class="">
                                     <li>
                                         <a class="dropdown-item" href="#" 
                                            onclick="editDetail({{ json_encode($detail) }})">
