@@ -198,10 +198,15 @@ class Html {
      * @param array $item Data array for the item
      * @return string Rendered HTML
      */
-    public static function renderItemTemplate($template, $item) {
+    public static function renderItemTemplate($index, $template, $item) {
         $rendered = $template;
     
         if (!is_string($item)) {
+            if ($index == 0) {
+                $rendered = str_replace('{{ $item.active }}', 'active', $rendered);
+            } else {
+                $rendered = str_replace('{{ $item.active }}', '', $rendered);
+            }
             foreach ($item as $key => $value) {
                 $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
                 $rendered = str_replace('{{$item.' . $key . '}}', htmlspecialchars($value), $rendered);
@@ -305,8 +310,10 @@ class Html {
             }
         
             $output = '';
+            $i = 0; 
             foreach ($data as $item) {
-                $output .= self::renderItemTemplate($template, $item);
+                $output .= self::renderItemTemplate($i, $template, $item);
+                $i += 1;
             }
             return $output;
         }, $html);

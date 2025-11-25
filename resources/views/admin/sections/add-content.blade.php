@@ -9,9 +9,9 @@
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">{{ isset($section) ? 'Edit Content' : 'Add Content' }} - {{ isset($section) ? $section->name : '' }}</h1>
+        <h1 class="h3 mb-0">{{ isset($content) ? 'Edit Content' : 'Add Content' }} - {{ isset($section) ? $section->name : '' }}</h1>
         <a href="{{ admin_url('sections/edit?id=' . $section->id) }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Sectionss
+            <i class="fas fa-arrow-left"></i> Back to Sections
         </a>
     </div>
 
@@ -23,10 +23,12 @@
         <?php unset($_SESSION['error']); ?>
     @endif
 
-    <form method="POST" action="{{ isset($section) ? admin_url('sections/update-content') : admin_url('sections/store-content') }}">
+    <form method="POST" action="{{ isset($content) ? admin_url('sections/update-content') : admin_url('sections/store-content') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" name="section_id" value="{{ $section->id }}">
-        <input type="hidden" name="id" value="{{ isset($content) ? $content->id : '' }}">
+        @if(isset($content))
+        <input type="hidden" name="id" value="{{ $content->id }}">
+        @endif
         
         <div class="row">
             <div class="col-md-8">
