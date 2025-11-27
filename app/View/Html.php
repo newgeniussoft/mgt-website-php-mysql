@@ -224,131 +224,105 @@ class Html {
     }
 
     /**
-     * Advanced render function with data source and templates
-     *
-     * @param string $html HTML content with <items> tags
-     * @return string Rendered HTML
+     * Render <items .../> tags within the provided HTML.
+     * - Supports model-backed and JSON-backed lists
+     * - Supports inline single item from tag attributes
+     * - Respects lang filtering (accepts 'sp' as alias of 'es' and comma-separated values)
      */
     public static function renderItemsWithData($html) {
         $pattern = '/<items\s+[^>]+\/>/i';
-        $dataSources = [];
-
-        foreach (self::findItemsTags($html) as $tagInfo) {
-            $attrs = $tagInfo['attributes'] ?? [];
-            $name = $attrs['name'] ?? null;
-            if (!$name) { continue; }
-
-            $list = null;
-
-            if (isset($attrs['data'])) {
-                $data = str_replace("'", '"', $attrs['data']);
-                $list = json_decode($data, true);
-                if ($list === null) { $list = []; }
-                if (is_array($list) && array_keys($list) !== range(0, count($list) - 1)) {
-                    $list = [$list];
-                }
-            } else {
-                $modelName = '\\App\\Models\\' . toPascal($name);
-                if (class_exists($modelName)) {
-                    $list = $modelName::all();
-                    $lang = Lang::getLocale();
-                    if ($name == 'tour') {
-                        $list = $modelName::where('language', $lang);
-                    }
-                    if (isset($attrs['sql'])) {
-                        $exp = parseExpression($attrs['sql']);
-                        $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
-                    }
-                } else {
-                    // Fallback: single inline item constructed from tag attributes
-                    $reserved = ['name','template','limit','sql','data','lang'];
-                    $single = [];
-                    foreach ($attrs as $k => $v) {
-                        if (!in_array($k, $reserved, true)) {
-                            $single[$k] = $v;
-                        }
-                    }
-                    $pairs = [];
-                    foreach ($single as $k => $v) {
-                        $pairs[] = $k . '="' . $v . '"';
-                    }
-                    $single['attributs_tag'] = implode(' ', $pairs);
-                    $list = [$single];
-                }
-            }
-
-            $listArray = [];
-            if ($list != null) {
-                foreach ($list as $entry) {
-                    if (is_string($entry)) {
-                        $listArray[] = $entry;
-                    } elseif (is_array($entry)) {
-                        $listArray[] = $entry;
-                    } elseif (is_object($entry)) {
-                        if (method_exists($entry, 'toArray')) {
-                            $listArray[] = $entry->toArray();
-                        } else {
-                            $listArray[] = (array) $entry;
-                        }
-                    }
-                }
-            }
-            $dataSources[$name] = $listArray;
-        }
-
+        // Preload templates once
         $templateItem = \App\Models\TemplateItem::all();
         $templates = [];
         foreach ($templateItem as $ti) {
             $templates[$ti->slug] = $ti->html_template;
         }
 
-        return preg_replace_callback($pattern, function($matches) use ($dataSources, $templates) {
+        return preg_replace_callback($pattern, function($matches) use ($templates) {
             $tag = $matches[0];
             $attributes = [];
-            $attrPattern = '/(\\w+)="([^"]*)"/';
-            if (preg_match_all($attrPattern, $tag, $attrMatches, PREG_SET_ORDER)) {
-                foreach ($attrMatches as $match) {
-                    $attributes[$match[1]] = $match[2];
-                }
+            if (preg_match_all('/(\w+)\s*=\s*"([^"]*)"/', $tag, $attrMatches, PREG_SET_ORDER)) {
+                foreach ($attrMatches as $m) { $attributes[$m[1]] = $m[2]; }
             }
 
-            // Language filter: show only if current locale matches the tag's lang attribute
+            // Language filter
             if (isset($attributes['lang'])) {
                 $curr = strtolower(Lang::getLocale());
-                $wanted = array_map('trim', explode(',', strtolower($attributes['lang'])));
-                // Normalize 'sp' to 'es'
-                $wanted = array_map(function($c){ return $c === 'sp' ? 'es' : $c; }, $wanted);
-                if (!in_array($curr, $wanted, true)) {
-                    return '';
-                }
+                // reduce to primary language code (e.g., en-US -> en)
+                $curr = explode('-', str_replace('_', '-', $curr))[0];
+                $wanted = preg_split('/[\s,]+/', strtolower($attributes['lang']), -1, PREG_SPLIT_NO_EMPTY);
+
+                $wanted = array_map(function($c){
+                    $c = str_replace('_', '-', trim(strtolower($c)));
+                    $c = ($c === 'sp') ? 'es' : $c; // support sp as Spanish
+                    return explode('-', $c)[0];
+                }, $wanted);
+                if (!in_array($curr, $wanted, true)) { return ''; }
             }
 
             $dataName = $attributes['name'] ?? null;
             $templateName = $attributes['template'] ?? null;
             $limit = isset($attributes['limit']) ? (int)$attributes['limit'] : null;
-
-            if (!$dataName || !isset($dataSources[$dataName])) {
-                return '<!-- Data source "' . htmlspecialchars($dataName) . '" not found -->';
-            }
+            if (!$dataName) { return '<!-- Data source name missing -->'; }
             if (!$templateName || !isset($templates[$templateName])) {
                 return '<!-- Template "' . htmlspecialchars($templateName) . '" not found -->';
             }
 
-            $data = $dataSources[$dataName];
+            // Build data for this tag
+            $list = null;
+            if (isset($attributes['data'])) {
+                $json = str_replace("'", '"', $attributes['data']);
+                $list = json_decode($json, true);
+                if ($list === null) { $list = []; }
+                if (is_array($list) && array_keys($list) !== range(0, count($list) - 1)) { $list = [$list]; }
+            } else {
+                $modelName = '\\App\\Models\\' . toPascal($dataName);
+                if (class_exists($modelName)) {
+                    $list = $modelName::all();
+                    $lang = Lang::getLocale();
+                    if ($dataName === 'tour') { $list = $modelName::where('language', $lang); }
+                    if (isset($attributes['sql'])) {
+                        $exp = parseExpression($attributes['sql']);
+                        $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
+                    }
+                } else {
+                    // Inline single item
+                    $reserved = ['name','template','limit','sql','data','lang'];
+                    $single = [];
+                    foreach ($attributes as $k => $v) {
+                        if (!in_array($k, $reserved, true)) { $single[$k] = $v; }
+                    }
+                    $pairs = [];
+                    foreach ($single as $k => $v) { $pairs[] = $k . '="' . $v . '"'; }
+                    $single['attributs_tag'] = implode(' ', $pairs);
+                    $list = [$single];
+                }
+            }
+
+            // Normalize entries
+            $data = [];
+            if ($list != null) {
+                foreach ($list as $entry) {
+                    if (is_string($entry)) { $data[] = $entry; }
+                    elseif (is_array($entry)) { $data[] = $entry; }
+                    elseif (is_object($entry)) {
+                        $data[] = method_exists($entry, 'toArray') ? $entry->toArray() : (array)$entry;
+                    }
+                }
+            }
+
+            if ($limit !== null && $limit > 0) { $data = array_slice($data, 0, $limit); }
             $template = $templates[$templateName];
-            if ($limit !== null && $limit > 0) {
-                $data = array_slice($data, 0, $limit);
-            }
-            $output = '';
+            $out = '';
             $i = 0;
-            foreach ($data as $item) {
-                $output .= self::renderItemTemplate($i, $template, $item);
-                $i += 1;
-            }
-            return $output;
+            foreach ($data as $item) { $out .= self::renderItemTemplate($i, $template, $item); $i++; }
+            return $out;
         }, $html);
     }
 
+    /**
+     * Parse inline translation definitions like { lang="en" key="..." value="..." }
+     */
     protected static function processInlineTranslationDefinitions($html) {
         $pattern = '/\{\s*([^}]*(?:\blang\s*=\s*"[^"]*"[^}]*)+)\s*\}/';
         return preg_replace_callback($pattern, function($m) {
@@ -459,6 +433,9 @@ class Html {
             $html = str_replace('{{' . $key . '}}', $value, $html);
         }
         
+        // Render any <items .../> tags in the template HTML itself
+        $html = self::renderItemsWithData($html);
+        // Then apply translations
         $html = self::processTranslations($html);
 
         if ($template->css_content) {
