@@ -208,8 +208,13 @@ class Html {
                 $rendered = str_replace('{{ $item.active }}', '', $rendered);
             }
             foreach ($item as $key => $value) {
-                $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
-                $rendered = str_replace('{{$item.' . $key . '}}', htmlspecialchars($value), $rendered);
+                if ($key === 'attributs_tag') {
+                    $rendered = str_replace('{{ $item.' . $key . ' }}', $value, $rendered);
+                    $rendered = str_replace('{{$item.' . $key . '}}', $value, $rendered);
+                } else {
+                    $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
+                    $rendered = str_replace('{{$item.' . $key . '}}', htmlspecialchars($value), $rendered);
+                }
             }
         } else {
                 $rendered = str_replace('{{ $item.value }}', htmlspecialchars($item), $rendered);
@@ -218,99 +223,124 @@ class Html {
         return $rendered;
     }
 
-
     /**
      * Advanced render function with data source and templates
-     * 
+     *
      * @param string $html HTML content with <items> tags
-     * @param array $dataSources Associative array of data sources (e.g., ['media' => $mediaArray])
-     * @param array $templates Associative array of templates (e.g., ['media-grid' => $templateString])
      * @return string Rendered HTML
      */
     public static function renderItemsWithData($html) {
         $pattern = '/<items\s+[^>]+\/>/i';
         $dataSources = [];
 
-        foreach(self::findItemsTags($html) as $item){
-            
-                $name = $item['attributes']['name'];
-            if (isset($item['attributes']['data'])) {
-            $data = str_replace("'", "\"", $item['attributes']['data']);
-            $array = json_decode($data, true);
-            $list = $array;
+        foreach (self::findItemsTags($html) as $tagInfo) {
+            $attrs = $tagInfo['attributes'] ?? [];
+            $name = $attrs['name'] ?? null;
+            if (!$name) { continue; }
 
+            $list = null;
+
+            if (isset($attrs['data'])) {
+                $data = str_replace("'", '"', $attrs['data']);
+                $list = json_decode($data, true);
+                if ($list === null) { $list = []; }
+                if (is_array($list) && array_keys($list) !== range(0, count($list) - 1)) {
+                    $list = [$list];
+                }
             } else {
                 $modelName = '\\App\\Models\\' . toPascal($name);
-                $list = $modelName::all();
-                $lang = Lang::getLocale();
-                
-                if ($name == 'tour') {
-                    $list = $modelName::where('language', $lang);
-                } 
-
-                if (isset($item['attributes']['sql'])) {
-                    $exp = parseExpression($item['attributes']['sql']);
-                    $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
+                if (class_exists($modelName)) {
+                    $list = $modelName::all();
+                    $lang = Lang::getLocale();
+                    if ($name == 'tour') {
+                        $list = $modelName::where('language', $lang);
+                    }
+                    if (isset($attrs['sql'])) {
+                        $exp = parseExpression($attrs['sql']);
+                        $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
+                    }
+                } else {
+                    // Fallback: single inline item constructed from tag attributes
+                    $reserved = ['name','template','limit','sql','data','lang'];
+                    $single = [];
+                    foreach ($attrs as $k => $v) {
+                        if (!in_array($k, $reserved, true)) {
+                            $single[$k] = $v;
+                        }
+                    }
+                    $pairs = [];
+                    foreach ($single as $k => $v) {
+                        $pairs[] = $k . '="' . $v . '"';
+                    }
+                    $single['attributs_tag'] = implode(' ', $pairs);
+                    $list = [$single];
                 }
-
             }
 
             $listArray = [];
             if ($list != null) {
-            foreach($list as $item){
-                $items = [];
-                if (!is_string($item)) {
-                    foreach($item->toArray() as $key => $value){
-                        $items[$key] = $value;
+                foreach ($list as $entry) {
+                    if (is_string($entry)) {
+                        $listArray[] = $entry;
+                    } elseif (is_array($entry)) {
+                        $listArray[] = $entry;
+                    } elseif (is_object($entry)) {
+                        if (method_exists($entry, 'toArray')) {
+                            $listArray[] = $entry->toArray();
+                        } else {
+                            $listArray[] = (array) $entry;
+                        }
                     }
-                    $listArray[] = $items;
-                } else {
-                    $listArray[] = $item;
                 }
-            }
-
             }
             $dataSources[$name] = $listArray;
         }
 
         $templateItem = \App\Models\TemplateItem::all();
         $templates = [];
-        foreach ($templateItem as $item) {
-            $templates[$item->slug] = $item->html_template;
+        foreach ($templateItem as $ti) {
+            $templates[$ti->slug] = $ti->html_template;
         }
-    
+
         return preg_replace_callback($pattern, function($matches) use ($dataSources, $templates) {
             $tag = $matches[0];
             $attributes = [];
-        
-            $attrPattern = '/(\w+)="([^"]*)"/';
+            $attrPattern = '/(\\w+)="([^"]*)"/';
             if (preg_match_all($attrPattern, $tag, $attrMatches, PREG_SET_ORDER)) {
                 foreach ($attrMatches as $match) {
                     $attributes[$match[1]] = $match[2];
                 }
             }
-        
+
+            // Language filter: show only if current locale matches the tag's lang attribute
+            if (isset($attributes['lang'])) {
+                $curr = strtolower(Lang::getLocale());
+                $wanted = array_map('trim', explode(',', strtolower($attributes['lang'])));
+                // Normalize 'sp' to 'es'
+                $wanted = array_map(function($c){ return $c === 'sp' ? 'es' : $c; }, $wanted);
+                if (!in_array($curr, $wanted, true)) {
+                    return '';
+                }
+            }
+
             $dataName = $attributes['name'] ?? null;
             $templateName = $attributes['template'] ?? null;
             $limit = isset($attributes['limit']) ? (int)$attributes['limit'] : null;
-        
+
             if (!$dataName || !isset($dataSources[$dataName])) {
                 return '<!-- Data source "' . htmlspecialchars($dataName) . '" not found -->';
             }
-        
             if (!$templateName || !isset($templates[$templateName])) {
                 return '<!-- Template "' . htmlspecialchars($templateName) . '" not found -->';
             }
-        
+
             $data = $dataSources[$dataName];
             $template = $templates[$templateName];
-        
             if ($limit !== null && $limit > 0) {
                 $data = array_slice($data, 0, $limit);
             }
-        
             $output = '';
-            $i = 0; 
+            $i = 0;
             foreach ($data as $item) {
                 $output .= self::renderItemTemplate($i, $template, $item);
                 $i += 1;
@@ -318,7 +348,7 @@ class Html {
             return $output;
         }, $html);
     }
-    
+
     protected static function processInlineTranslationDefinitions($html) {
         $pattern = '/\{\s*([^}]*(?:\blang\s*=\s*"[^"]*"[^}]*)+)\s*\}/';
         return preg_replace_callback($pattern, function($m) {
