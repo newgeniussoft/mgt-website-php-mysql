@@ -208,19 +208,62 @@ class Html {
                 $rendered = str_replace('{{ $item.active }}', '', $rendered);
             }
             foreach ($item as $key => $value) {
-                if ($key === 'attributs_tag') {
+                if ($key === 'attributs_tag' || $key === 'list') {
                     $rendered = str_replace('{{ $item.' . $key . ' }}', $value, $rendered);
                     $rendered = str_replace('{{$item.' . $key . '}}', $value, $rendered);
                 } else {
-                    $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
-                    $rendered = str_replace('{{$item.' . $key . '}}', htmlspecialchars($value), $rendered);
+                    $converted = self::convertMarkdownLinks((string)$value);
+                    if ($converted !== null) {
+                        $rendered = str_replace('{{ $item.' . $key . ' }}', $converted, $rendered);
+                        $rendered = str_replace('{{$item.' . $key . '}}', $converted, $rendered);
+                    } else {
+                        $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
+                        $rendered = str_replace('{{$item.' . $key . '}}', htmlspecialchars($value), $rendered);
+                    }
                 }
             }
         } else {
-                $rendered = str_replace('{{ $item.value }}', htmlspecialchars($item), $rendered);
+                $converted = self::convertMarkdownLinks((string)$item);
+                if ($converted !== null) {
+                    $rendered = str_replace('{{ $item.value }}', $converted, $rendered);
+                    $rendered = str_replace('{{$item.value}}', $converted, $rendered);
+                } else {
+                    $rendered = str_replace('{{ $item.value }}', htmlspecialchars($item), $rendered);
+                    $rendered = str_replace('{{$item.value}}', htmlspecialchars($item), $rendered);
+                }
         }
     
         return $rendered;
+    }
+
+    /**
+     * Convert link-only Markdown [text](url) to safe HTML anchors. Non-link text is escaped.
+     * Supports http/https URLs only. Returns null if no markdown link is found.
+     */
+    protected static function convertMarkdownLinks($text) {
+        $pattern = '/\[(?<text>[^\]]+)\]\((?<url>https?:\/\/[^\)\s]+)\)/i';
+        if (!preg_match($pattern, $text)) {
+            return null;
+        }
+        $result = '';
+        $offset = 0;
+        while (preg_match($pattern, $text, $m, PREG_OFFSET_CAPTURE, $offset)) {
+            $start = $m[0][1];
+            // escape text before the match
+            $before = substr($text, $offset, $start - $offset);
+            $result .= htmlspecialchars($before, ENT_QUOTES, 'UTF-8');
+            $rawText = $m['text'][0];
+            $rawUrl = $m['url'][0];
+            $escText = htmlspecialchars($rawText, ENT_QUOTES, 'UTF-8');
+            $escUrl = htmlspecialchars($rawUrl, ENT_QUOTES, 'UTF-8');
+            $result .= '<a href="' . $escUrl . '">' . $escText . '</a>';
+            $offset = $start + strlen($m[0][0]);
+        }
+        // escape remainder
+        if ($offset < strlen($text)) {
+            $result .= htmlspecialchars(substr($text, $offset), ENT_QUOTES, 'UTF-8');
+        }
+        return $result;
     }
 
     /**
@@ -275,6 +318,41 @@ class Html {
                 $list = json_decode($json, true);
                 if ($list === null) { $list = []; }
                 if (is_array($list) && array_keys($list) !== range(0, count($list) - 1)) { $list = [$list]; }
+            } elseif (isset($attributes['list'])) {
+                // Expand inline list into multiple items; split on commas only so values can contain spaces
+                $parts = preg_split('/,\s*/', $attributes['list'], -1, PREG_SPLIT_NO_EMPTY);
+                $constants = [];
+                $reserved = ['name','template','limit','sql','data','lang','list','tag'];
+                foreach ($attributes as $k => $v) {
+                    if (!in_array($k, $reserved, true)) { $constants[$k] = $v; }
+                }
+                $pairs = [];
+                foreach ($constants as $k => $v) { $pairs[] = $k . '="' . $v . '"'; }
+                $baseAttrTag = implode(' ', $pairs);
+                $tagName = isset($attributes['tag']) && trim($attributes['tag']) !== '' ? trim($attributes['tag']) : null;
+                if ($tagName) {
+                    $itemsHtml = '';
+                    foreach ($parts as $val) {
+                        $text = trim($val);
+                        $converted = self::convertMarkdownLinks($text);
+                        $content = ($converted !== null) ? $converted : htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+                        $itemsHtml .= '<' . $tagName . '>' . $content . '</' . $tagName . '>';
+                    }
+                    $single = $constants;
+                    $single['attributs_tag'] = $baseAttrTag;
+                    $single['list'] = $itemsHtml;
+                    $single['value'] = '';
+                    $list = [$single];
+                } else {
+                    // Expand inline list into multiple items when no tag specified
+                    $list = [];
+                    foreach ($parts as $val) {
+                        $item = $constants;
+                        $item['value'] = trim($val);
+                        $item['attributs_tag'] = $baseAttrTag;
+                        $list[] = $item;
+                    }
+                }
             } else {
                 $modelName = '\\App\\Models\\' . toPascal($dataName);
                 if (class_exists($modelName)) {
@@ -287,7 +365,7 @@ class Html {
                     }
                 } else {
                     // Inline single item
-                    $reserved = ['name','template','limit','sql','data','lang'];
+                    $reserved = ['name','template','limit','sql','data','lang','list','tag'];
                     $single = [];
                     foreach ($attributes as $k => $v) {
                         if (!in_array($k, $reserved, true)) { $single[$k] = $v; }
