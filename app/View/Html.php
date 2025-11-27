@@ -471,6 +471,10 @@ class Html {
         $uri = $_SERVER['REQUEST_URI'];
 
         $currentUrl = $protocol . "://" . $host . $uri;
+
+        $uri_array = explode("/", $uri);
+
+        $kml_folder = $uri_array[count($uri_array)-1];
         
         $variables = [
             'meta_title' => $item->meta_title,
@@ -482,7 +486,7 @@ class Html {
             'current_path' => $currentUrl,
             'current_path_es' => currentUrlToEs(),
             'menu_items' => $menuHtml,
-            'kml' => getKmlFiles('adventure_tour'),
+            'kml' => getKmlFiles($kml_folder),
             'custom_css' => '',
             'custom_js' => ''
         ];
