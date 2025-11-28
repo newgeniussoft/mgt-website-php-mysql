@@ -8,4 +8,7 @@ return [
     'price_incl' => 'Price Includes',
     'price_excl' => 'Price Excludes',
     'day' => 'Day',
+    'quick_link' => 'Quick links',
+    'more' => 'More',
+    'get_in_touch' => 'Get in touch',
 ];
