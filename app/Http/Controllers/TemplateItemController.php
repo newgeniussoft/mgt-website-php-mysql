@@ -64,6 +64,7 @@ class TemplateItemController extends Controller {
             'page' => 'Pages',
             'tour' => 'Tours',
             'gallery' => 'Galleries',
+            'review' => 'Reviews',
             'user' => 'Users'
         ];
         
@@ -141,6 +142,7 @@ class TemplateItemController extends Controller {
             'page' => 'Pages',
             'tour' => 'Tours',
             'gallery' => 'Galleries',
+            'review' => 'Reviews',
             'user' => 'Users'
         ];
         

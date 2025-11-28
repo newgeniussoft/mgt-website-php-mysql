@@ -83,9 +83,34 @@
                         <div class="mb-3">
                             <label for="image" class="form-label">Update Image</label>
                             <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewGalleryImage(this)">
-                            <div class="form-text">Leave blank to keep current image. New image will use its original filename (sanitized).</div>
+                            <div class="form-text">Leave blank to keep current image. New image will use its original filename base (de-duplicated if necessary).</div>
                         </div>
                         <div id="imagePreview" class="mt-2"></div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            <i class="fas fa-image me-1"></i>Thumbnail (optional)
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        @if($item->thumbnail)
+                            <div class="mb-3">
+                                <label class="form-label">Current Thumbnail</label>
+                                <div>
+                                    <img src="/uploads/{{ $item->thumbnail }}" class="img-thumbnail" style="max-width: 160px; max-height: 100px;">
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="mb-3">
+                            <label for="thumbnail" class="form-label">Update Thumbnail</label>
+                            <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*" onchange="previewThumb(this)">
+                            <div class="form-text">Stored in <code>/uploads/galleries/thumbs</code>. Filename base is preserved.</div>
+                        </div>
+                        <div id="thumbPreview" class="mt-2"></div>
                     </div>
                 </div>
 
@@ -119,6 +144,23 @@ function previewGalleryImage(input) {
             img.className = 'img-thumbnail mt-2';
             img.style.maxWidth = '200px';
             img.style.maxHeight = '120px';
+            preview.appendChild(img);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function previewThumb(input) {
+    const preview = document.getElementById('thumbPreview');
+    preview.innerHTML = '';
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'img-thumbnail mt-2';
+            img.style.maxWidth = '160px';
+            img.style.maxHeight = '100px';
             preview.appendChild(img);
         };
         reader.readAsDataURL(input.files[0]);
