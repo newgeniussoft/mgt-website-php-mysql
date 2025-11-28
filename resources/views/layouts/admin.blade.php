@@ -136,6 +136,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ strpos(page_admin(), 'reviews') === 0 ? 'active' : '' }}" href="{{ admin_url('reviews') }}">
+                                <i class="fas fa-comments"></i>
+                                Reviews
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ page_admin() == 'media' ? 'active' : '' }}" href="{{ admin_url('media') }}">
                                 <i class="fas fa-images"></i>
                                 Media Library

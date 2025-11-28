@@ -48,6 +48,13 @@ abstract class Model {
         $stmt->execute([$value]);
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
+
+    public static function condition($condition) {
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE ".$condition);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
     
     public static function create(array $data) {
         $instance = new static();

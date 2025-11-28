@@ -98,19 +98,58 @@ class Html {
         foreach ($sections as $section) {
             $sectionHtml = $section->html_template ?? '';
             
-            $contentHtml = '';
+            $contentHtmlAll = '';
             $currentLanguage = Lang::getLocale();
             $contents = \App\Models\Content::getBySection($section->id, true, $currentLanguage);
             
+            $contentByIndex = [];
+            $namedMap = [];
             foreach ($contents as $content) {
                 if ($content->content_type === 'html') {
-                    $contentHtml .= $content->content;
+                    $entry = $content->content;
                 } else {
-                    $contentHtml .= '<div>' . nl2br(htmlspecialchars($content->content)) . '</div>';
+                    $entry = '<div>' . nl2br(htmlspecialchars($content->content)) . '</div>';
+                }
+                $contentHtmlAll .= $entry;
+                $contentByIndex[] = $entry;
+                if (!empty($content->title)) {
+                    if (!isset($namedMap[$content->title])) {
+                        $namedMap[$content->title] = $entry;
+                    }
+                    $slug = self::slugifyContentKey($content->title);
+                    if (!empty($slug) && !isset($namedMap[$slug])) {
+                        $namedMap[$slug] = $entry;
+                    }
                 }
             }
             
-            $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
+            // Determine how to populate legacy {{ content }}
+            $usesNumbered = preg_match('/\{\{\s*content\d+\s*\}\}/', $sectionHtml) === 1;
+            $usesNamed = false;
+            foreach ($namedMap as $k => $_) {
+                if (strpos($sectionHtml, '{{ ' . $k . ' }}') !== false || strpos($sectionHtml, '{{' . $k . '}}') !== false) {
+                    $usesNamed = true; break;
+                }
+            }
+            $firstEntry = $contentByIndex[0] ?? '';
+            $contentReplacement = $firstEntry;
+            $sectionHtml = str_replace('{{ content }}', $contentReplacement, $sectionHtml);
+            $sectionHtml = str_replace('{{content}}', $contentReplacement, $sectionHtml);
+            // Always expose the concatenated form via a separate variable
+            $sectionHtml = str_replace('{{ content_all }}', $contentHtmlAll, $sectionHtml);
+            $sectionHtml = str_replace('{{content_all}}', $contentHtmlAll, $sectionHtml);
+            
+            $i = 1;
+            foreach ($contentByIndex as $entry) {
+                $key = 'content' . $i;
+                $sectionHtml = str_replace('{{ ' . $key . ' }}', $entry, $sectionHtml);
+                $sectionHtml = str_replace('{{' . $key . '}}', $entry, $sectionHtml);
+                $i++;
+            }
+            foreach ($namedMap as $k => $v) {
+                $sectionHtml = str_replace('{{ ' . $k . ' }}', $v, $sectionHtml);
+                $sectionHtml = str_replace('{{' . $k . '}}', $v, $sectionHtml);
+            }
             $sectionHtml = self::renderItemsWithData($sectionHtml);
            
             $html .= $sectionHtml;
@@ -200,39 +239,38 @@ class Html {
      */
     public static function renderItemTemplate($index, $template, $item) {
         $rendered = $template;
-    
+        // helper to replace all spacing variations using regex
+        $replace = function($html, $key, $replacement) {
+            $pattern = '/\{\{\s*\$item\.' . preg_quote($key, '/') . '\s*\}\}/';
+            return preg_replace_callback($pattern, function() use ($replacement) { return (string)$replacement; }, $html);
+        };
         if (!is_string($item)) {
-            if ($index == 0) {
-                $rendered = str_replace('{{ $item.active }}', 'active', $rendered);
-            } else {
-                $rendered = str_replace('{{ $item.active }}', '', $rendered);
-            }
+            // active handling
+            $rendered = $replace($rendered, 'active', $index == 0 ? 'active' : '');
             foreach ($item as $key => $value) {
                 if ($key === 'attributs_tag' || $key === 'list') {
-                    $rendered = str_replace('{{ $item.' . $key . ' }}', $value, $rendered);
-                    $rendered = str_replace('{{$item.' . $key . '}}', $value, $rendered);
-                } else {
-                    $converted = self::convertMarkdownLinks((string)$value);
-                    if ($converted !== null) {
-                        $rendered = str_replace('{{ $item.' . $key . ' }}', $converted, $rendered);
-                        $rendered = str_replace('{{$item.' . $key . '}}', $converted, $rendered);
-                    } else {
-                        $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
-                        $rendered = str_replace('{{$item.' . $key . '}}', htmlspecialchars($value), $rendered);
-                    }
+                    $rendered = $replace($rendered, $key, (string)$value);
+                    continue;
                 }
+                $converted = self::convertMarkdownLinks((string)$value);
+                $repVal = ($converted !== null) ? $converted : htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+                $rendered = $replace($rendered, $key, $repVal);
+            }
+            // fallback for {{ $item.value }} when 'value' missing
+            if (!array_key_exists('value', (array)$item)) {
+                $fallback = '';
+                foreach (['title','name','text','label'] as $cand) {
+                    if (!empty($item[$cand])) { $fallback = (string)$item[$cand]; break; }
+                }
+                $converted = self::convertMarkdownLinks($fallback);
+                $repVal = ($converted !== null) ? $converted : htmlspecialchars($fallback, ENT_QUOTES, 'UTF-8');
+                $rendered = $replace($rendered, 'value', $repVal);
             }
         } else {
-                $converted = self::convertMarkdownLinks((string)$item);
-                if ($converted !== null) {
-                    $rendered = str_replace('{{ $item.value }}', $converted, $rendered);
-                    $rendered = str_replace('{{$item.value}}', $converted, $rendered);
-                } else {
-                    $rendered = str_replace('{{ $item.value }}', htmlspecialchars($item), $rendered);
-                    $rendered = str_replace('{{$item.value}}', htmlspecialchars($item), $rendered);
-                }
+            $converted = self::convertMarkdownLinks((string)$item);
+            $repVal = ($converted !== null) ? $converted : htmlspecialchars((string)$item, ENT_QUOTES, 'UTF-8');
+            $rendered = $replace($rendered, 'value', $repVal);
         }
-    
         return $rendered;
     }
 
@@ -264,6 +302,18 @@ class Html {
             $result .= htmlspecialchars(substr($text, $offset), ENT_QUOTES, 'UTF-8');
         }
         return $result;
+    }
+
+    protected static function slugifyContentKey($str) {
+        $s = (string)$str;
+        if (function_exists('iconv')) {
+            $converted = @iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $s);
+            if ($converted !== false) { $s = $converted; }
+        }
+        $s = strtolower($s);
+        $s = preg_replace('/[^a-z0-9]+/i', '_', $s);
+        $s = trim($s, '_');
+        return $s;
     }
 
     /**
@@ -320,7 +370,8 @@ class Html {
                 if (is_array($list) && array_keys($list) !== range(0, count($list) - 1)) { $list = [$list]; }
             } elseif (isset($attributes['list'])) {
                 // Expand inline list into multiple items; split on commas only so values can contain spaces
-                $parts = preg_split('/,\s*/', $attributes['list'], -1, PREG_SPLIT_NO_EMPTY);
+                $parts = preg_split('/_\s*/', $attributes['list'], -1, PREG_SPLIT_NO_EMPTY);
+
                 $constants = [];
                 $reserved = ['name','template','limit','sql','data','lang','list','tag'];
                 foreach ($attributes as $k => $v) {
@@ -358,7 +409,12 @@ class Html {
                 if (class_exists($modelName)) {
                     $list = $modelName::all();
                     $lang = Lang::getLocale();
-                    if ($dataName === 'tour') { $list = $modelName::where('language', $lang); }
+                    if ($dataName === 'tour') {
+                        $list = $modelName::where('language', $lang);
+                        if (isset($attributes['condition'])) {
+                            $list = $modelName::condition("language='".$lang."' AND ".$attributes['condition']);
+                        }
+                    }
                     if (isset($attributes['sql'])) {
                         $exp = parseExpression($attributes['sql']);
                         $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
