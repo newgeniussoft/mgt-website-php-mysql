@@ -29,6 +29,13 @@ abstract class Model {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
     
+    public static function all_limit_offset($limit, $offset) {
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} ORDER BY id DESC LIMIT ".$limit." OFFSET ".$offset);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+    
     public static function find($id) {
         $instance = new static();
         $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `{$instance->primaryKey}` = ?");

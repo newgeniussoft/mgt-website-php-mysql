@@ -118,6 +118,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ page_admin() == 'blogs' ? 'active' : '' }}" href="{{ admin_url('blogs') }}">
+                                <i class="fas fa-blog"></i>
+                                Blogs
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ page_admin() == 'templates' ? 'active' : '' }}" href="{{ admin_url('templates') }}">
                                 <i class="fas fa-file-code"></i>
                                 Templates

@@ -477,4 +477,100 @@ function parseExpression($str) {
     return null; // not matched
 }
 
+function pagination($nbDePages) {
+            // Number of pages to display before and after the current page
+            $page = 1;
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+            }
+            $nb_AvAp = 3;
+            
+            // Start pagination container
+            $html = '<div>';
+            $html .= '<ul class="pagination">';
+            
+            // Previous page link
+            if ($page > 1) {
+                $html .='<li><a href="?page=' . ($page - 1) . '"><i class="fa fa-arrow-left"></i></a></li>';
+            } else {
+                $html .= '<li><span id="lien_off"><i class="fa fa-arrow-left"></i></span></li>';
+            }
+                
+            // Case 1: Small number of pages - show all page links
+            if ($nbDePages <= ($nb_AvAp * 2) + 2) {
+                // Display all page numbers
+                for ($i = 1; $i <= $nbDePages; $i++) {
+                    $html .= renderPageLink($i, $page);
+                }
+            }
+            // Case 2: Current page is near the beginning
+            elseif ($page <= $nb_AvAp + 1) {
+                // Display first set of pages
+                for ($i = 1; $i <= (($nb_AvAp * 2) + 1) && $i <= $nbDePages; $i++) {
+                    $html .= renderPageLink($i, $page);
+                }
+            }
+            // Case 3: Current page is right after the beginning section
+            elseif ($page == $nb_AvAp + 2) {
+                // Display first page
+                $html .= '<li><a href="?page=1">1</a></li>';
+                
+                // Display pages around current page
+                for ($i = $page - $nb_AvAp; $i <= $page + $nb_AvAp; $i++) {
+                    $html .= renderPageLink($i, $page);
+                }
+            }
+            // Case 4: Current page is in the middle
+            elseif ($page - $nb_AvAp > 2 && $page < $nbDePages - 2) {
+                // Display first page
+               $html .= '<li><a href="?page=1">1</a></li>';
+                
+                // Display pages around current page
+                for ($i = $page - $nb_AvAp; $i <= $page + $nb_AvAp && $i <= $nbDePages; $i++) {
+                    $html .= renderPageLink($i, $page);
+                }
+            }
+            // Case 5: Current page is near the end
+            elseif ($page >= $nbDePages - 2) {
+                // Display first page
+                $html .='<li><a href="?page=1">1</a></li>';
+                
+                // Calculate offset for special case
+                $offset = ($nb_AvAp == 1 && $page == $nbDePages - 2) ? 1 : 0;
+                
+                // Display last set of pages
+                for ($i = $nbDePages - ($nb_AvAp * 2) - $offset; $i <= $page + $nb_AvAp && $i <= $nbDePages; $i++) {
+                    $html .= renderPageLink($i, $page);
+                }
+            }
+            
+            // Display last page link if needed
+            if ($page + $nb_AvAp < $nbDePages && $nbDePages > ($nb_AvAp * 2) + 2) {
+                $html .='<li><a href="?page=' . $nbDePages . '">' . $nbDePages . '</a></li>';
+            }
+            
+            // Next page link
+            if ($page < $nbDePages) {
+               $html .= '<li><a href="?page=' . ($page + 1) . '"><i class="fa fa-arrow-right"></i></a></li>';
+            } else {
+               $html .= '<li><span id="lien_off"><i class="fa fa-arrow-right"></i></span></li>';
+            }
+            
+            // Close pagination container
+            $html .= '</ul>';
+            $html .= '</div>';
+            return $html;
+           
+        }
+
+           function renderPageLink($pageNum, $currentPage) {
+            $html = "";
+            if ($pageNum == $currentPage) {
+                $html .= '<li><span>' . $pageNum . '</span></li>';
+            } else {
+                $html .= '<li><a href="?page=' . $pageNum . '">' . $pageNum . '</a></li>';
+            }
+            return $html;
+        }
+
 

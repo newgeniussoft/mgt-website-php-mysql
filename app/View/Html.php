@@ -135,6 +135,8 @@ class Html {
             $contentReplacement = $firstEntry;
             $sectionHtml = str_replace('{{ content }}', $contentReplacement, $sectionHtml);
             $sectionHtml = str_replace('{{content}}', $contentReplacement, $sectionHtml);
+
+            $sectionHtml = str_replace('{{ pagination }}', pagination(10), $sectionHtml);
             // Always expose the concatenated form via a separate variable
             $sectionHtml = str_replace('{{ content_all }}', $contentHtmlAll, $sectionHtml);
             $sectionHtml = str_replace('{{content_all}}', $contentHtmlAll, $sectionHtml);
@@ -356,6 +358,7 @@ class Html {
             $dataName = $attributes['name'] ?? null;
             $templateName = $attributes['template'] ?? null;
             $limit = isset($attributes['limit']) ? (int)$attributes['limit'] : null;
+
             if (!$dataName) { return '<!-- Data source name missing -->'; }
             if (!$templateName || !isset($templates[$templateName])) {
                 return '<!-- Template "' . htmlspecialchars($templateName) . '" not found -->';
@@ -418,6 +421,12 @@ class Html {
                     if (isset($attributes['sql'])) {
                         $exp = parseExpression($attributes['sql']);
                         $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
+                    }
+                    if (isset($attributes['pagination'])) {
+                        $resultsPerPage = 10;
+                        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+                        $offset = ($page - 1) * $resultsPerPage;
+                        $list = $modelName::all_limit_offset($attributes['pagination'], $offset);
                     }
                 } else {
                     // Inline single item

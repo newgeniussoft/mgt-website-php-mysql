@@ -146,6 +146,14 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/galleries/update', 'App\Http\Controllers\GalleryController@update');
     $router->post('/galleries/delete', 'App\Http\Controllers\GalleryController@destroy');
     
+    // Blog Management routes
+    $router->get('/blogs', 'App\\Http\\Controllers\\BlogController@index');
+    $router->get('/blogs/create', 'App\\Http\\Controllers\\BlogController@create');
+    $router->post('/blogs/store', 'App\\Http\\Controllers\\BlogController@store');
+    $router->get('/blogs/edit', 'App\\Http\\Controllers\\BlogController@edit');
+    $router->post('/blogs/update', 'App\\Http\\Controllers\\BlogController@update');
+    $router->post('/blogs/delete', 'App\\Http\\Controllers\\BlogController@destroy');
+
     // Template Item Management routes
     $router->get('/template-items', 'App\Http\Controllers\TemplateItemController@index');
     $router->get('/template-items/create', 'App\Http\Controllers\TemplateItemController@create');
