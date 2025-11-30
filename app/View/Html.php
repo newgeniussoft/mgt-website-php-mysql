@@ -136,7 +136,7 @@ class Html {
             $sectionHtml = str_replace('{{ content }}', $contentReplacement, $sectionHtml);
             $sectionHtml = str_replace('{{content}}', $contentReplacement, $sectionHtml);
 
-            $sectionHtml = str_replace('{{ pagination }}', pagination(10), $sectionHtml);
+            $sectionHtml = str_replace('{{ pagination }}', pagination(9), $sectionHtml);
             // Always expose the concatenated form via a separate variable
             $sectionHtml = str_replace('{{ content_all }}', $contentHtmlAll, $sectionHtml);
             $sectionHtml = str_replace('{{content_all}}', $contentHtmlAll, $sectionHtml);
@@ -417,16 +417,29 @@ class Html {
                         if (isset($attributes['condition'])) {
                             $list = $modelName::condition("language='".$lang."' AND ".$attributes['condition']);
                         }
+                    } elseif ($dataName === 'blog') {
+                        $list = $modelName::all();
+                        $currentLanguage = Lang::getLocale();
+                        foreach($list as $item) {
+                            if ($currentLanguage === "es") {
+                                $item->short_texte = $item->short_texte_es;
+                                $item->title = $item->title_es;
+                            }
+                        }
                     }
                     if (isset($attributes['sql'])) {
                         $exp = parseExpression($attributes['sql']);
                         $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
                     }
                     if (isset($attributes['pagination'])) {
-                        $resultsPerPage = 10;
+                        $resultsPerPage = $attributes['pagination'];
                         $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
                         $offset = ($page - 1) * $resultsPerPage;
-                        $list = $modelName::all_limit_offset($attributes['pagination'], $offset);
+                        $condition = '';
+                        if (isset($attributes['condition'])) {
+                            $condition = $attributes['condition'];
+                        }
+                        $list = $modelName::all_limit_offset($attributes['pagination'], $offset, $condition);
                     }
                 } else {
                     // Inline single item

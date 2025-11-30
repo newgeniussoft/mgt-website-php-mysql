@@ -29,9 +29,14 @@ abstract class Model {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
     
-    public static function all_limit_offset($limit, $offset) {
+    public static function all_limit_offset($limit, $offset, $condition = '') {
         $instance = new static();
-        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} ORDER BY id DESC LIMIT ".$limit." OFFSET ".$offset);
+        $sql = "SELECT * FROM {$instance->table} ";
+        if (!empty($condition)) {
+            $sql .= " WHERE ".$condition;
+        }
+        $sql .= " ORDER BY id DESC LIMIT ".$limit." OFFSET ".$offset;
+        $stmt = $instance->getConnection()->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
