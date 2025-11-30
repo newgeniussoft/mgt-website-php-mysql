@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Template;
 
 class BlogController extends Controller
 {
@@ -20,6 +21,7 @@ class BlogController extends Controller
     {
         return view('admin.blogs.create', [
             'title' => 'Create Blog',
+            'templates' => Template::all(),
         ]);
     }
 
@@ -62,6 +64,9 @@ class BlogController extends Controller
             $slug = $this->generateUniqueSlug($baseSlug);
         }
 
+        // Optional template selection
+        $templateSlug = trim($_POST['template_slug'] ?? '');
+
         try {
             $data = [
                 'title' => $title,
@@ -74,6 +79,9 @@ class BlogController extends Controller
             ];
             if ($slug !== null) {
                 $data['slug'] = $slug;
+            }
+            if ($templateSlug !== '') {
+                $data['template_slug'] = $templateSlug;
             }
             $item = Blog::create($data);
 
@@ -102,6 +110,7 @@ class BlogController extends Controller
         return view('admin.blogs.edit', [
             'title' => 'Edit Blog',
             'item' => $item,
+            'templates' => Template::all(),
         ]);
     }
 
@@ -137,6 +146,10 @@ class BlogController extends Controller
             $baseSlug = $slugInput !== '' ? $slugInput : ($item->slug ?: $item->title);
             $item->slug = $this->generateUniqueSlug($baseSlug, (int)$item->id);
         }
+
+        // Handle template selection (allow clearing to default)
+        $templateSlug = trim($_POST['template_slug'] ?? '');
+        $item->template_slug = ($templateSlug !== '') ? $templateSlug : null;
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $imagePath = $this->handleImageUpload($_FILES['image'], 'blogs');

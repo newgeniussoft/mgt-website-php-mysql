@@ -95,6 +95,25 @@
                 </div>
 
                 <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            <i class="fas fa-layer-group me-1"></i>Template
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="template_slug" class="form-label">Template</label>
+                            <select class="form-control" id="template_slug" name="template_slug">
+                                <option value="" {{ empty($item->template_slug) ? 'selected' : '' }}>Default</option>
+                                @foreach($templates as $tpl)
+                                    <option value="{{ $tpl->slug }}" {{ $item->template_slug === $tpl->slug ? 'selected' : '' }}>{{ $tpl->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn-lg">

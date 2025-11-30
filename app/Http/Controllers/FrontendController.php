@@ -86,6 +86,8 @@ class FrontendController extends Controller
     {
         // If $slug is already a Page object (from index method)
         $model = Model::fromSlug($slug); 
+        
+
         // Get menu pages for navigation
         $menuPages = Page::getMenuPages();
         if (!is_array($menuPages)) {
@@ -112,7 +114,8 @@ class FrontendController extends Controller
                     return Html::renderItemWithTemplate($resolved, $menuPages);
                 }
                 return $this->notFound();
-            }
+            } 
+
             $found = $model::where('slug', '=', $item);
             if (is_array($found) && count($found) > 0) {
                 $found = $found[0];

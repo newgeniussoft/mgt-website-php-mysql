@@ -15,6 +15,7 @@ class Blog extends Model
         'description_es',
         'image',
         'slug',
+        'template_slug',
     ];
 
     // Schema only has created_at, no updated_at
