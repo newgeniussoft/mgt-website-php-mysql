@@ -30,6 +30,11 @@
                             <input type="text" class="form-control" id="title" name="title" placeholder="English title" required>
                         </div>
                         <div class="mb-3">
+                            <label for="slug" class="form-label">Slug</label>
+                            <input type="text" class="form-control" id="slug" name="slug" placeholder="auto from title if left blank">
+                            <div class="form-text">Lowercase letters, numbers, and hyphens only. Must be unique.</div>
+                        </div>
+                        <div class="mb-3">
                             <label for="short_texte" class="form-label">Short Text (EN)</label>
                             <textarea class="form-control" id="short_texte" name="short_texte" rows="2" placeholder="Short summary (max 500 chars)"></textarea>
                         </div>

@@ -477,6 +477,18 @@ function parseExpression($str) {
     return null; // not matched
 }
 
+function toKebabCase(string $string): string {
+    // Replace underscores and spaces with a dash
+    $string = preg_replace('/[\s_]+/', '-', $string);
+
+    // Add a dash before any uppercase letter except at the start
+    $string = preg_replace('/([a-z])([A-Z])/', '$1-$2', $string);
+
+    // Convert to lowercase
+    return strtolower($string);
+}
+
+
 function pagination($nbDePages) {
             // Number of pages to display before and after the current page
             $page = 1;

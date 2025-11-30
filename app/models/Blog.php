@@ -14,6 +14,7 @@ class Blog extends Model
         'description',
         'description_es',
         'image',
+        'slug',
     ];
 
     // Schema only has created_at, no updated_at
@@ -28,5 +29,14 @@ class Blog extends Model
         $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} ORDER BY created_at DESC, id DESC");
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+    public static function getBySlug($slug)
+    {
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE slug = ? LIMIT 1");
+        $stmt->execute([$slug]);
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, static::class);
+        return $stmt->fetch();
     }
 }

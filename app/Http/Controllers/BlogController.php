@@ -54,8 +54,16 @@ class BlogController extends Controller
             return redirect(admin_url('blogs/create'));
         }
 
+        // Prepare slug if column exists
+        $slug = null;
+        if ($this->hasSlugColumn()) {
+            $slugInput = trim($_POST['slug'] ?? '');
+            $baseSlug = $slugInput !== '' ? $slugInput : $title;
+            $slug = $this->generateUniqueSlug($baseSlug);
+        }
+
         try {
-            $item = Blog::create([
+            $data = [
                 'title' => $title,
                 'title_es' => $titleEs,
                 'short_texte' => $shortTexte,
@@ -63,7 +71,11 @@ class BlogController extends Controller
                 'description' => $description,
                 'description_es' => $descriptionEs,
                 'image' => $imagePath,
-            ]);
+            ];
+            if ($slug !== null) {
+                $data['slug'] = $slug;
+            }
+            $item = Blog::create($data);
 
             $_SESSION['success'] = 'Blog created successfully';
             return redirect(admin_url('blogs/edit?id=' . $item->id));
@@ -118,6 +130,13 @@ class BlogController extends Controller
         $item->short_texte_es = trim($_POST['short_texte_es'] ?? '');
         $item->description = $_POST['description'] ?? '';
         $item->description_es = $_POST['description_es'] ?? '';
+
+        // Handle slug if column exists
+        if ($this->hasSlugColumn()) {
+            $slugInput = trim($_POST['slug'] ?? '');
+            $baseSlug = $slugInput !== '' ? $slugInput : ($item->slug ?: $item->title);
+            $item->slug = $this->generateUniqueSlug($baseSlug, (int)$item->id);
+        }
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $imagePath = $this->handleImageUpload($_FILES['image'], 'blogs');
@@ -225,5 +244,50 @@ class BlogController extends Controller
         } catch (\Exception $e) {
             // On error, do not delete to be safe
         }
+    }
+
+    private function hasSlugColumn()
+    {
+        try {
+            $model = new Blog();
+            $conn = $model->getConnection();
+            $stmt = $conn->query("SHOW COLUMNS FROM blogs LIKE 'slug'");
+            return $stmt && $stmt->fetch() ? true : false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function slugExists($slug, $excludeId = null)
+    {
+        try {
+            $model = new Blog();
+            $conn = $model->getConnection();
+            if ($excludeId) {
+                $stmt = $conn->prepare("SELECT 1 FROM blogs WHERE slug = ? AND id <> ? LIMIT 1");
+                $stmt->execute([$slug, $excludeId]);
+            } else {
+                $stmt = $conn->prepare("SELECT 1 FROM blogs WHERE slug = ? LIMIT 1");
+                $stmt->execute([$slug]);
+            }
+            return (bool)$stmt->fetchColumn();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function generateUniqueSlug($text, $excludeId = null)
+    {
+        $base = function_exists('str_slug') ? str_slug($text) : strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $text), '-'));
+        if ($base === '') {
+            $base = 'item';
+        }
+        $candidate = $base;
+        $i = 2;
+        while ($this->slugExists($candidate, $excludeId)) {
+            $candidate = $base . '-' . $i;
+            $i++;
+        }
+        return $candidate;
     }
 }

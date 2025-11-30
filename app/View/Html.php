@@ -421,9 +421,11 @@ class Html {
                         $list = $modelName::all();
                         $currentLanguage = Lang::getLocale();
                         foreach($list as $item) {
+                            $item->slug = toKebabCase($item->title);
                             if ($currentLanguage === "es") {
                                 $item->short_texte = $item->short_texte_es;
                                 $item->title = $item->title_es;
+                                $item->slug = toKebabCase($item->slug_es);
                             }
                         }
                     }

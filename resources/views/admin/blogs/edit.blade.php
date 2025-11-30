@@ -31,6 +31,11 @@
                             <input type="text" class="form-control" id="title" name="title" value="{{ $item->title }}" required>
                         </div>
                         <div class="mb-3">
+                            <label for="slug" class="form-label">Slug</label>
+                            <input type="text" class="form-control" id="slug" name="slug" value="{{ $item->slug }}" placeholder="auto from title if left blank">
+                            <div class="form-text">Lowercase letters, numbers, and hyphens only. Must be unique.</div>
+                        </div>
+                        <div class="mb-3">
                             <label for="short_texte" class="form-label">Short Text (EN)</label>
                             <textarea class="form-control" id="short_texte" name="short_texte" rows="2">{{ $item->short_texte }}</textarea>
                         </div>
