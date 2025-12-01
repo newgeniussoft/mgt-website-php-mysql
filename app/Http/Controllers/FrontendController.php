@@ -42,6 +42,10 @@ class FrontendController extends Controller
         } else {
             // Get page by slug
             $page = Page::getBySlug($slug);
+
+            if ($page->is_menu_only) {
+                return $this->notFound();
+            }
             
             if (!$page || $page->status !== 'published') {
                 return $this->notFound();
@@ -86,6 +90,8 @@ class FrontendController extends Controller
     {
         // If $slug is already a Page object (from index method)
         $model = Model::fromSlug($slug); 
+        
+
         // Get menu pages for navigation
         $menuPages = Page::getMenuPages();
         if (!is_array($menuPages)) {
@@ -112,11 +118,22 @@ class FrontendController extends Controller
                     return Html::renderItemWithTemplate($resolved, $menuPages);
                 }
                 return $this->notFound();
-            }
+            } 
+
             $found = $model::where('slug', '=', $item);
             if (is_array($found) && count($found) > 0) {
                 $found = $found[0];
             }
+
+            if ($slug === "blog") {
+                $lang = Lang::getLocale();
+                if ($lang === "es") {
+                    $found->title = $found->title_es;
+                    $found->short_text = $found->short_text_es;
+                    $found->description = $found->description_es;
+                }
+            }
+
             return Html::renderItemWithTemplate($found, $menuPages);
 
         } else {

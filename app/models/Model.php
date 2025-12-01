@@ -29,6 +29,18 @@ abstract class Model {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
     
+    public static function all_limit_offset($limit, $offset, $condition = '') {
+        $instance = new static();
+        $sql = "SELECT * FROM {$instance->table} ";
+        if (!empty($condition)) {
+            $sql .= " WHERE ".$condition;
+        }
+        $sql .= " ORDER BY id DESC LIMIT ".$limit." OFFSET ".$offset;
+        $stmt = $instance->getConnection()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+    
     public static function find($id) {
         $instance = new static();
         $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `{$instance->primaryKey}` = ?");
@@ -46,6 +58,13 @@ abstract class Model {
         $instance = new static();
         $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `$column` $operator ?");
         $stmt->execute([$value]);
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+    public static function condition($condition) {
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE ".$condition);
+        $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
     

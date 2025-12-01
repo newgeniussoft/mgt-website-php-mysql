@@ -106,6 +106,10 @@ class Section extends Model {
      * Reorder sections
      */
     public static function reorder($pageId, $sectionIds) {
+    if (is_string($sectionIds)) {
+        $sectionIds = json_decode($sectionIds, true);
+    }
+
         $instance = new static();
         $conn = $instance->getConnection();
         

@@ -118,6 +118,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ page_admin() == 'blogs' ? 'active' : '' }}" href="{{ admin_url('blogs') }}">
+                                <i class="fas fa-blog"></i>
+                                Blogs
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ page_admin() == 'templates' ? 'active' : '' }}" href="{{ admin_url('templates') }}">
                                 <i class="fas fa-file-code"></i>
                                 Templates
@@ -136,9 +142,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ strpos(page_admin(), 'reviews') === 0 ? 'active' : '' }}" href="{{ admin_url('reviews') }}">
+                                <i class="fas fa-comments"></i>
+                                Reviews
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ page_admin() == 'media' ? 'active' : '' }}" href="{{ admin_url('media') }}">
                                 <i class="fas fa-images"></i>
                                 Media Library
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ page_admin() == 'slides' ? 'active' : '' }}" href="{{ admin_url('slides') }}">
+                                <i class="fas fa-images"></i>
+                                Slide
                             </a>
                         </li>
                         <li class="nav-item">

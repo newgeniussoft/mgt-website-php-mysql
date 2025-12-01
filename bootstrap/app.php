@@ -29,6 +29,7 @@ try {
         env('DB_USERNAME'),
         env('DB_PASSWORD')
     );
+    $pdo->exec("SET NAMES utf8");
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     \App\Models\Model::setConnection($pdo);
 } catch (\PDOException $e) {

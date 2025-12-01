@@ -38,10 +38,15 @@ class Html {
             $label = Lang::has($menuKey) ? Lang::get($menuKey) : $menuPage->title;
 
             if (!in_array($menuPage->id, $idHasChild) && !in_array($menuPage->id, $idHasParent) && !in_array($menuPage->id, $idHasItems)) {
-                $html .= '<li class="nav-item '.$active.'"><a href="' . url($url) . '" class="nav-link ">' . htmlspecialchars($label) . '</a></li>';
+                $icon_home = $menuPage->is_homepage ? '<i class="fa fa-home"></i> ' : '';
+                $html .= '<li class="nav-item '.$active.'"><a href="' . url($url) . '" class="nav-link ">'. $icon_home . htmlspecialchars($label) . '</a></li>';
             } else {
                 if (in_array($menuPage->id, $idHasChild)) {
-                    $html .= '<li class="nav-item '.$active.' dropdown"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($label) . '</a>';
+                    $url = url($url);
+                    if ($menuPage->is_menu_only) {
+                        $url = "#";
+                    }
+                    $html .= '<li class="nav-item '.$active.' dropdown"><a href="' . $url . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($label) . '</a>';
                     $html .= '<div class="dropdown-menu" aria-labelledby="dropdown-' . $menuPage->id . '">';
                     foreach($menuPages as $child) {
                         if ($child->parent_id  === $menuPage->id) {
@@ -97,19 +102,60 @@ class Html {
         foreach ($sections as $section) {
             $sectionHtml = $section->html_template ?? '';
             
-            $contentHtml = '';
+            $contentHtmlAll = '';
             $currentLanguage = Lang::getLocale();
             $contents = \App\Models\Content::getBySection($section->id, true, $currentLanguage);
             
+            $contentByIndex = [];
+            $namedMap = [];
             foreach ($contents as $content) {
                 if ($content->content_type === 'html') {
-                    $contentHtml .= $content->content;
+                    $entry = $content->content;
                 } else {
-                    $contentHtml .= '<div>' . nl2br(htmlspecialchars($content->content)) . '</div>';
+                    $entry = '<div>' . nl2br(htmlspecialchars($content->content)) . '</div>';
+                }
+                $contentHtmlAll .= $entry;
+                $contentByIndex[] = $entry;
+                if (!empty($content->title)) {
+                    if (!isset($namedMap[$content->title])) {
+                        $namedMap[$content->title] = $entry;
+                    }
+                    $slug = self::slugifyContentKey($content->title);
+                    if (!empty($slug) && !isset($namedMap[$slug])) {
+                        $namedMap[$slug] = $entry;
+                    }
                 }
             }
             
-            $sectionHtml = str_replace('{{ content }}', $contentHtml, $sectionHtml);
+            // Determine how to populate legacy {{ content }}
+            $usesNumbered = preg_match('/\{\{\s*content\d+\s*\}\}/', $sectionHtml) === 1;
+            $usesNamed = false;
+            foreach ($namedMap as $k => $_) {
+                if (strpos($sectionHtml, '{{ ' . $k . ' }}') !== false || strpos($sectionHtml, '{{' . $k . '}}') !== false) {
+                    $usesNamed = true; break;
+                }
+            }
+            $firstEntry = $contentByIndex[0] ?? '';
+            $contentReplacement = $firstEntry;
+            $sectionHtml = str_replace('{{ content }}', $contentReplacement, $sectionHtml);
+            $sectionHtml = str_replace('{{content}}', $contentReplacement, $sectionHtml);
+
+            $sectionHtml = str_replace('{{ pagination }}', pagination(9), $sectionHtml);
+            // Always expose the concatenated form via a separate variable
+            $sectionHtml = str_replace('{{ content_all }}', $contentHtmlAll, $sectionHtml);
+            $sectionHtml = str_replace('{{content_all}}', $contentHtmlAll, $sectionHtml);
+            
+            $i = 1;
+            foreach ($contentByIndex as $entry) {
+                $key = 'content' . $i;
+                $sectionHtml = str_replace('{{ ' . $key . ' }}', $entry, $sectionHtml);
+                $sectionHtml = str_replace('{{' . $key . '}}', $entry, $sectionHtml);
+                $i++;
+            }
+            foreach ($namedMap as $k => $v) {
+                $sectionHtml = str_replace('{{ ' . $k . ' }}', $v, $sectionHtml);
+                $sectionHtml = str_replace('{{' . $k . '}}', $v, $sectionHtml);
+            }
             $sectionHtml = self::renderItemsWithData($sectionHtml);
            
             $html .= $sectionHtml;
@@ -197,122 +243,252 @@ class Html {
      * @param array $item Data array for the item
      * @return string Rendered HTML
      */
-    public static function renderItemTemplate($template, $item) {
+    public static function renderItemTemplate($index, $template, $item) {
         $rendered = $template;
-    
+        // helper to replace all spacing variations using regex
+        $replace = function($html, $key, $replacement) {
+            $pattern = '/\{\{\s*\$item\.' . preg_quote($key, '/') . '\s*\}\}/';
+            return preg_replace_callback($pattern, function() use ($replacement) { return (string)$replacement; }, $html);
+        };
+        $lang = "";
+        if (Lang::getLocale() == "es") {
+            $lang = "/es";
+        }
+        $rendered = str_replace('{{ $lang }}', $lang, $rendered);
         if (!is_string($item)) {
+            // active handling
+            $rendered = $replace($rendered, 'active', $index == 0 ? 'active' : '');
             foreach ($item as $key => $value) {
-                $rendered = str_replace('{{ $item.' . $key . ' }}', htmlspecialchars($value), $rendered);
-                $rendered = str_replace('{{$item.' . $key . '}}', htmlspecialchars($value), $rendered);
+                if ($key === 'attributs_tag' || $key === 'list') {
+                    $rendered = $replace($rendered, $key, (string)$value);
+                    continue;
+                }
+                $converted = self::convertMarkdownLinks((string)$value);
+                $repVal = ($converted !== null) ? $converted : htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+                $rendered = $replace($rendered, $key, $repVal);
+            }
+            // fallback for {{ $item.value }} when 'value' missing
+            if (!array_key_exists('value', (array)$item)) {
+                $fallback = '';
+                foreach (['title','name','text','label'] as $cand) {
+                    if (!empty($item[$cand])) { $fallback = (string)$item[$cand]; break; }
+                }
+                $converted = self::convertMarkdownLinks($fallback);
+                $repVal = ($converted !== null) ? $converted : htmlspecialchars($fallback, ENT_QUOTES, 'UTF-8');
+                $rendered = $replace($rendered, 'value', $repVal);
             }
         } else {
-                $rendered = str_replace('{{ $item.value }}', htmlspecialchars($item), $rendered);
+            $converted = self::convertMarkdownLinks((string)$item);
+            $repVal = ($converted !== null) ? $converted : htmlspecialchars((string)$item, ENT_QUOTES, 'UTF-8');
+            $rendered = $replace($rendered, 'value', $repVal);
         }
-    
         return $rendered;
     }
 
+    /**
+     * Convert link-only Markdown [text](url) to safe HTML anchors. Non-link text is escaped.
+     * Supports http/https URLs only. Returns null if no markdown link is found.
+     */
+    protected static function convertMarkdownLinks($text) {
+        $pattern = '/\[(?<text>[^\]]+)\]\((?<url>https?:\/\/[^\)\s]+)\)/i';
+        if (!preg_match($pattern, $text)) {
+            return null;
+        }
+        $result = '';
+        $offset = 0;
+        while (preg_match($pattern, $text, $m, PREG_OFFSET_CAPTURE, $offset)) {
+            $start = $m[0][1];
+            // escape text before the match
+            $before = substr($text, $offset, $start - $offset);
+            $result .= htmlspecialchars($before, ENT_QUOTES, 'UTF-8');
+            $rawText = $m['text'][0];
+            $rawUrl = $m['url'][0];
+            $escText = htmlspecialchars($rawText, ENT_QUOTES, 'UTF-8');
+            $escUrl = htmlspecialchars($rawUrl, ENT_QUOTES, 'UTF-8');
+            $result .= '<a href="' . $escUrl . '">' . $escText . '</a>';
+            $offset = $start + strlen($m[0][0]);
+        }
+        // escape remainder
+        if ($offset < strlen($text)) {
+            $result .= htmlspecialchars(substr($text, $offset), ENT_QUOTES, 'UTF-8');
+        }
+        return $result;
+    }
+
+    protected static function slugifyContentKey($str) {
+        $s = (string)$str;
+        if (function_exists('iconv')) {
+            $converted = @iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $s);
+            if ($converted !== false) { $s = $converted; }
+        }
+        $s = strtolower($s);
+        $s = preg_replace('/[^a-z0-9]+/i', '_', $s);
+        $s = trim($s, '_');
+        return $s;
+    }
 
     /**
-     * Advanced render function with data source and templates
-     * 
-     * @param string $html HTML content with <items> tags
-     * @param array $dataSources Associative array of data sources (e.g., ['media' => $mediaArray])
-     * @param array $templates Associative array of templates (e.g., ['media-grid' => $templateString])
-     * @return string Rendered HTML
+     * Render <items .../> tags within the provided HTML.
+     * - Supports model-backed and JSON-backed lists
+     * - Supports inline single item from tag attributes
+     * - Respects lang filtering (accepts 'sp' as alias of 'es' and comma-separated values)
      */
     public static function renderItemsWithData($html) {
         $pattern = '/<items\s+[^>]+\/>/i';
-        $dataSources = [];
-
-        foreach(self::findItemsTags($html) as $item){
-            
-                $name = $item['attributes']['name'];
-            if (isset($item['attributes']['data'])) {
-            $data = str_replace("'", "\"", $item['attributes']['data']);
-            $array = json_decode($data, true);
-            $list = $array;
-
-            } else {
-                $modelName = '\\App\\Models\\' . toPascal($name);
-                $list = $modelName::all();
-            
-                $lang = Lang::getLocale();
-                if ($name == 'tour') {
-                    $list = $modelName::where('language', $lang);
-                }  /*elseif  ($name == 'tour_detail') {
-                    $exp = parseExpression($item['attributes']['sql']);
-                    $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
-                }*/
-                if (isset($item['attributes']['sql'])) {
-                    $exp = parseExpression($item['attributes']['sql']);
-                    $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
-                }
-
-            }
-
-            $listArray = [];
-            if ($list != null) {
-            foreach($list as $item){
-                $items = [];
-                if (!is_string($item)) {
-                    foreach($item->toArray() as $key => $value){
-                        $items[$key] = $value;
-                    }
-                    $listArray[] = $items;
-                } else {
-                    $listArray[] = $item;
-                }
-            }
-
-            }
-            $dataSources[$name] = $listArray;
-        }
-
+        // Preload templates once
         $templateItem = \App\Models\TemplateItem::all();
         $templates = [];
-        foreach ($templateItem as $item) {
-            $templates[$item->slug] = $item->html_template;
+        foreach ($templateItem as $ti) {
+            $templates[$ti->slug] = $ti->html_template;
         }
-    
-        return preg_replace_callback($pattern, function($matches) use ($dataSources, $templates) {
+
+        return preg_replace_callback($pattern, function($matches) use ($templates) {
             $tag = $matches[0];
             $attributes = [];
-        
-            $attrPattern = '/(\w+)="([^"]*)"/';
-            if (preg_match_all($attrPattern, $tag, $attrMatches, PREG_SET_ORDER)) {
-                foreach ($attrMatches as $match) {
-                    $attributes[$match[1]] = $match[2];
-                }
+            if (preg_match_all('/(\w+)\s*=\s*"([^"]*)"/', $tag, $attrMatches, PREG_SET_ORDER)) {
+                foreach ($attrMatches as $m) { $attributes[$m[1]] = $m[2]; }
             }
-        
+
+            // Language filter
+            if (isset($attributes['lang'])) {
+                $curr = strtolower(Lang::getLocale());
+                // reduce to primary language code (e.g., en-US -> en)
+                $curr = explode('-', str_replace('_', '-', $curr))[0];
+                $wanted = preg_split('/[\s,]+/', strtolower($attributes['lang']), -1, PREG_SPLIT_NO_EMPTY);
+
+                $wanted = array_map(function($c){
+                    $c = str_replace('_', '-', trim(strtolower($c)));
+                    $c = ($c === 'sp') ? 'es' : $c; // support sp as Spanish
+                    return explode('-', $c)[0];
+                }, $wanted);
+                if (!in_array($curr, $wanted, true)) { return ''; }
+            }
+
             $dataName = $attributes['name'] ?? null;
             $templateName = $attributes['template'] ?? null;
             $limit = isset($attributes['limit']) ? (int)$attributes['limit'] : null;
-        
-            if (!$dataName || !isset($dataSources[$dataName])) {
-                return '<!-- Data source "' . htmlspecialchars($dataName) . '" not found -->';
-            }
-        
+
+            if (!$dataName) { return '<!-- Data source name missing -->'; }
             if (!$templateName || !isset($templates[$templateName])) {
                 return '<!-- Template "' . htmlspecialchars($templateName) . '" not found -->';
             }
-        
-            $data = $dataSources[$dataName];
+
+            // Build data for this tag
+            $list = null;
+            if (isset($attributes['data'])) {
+                $json = str_replace("'", '"', $attributes['data']);
+                $list = json_decode($json, true);
+                if ($list === null) { $list = []; }
+                if (is_array($list) && array_keys($list) !== range(0, count($list) - 1)) { $list = [$list]; }
+            } elseif (isset($attributes['list'])) {
+                // Expand inline list into multiple items; split on commas only so values can contain spaces
+                $parts = preg_split('/_\s*/', $attributes['list'], -1, PREG_SPLIT_NO_EMPTY);
+
+                $constants = [];
+                $reserved = ['name','template','limit','sql','data','lang','list','tag'];
+                foreach ($attributes as $k => $v) {
+                    if (!in_array($k, $reserved, true)) { $constants[$k] = $v; }
+                }
+                $pairs = [];
+                foreach ($constants as $k => $v) { $pairs[] = $k . '="' . $v . '"'; }
+                $baseAttrTag = implode(' ', $pairs);
+                $tagName = isset($attributes['tag']) && trim($attributes['tag']) !== '' ? trim($attributes['tag']) : null;
+                if ($tagName) {
+                    $itemsHtml = '';
+                    foreach ($parts as $val) {
+                        $text = trim($val);
+                        $converted = self::convertMarkdownLinks($text);
+                        $content = ($converted !== null) ? $converted : htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+                        $itemsHtml .= '<' . $tagName . '>' . $content . '</' . $tagName . '>';
+                    }
+                    $single = $constants;
+                    $single['attributs_tag'] = $baseAttrTag;
+                    $single['list'] = $itemsHtml;
+                    $single['value'] = '';
+                    $list = [$single];
+                } else {
+                    // Expand inline list into multiple items when no tag specified
+                    $list = [];
+                    foreach ($parts as $val) {
+                        $item = $constants;
+                        $item['value'] = trim($val);
+                        $item['attributs_tag'] = $baseAttrTag;
+                        $list[] = $item;
+                    }
+                }
+            } else {
+                $modelName = '\\App\\Models\\' . toPascal($dataName);
+                if (class_exists($modelName)) {
+                    $list = $modelName::all();
+                    $lang = Lang::getLocale();
+                    if ($dataName === 'tour') {
+                        $list = $modelName::where('language', $lang);
+                        if (isset($attributes['condition'])) {
+                            $list = $modelName::condition("language='".$lang."' AND ".$attributes['condition']);
+                        }
+                    } elseif ($dataName === 'blog') {
+                        $list = $modelName::all();
+                        $currentLanguage = Lang::getLocale();
+                        foreach($list as $item) {
+                            $item->slug = toKebabCase($item->title);
+                            if ($currentLanguage === "es") {
+                                $item->short_texte = $item->short_texte_es;
+                                $item->title = $item->title_es;
+                            }
+                        }
+                    }
+                    if (isset($attributes['sql'])) {
+                        $exp = parseExpression($attributes['sql']);
+                        $list = $modelName::where($exp['key'], $exp['operator'], $exp['value']);
+                    }
+                    if (isset($attributes['pagination'])) {
+                        $resultsPerPage = $attributes['pagination'];
+                        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+                        $offset = ($page - 1) * $resultsPerPage;
+                        $condition = '';
+                        if (isset($attributes['condition'])) {
+                            $condition = $attributes['condition'];
+                        }
+                        $list = $modelName::all_limit_offset($attributes['pagination'], $offset, $condition);
+                    }
+                } else {
+                    // Inline single item
+                    $reserved = ['name','template','limit','sql','data','lang','list','tag'];
+                    $single = [];
+                    foreach ($attributes as $k => $v) {
+                        if (!in_array($k, $reserved, true)) { $single[$k] = $v; }
+                    }
+                    $pairs = [];
+                    foreach ($single as $k => $v) { $pairs[] = $k . '="' . $v . '"'; }
+                    $single['attributs_tag'] = implode(' ', $pairs);
+                    $list = [$single];
+                }
+            }
+
+            // Normalize entries
+            $data = [];
+            if ($list != null) {
+                foreach ($list as $entry) {
+                    if (is_string($entry)) { $data[] = $entry; }
+                    elseif (is_array($entry)) { $data[] = $entry; }
+                    elseif (is_object($entry)) {
+                        $data[] = method_exists($entry, 'toArray') ? $entry->toArray() : (array)$entry;
+                    }
+                }
+            }
+
+            if ($limit !== null && $limit > 0) { $data = array_slice($data, 0, $limit); }
             $template = $templates[$templateName];
-        
-            if ($limit !== null && $limit > 0) {
-                $data = array_slice($data, 0, $limit);
-            }
-        
-            $output = '';
-            foreach ($data as $item) {
-                $output .= self::renderItemTemplate($template, $item);
-            }
-            return $output;
+            $out = '';
+            $i = 0;
+            foreach ($data as $item) { $out .= self::renderItemTemplate($i, $template, $item); $i++; }
+            return $out;
         }, $html);
     }
-    
+
+    /**
+     * Parse inline translation definitions like { lang="en" key="..." value="..." }
+     */
     protected static function processInlineTranslationDefinitions($html) {
         $pattern = '/\{\s*([^}]*(?:\blang\s*=\s*"[^"]*"[^}]*)+)\s*\}/';
         return preg_replace_callback($pattern, function($m) {
@@ -423,6 +599,9 @@ class Html {
             $html = str_replace('{{' . $key . '}}', $value, $html);
         }
         
+        // Render any <items .../> tags in the template HTML itself
+        $html = self::renderItemsWithData($html);
+        // Then apply translations
         $html = self::processTranslations($html);
 
         if ($template->css_content) {
@@ -465,6 +644,10 @@ class Html {
         $uri = $_SERVER['REQUEST_URI'];
 
         $currentUrl = $protocol . "://" . $host . $uri;
+
+        $uri_array = explode("/", $uri);
+
+        $kml_folder = $uri_array[count($uri_array)-1];
         
         $variables = [
             'meta_title' => $item->meta_title,
@@ -476,7 +659,7 @@ class Html {
             'current_path' => $currentUrl,
             'current_path_es' => currentUrlToEs(),
             'menu_items' => $menuHtml,
-            'kml' => getKmlFiles('adventure_tour'),
+            'kml' => getKmlFiles($kml_folder),
             'custom_css' => '',
             'custom_js' => ''
         ];

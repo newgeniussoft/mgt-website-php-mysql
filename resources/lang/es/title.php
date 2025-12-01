@@ -8,4 +8,11 @@ return [
     'price_incl' => 'El precio incluye',
     'price_excl' => 'El precio excluye',
     'day' => 'Día',
+    'quick_link' => 'Enlaces rápidos',
+    'more' => 'Más',
+    'get_in_touch' => 'Ponte en contacto',
+    'contact' => 'Contáctenos',
+    'address' => 'Dirección',
+    'phone' => 'Teléfono',
+    'email' => 'Correo electrónico',
 ];

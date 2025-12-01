@@ -183,7 +183,7 @@
                                 <tr>
                                     <td style="width: 80px;">
                                         @if($tour['image'])
-                                            <img src="/storage/uploads/{{ $tour['image'] }}" 
+                                            <img src="/uploads/{{ $tour['image'] }}" 
                                                  class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;">
                                         @else
                                             <div class="bg-light d-flex align-items-center justify-content-center" 

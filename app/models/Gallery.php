@@ -10,6 +10,7 @@ class Gallery extends Model
         'title',
         'description',
         'image',
+        'thumbnail',
         'sort_order',
         'status',
     ];

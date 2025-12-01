@@ -146,6 +146,14 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/galleries/update', 'App\Http\Controllers\GalleryController@update');
     $router->post('/galleries/delete', 'App\Http\Controllers\GalleryController@destroy');
     
+    // Blog Management routes
+    $router->get('/blogs', 'App\\Http\\Controllers\\BlogController@index');
+    $router->get('/blogs/create', 'App\\Http\\Controllers\\BlogController@create');
+    $router->post('/blogs/store', 'App\\Http\\Controllers\\BlogController@store');
+    $router->get('/blogs/edit', 'App\\Http\\Controllers\\BlogController@edit');
+    $router->post('/blogs/update', 'App\\Http\\Controllers\\BlogController@update');
+    $router->post('/blogs/delete', 'App\\Http\\Controllers\\BlogController@destroy');
+
     // Template Item Management routes
     $router->get('/template-items', 'App\Http\Controllers\TemplateItemController@index');
     $router->get('/template-items/create', 'App\Http\Controllers\TemplateItemController@create');
@@ -201,9 +209,17 @@ $router->group(['prefix' => $_ENV['APP_ADMIN_PREFIX'], 'middleware' => 'auth'], 
     $router->post('/tours/update-photo', 'App\Http\Controllers\TourController@updatePhoto');
     $router->post('/tours/delete-photo', 'App\Http\Controllers\TourController@deletePhoto');
     $router->post('/tours/set-featured-photo', 'App\Http\Controllers\TourController@setFeaturedPhoto');
+    
+    // Review Management routes
+    $router->get('/reviews', 'App\Http\Controllers\ReviewController@index');
+    $router->get('/reviews/create', 'App\Http\Controllers\ReviewController@create');
+    $router->post('/reviews/store', 'App\Http\Controllers\ReviewController@store');
+    $router->get('/reviews/edit', 'App\Http\Controllers\ReviewController@edit');
+    $router->post('/reviews/update', 'App\Http\Controllers\ReviewController@update');
+    $router->post('/reviews/approve', 'App\Http\Controllers\ReviewController@approve');
+    $router->post('/reviews/delete', 'App\Http\Controllers\ReviewController@destroy');
 });
 
 // Catch-all route for dynamic pages (must be last)
 $router->get('/{slug}', 'App\Http\Controllers\FrontendController@showPage');
 $router->get('/{slug}/{item}', 'App\Http\Controllers\FrontendController@showPageItem');
-

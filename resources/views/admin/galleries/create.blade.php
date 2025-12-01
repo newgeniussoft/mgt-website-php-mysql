@@ -66,16 +66,32 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">
-                            <i class="fas fa-image me-1"></i>Image
+                            <i class="fas fa-images me-1"></i>Images
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="image" class="form-label">Image <span class="text-danger">*</span></label>
-                            <input type="file" class="form-control" id="image" name="image" accept="image/*" required onchange="previewGalleryImage(this)">
-                            <div class="form-text">File will be stored with its original name (sanitized) in <code>/uploads/galleries</code>.</div>
+                            <label for="images" class="form-label">Select Images <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" id="images" name="images[]" accept="image/*" multiple required onchange="previewGalleryImages(this)">
+                            <div class="form-text">Files will be stored with their original base names. You can select multiple images.</div>
                         </div>
-                        <div id="imagePreview" class="mt-2"></div>
+                        <div id="imagesPreview" class="mt-2 d-flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            <i class="fas fa-image me-1"></i>Thumbnail (optional)
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="thumbnail" class="form-label">Thumbnail</label>
+                            <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*" onchange="previewThumbnail(this)">
+                            <div class="form-text">Stored in <code>/uploads/galleries/thumbs</code>. Filename base is preserved.</div>
+                        </div>
+                        <div id="thumbPreview" class="mt-2"></div>
                     </div>
                 </div>
 
@@ -97,10 +113,29 @@
 </div>
 
 <script>
-function previewGalleryImage(input) {
-    const preview = document.getElementById('imagePreview');
+function previewGalleryImages(input) {
+    const preview = document.getElementById('imagesPreview');
     preview.innerHTML = '';
+    if (input.files && input.files.length) {
+        Array.from(input.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'img-thumbnail mt-2';
+                img.style.maxWidth = '120px';
+                img.style.maxHeight = '80px';
+                img.style.objectFit = 'cover';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+}
 
+function previewThumbnail(input) {
+    const preview = document.getElementById('thumbPreview');
+    preview.innerHTML = '';
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
