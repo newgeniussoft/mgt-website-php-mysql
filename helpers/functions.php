@@ -445,11 +445,12 @@ function settings($group = null) {
 function getKmlFiles($folder) {
     $index = 0;
     $results = '[';
-    $folder = __DIR__."/../public/uploads/kml/".$folder;
-    if (is_dir($folder)) {
-        $dir = scandir($folder);
+    $nFolder = __DIR__."/../public/uploads/kml/".$folder;
+    if (is_dir($nFolder)) {
+        $dir = scandir($nFolder);
         $dir = array_slice($dir, 2);
-        $results .= implode(', ', array_map(fn($name) => '"/uploads/kml/'.$folder."/".$name.'"', $dir));
+       $results .= implode(', ', array_map(fn($name) => '"/uploads/kml/'.$folder."/".$name.'"', $dir));
+
     }
     $results .= "]";
     return $results;

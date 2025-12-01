@@ -537,6 +537,25 @@ body.scrolled {
     }
 }
 
+@media (max-width: 700px) {
+  .title-slogan {
+    font-size: 18pt !important;
+  }
+}
+
+@media (max-width: 523px) {
+  .float-image {
+    float: none;
+    width: 100% !important;
+    margin-bottom: 15px;
+  }
+  #list-tours {
+    margin-top: 25px;
+  }
+}
+
+
+
 .navbar {
     transition: all 0.5s ease;
     padding: 5px 5px; /* Even larger padding for big navbar */
