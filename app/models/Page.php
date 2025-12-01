@@ -7,7 +7,7 @@ class Page extends Model {
     protected $table = 'pages';
     protected $fillable = [
         'template_id', 'title', 'slug', 'meta_title', 'meta_description', 
-        'meta_keywords', 'featured_image', 'status', 'is_homepage', 
+        'meta_keywords', 'featured_image', 'status', 'is_homepage', 'is_menu_only',
         'show_in_menu', 'has_items', 'menu_order', 'parent_id', 'author_id', 'published_at'
     ];
 

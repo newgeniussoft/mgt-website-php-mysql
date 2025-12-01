@@ -1287,6 +1287,14 @@ vertical-align: middle;
     padding-top: 0 !important;
     color: #fff;
 }
+.footer a {
+  color: #979797 !important;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.footer a:hover {
+  color: #0db17a !important;
+  text-decoration: none !important;
+}
 .footer p  {
   color: #979797;
   font-size: 12pt;

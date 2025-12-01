@@ -42,6 +42,10 @@ class FrontendController extends Controller
         } else {
             // Get page by slug
             $page = Page::getBySlug($slug);
+
+            if ($page->is_menu_only) {
+                return $this->notFound();
+            }
             
             if (!$page || $page->status !== 'published') {
                 return $this->notFound();

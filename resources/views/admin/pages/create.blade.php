@@ -112,6 +112,11 @@
                         </div>
 
                         <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="is_menu_only" name="is_menu_only">
+                            <label class="custom-control-label" for="is_menu_only">Show in Menu</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="has_items" name="has_items">
                             <label class="custom-control-label" for="has_items">Has items</label>
                         </div>

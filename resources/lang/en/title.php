@@ -11,4 +11,8 @@ return [
     'quick_link' => 'Quick links',
     'more' => 'More',
     'get_in_touch' => 'Get in touch',
+    'contact' => 'Contact',
+    'address' => 'Address',
+    'phone' => 'Phone',
+    'email' => 'Email',
 ];

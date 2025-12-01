@@ -199,6 +199,11 @@
                         </div>
 
                         <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="is_menu_only" name="is_menu_only" {{ $page->is_menu_only ? 'checked' : '' }}>
+                            <label class="custom-control-label" for="is_menu_only">Is menu only</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="has_items" name="has_items" {{ $page->has_items ? 'checked' : '' }}>
                             <label class="custom-control-label" for="has_items">Has items</label>
                         </div>

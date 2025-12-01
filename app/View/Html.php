@@ -42,7 +42,11 @@ class Html {
                 $html .= '<li class="nav-item '.$active.'"><a href="' . url($url) . '" class="nav-link ">'. $icon_home . htmlspecialchars($label) . '</a></li>';
             } else {
                 if (in_array($menuPage->id, $idHasChild)) {
-                    $html .= '<li class="nav-item '.$active.' dropdown"><a href="' . url($url) . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($label) . '</a>';
+                    $url = url($url);
+                    if ($menuPage->is_menu_only) {
+                        $url = "#";
+                    }
+                    $html .= '<li class="nav-item '.$active.' dropdown"><a href="' . $url . '" class="nav-link dropdown-toggle" id="dropdown-' . $menuPage->id . '" role="button" aria-haspopup="true" aria-expanded="true">' . htmlspecialchars($label) . '</a>';
                     $html .= '<div class="dropdown-menu" aria-labelledby="dropdown-' . $menuPage->id . '">';
                     foreach($menuPages as $child) {
                         if ($child->parent_id  === $menuPage->id) {
