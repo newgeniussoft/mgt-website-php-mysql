@@ -246,6 +246,11 @@ class Html {
             $pattern = '/\{\{\s*\$item\.' . preg_quote($key, '/') . '\s*\}\}/';
             return preg_replace_callback($pattern, function() use ($replacement) { return (string)$replacement; }, $html);
         };
+        $lang = "";
+        if (Lang::getLocale() == "es") {
+            $lang = "/es";
+        }
+        $rendered = str_replace('{{ $lang }}', $lang, $rendered);
         if (!is_string($item)) {
             // active handling
             $rendered = $replace($rendered, 'active', $index == 0 ? 'active' : '');
@@ -425,7 +430,6 @@ class Html {
                             if ($currentLanguage === "es") {
                                 $item->short_texte = $item->short_texte_es;
                                 $item->title = $item->title_es;
-                                $item->slug = toKebabCase($item->slug_es);
                             }
                         }
                     }

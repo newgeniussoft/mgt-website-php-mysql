@@ -120,6 +120,16 @@ class FrontendController extends Controller
             if (is_array($found) && count($found) > 0) {
                 $found = $found[0];
             }
+
+            if ($slug === "blog") {
+                $lang = Lang::getLocale();
+                if ($lang === "es") {
+                    $found->title = $found->title_es;
+                    $found->short_text = $found->short_text_es;
+                    $found->description = $found->description_es;
+                }
+            }
+
             return Html::renderItemWithTemplate($found, $menuPages);
 
         } else {
