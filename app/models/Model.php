@@ -1,154 +1,188 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
 
-class Model {
-    protected $db;
-    public $table_name;
+namespace App\Models;
 
-    public function __construct($table_name) {
-        $this->db = Database::getInstance()->getConn();
-        $this->table_name = $table_name;
+abstract class Model {
+    protected $table;
+    protected $primaryKey = 'id';
+    protected $fillable = [];
+    protected $guarded = ['id'];
+    protected $hidden = [];
+    protected $casts = [];
+    protected $attributes = [];
+    protected $timestamps = true;
+    
+    protected static $connection;
+    
+    public static function setConnection($pdo) {
+        self::$connection = $pdo;
     }
-
-    public function create($data) {
-        $columns = implode(',', array_keys($data));
-        $placeholders = implode(',', array_fill(0, count($data), '?'));
-        $sql = "INSERT INTO {$this->table_name} ({$columns}) VALUES ({$placeholders})";
-        return $this->query($sql, array_values($data));
+    
+    public function getConnection() {
+        return self::$connection;
     }
-
-    public function sql($sql) {
-        return $this->query($sql);
-    }
-
-    public function update($id, $data) {
-        $columns = $this->columns();
-        $col_not_allowed = ['id', 'created_at', 'updated_at'];
-        $nData = [];
-       /* foreach($columns as $col) {
-            if (!in_array($col, $col_not_allowed)) {
-                $nData[$col] = $data[$col];
-            }
-        }*/
-        $set = implode(',', array_map(function($key) use ($data) { return " {$key} = ?"; }, array_keys($data))); 
-        $sql = "UPDATE {$this->table_name} SET {$set} WHERE id = ?";
-       //echo($sql);
-       $params = [];
-       foreach($data as $item) {
-        $params[] = $item;
-       }
-       $params[]  = $id;
-       
-       // print_r($params);
-
-
-     //  echo($sql);
-       
-       $stmt = $this->db->prepare($sql);
-        return $stmt->execute($params);
-       /*foreach(array_keys($data) as $key) {
-            echo('<b>'.$key.'</b>: '.$data[$key].'<br>');
-       }*/
-      /*/$stmt = $this->db->prepare($sql);
-        $stmt->execute();*/
-        // return $this->query($sql);
-    }
-
-    public function where($col, $value) {
-        $stmt = $this->db->prepare("SELECT * FROM " . $this->table_name." WHERE ".$col." = '".$value."'");
+    
+    public static function all() {
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table}");
         $stmt->execute();
-        $data = [];
-        while($item = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $data[] = (object) $item;
-        }
-        return $data;
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
-
-    public function like($col, $value) {
-        $stmt = $this->db->prepare("SELECT * FROM " . $this->table_name." WHERE ".$col." LIKE '%".$value."%' ");
+    
+    public static function all_limit_offset($limit, $offset, $condition = '') {
+        $instance = new static();
+        $sql = "SELECT * FROM {$instance->table} ";
+        if (!empty($condition)) {
+            $sql .= " WHERE ".$condition;
+        }
+        $sql .= " ORDER BY id DESC LIMIT ".$limit." OFFSET ".$offset;
+        $stmt = $instance->getConnection()->prepare($sql);
         $stmt->execute();
-        $data = [];
-        while($item = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $data[] = (object) $item;
-        }
-        return $data;
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
-
-    public function limit($limit) {
-        $stmt = $this->db->prepare("SELECT * FROM " . $this->table_name." LIMIT ".$limit);
-        $stmt->execute();
-        $data = [];
-        while($item = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $data[] = (object) $item;
-        }
-        return $data;
-    }
-
-    public function limitOffset($limit, $offset, $condition = '', $order = 'ASC') {
-        $stmt = $this->db->prepare("SELECT * FROM " . $this->table_name." ".$condition." ORDER BY id ".$order." LIMIT ".$limit." OFFSET ".$offset);
-        $stmt->execute();
-        $data = [];
-        while($item = $stmt->fetch(PDO::FETCH_OBJ)) {
-            $data[] = (object) $item;
-        }
-        return $data;
-    }
-
-    public function columns() {
-        $columns = [];
-        $stmt = $this->db->query("SHOW COLUMNS FROM `$this->table_name`");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $columns[] = $row['Field'];
-        }
-        return $columns;
-    }
-
-    public function delete($id) {
-        $sql = "DELETE FROM {$this->table_name} WHERE id = ?";
-        return $this->query($sql, [$id]);
-    }
-
-    public function all($order = 'ASC') {
-        $sql = "SELECT * FROM {$this->table_name} ORDER BY id {$order}";
-        return $this->toObjects($this->fetchAll($sql));
-    }
-
-    public function toObjects($data) {
-        $objects = [];
-        foreach ($data as $row) {
-            $objects[] = (object)$row;
-        }
-        return $objects;
-    }
-
-    public function get($id) {
-        $sql = "SELECT * FROM {$this->table_name} WHERE id = ?";
-        return $this->fetch($sql, [$id]);
-    }
-
-    // Safe query execution with prepared statements
-    protected function query($sql, $params = []) {
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
-        return $stmt;
-    }
-
-    // Fetch all results
-    protected function fetchAll($sql, $params = []) {
-        $stmt = $this->query($sql, $params);
-        return $stmt->fetchAll();
-    }
-
-    // Fetch single row
-    protected function fetch($sql, $params = []) {
-        $stmt = $this->query($sql, $params);
+    
+    public static function find($id) {
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `{$instance->primaryKey}` = ?");
+        $stmt->execute([$id]);
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, static::class);
         return $stmt->fetch();
     }
+    
+    public static function where($column, $operator, $value = null) {
+        if ($value === null) {
+            $value = $operator;
+            $operator = '=';
+        }
+        
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `$column` $operator ?");
+        $stmt->execute([$value]);
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
 
-    // For child models to access PDO directly if needed
-    public function getDb() {
-        return $this->db;
+    public static function condition($condition) {
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE ".$condition);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+    
+    public static function create(array $data) {
+        $instance = new static();
+        $instance->fill($data);
+        $instance->save();
+        return $instance;
+    }
+
+    public function query() {
+        $instance = new static();
+        return $instance;
+    }
+    
+    public function fill(array $data) {
+        foreach ($data as $key => $value) {
+            if (in_array($key, $this->fillable) && !in_array($key, $this->guarded)) {
+                $this->attributes[$key] = $value;
+            }
+        }
+        return $this;
+    }
+    
+    public function save() {
+        if ($this->timestamps) {
+            if (!isset($this->attributes[$this->primaryKey])) {
+                $this->attributes['created_at'] = date('Y-m-d H:i:s');
+            }
+            $this->attributes['updated_at'] = date('Y-m-d H:i:s');
+        }
+        
+        if (isset($this->attributes[$this->primaryKey])) {
+            return $this->update();
+        }
+        return $this->insert();
+    }
+    
+    protected function insert() {
+        // Escape column names with backticks
+        $columns = implode(', ', array_map(function($col) { return "`$col`"; }, array_keys($this->attributes)));
+        $placeholders = implode(', ', array_fill(0, count($this->attributes), '?'));
+        
+        $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placeholders)";
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute(array_values($this->attributes));
+        
+        $this->attributes[$this->primaryKey] = $this->getConnection()->lastInsertId();
+        return true;
+    }
+    
+    protected function update() {
+        $sets = [];
+        $values = [];
+        
+        foreach ($this->attributes as $key => $value) {
+            if ($key !== $this->primaryKey) {
+                // Escape column names with backticks
+                $sets[] = "`$key` = ?";
+                $values[] = $value;
+            }
+        }
+        
+        $values[] = $this->attributes[$this->primaryKey];
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $sets) . " WHERE `{$this->primaryKey}` = ?";
+        $stmt = $this->getConnection()->prepare($sql);
+        return $stmt->execute($values);
+    }
+    
+    public function delete() {
+        // Support both models created via create()/fill() (ID in $attributes)
+        // and models loaded via find()/all()/where() (ID as a public property)
+        $id = $this->{$this->primaryKey} ?? null;
+        if ($id === null) {
+            return false;
+        }
+
+        $sql = "DELETE FROM {$this->table} WHERE `{$this->primaryKey}` = ?";
+        $stmt = $this->getConnection()->prepare($sql);
+        return $stmt->execute([$id]);
+    }
+    
+    public function __get($key) {
+        return $this->attributes[$key] ?? null;
+    }
+    
+    public function __set($key, $value) {
+        $this->attributes[$key] = $value;
+    }
+    
+    public function toArray() {
+        $array = $this->attributes;
+        foreach ($this->hidden as $key) {
+            unset($array[$key]);
+        }
+        return $array;
+    }
+
+    public static function fromSlug($slug) {
+        // singularize simple cases: remove trailing s
+        $base = rtrim($slug, 's');
+
+        // Model names to try
+        $models = [
+            ucfirst($base),          // Tour
+            ucfirst($base) . 's',    // Tours
+        ];
+
+        // Namespace of your models
+        $namespace = "App\\Models\\";
+
+        foreach ($models as $model) {
+            $fullClass = $namespace . $model;
+
+            if (class_exists($fullClass)) {
+                return $fullClass;   // returns a valid model class name
+            }
+        }
+        return null; // No model matched
     }
 }
-
-?>

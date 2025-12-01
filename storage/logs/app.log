@@ -1,0 +1,20 @@
+[2025-11-08 14:59:17] [error] Database connection failed: SQLSTATE[HY000] [1049] Unknown database 'my_database'
+[2025-11-09 08:24:38] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée.
+
+[2025-11-13 04:39:27] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée.
+
+[2025-11-13 04:42:33] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée.
+
+[2025-11-13 04:42:43] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée.
+
+[2025-11-13 04:42:48] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée.
+
+[2025-11-25 16:07:33] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2025-11-28 10:43:54] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2025-11-29 06:34:06] [error] Database connection failed: SQLSTATE[HY000] [1049] Unknown database 'db_mgt_prods'
+[2025-11-29 12:33:44] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2025-11-29 12:33:59] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2025-11-29 12:34:02] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2025-11-30 12:07:58] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2025-12-01 03:06:43] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2025-12-01 13:34:24] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée

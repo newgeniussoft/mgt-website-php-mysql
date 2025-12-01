@@ -1,11 +1,32 @@
 <?php
-require_once __DIR__ . '/../models/Model.php';
 
-class Gallery extends Model {
-    private $table = 'galleries';
+namespace App\Models;
 
-    public function __construct() {
-        parent::__construct($this->table);
+class Gallery extends Model
+{
+    protected $table = 'galleries';
+
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'thumbnail',
+        'sort_order',
+        'status',
+    ];
+
+    protected $timestamps = true;
+
+    /**
+     * Get all active gallery items ordered for display.
+     */
+    public static function getActive()
+    {
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare(
+            "SELECT * FROM {$instance->table} WHERE status = 'active' ORDER BY sort_order ASC, created_at DESC"
+        );
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
 }
-?>

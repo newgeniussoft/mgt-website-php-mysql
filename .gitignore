@@ -3,5 +3,8 @@
 /template
 /template_v2
 /assets/img/uploads
+/old
+/public/*.html
+/public/uploads/*
 
 *.zip
