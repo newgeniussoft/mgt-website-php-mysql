@@ -4,118 +4,105 @@ A comprehensive PHP/MySQL Content Management System with advanced features.
 
 ## 🚀 Features
 
-- **Admin Panel** with authentication and role-based access
-- **Media Library** with folder organization
-- **File Manager** for direct file system access
-- **Code Editor** with Monaco Editor integration
-- **Database Manager** - phpMyAdmin alternative built-in
-- **Settings System** with dynamic configuration
-- **Multi-language Support** (English, Spanish)
-- **Responsive Design** with Bootstrap
+- **Admin panel** with authentication (prefix configurable via `APP_ADMIN_PREFIX`)
+- **Pages, Templates & Sections** for database-driven pages with a default site Template
+- **Template Items** to render model-backed lists/cards and detail pages
+- **Tours module** (multi-language, photos, details, featured, categories, locations)
+- **Blogs** CRUD with image upload and Spanish fields
+- **Galleries** with thumbnails and multi-image support
+- **Media Library** (DB-backed) with folders, metadata, downloads
+- **File Manager** for real file system operations
+- **Code Editor** (Monaco) to edit project files in-browser
+- **Database Manager** (browse/edit/SQL/export/DDL tools)
+- **Settings system** grouped and typed (text/number/boolean/json/image)
+- **DB-backed translations** with file fallback, `<t key="..." default="..."/>` tags, and inline seeding
+- **I18n-aware URLs** with Spanish canonicalization at `/es/`
+- **Bootstrap** responsive UI and Font Awesome icons
 
-## 📦 Quick Start
+## 📦 Requirements
 
-1. **Database Manager**: See `DATABASE_MANAGER_QUICKSTART.md`
-2. **Admin Authentication**: See `ADMIN_AUTH.md`
-3. **Media Management**: See `MEDIA_MANAGEMENT.md`
-4. **Settings System**: See `SETTINGS_SYSTEM.md`
+- PHP 7.4+ (8.x recommended)
+- MySQL 5.7+ or MariaDB 10.3+
+- Apache with `mod_rewrite` enabled, or PHP built-in server
+- No Composer required (custom PSR-4 autoloader)
 
-## 🗄️ Database Manager
+## �️ Installation
 
-The built-in Database Manager provides phpMyAdmin-like functionality:
+- **Clone or copy** into your web root. Example (XAMPP on Windows): `c:\xampp\htdocs\mgt-v5_2`.
+- Create a database (e.g. `db_mgt_prod`).
+- Import schema/data: `database/migrations/all.sql` (or individual `00X_*.sql` files).
+- Configure `.env` in project root:
+  - `APP_URL` (e.g. `http://localhost/mgt-v5_2` or `http://localhost:8000`)
+  - `APP_ADMIN_PREFIX` (default `cpanel`)
+  - `DB_HOST`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
 
-- ✅ View all database tables
-- ✅ Browse, search, and sort data
-- ✅ Add, edit, and delete rows
-- ✅ Execute custom SQL queries
-- ✅ Export tables as SQL files
-- ✅ Smart form fields based on data types
+## ▶️ Run locally
 
-**Access**: Admin Panel → System → Database Manager
+- Option A — Apache (recommended)
+  - Point your VirtualHost DocumentRoot to `public/`.
+  - Ensure `.htaccess` is honored and `mod_rewrite` is enabled.
+  - Visit: `APP_URL` (home) and `APP_URL/{APP_ADMIN_PREFIX}` (admin).
 
-For details, see `DATABASE_MANAGER.md`
+- Option B — PHP built-in server
+  - From project root: `php -S localhost:8000 server.php`
+  - Visit: `http://localhost:8000` and `http://localhost:8000/{APP_ADMIN_PREFIX}`
 
-```bash
-// ==========================================
-// PROJECT STRUCTURE GUIDE
-// ==========================================
-/*
-your-project/
-├── app/
-│   ├── Models/
-│   │   ├── Model.php (base model)
-│   │   ├── User.php
-│   │   └── Post.php
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── Controller.php (base controller)
-│   │   │   ├── UserController.php
-│   │   │   ├── PostController.php
-│   │   │   └── AuthController.php
-│   │   ├── Requests/
-│   │   │   ├── Request.php (base request)
-│   │   │   ├── StoreUserRequest.php
-│   │   │   └── UpdatePostRequest.php
-│   │   └── Middleware/
-│   │       ├── Middleware.php (base)
-│   │       ├── AuthMiddleware.php
-│   │       └── CorsMiddleware.php
-│   ├── Services/
-│   │   ├── AuthService.php
-│   │   └── EmailService.php
-│   └── Traits/
-│       ├── HasTimestamps.php
-│       └── Searchable.php
-├── bootstrap/
-│   └── app.php (application bootstrap)
-├── config/
-│   ├── app.php
-│   ├── database.php
-│   └── mail.php
-├── database/
-│   ├── migrations/
-│   │   └── 001_create_users_table.sql
-│   └── seeds/
-│       └── UserSeeder.php
-├── public/
-│   ├── index.php (entry point)
-│   ├── css/
-│   ├── js/
-│   └── images/
-├── resources/
-│   └── views/
-│       ├── layouts/
-│       │   ├── app.php
-│       │   └── guest.php
-│       ├── components/
-│       │   ├── header.php
-│       │   └── footer.php
-│       ├── users/
-│       │   ├── index.php
-│       │   ├── show.php
-│       │   └── create.php
-│       └── errors/
-│           ├── 404.php
-│           └── 500.php
-├── routes/
-│   ├── web.php
-│   └── api.php
-├── storage/
-│   ├── logs/
-│   │   └── app.log
-│   ├── cache/
-│   └── uploads/
-├── helpers/
-│   ├── functions.php
-│   ├── array_helpers.php
-│   └── string_helpers.php
-├── tests/
-│   ├── Unit/
-│   └── Feature/
-├── vendor/ (if using Composer)
-├── .env (environment variables)
-├── .htaccess
-└── composer.json
-```
+## 🔐 Admin access
 
-Login: vecaxa8359@chaineor.com
+- Login page: `/{APP_ADMIN_PREFIX}/login`.
+- Users are stored in the `users` table. Create one via SQL or the Database Manager and store a `password_hash()` value for the password (bcrypt).
+
+## 🌐 Routing overview
+
+- Custom router in `public/index.php`, routes in `routes/web.php`.
+- Language prefix support: `/es/...` sets the locale to Spanish. The `.htaccess` canonicalizes `/es` → `/es/` and keeps `/es/` trailing slash for the homepage.
+- Frontend:
+  - `/` → dynamic homepage (`Page::getHomepage()`)
+  - `/{slug}` → page by slug
+  - `/{slug}/{item}` → model-backed detail (e.g. `tour/{slug}`, `blog/{slug}`)
+- Admin (all prefixed with `/{APP_ADMIN_PREFIX}`): dashboard, pages, templates, template-items, sections, media, filemanager, codeeditor, database, tours, blogs, reviews, translations, settings.
+
+## 🧩 Templates, Sections, and Items
+
+- Templates (`templates` table) render the overall page; Sections attach HTML/CSS/JS blocks to pages.
+- Content placeholders:
+  - `{{ content }}` (first entry), `{{ content_all }}`, `{{ content1 }}` ...
+  - Named content via auto-slugified titles, e.g. `{{ intro_text }}`.
+- Items tag to render datasets:
+  - Example: `<items name="tour" template="tour-template" limit="6" />`
+  - Supports inline lists and JSON via `data="..."`.
+
+## 🗣️ Translations
+
+- `resources/lang/{locale}/*.php` files with DB-backed override (`translations` table).
+- Helpers: `__('key')`, `trans('key')`, `trans_choice('key', n)`.
+- Inline render tags: `<t key="..." default="..." />` and block form.
+- Inline seeding: `{ lang="en" key="menu.home" value="Home" }` stores into DB if missing.
+
+## 🖼️ Media, Files, Database tools
+
+- **Media Library**: upload, metadata, folders, download links.
+- **File Manager**: create/rename/move/delete/copy files and folders.
+- **Code Editor**: Monaco-based editor with file tree and save actions.
+- **Database Manager**: browse tables, edit rows, run SQL, export, manage columns.
+
+## 📁 Notable paths
+
+- Entry point: `public/index.php`
+- Rewrites: `public/.htaccess` (includes Spanish `/es/` canonicalization)
+- Bootstrap & env: `bootstrap/app.php`, `.env`
+- Router & routes: `public/index.php`, `routes/web.php`
+- Views: `resources/views`
+- Uploads: `public/uploads`
+- Logs: `storage/logs/app.log`
+
+## 🚀 Production notes
+
+- Set web server DocumentRoot to `public/`.
+- Ensure `public/.htaccess` and `mod_rewrite` are enabled.
+- Set proper permissions for `public/uploads` and `storage/logs`.
+- Configure `APP_URL` and SMTP/analytics/settings via the admin Settings UI.
+
+---
+
+This project uses a lean custom PHP stack (no Composer) with PDO, a simple PSR-4 autoloader, and Blade-like rendering helpers.
