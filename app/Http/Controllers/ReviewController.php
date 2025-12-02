@@ -168,4 +168,17 @@ class ReviewController extends Controller
 
         return redirect(admin_url('reviews'));
     }
+
+    public function action() {
+        if(isset($_GET['accept_review'])) {
+            $id = (int)($_GET['accept_review'] ?? 0);
+            $review = Review::updateById($id, ['pending' => 0]);
+        } 
+        if (isset($_GET['delete_review'])) {
+            $id = (int)($_GET['delete_review'] ?? 0);
+            $review = Review::deleteById($id);
+        }
+        
+        return view('frontend.review');
+    }
 }

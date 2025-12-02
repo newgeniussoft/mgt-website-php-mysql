@@ -247,7 +247,7 @@ try {
     $cooldown_check->execute([':email' => $email_user]);
     $cooldown_result = $cooldown_check->fetch();
 
-    if ($cooldown_result['last_submit']) {
+   /* if ($cooldown_result['last_submit']) {
         $last_submit = strtotime($cooldown_result['last_submit']);
         $time_diff = time() - $last_submit;
         
@@ -255,7 +255,7 @@ try {
             $wait_time = ceil((SUBMISSION_COOLDOWN - $time_diff) / 60);
             sendResponse(false, "Please wait $wait_time more minute(s) before submitting another review");
         }
-    }
+    }*/
 
     // 13. INSERT REVIEW
     $sql = "INSERT INTO reviews (rating, name_user, email_user, message, pending, daty) 
@@ -270,6 +270,21 @@ try {
     
     if ($stmt->execute()) {
         // Log successful submission
+    $last_review_sql = "SELECT * FROM reviews ORDER BY id DESC LIMIT 1";
+    $getLast = $pdo->prepare($last_review_sql);
+    $getLast->execute();
+    $last_review = $getLast->fetch(PDO::FETCH_ASSOC);
+    $lastId = $last_review['id'];
+    
+    
+    include '../helpers/functions.php';
+    $subject = 'Review of Madagascar Green Tours from '.$name_user;
+    // Message
+    $message = 'Review from : '.$name_user.'<b><p>'.$message.'</p>';
+    $message .= '<a href="'.$_ENV['APP_URL'].'/action?accept_review='.$lastId.'" style="background: #06923E; padding: 4px; border-radius: 4px; color: #fff">Accept</a> ';
+    $message .= '<a href="'.$_ENV['APP_URL'].'/action?delete_review='.$lastId.'" style="background: #E14434; padding: 4px; border-radius: 4px; color: #fff">Delete</a>';
+
+        sendEmail('info@madagascar-green-tours.com', $subject, $message);
         error_log("Review submitted successfully from IP: $user_ip, Email: $email_user, Score: $interaction_score");
         sendResponse(true, 'Review submitted successfully! It will be visible after approval.');
     } else {

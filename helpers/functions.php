@@ -1,5 +1,8 @@
 <?php
 
+    use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 // Application helpers
 function app($class = null) {
     static $container = [];
@@ -587,6 +590,29 @@ function pagination($nbDePages) {
                 $html .= '<li><a href="?page=' . $pageNum . '">' . $pageNum . '</a></li>';
             }
             return $html;
+        }
+
+        function sendEmail($to, $subject, $body) {
+            
+require 'vendor/autoload.php';
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host   = 'send.one.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'tech@madagascar-green-tours.com';
+                $mail->Password   = '9qU^xWv(!Gt=),SX';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                $mail->Port       = 465;
+                $mail->setFrom("tech@madagascar-green-tours.com", 'Madagascar Green Tours');
+                $mail->addAddress($to);
+                $mail->Subject = $subject;
+                $mail->Body    = $body;
+                $mail->AltBody = strip_tags($body);
+                $mail->send();
+            } catch (Exception $e) {
+                error_log("Email sending failed: " . $e->getMessage());
+            }
         }
 
 

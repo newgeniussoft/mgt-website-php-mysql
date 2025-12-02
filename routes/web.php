@@ -16,6 +16,8 @@ $router->get('/test-api', function() {
 });
 
 $router->get('/test', 'App\Http\Controllers\FrontendController@testPage');
+$router->post('/send-review', 'App\Http\Controllers\FrontendController@sendReview');
+$router->get('/action', 'App\Http\Controllers\ReviewController@action');
 
 // User routes example
 $router->group(['prefix' => 'api'], function($router) {
