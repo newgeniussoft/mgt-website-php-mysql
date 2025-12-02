@@ -137,8 +137,15 @@ class Html {
             }
             $firstEntry = $contentByIndex[0] ?? '';
             $contentReplacement = $firstEntry;
+            if (isset($_GET['sent'])) {
+                $message = '<div class="alert alert-success" role="alert">Your message has been sent successfully!</div>';
+            } else {
+                $message = '';
+            }
+            $sectionHtml = str_replace('{{ message }}', $message, $sectionHtml);
             $sectionHtml = str_replace('{{ content }}', $contentReplacement, $sectionHtml);
             $sectionHtml = str_replace('{{content}}', $contentReplacement, $sectionHtml);
+            
 
             $sectionHtml = str_replace('{{ pagination }}', pagination(9), $sectionHtml);
             // Always expose the concatenated form via a separate variable
@@ -661,7 +668,8 @@ class Html {
             'menu_items' => $menuHtml,
             'kml' => getKmlFiles($kml_folder),
             'custom_css' => '',
-            'custom_js' => ''
+            'custom_js' => '',
+            'message' => isset($_GET['sent']) ? 'Your message has been sent successfully!' : '',
         ];
         
         $html = $template->html_content ?? '';
