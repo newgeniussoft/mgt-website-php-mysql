@@ -20,7 +20,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h5 class="card-title">Total Users</h5>
-                            <h2 class="mb-0">150</h2>
+                            <h2 class="mb-0">{{ $total_users }}</h2>
                         </div>
                         <div>
                             <i class="fas fa-users fa-3x opacity-50"></i>
@@ -35,8 +35,8 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="card-title">Active Pages</h5>
-                            <h2 class="mb-0">24</h2>
+                            <h5 class="card-title">Total Pages</h5>
+                            <h2 class="mb-0">{{ $total_pages }}</h2>
                         </div>
                         <div>
                             <i class="fas fa-file-alt fa-3x opacity-50"></i>
@@ -51,11 +51,11 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="card-title">Media Files</h5>
-                            <h2 class="mb-0">342</h2>
+                            <h5 class="card-title">Total Tours</h5>
+                            <h2 class="mb-0">{{ $total_tours }}</h2>
                         </div>
                         <div>
-                            <i class="fas fa-images fa-3x opacity-50"></i>
+                            <i class="fas fa-route fa-3x opacity-50"></i>
                         </div>
                     </div>
                 </div>
@@ -67,11 +67,11 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="card-title">Messages</h5>
-                            <h2 class="mb-0">12</h2>
+                            <h5 class="card-title">Total Blogs</h5>
+                            <h2 class="mb-0">{{ $total_blogs }}</h2>
                         </div>
                         <div>
-                            <i class="fas fa-envelope fa-3x opacity-50"></i>
+                            <i class="fas fa-file-alt fa-3x opacity-50"></i>
                         </div>
                     </div>
                 </div>
@@ -97,24 +97,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Page Created</td>
-                                    <td>John Doe</td>
-                                    <td>2 hours ago</td>
-                                    <td><span class="badge badge-success">Success</span></td>
-                                </tr>
-                                <tr>
-                                    <td>User Registered</td>
-                                    <td>Jane Smith</td>
-                                    <td>5 hours ago</td>
-                                    <td><span class="badge badge-success">Success</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Media Uploaded</td>
-                                    <td>Admin</td>
-                                    <td>1 day ago</td>
-                                    <td><span class="badge badge-success">Success</span></td>
-                                </tr>
+                                @forelse(($recent_reviews ?? []) as $r)
+                                    <tr>
+                                        <td>
+                                            Review @if(!empty($r['rating'])) <span class="ml-2">⭐ {{ $r['rating'] }}/5</span>@endif
+                                            <div class="text-muted small">{{ strlen($r['message'] ?? '') > 80 ? substr($r['message'], 0, 80) . '…' : ($r['message'] ?? '') }}</div>
+                                        </td>
+                                        <td>{{ $r['name_user'] ?? '—' }}</td>
+                                        <td>{{ isset($r['daty']) ? date('Y-m-d H:i', strtotime($r['daty'])) : '—' }}</td>
+                                        <td>
+                                            @if((int)($r['pending'] ?? 0) === 1)
+                                                <span class="badge badge-warning">Pending</span>
+                                            @else
+                                                <span class="badge badge-success">Approved</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-muted">No recent reviews.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -129,16 +132,16 @@
                 </div>
                 <div class="card-body">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">
+                        <a href="{{ admin_url('pages/create') }}" class="list-group-item list-group-item-action">
                             <i class="fas fa-plus-circle"></i> Create New Page
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="fas fa-user-plus"></i> Add New User
+                        <a href="{{ admin_url('blogs/create') }}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-blog"></i> Add New Blog
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">
+                        <a href="{{ admin_url('filemanager?path=media') }}" class="list-group-item list-group-item-action">
                             <i class="fas fa-upload"></i> Upload Media
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">
+                        <a href="{{ admin_url('settings') }}" class="list-group-item list-group-item-action">
                             <i class="fas fa-cog"></i> Settings
                         </a>
                     </div>

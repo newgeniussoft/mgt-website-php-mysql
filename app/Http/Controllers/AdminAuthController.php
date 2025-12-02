@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Page;
+use App\Models\Tour;
+use App\Models\Blog;
 use App\View\View;
 
 class AdminAuthController extends Controller {
@@ -76,10 +79,47 @@ class AdminAuthController extends Controller {
      * Show admin dashboard
      */
     public function dashboard() {
+        $pdo = (new User())->getConnection();
+        $total_users = 0;
+        $total_pages = 0;
+        $total_tours = 0;
+        $total_blogs = 0;
+        $recent_reviews = [];
+
+        try {
+            $stmt = $pdo->query("SELECT COUNT(*) FROM users");
+            $total_users = (int)$stmt->fetchColumn();
+        } catch (\Throwable $e) {}
+
+        try {
+            $total_pages = (int) Page::count();
+        } catch (\Throwable $e) {}
+
+        try {
+            $stmt = $pdo->query("SELECT COUNT(*) FROM tours");
+            $total_tours = (int)$stmt->fetchColumn();
+        } catch (\Throwable $e) {}
+
+        try {
+            $stmt = $pdo->query("SELECT COUNT(*) FROM blogs");
+            $total_blogs = (int)$stmt->fetchColumn();
+        } catch (\Throwable $e) {}
+
+        try {
+            $stmt = $pdo->prepare("SELECT id, rating, name_user, email_user, message, pending, daty FROM reviews ORDER BY daty DESC LIMIT 10");
+            $stmt->execute();
+            $recent_reviews = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\Throwable $e) {}
+
         return View::make('admin.dashboard', [
             'title' => 'Admin Dashboard',
             'admin_name' => $_SESSION['admin_name'] ?? 'Admin',
-            'admin_email' => $_SESSION['admin_email'] ?? ''
+            'admin_email' => $_SESSION['admin_email'] ?? '',
+            'total_users' => $total_users,
+            'total_pages' => $total_pages,
+            'total_tours' => $total_tours,
+            'total_blogs' => $total_blogs,
+            'recent_reviews' => $recent_reviews,
         ]);
     }
     

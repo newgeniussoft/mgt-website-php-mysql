@@ -66,7 +66,8 @@ class Setting extends Model {
      */
     public static function getAllGroups() {
         
-        $stmt = self::getConnection()->prepare("SELECT DISTINCT `group` FROM settings ORDER BY `group`");
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT DISTINCT `group` FROM settings ORDER BY `group`");
         $stmt->execute();
         $groups = [];
         
@@ -129,7 +130,8 @@ class Setting extends Model {
      */
     public static function getGroupedSettings() {
        
-        $stmt = self::getConnection()->prepare("SELECT * FROM settings ORDER BY `group`, `order`");
+        $instance = new static();
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM settings ORDER BY `group`, `order`");
         $stmt->execute();
         
         $settings = [];
