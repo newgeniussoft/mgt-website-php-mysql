@@ -1,6 +1,7 @@
 # Madagascar Green Tours CMS
 
 A comprehensive PHP/MySQL Content Management System with advanced features.
+<img src="screenshots/screenshot-2025-12-02-055209.png">
 
 ## 🚀 Features
 
