@@ -18,3 +18,26 @@
 [2025-11-30 12:07:58] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
 [2025-12-01 03:06:43] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
 [2025-12-01 13:34:24] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2025-12-02 11:48:44] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: NO)
+[2025-12-02 11:49:02] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:49:03] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:49:06] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:49:06] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:49:19] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:49:28] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:51:52] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:53:33] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: NO)
+[2025-12-02 11:53:34] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: NO)
+[2025-12-02 11:53:36] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: NO)
+[2025-12-02 11:53:36] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: NO)
+[2025-12-02 11:53:55] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:53:56] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:53:57] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:53:57] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:53:58] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:53:58] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2025-12-02 11:54:00] [error] Database connection failed: SQLSTATE[HY000] [1045] Access denied for user ''@'10.27.53.3' (using password: YES)
+[2026-04-02 14:56:24] [error] Database connection failed: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for madagascar-green-tours.com.mysql.service.one.com failed: H�te inconnu. 
+[2026-04-02 14:56:24] [error] Database connection failed: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for madagascar-green-tours.com.mysql.service.one.com failed: H�te inconnu. 
+[2026-04-06 09:10:47] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-04-06 09:10:51] [error] Database connection failed: SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée

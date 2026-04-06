@@ -56,7 +56,7 @@ abstract class Model {
         }
         
         $instance = new static();
-        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `$column` $operator ? ");
+        $stmt = $instance->getConnection()->prepare("SELECT * FROM {$instance->table} WHERE `$column` $operator ? ORDER BY id DESC");
         $stmt->execute([$value]);
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
     }

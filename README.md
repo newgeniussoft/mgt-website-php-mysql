@@ -45,7 +45,7 @@ A comprehensive PHP/MySQL Content Management System with advanced features.
   - Visit: `APP_URL` (home) and `APP_URL/{APP_ADMIN_PREFIX}` (admin).
 
 - Option B — PHP built-in server
-  - From project root: `php -S localhost:8000 server.php`
+  - From project root: `php -S localhost:8000 -t public`
   - Visit: `http://localhost:8000` and `http://localhost:8000/{APP_ADMIN_PREFIX}`
 
 ## 🔐 Admin access

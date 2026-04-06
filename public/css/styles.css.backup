@@ -2510,8 +2510,8 @@ input[name="nav"]:checked + .page .page-contents > * {
 .tomb_back {
   background: url("../img/images/baobab.jpg");
 }
-.forest_back 
-{background: url("../img/images/cover-nosy-be.jpg");
+.forest_back {
+    background: url("../uploads/tours/combination-tour/forest-madagascar.jpg");
 }
 .bird_back {
   background: url("../img/images/bird.png");

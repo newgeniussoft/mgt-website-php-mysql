@@ -76,7 +76,7 @@ class Html {
                                     "title_es" => "RN7 Visita sur activa",
                                 ],
                                 (object)[
-                                    "slug" =>'rn7-jungle-train-tour',
+                                    "slug" =>'rn7-Jungle-train-tour',
                                     "title" => "RN7 Jungle train tour",
                                     "title_es" => "Gira en tren por la jungla",
                                 ],
